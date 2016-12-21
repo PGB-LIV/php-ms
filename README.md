@@ -1,2 +1,2 @@
 # php-ms
-PHP Mass Spectrometry utilty classes
+PHP Mass Spectrometry utility classes
