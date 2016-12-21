@@ -22,7 +22,7 @@ namespace pgb_liv\php_ms\Reader;
  *
  * @author Andrew Collins
  */
-class MgfParser implements \Iterator
+class MgfReader implements \Iterator
 {
 
     private $filePath;

@@ -23,7 +23,7 @@ spl_autoload_register(function ($class) {
     $prefix = 'pgb_liv\\php_ms\\';
     
     // base directory for the namespace prefix
-    $baseDir = __DIR__;
+    $baseDir = __DIR__ . DIRECTORY_SEPARATOR ;
     
     // does the class use the namespace prefix?
     $len = strlen($prefix);
@@ -38,7 +38,7 @@ spl_autoload_register(function ($class) {
     // replace the namespace prefix with the base directory, replace namespace
     // separators with directory separators in the relative class name, append
     // with .php
-    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+    $file = $baseDir . str_replace('\\', DIRECTORY_SEPARATOR, $relativeClass) . '.php';
     
     // if the file exists, require it
     if (file_exists($file)) {
