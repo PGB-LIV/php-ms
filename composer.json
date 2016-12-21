@@ -1,7 +1,7 @@
 {
     "name": "pgb-liv/php-ms",
     "description": "PHP Mass Spectrometry Utilities library",
-    "keywords": ["massspec", "ms", "lc/ms", "ms/ms"],
+    "keywords": ["massspec", "ms", "lcms", "msms"],
     "homepage": "https://github.com/PGB-LIV/php-ms",
     "license": "Apache2",
     "authors": [
