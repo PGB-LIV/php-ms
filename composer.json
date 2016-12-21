@@ -3,7 +3,7 @@
     "description": "PHP Mass Spectrometry Utilities library",
     "keywords": ["massspec", "ms", "lcms", "msms"],
     "homepage": "https://github.com/PGB-LIV/php-ms",
-    "license": "Apache2",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Andrew Collins",
@@ -13,9 +13,25 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "require-dev": {
+        "theseer/phpdox": "0.8.*",
+        "squizlabs/php_codesniffer": "2.*",
+        "pdepend/pdepend": "2.*",
+        "sebastian/phpcpd": "2.*",
+        "phploc/phploc": "2.*",
+        "phpmd/phpmd": "2.*",
+        "phpunit/phpunit": "4.*"
+    },
     "autoload": {
         "psr-4": {
             "pgb_liv\\php_ms\\": "src/"
         }
 	}
+    "support": {
+        "source": "https://github.com/PGB-LIV/php-ms"
+    }
+    "config": {
+       "vendor-dir": "src/vendor"
+    },
+    "minimum-stability": "stable"
 }
