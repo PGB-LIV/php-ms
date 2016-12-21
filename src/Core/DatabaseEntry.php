@@ -17,15 +17,56 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * A sequence Database Entry object.
+ * A sequence Database Entry object. By default the identifier, description
+ * and sequence are available. Additional fields will be available if the 
+ * description has been able to be parsed in the case of FASTA data.
  *
  * @author Andrew Collins
  */
 class DatabaseEntry implements \Iterator
 {
-    public function __construct($filePath)
-    {
-        $this->filePath = $filePath;
-    }
 
+	private $description;
+	
+	private $sequence;
+	
+	private $identifier;
+	
+	private $database;
+	
+	private $accession;
+	
+	private $entryName
+	
+	private $proteinName;	
+	
+	private $organismName;
+	
+	private $geneName;
+	
+	private $proteinExistence;
+	
+	private $sequenceVersion;
+	
+    public function __construct($identifier, $description, $sequence)
+    {
+		$this->identifier = $identifier;
+		$this->description = $description;
+		$this->sequence = $sequence;
+    }
+	
+	public function getIdentifier()
+	{
+		return $this->identifier;
+	}
+	
+	public function getDescription()
+	{
+		return $this->description;
+	}
+	
+	public function getSequence()
+	{
+		return $this->sequence;
+	}
 }
