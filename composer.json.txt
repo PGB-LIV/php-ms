@@ -1,0 +1,16 @@
+{
+    "name": "PGB_LIV/php-ms",
+    "description": "PHP Mass Spectrometry Utilities library",
+    "keywords": ["massspec", "ms", "lc/ms", "ms/ms"],
+    "homepage": "https://github.com/PGB-LIV/php-ms",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "Andrew Collins",
+            "homepage": "http://www.andrew-collins.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
