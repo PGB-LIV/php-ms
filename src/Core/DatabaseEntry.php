@@ -36,7 +36,7 @@ class DatabaseEntry implements \Iterator
 	
 	private $accession;
 	
-	private $entryName
+	private $entryName;
 	
 	private $proteinName;	
 	
