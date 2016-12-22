@@ -26,10 +26,10 @@
         "psr-4": {
             "pgb_liv\\php_ms\\": "src/"
         }
-	}
+	},
     "support": {
         "source": "https://github.com/PGB-LIV/php-ms"
-    }
+    },
     "config": {
        "vendor-dir": "src/vendor"
     },
