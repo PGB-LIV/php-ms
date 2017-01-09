@@ -23,8 +23,10 @@ class UniprotDatabaseEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Core\Database\UniProtDatabaseEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::__construct
      *
      * @uses pgb_liv\php_ms\Core\Database\UniProtDatabaseEntry
+     * @uses pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
@@ -37,8 +39,20 @@ class UniprotDatabaseEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Core\Database\UniProtDatabaseEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getIdentifier
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getDescription
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getSequence
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getDatabase
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getAccession
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getEntryName
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getOrganismName
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getGeneName
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getProteinExistence
+     * @covers pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry::getSequenceVersion
      *
      * @uses pgb_liv\php_ms\Core\Database\UniProtDatabaseEntry
+     * @uses pgb_liv\php_ms\Core\Database\AbstractDatabaseEntry
      */
     public function testCanRetrieveEntry()
     {
@@ -56,7 +70,6 @@ class UniprotDatabaseEntryTest extends \PHPUnit_Framework_TestCase
         $sequence = 'MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWRVLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFYLKMKGDYYRYLAEVATGDDKKRIIDSARSAYQEAMDISKKEMPPTNPIRLGLALNFSVFHYEIANSPEEAISLAKTTFDEAMADLHTLSEDSYKDSTLIMQLLRDNLTLWTADNAGEEGGEAPQEPQS';
         
         $uniprot = new UniprotDatabaseEntry($identifier, $description, $sequence);
-        var_dump($uniprot);
         
         $this->assertEquals($identifier, $uniprot->getIdentifier());
         $this->assertEquals($description, $uniprot->getDescription());

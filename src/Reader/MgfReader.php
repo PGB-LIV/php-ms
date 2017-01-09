@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
+use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+
 /**
  * An MGF reader that creates a new iterable object that will return a raw
  * entry on each iteration.
@@ -113,7 +115,7 @@ class MgfReader implements \Iterator
 
     private function parseEntry()
     {
-        $entry = array();
+        $entry = new SpectraEntry();
         
         // Scan to BEGIN IONS
         $isFound = false;
@@ -132,7 +134,6 @@ class MgfReader implements \Iterator
         }
         
         // Scan for key=value pairs
-        $entry['meta'] = array();
         while ($line = $this->peekLine()) {
             if (strpos($line, '=') === false) {
                 break;
@@ -145,12 +146,25 @@ class MgfReader implements \Iterator
             if (is_numeric($value)) {
                 $value += 0;
             }
-            
-            $entry['meta'][$pair[0]] = $value;
+
+            if ($pair[0] == 'TITLE') {
+                $entry->setTitle($pair[1]);
+            }
+            elseif ($pair[0] == 'PEPMASS') {
+                $entry->setMassCharge($pair[1]+0);
+            }
+            elseif ($pair[0] == 'CHARGE') {
+                $entry->setCharge($pair[1]);
+            }
+            elseif ($pair[0] == 'SCANS') {
+                $entry->setScans($pair[1]+0);
+            }
+            elseif ($pair[0] == 'RTINSECONDS') {
+                $entry->setRetentionTime($pair[1]+0);
+            }
         }
         
         // Scan for [m/z] [intensity]
-        $entry['ions'] = array();
         while ($line = $this->peekLine()) {
             if (strpos($line, 'END IONS') !== false) {
                 break;
@@ -159,17 +173,17 @@ class MgfReader implements \Iterator
             $line = trim($this->getLine());
             $pair = explode(' ', $line, 2);
             
-            $ion = array();
-            $ion['mz'] = (float) $pair[0];
+            $ion = new SpectraEntry();
+            $ion->setMassCharge((float) $pair[0]);
             if (count($pair) > 1) {
-                $ion['intensity'] = (float) $pair[1];
+                $ion->setIntensity((float) $pair[1]);
             }
             
             if (count($pair) > 2) {
-                $ion['charge'] = $pair[2];
+                $ion->setCharge($pair[2]);
             }
             
-            $entry['ions'][] = $ion;
+            $entry->addIon($ion);
         }
         
         $this->key ++;
