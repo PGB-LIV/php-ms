@@ -16,6 +16,9 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
+use pgb_liv\php_ms\Core\Database\UniprotDatabaseEntry;
+use pgb_liv\php_ms\Core\Database\DefaultDatabaseEntry;
+
 /**
  * A FASTA parser that creates a new iterable object that will return a database
  * entry on each iteration.
@@ -124,6 +127,8 @@ class FastaReader implements \Iterator
             break;
         }
         
+        $identifier = substr($description, 0, strpos($description, ' '));
+        
         $sequence = '';
         while ($line = $this->peekLine()) {
             $line = trim($line);
@@ -135,9 +140,12 @@ class FastaReader implements \Iterator
             $sequence .= trim($this->getLine());
         }
         
-        $entry = array();
-        $entry['description'] = $description;
-        $entry['sequence'] = $sequence;
+        $database = substr($identifier, 0, 2);
+        if ($database == 'sp' || $database == 'tr') {
+            $entry = new UniprotDatabaseEntry($identifier, $description, $sequence);
+        } else {
+            $entry = new DefaultDatabaseEntry($identifier, $description, $sequence);
+        }
         
         $this->key ++;
         

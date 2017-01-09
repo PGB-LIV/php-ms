@@ -14,18 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core;
+namespace pgb_liv\php_ms\Core\Database;
 
 /**
- * A Spectra Entry object.
+ * A sequence Database Entry object.
+ * By default the identifier, description
+ * and sequence are available. Additional fields will be available if the
+ * description has been able to be parsed in the case of FASTA data.
  *
  * @author Andrew Collins
  */
-class SpectraEntry implements \Iterator
+interface DatabaseEntryInterface
 {
-
-    public function __construct($filePath)
-    {
-        $this->filePath = $filePath;
-    }
 }
