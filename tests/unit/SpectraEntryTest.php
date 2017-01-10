@@ -27,7 +27,6 @@ class SpectraEntryTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setCharge
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setScans
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setRetentionTime
-     * 
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getTitle
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getMassCharge
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getCharge
@@ -49,7 +48,7 @@ class SpectraEntryTest extends \PHPUnit_Framework_TestCase
         $spectra->setMassCharge($massCharge);
         $spectra->setCharge($charge);
         $spectra->setScans($scans);
-        $spectra->setRetentionTime($rt);             
+        $spectra->setRetentionTime($rt);
         
         $this->assertEquals($title, $spectra->getTitle());
         $this->assertEquals($massCharge, $spectra->getMassCharge());

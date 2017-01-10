@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core\Database;
+namespace pgb_liv\php_ms\Core\Database\Fasta;
+
+use pgb_liv\php_ms\Core\Protein;
 
 /**
  * A sequence Database Entry object.
@@ -24,43 +26,42 @@ namespace pgb_liv\php_ms\Core\Database;
  *
  * @author Andrew Collins
  */
-class UniprotDatabaseEntry extends AbstractDatabaseEntry
+class UniprotFastaEntry
 {
 
-    public function __construct($identifier, $description, $sequence)
+    public static function getProtein($identifier, $description, $sequence)
     {
-        parent::__construct($identifier, $description, $sequence);
-        
         // Parse identifier
         $identifierParts = explode('|', $identifier, 3);
-        if ($identifierParts[0] == 'sp') {
-            $this->database = 'UniProtKB/Swiss-Prot';
-        } elseif ($identifierParts[0] == 'tr') {
-            $this->database = 'UniProtKB/TrEMBL';
-        } else {
-            $this->database = $identifierParts[0];
-        }
         
-        $this->accession = $identifierParts[1];
-        $this->entryName = $identifierParts[2];
+        $protein = new Protein();
+        $protein->setSequence($sequence);
+        $protein->setUniqueIdentifier($identifier);
+        $protein->setDatabasePrefix($identifierParts[0]);
+        $protein->setAccession($identifierParts[1]);
+        $protein->setEntryName($identifierParts[2]);
+        
+        $protein->setDescription($description);
         
         // Parse description
         $osPosition = strpos($description, ' OS=');
-        $this->proteinName = substr($description, 0, $osPosition);
+        $protein->setProteinName(substr($description, 0, $osPosition));
         
         $matches = array();
         preg_match_all('/([OS|GN|PE|SV]{2})=(.+?(?=\s[GN|PE|SV]|$))/', $description, $matches);
         
         foreach ($matches[1] as $key => $value) {
             if ($value == 'OS') {
-                $this->organismName = $matches[2][$key];
+                $protein->setOrganismName($matches[2][$key]);
             } elseif ($value == 'GN') {
-                $this->geneName = $matches[2][$key];
+                $protein->setGeneName($matches[2][$key]);
             } elseif ($value == 'PE') {
-                $this->proteinExistence = $matches[2][$key];
+                $protein->setProteinExistence($matches[2][$key]);
             } elseif ($value == 'SV') {
-                $this->sequenceVersion = $matches[2][$key];
+                $protein->setSequenceVersion($matches[2][$key]);
             }
         }
+        
+        return $protein;
     }
 }

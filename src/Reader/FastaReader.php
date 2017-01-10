@@ -16,8 +16,8 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
-use pgb_liv\php_ms\Core\Database\UniprotDatabaseEntry;
-use pgb_liv\php_ms\Core\Database\DefaultDatabaseEntry;
+use pgb_liv\php_ms\Core\Database\Fasta\FastaFactory;
+use pgb_liv\php_ms\Core\Protein;
 
 /**
  * A FASTA parser that creates a new iterable object that will return a database
@@ -75,7 +75,7 @@ class FastaReader implements \Iterator
 
     public function valid()
     {
-        if (is_array($this->current)) {
+        if ($this->current instanceof Protein) {
             return true;
         }
         
@@ -128,6 +128,7 @@ class FastaReader implements \Iterator
         }
         
         $identifier = substr($description, 0, strpos($description, ' '));
+        $description = substr($description, strpos($description, ' ')+1);
         
         $sequence = '';
         while ($line = $this->peekLine()) {
@@ -139,13 +140,8 @@ class FastaReader implements \Iterator
             
             $sequence .= trim($this->getLine());
         }
-        
-        $database = substr($identifier, 0, 2);
-        if ($database == 'sp' || $database == 'tr') {
-            $entry = new UniprotDatabaseEntry($identifier, $description, $sequence);
-        } else {
-            $entry = new DefaultDatabaseEntry($identifier, $description, $sequence);
-        }
+                
+        $entry = FastaFactory::getProtein($identifier, $description, $sequence);
         
         $this->key ++;
         

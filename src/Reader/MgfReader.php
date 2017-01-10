@@ -74,7 +74,7 @@ class MgfReader implements \Iterator
 
     public function valid()
     {
-        if (is_array($this->current)) {
+        if ($this->current instanceof SpectraEntry) {
             return true;
         }
         
@@ -146,21 +146,17 @@ class MgfReader implements \Iterator
             if (is_numeric($value)) {
                 $value += 0;
             }
-
+            
             if ($pair[0] == 'TITLE') {
                 $entry->setTitle($pair[1]);
-            }
-            elseif ($pair[0] == 'PEPMASS') {
-                $entry->setMassCharge($pair[1]+0);
-            }
-            elseif ($pair[0] == 'CHARGE') {
+            } elseif ($pair[0] == 'PEPMASS') {
+                $entry->setMassCharge($pair[1] + 0);
+            } elseif ($pair[0] == 'CHARGE') {
                 $entry->setCharge($pair[1]);
-            }
-            elseif ($pair[0] == 'SCANS') {
-                $entry->setScans($pair[1]+0);
-            }
-            elseif ($pair[0] == 'RTINSECONDS') {
-                $entry->setRetentionTime($pair[1]+0);
+            } elseif ($pair[0] == 'SCANS') {
+                $entry->setScans($pair[1] + 0);
+            } elseif ($pair[0] == 'RTINSECONDS') {
+                $entry->setRetentionTime($pair[1] + 0);
             }
         }
         

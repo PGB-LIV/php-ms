@@ -14,16 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core\Database;
+namespace pgb_liv\php_ms\Utility\Digestion;
 
 /**
- * A sequence Database Entry object.
- * By default the identifier, description
- * and sequence are available. Additional fields will be available if the
- * description has been able to be parsed in the case of FASTA data.
+ * A Spectra Entry object.
  *
  * @author Andrew Collins
  */
-interface DatabaseEntryInterface
+abstract class AbstractDigest extends AbstractDigest implements DigestInterface
 {
+
+    protected $maxMissedCleavage;
+
+    public function __construct($maxMissedCleavage)
+    {
+        $this->maxMissedCleavage = $maxMissedCleavage;
+    }
 }

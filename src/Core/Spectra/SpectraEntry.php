@@ -99,17 +99,22 @@ class SpectraEntry
         $this->intensity = $intensity;
     }
 
-    public function getIntensity($intensity)
+    public function getIntensity()
     {
         return $this->intensity;
     }
 
-    public function addIon($spectra)
+    public function addIon(SpectraEntry $spectra)
     {
         if (is_null($this->spectra)) {
             $this->spectra = array();
         }
         
         $this->spectra[] = $spectra;
+    }
+
+    public function getIons()
+    {
+        return $this->spectra;
     }
 }

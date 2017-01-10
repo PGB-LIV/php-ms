@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core\Database;
+namespace pgb_liv\php_ms\Core\Database\Fasta;
 
 /**
  * A sequence Database Entry object.
@@ -24,6 +24,22 @@ namespace pgb_liv\php_ms\Core\Database;
  *
  * @author Andrew Collins
  */
-class DefaultDatabaseEntry extends AbstractDatabaseEntry
+class FastaFactory
 {
+
+    public static function getProtein($identifier, $description, $sequence)
+    {
+        // TODO: This is temporary, and will not work as it is using the database prefix
+        // to detect the FASTA generator, rather than validing the line as matching the parsing
+        // rules of the database
+        $database = substr($identifier, 0, 2);
+                
+        if ($database == 'sp' || $database == 'tr') {
+            $entry = UniprotFastaEntry::getProtein($identifier, $description, $sequence);
+        } else {
+            $entry = DefaultFastaEntry::getProtein($identifier, $description, $sequence);
+        }
+        
+        return $entry;
+    }
 }
