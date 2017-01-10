@@ -24,19 +24,20 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class DigestTrypsin extends AbstractDigest implements DigestInterface 
+class DigestTrypsin extends AbstractDigest implements DigestInterface
 {
 
-    const CleavageRule = '/(?!P)(?<=[RK])/';
+    const CLEAVAGE_RULE = '/(?!P)(?<=[RK])/';
 
     public function digest(Protein $protein)
     {
-        $peptideSequences = preg_split(DigestTrypsin::CleavageRule, $protein->getSequence());
+        $peptideSequences = preg_split(DigestTrypsin::CLEAVAGE_RULE, $protein->getSequence());
         
         $peptides = array();
         $position = 0;
         foreach ($peptideSequences as $peptideSequence) {
-            $peptide = new Peptide($protein, $peptideSequence);
+            $peptide = new Peptide($peptideSequence);
+            $peptide->setProtein($protein);
             $peptide->setPositionStart($position);
             $endPosition = $position + strlen($peptideSequence) - 1;
             $peptide->setPositionEnd($endPosition);
@@ -61,7 +62,8 @@ class DigestTrypsin extends AbstractDigest implements DigestInterface
                 
                 $comulativeSequence .= $peptides[$index + $missedCleave]->getSequence();
                 
-                $peptide = new Peptide($basePeptide->getProtein(), $comulativeSequence);
+                $peptide = new Peptide($comulativeSequence);
+                $peptide->setProtein($basePeptide->getProtein());
                 $peptide->setPositionStart($basePeptide->getPositionStart());
                 $peptide->setPositionEnd($peptide->getPositionStart() + strlen($comulativeSequence) - 1);
                 $peptide->setMissedCleavageCount($missedCleave);

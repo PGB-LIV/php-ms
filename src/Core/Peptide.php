@@ -35,12 +35,6 @@ class Peptide
 
     private $missedCleavageCount;
 
-    public function __construct(Protein $protein, $sequence)
-    {
-        $this->protein = $protein;
-        $this->sequence = $sequence;
-    }
-
     public function __construct($sequence)
     {
         $this->sequence = $sequence;
@@ -64,6 +58,11 @@ class Peptide
     public function setMissedCleavageCount($count)
     {
         $this->missedCleavageCount = $count;
+    }
+
+    public function setProtein(Protein $protein)
+    {
+        $this->protein = $protein;
     }
 
     public function getProtein()
