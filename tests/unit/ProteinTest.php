@@ -21,7 +21,7 @@ use pgb_liv\php_ms\Core\Protein;
 class ProteinTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers pgb_liv\php_ms\Core\Protein::getIdentifier
+     * @covers pgb_liv\php_ms\Core\Protein::getUniqueIdentifier
      * @covers pgb_liv\php_ms\Core\Protein::getDescription
      * @covers pgb_liv\php_ms\Core\Protein::getSequence
      * @covers pgb_liv\php_ms\Core\Protein::getDatabasePrefix
@@ -31,7 +31,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::getGeneName
      * @covers pgb_liv\php_ms\Core\Protein::getProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::getSequenceVersion
-     * @covers pgb_liv\php_ms\Core\Protein::setIdentifier
+     * @covers pgb_liv\php_ms\Core\Protein::setUniqueIdentifier
      * @covers pgb_liv\php_ms\Core\Protein::setDescription
      * @covers pgb_liv\php_ms\Core\Protein::setSequence
      * @covers pgb_liv\php_ms\Core\Protein::setDatabasePrefix
