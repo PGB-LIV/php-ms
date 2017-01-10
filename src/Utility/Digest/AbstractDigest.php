@@ -21,7 +21,7 @@ namespace pgb_liv\php_ms\Utility\Digestion;
  *
  * @author Andrew Collins
  */
-abstract class AbstractDigest extends AbstractDigest implements DigestInterface
+abstract class AbstractDigest
 {
 
     protected $maxMissedCleavage;
