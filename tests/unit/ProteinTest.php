@@ -20,21 +20,6 @@ use pgb_liv\php_ms\Core\Protein;
 
 class ProteinTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Protein::__construct
-     *
-     * @uses pgb_liv\php_ms\Core\Protein
-     */
-    public function testObjectCanBeConstructedForValidConstructorArguments()
-    {
-        $uniprot = new Protein();
-        
-        $this->assertInstanceOf('\pgb_liv\php_ms\Core\Protein', $uniprot);
-        
-        return $uniprot;
-    }
-
     /**
      * @covers pgb_liv\php_ms\Core\Protein::getIdentifier
      * @covers pgb_liv\php_ms\Core\Protein::getDescription
