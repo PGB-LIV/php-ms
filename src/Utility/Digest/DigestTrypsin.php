@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Digestion;
+namespace pgb_liv\php_ms\Utility\Digest;
 
 use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Peptide;
@@ -30,14 +30,14 @@ class DigestTrypsin extends AbstractDigest implements DigestInterface
     /**
      * Cleavage rule regular expresion.
      * Split R or K when not before P.
-     * 
+     *
      * @var string
      */
     const CLEAVAGE_RULE = '/(?!P)(?<=[RK])/';
 
     /**
      * Digest the protein and produce peptides matching the enzyme rules.
-     * 
+     *
      * @param Protein $protein
      *            Must contain a protein sequence
      */

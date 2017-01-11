@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Digestion;
+namespace pgb_liv\php_ms\Utility\Digest;
 
 use pgb_liv\php_ms\Core\Protein;
 
@@ -28,7 +28,7 @@ interface DigestInterface
 
     /**
      * Digest the protein and produce peptides matching the enzyme rules.
-     * 
+     *
      * @param Protein $protein
      *            Must contain a protein sequence
      */
