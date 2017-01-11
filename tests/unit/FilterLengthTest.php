@@ -87,7 +87,7 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::__construct
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValid
-     * @covers pgb_liv\php_ms\Utility\Filter\AbtractFilter::filter
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::filter
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterLength
      * @uses pgb_liv\php_ms\Utility\Filter\AbstractFilter
