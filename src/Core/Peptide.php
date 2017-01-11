@@ -96,7 +96,7 @@ class Peptide
      *            The peptide sequence to calculate for
      * @return The neutral mass of the sequence
      */
-    private function calculateMass($sequence)
+    public function calculateMass($sequence)
     {
         $acids = str_split($sequence, 1);
         

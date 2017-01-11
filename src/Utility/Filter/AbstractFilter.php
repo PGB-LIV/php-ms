@@ -26,11 +26,22 @@ use pgb_liv\php_ms\Core\Peptide;
 abstract class AbstractFilter
 {
 
-    public abstract function isValid(Peptide $peptide);
+    /**
+     * Returns true if the Peptide matches the filter criteria, else false
+     *
+     * @param Peptide $peptide
+     *            Must contain a peptide sequence
+     */
+    abstract public function isValid(Peptide $peptide);
 
+    /**
+     * Filters an array of peptides and returns an array of peptides which match the filter criteria
+     *
+     * @param array $peptides
+     *            An array of Peptide elements
+     */
     public function filter(array $peptides)
     {
-        
         return array_filter($peptides, array(
             $this,
             'isValid'

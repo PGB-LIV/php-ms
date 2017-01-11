@@ -27,8 +27,18 @@ use pgb_liv\php_ms\Core\Peptide;
 class FilterLength extends AbstractFilter
 {
 
+    /**
+     * Minimum peptide length, inclusive
+     *
+     * @var integer
+     */
     private $minLength = 6;
 
+    /**
+     * Maximum peptide length, inclusive
+     *
+     * @var integer
+     */
     private $maxLength = 60;
 
     public function __construct($minLength, $maxLength)
@@ -38,6 +48,12 @@ class FilterLength extends AbstractFilter
         $this->maxLength = $maxLength;
     }
 
+    /**
+     * Returns true if the Peptide matches the filter criteria, else false
+     *
+     * @param Peptide $peptide
+     *            Must contain a peptide sequence
+     */
     public function isValid(Peptide $peptide)
     {
         if ($peptide->getLength() < $this->minLength) {

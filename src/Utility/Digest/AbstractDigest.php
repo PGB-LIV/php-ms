@@ -23,13 +23,16 @@ namespace pgb_liv\php_ms\Utility\Digestion;
  */
 abstract class AbstractDigest
 {
+
     /**
-     * @var Maximum number of missed cleavages a peptide may contain
+     * Maximum number of missed cleavages a peptide may contain
+     *
+     * @var integer
      */
     protected $maxMissedCleavage;
 
     public function __construct($maxMissedCleavage)
     {
         $this->maxMissedCleavage = $maxMissedCleavage;
-    }    
+    }
 }

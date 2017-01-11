@@ -28,7 +28,9 @@ interface DigestInterface
 
     /**
      * Digest the protein and produce peptides matching the enzyme rules.
-     * @param Protein $protein Must contain a protein sequence
+     * 
+     * @param Protein $protein
+     *            Must contain a protein sequence
      */
     public function digest(Protein $protein);
 }
