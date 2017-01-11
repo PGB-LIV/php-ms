@@ -64,6 +64,11 @@ class Peptide
         $this->missedCleavageCount = $count;
     }
 
+    public function getMissedCleavageCount()
+    {
+        return $this->missedCleavageCount;
+    }
+
     public function setProtein(Protein $protein)
     {
         $this->protein = $protein;
@@ -96,13 +101,13 @@ class Peptide
      *            The peptide sequence to calculate for
      * @return The neutral mass of the sequence
      */
-    public function calculateMass($sequence)
+    public function calculateMass()
     {
-        $acids = str_split($sequence, 1);
+        $acids = str_split($this->getSequence(), 1);
         
         $mass = static::HYDROGEN_MASS + static::HYDROGEN_MASS + static::OXYGEN_MASS;
         foreach ($acids as $acid) {
-            $mass += $this->aminoAcids[$acid];
+            $mass += constant('pgb_liv\php_ms\Core\AminoAcidMono::'.$acid);
         }
         
         return $mass;
