@@ -107,7 +107,7 @@ class Peptide
         
         $mass = static::HYDROGEN_MASS + static::HYDROGEN_MASS + static::OXYGEN_MASS;
         foreach ($acids as $acid) {
-            $mass += constant('pgb_liv\php_ms\Core\AminoAcidMono::'.$acid);
+            $mass += AminoAcidMono::getMonoisotopicMass($acid);
         }
         
         return $mass;

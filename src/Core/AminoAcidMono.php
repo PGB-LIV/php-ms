@@ -110,6 +110,6 @@ class AminoAcidMono
 
     public static function getMonoisotopicMass($acid)
     {
-        return AminoAcidMono::$acid;
+        return constant('pgb_liv\php_ms\Core\AminoAcidMono::' . $acid);
     }
 }
