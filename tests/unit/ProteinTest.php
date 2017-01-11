@@ -20,6 +20,7 @@ use pgb_liv\php_ms\Core\Protein;
 
 class ProteinTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @covers pgb_liv\php_ms\Core\Protein::getUniqueIdentifier
      * @covers pgb_liv\php_ms\Core\Protein::getDescription
@@ -29,6 +30,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::getEntryName
      * @covers pgb_liv\php_ms\Core\Protein::getOrganismName
      * @covers pgb_liv\php_ms\Core\Protein::getGeneName
+     * @covers pgb_liv\php_ms\Core\Protein::getProteinName
      * @covers pgb_liv\php_ms\Core\Protein::getProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::getSequenceVersion
      * @covers pgb_liv\php_ms\Core\Protein::setUniqueIdentifier
@@ -39,6 +41,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::setEntryName
      * @covers pgb_liv\php_ms\Core\Protein::setOrganismName
      * @covers pgb_liv\php_ms\Core\Protein::setGeneName
+     * @covers pgb_liv\php_ms\Core\Protein::setProteinName
      * @covers pgb_liv\php_ms\Core\Protein::setProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::setSequenceVersion
      *
@@ -51,12 +54,13 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $entryName = '1433S_HUMAN';
         $identifier = $database . '|' . $accession . '|' . $entryName;
         
+        $proteinName = '14-3-3 protein sigma';
         $organism = 'Homo sapiens';
         $geneName = 'SFN';
         $pe = 1;
         $sv = 1;
         
-        $description = '14-3-3 protein sigma OS=' . $organism . ' GN=' . $geneName . ' PE=' . $pe . ' SV=' . $sv;
+        $description = $proteinName . ' OS=' . $organism . ' GN=' . $geneName . ' PE=' . $pe . ' SV=' . $sv;
         $sequence = 'MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWRVLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFYLKMKGDYYRYLAEVATGDDKKRIIDSARSAYQEAMDISKKEMPPTNPIRLGLALNFSVFHYEIANSPEEAISLAKTTFDEAMADLHTLSEDSYKDSTLIMQLLRDNLTLWTADNAGEEGGEAPQEPQS';
         
         $protein = new Protein();
@@ -67,6 +71,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $protein->setEntryName($entryName);
         
         $protein->setDescription($description);
+        $protein->setProteinName($proteinName);
         $protein->setOrganismName($organism);
         $protein->setGeneName($geneName);
         $protein->setProteinExistence($pe);
@@ -80,6 +85,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accession, $protein->getAccession());
         $this->assertEquals($entryName, $protein->getEntryName());
         
+        $this->assertEquals($proteinName, $protein->getProteinName());
         $this->assertEquals($organism, $protein->getOrganismName());
         $this->assertEquals($geneName, $protein->getGeneName());
         $this->assertEquals($pe, $protein->getProteinExistence());

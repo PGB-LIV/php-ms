@@ -20,7 +20,7 @@ use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * A Spectra Entry object.
+ * Trypsin digestion for generated trypsinated peptides.
  *
  * @author Andrew Collins
  */

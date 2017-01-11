@@ -14,21 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Digestion;
+namespace pgb_liv\php_ms\Utility\Filter;
 
-use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Generic interface for all digestion algorithms
+ * Interface to common filtering methods
  *
  * @author Andrew Collins
  */
-interface DigestInterface
+interface FilterInterface
 {
 
     /**
-     * Digest the protein and produce peptides matching the enzyme rules.
-     * @param Protein $protein Must contain a protein sequence
+     * Returns true if the Peptide matches the filter criteria, else false
+     *
+     * @param Peptide $peptide
+     *            Must contain a peptide sequence
      */
-    public function digest(Protein $protein);
+    public function isValid(Peptide $peptide);
+
+    /**
+     * Filters an array of peptides and returns an array of peptides which match the filter criteria
+     *
+     * @param array $peptides
+     *            An array of Peptide elements
+     */
+    public function filter(array $peptides);
 }

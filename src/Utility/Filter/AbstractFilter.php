@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Digestion;
+namespace pgb_liv\php_ms\Utility\Filter;
 
-use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Generic interface for all digestion algorithms
+ * Abstract class containing generic filtering methods
  *
  * @author Andrew Collins
  */
-interface DigestInterface
+abstract class AbstractFilter
 {
 
-    /**
-     * Digest the protein and produce peptides matching the enzyme rules.
-     * @param Protein $protein Must contain a protein sequence
-     */
-    public function digest(Protein $protein);
+    public abstract function isValid(Peptide $peptide);
+
+    public function filter(array $peptides)
+    {
+        
+        return array_filter($peptides, array(
+            $this,
+            'isValid'
+        ));
+    }
 }

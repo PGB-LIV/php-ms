@@ -17,17 +17,19 @@
 namespace pgb_liv\php_ms\Utility\Digestion;
 
 /**
- * A Spectra Entry object.
+ * Abstract class for digestion algorithms.
  *
  * @author Andrew Collins
  */
 abstract class AbstractDigest
 {
-
+    /**
+     * @var Maximum number of missed cleavages a peptide may contain
+     */
     protected $maxMissedCleavage;
 
     public function __construct($maxMissedCleavage)
     {
         $this->maxMissedCleavage = $maxMissedCleavage;
-    }
+    }    
 }

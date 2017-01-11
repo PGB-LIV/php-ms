@@ -25,6 +25,10 @@ namespace pgb_liv\php_ms\Core;
 class Peptide
 {
 
+    const HYDROGEN_MASS = 1.007825;
+
+    const OXYGEN_MASS = 15.994915;
+
     private $sequence;
 
     private $protein;
@@ -78,5 +82,29 @@ class Peptide
     public function getPositionEnd()
     {
         return $this->positionEnd;
+    }
+
+    public function getLength()
+    {
+        return strlen($this->getSequence());
+    }
+
+    /**
+     * Calculates the neutral mass of a sequence
+     *
+     * @param string $sequence
+     *            The peptide sequence to calculate for
+     * @return The neutral mass of the sequence
+     */
+    private function calculateMass($sequence)
+    {
+        $acids = str_split($sequence, 1);
+        
+        $mass = static::HYDROGEN_MASS + static::HYDROGEN_MASS + static::OXYGEN_MASS;
+        foreach ($acids as $acid) {
+            $mass += $this->aminoAcids[$acid];
+        }
+        
+        return $mass;
     }
 }
