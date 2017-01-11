@@ -23,12 +23,12 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\Protein::__construct
-     * @covers pgb_liv\php_ms\Core\Protein::getSequence
-     * @covers pgb_liv\php_ms\Core\Protein::getLength
-     * @covers pgb_liv\php_ms\Core\Protein::calculateMass
+     * @covers pgb_liv\php_ms\Core\Peptide::__construct
+     * @covers pgb_liv\php_ms\Core\Peptide::getSequence
+     * @covers pgb_liv\php_ms\Core\Peptide::getLength
+     * @covers pgb_liv\php_ms\Core\Peptide::calculateMass
      *
-     * @uses pgb_liv\php_ms\Core\Protein
+     * @uses pgb_liv\php_ms\Core\Peptide
      */
     public function testCanRetrieveEntry()
     {
