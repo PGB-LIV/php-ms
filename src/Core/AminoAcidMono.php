@@ -66,64 +66,41 @@ class AminoAcidMono
 
     const Y = 163.06332;
 
-    const a = A;
-
-    const c = C;
-
-    const d = D;
-
-    const e = E;
-
-    const f = F;
-
-    const g = G;
-
-    const h = H;
-
-    const i = I;
-
-    const k = K;
-
-    const l = L;
-
-    const m = M;
-
-    const n = N;
-
-    const p = P;
-
-    const q = Q;
-
-    const r = R;
-
-    const s = S;
-
-    const t = T;
-
-    const u = U;
-
-    const v = V;
-
-    const w = W;
-
-    const y = Y;
-
+    /**
+     * Gets the monoisotopic mass for the provided amino acid.
+     *
+     * @param char $acid
+     *            Amino acid
+     * @throws \InvalidArgumentException If acid is not a single character or valid amino acid
+     * @return float Monoisotopic mass
+     */
     public static function getMonoisotopicMass($acid)
-    {    	
+    {
         $value = @constant('pgb_liv\php_ms\Core\AminoAcidMono::' . $acid);
         
-        if (is_null($value))
-        {
-	    	if (strlen($acid) > 1)
-	    	{
-	    		throw new \InvalidArgumentException('Value must be a single amino acid. Input was '. $acid);
-	    	}
-	    	else
-	    	{
-	    		throw new \InvalidArgumentException('Value must be a valid amino acid. Input was '. $acid);
-	    	}        	
+        if (is_null($value)) {
+            if (strlen($acid) > 1) {
+                throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
+            } else {
+                throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
+            }
         }
         
         return $value;
+    }
+
+    /**
+     * Gets the monoisotopic mass for the provided amino acid.
+     *
+     * @param char $acid
+     *            Amino acid
+     * @throws \InvalidArgumentException If acid is not a single character or valid amino acid
+     * @return float Monoisotopic mass
+     */
+    public static function getMonoisotopicInsensitive($acid)
+    {
+        $acidUp = strtoupper($acid);
+        
+        return getMonoisotopicMass($acidUp);
     }
 }

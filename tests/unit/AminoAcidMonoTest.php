@@ -16,7 +16,6 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\AminoAcidMono;
 
 class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
@@ -28,33 +27,34 @@ class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
      * @uses pgb_liv\php_ms\Core\AminoAcidMono
      */
     public function testCanRetrieveEntryValid()
-    {        
+    {
         $this->assertEquals(AminoAcidMono::A, AminoAcidMono::getMonoisotopicMass('A'));
-	    $this->assertEquals(AminoAcidMono::C, AminoAcidMono::getMonoisotopicMass('C'));	
-	    $this->assertEquals(AminoAcidMono::D, AminoAcidMono::getMonoisotopicMass('D'));	
-	    $this->assertEquals(AminoAcidMono::E, AminoAcidMono::getMonoisotopicMass('E'));	
-	    $this->assertEquals(AminoAcidMono::F, AminoAcidMono::getMonoisotopicMass('F'));
-	    $this->assertEquals(AminoAcidMono::G, AminoAcidMono::getMonoisotopicMass('G'));	
-	    $this->assertEquals(AminoAcidMono::H, AminoAcidMono::getMonoisotopicMass('H'));	
-	    $this->assertEquals(AminoAcidMono::I, AminoAcidMono::getMonoisotopicMass('I'));	
-	    $this->assertEquals(AminoAcidMono::K, AminoAcidMono::getMonoisotopicMass('K'));	
-	    $this->assertEquals(AminoAcidMono::L, AminoAcidMono::getMonoisotopicMass('L'));	
-	    $this->assertEquals(AminoAcidMono::M, AminoAcidMono::getMonoisotopicMass('M'));	
-	    $this->assertEquals(AminoAcidMono::N, AminoAcidMono::getMonoisotopicMass('N'));	
-	    $this->assertEquals(AminoAcidMono::P, AminoAcidMono::getMonoisotopicMass('P'));	
-	    $this->assertEquals(AminoAcidMono::Q, AminoAcidMono::getMonoisotopicMass('Q'));	
-	    $this->assertEquals(AminoAcidMono::R, AminoAcidMono::getMonoisotopicMass('R'));	
-	    $this->assertEquals(AminoAcidMono::S, AminoAcidMono::getMonoisotopicMass('S'));	
-	    $this->assertEquals(AminoAcidMono::T, AminoAcidMono::getMonoisotopicMass('T'));	
-	    $this->assertEquals(AminoAcidMono::U, AminoAcidMono::getMonoisotopicMass('U'));	
-	    $this->assertEquals(AminoAcidMono::V, AminoAcidMono::getMonoisotopicMass('V'));	
-	    $this->assertEquals(AminoAcidMono::W, AminoAcidMono::getMonoisotopicMass('W'));	
-	    $this->assertEquals(AminoAcidMono::Y, AminoAcidMono::getMonoisotopicMass('Y'));
+        $this->assertEquals(AminoAcidMono::C, AminoAcidMono::getMonoisotopicMass('C'));
+        $this->assertEquals(AminoAcidMono::D, AminoAcidMono::getMonoisotopicMass('D'));
+        $this->assertEquals(AminoAcidMono::E, AminoAcidMono::getMonoisotopicMass('E'));
+        $this->assertEquals(AminoAcidMono::F, AminoAcidMono::getMonoisotopicMass('F'));
+        $this->assertEquals(AminoAcidMono::G, AminoAcidMono::getMonoisotopicMass('G'));
+        $this->assertEquals(AminoAcidMono::H, AminoAcidMono::getMonoisotopicMass('H'));
+        $this->assertEquals(AminoAcidMono::I, AminoAcidMono::getMonoisotopicMass('I'));
+        $this->assertEquals(AminoAcidMono::K, AminoAcidMono::getMonoisotopicMass('K'));
+        $this->assertEquals(AminoAcidMono::L, AminoAcidMono::getMonoisotopicMass('L'));
+        $this->assertEquals(AminoAcidMono::M, AminoAcidMono::getMonoisotopicMass('M'));
+        $this->assertEquals(AminoAcidMono::N, AminoAcidMono::getMonoisotopicMass('N'));
+        $this->assertEquals(AminoAcidMono::P, AminoAcidMono::getMonoisotopicMass('P'));
+        $this->assertEquals(AminoAcidMono::Q, AminoAcidMono::getMonoisotopicMass('Q'));
+        $this->assertEquals(AminoAcidMono::R, AminoAcidMono::getMonoisotopicMass('R'));
+        $this->assertEquals(AminoAcidMono::S, AminoAcidMono::getMonoisotopicMass('S'));
+        $this->assertEquals(AminoAcidMono::T, AminoAcidMono::getMonoisotopicMass('T'));
+        $this->assertEquals(AminoAcidMono::U, AminoAcidMono::getMonoisotopicMass('U'));
+        $this->assertEquals(AminoAcidMono::V, AminoAcidMono::getMonoisotopicMass('V'));
+        $this->assertEquals(AminoAcidMono::W, AminoAcidMono::getMonoisotopicMass('W'));
+        $this->assertEquals(AminoAcidMono::Y, AminoAcidMono::getMonoisotopicMass('Y'));
     }
 
     /**
      * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
      * @expectedException InvalidArgumentException
+     *
      * @uses pgb_liv\php_ms\Core\AminoAcidMono
      */
     public function testCanRetrieveEntryInvalidChar()
@@ -65,6 +65,7 @@ class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
      * @expectedException InvalidArgumentException
+     *
      * @uses pgb_liv\php_ms\Core\AminoAcidMono
      */
     public function testCanRetrieveEntryInvalidString()
