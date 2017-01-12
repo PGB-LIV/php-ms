@@ -109,7 +109,21 @@ class AminoAcidMono
     const y = Y;
 
     public static function getMonoisotopicMass($acid)
-    {
-        return constant('pgb_liv\php_ms\Core\AminoAcidMono::' . $acid);
+    {    	
+        $value = @constant('pgb_liv\php_ms\Core\AminoAcidMono::' . $acid);
+        
+        if (is_null($value))
+        {
+	    	if (strlen($acid) > 1)
+	    	{
+	    		throw new \InvalidArgumentException('Value must be a single amino acid. Input was '. $acid);
+	    	}
+	    	else
+	    	{
+	    		throw new \InvalidArgumentException('Value must be a valid amino acid. Input was '. $acid);
+	    	}        	
+        }
+        
+        return $value;
     }
 }
