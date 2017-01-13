@@ -29,7 +29,7 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
-        $trypsin = new DigestTrypsin(2);
+        $trypsin = new DigestTrypsin();
         
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Digest\DigestTrypsin', $trypsin);
         
@@ -50,7 +50,7 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setSequence(implode('', $peptideStrings));
         
-        $trypsin = new DigestTrypsin(0);
+        $trypsin = new DigestTrypsin();
         $peptides = $trypsin->digest($protein);
         
         $i = 0;
@@ -76,7 +76,7 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setSequence(implode('', $peptideStrings));
         
-        $trypsin = new DigestTrypsin(0);
+        $trypsin = new DigestTrypsin();
         $peptides = $trypsin->digest($protein);
         
         $i = 0;
@@ -103,7 +103,7 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setSequence(implode('', $peptideStrings));
         
-        $trypsin = new DigestTrypsin(0);
+        $trypsin = new DigestTrypsin();
         $peptides = $trypsin->digest($protein);
         
         $i = 0;
@@ -128,7 +128,7 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setSequence(implode('', $peptideStrings));
         
-        $trypsin = new DigestTrypsin(0);
+        $trypsin = new DigestTrypsin();
         $peptides = $trypsin->digest($protein);
         
         $i = 0;
@@ -153,7 +153,7 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setSequence(implode('', $peptideStrings));
         
-        $trypsin = new DigestTrypsin(0);
+        $trypsin = new DigestTrypsin();
         $peptides = $trypsin->digest($protein);
         
         $i = 0;
@@ -176,7 +176,8 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setSequence('EPTIDEKEPTIDE');
         
-        $trypsin = new DigestTrypsin(1);
+        $trypsin = new DigestTrypsin();
+        $trypsin->setMaxMissedCleavage(1);
         $peptides = $trypsin->digest($protein);
         
         $this->assertEquals('EPTIDEK', $peptides[0]->getSequence());
