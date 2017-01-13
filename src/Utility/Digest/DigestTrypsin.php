@@ -16,15 +16,12 @@
  */
 namespace pgb_liv\php_ms\Utility\Digest;
 
-use pgb_liv\php_ms\Core\Protein;
-use pgb_liv\php_ms\Core\Peptide;
-
 /**
  * Trypsin digestion for generated trypsinated peptides.
  *
  * @author Andrew Collins
  */
-class DigestTrypsin extends AbstractDigest implements DigestInterface
+class DigestTrypsin extends DigestRegularExpression implements DigestInterface
 {
 
     /**
@@ -35,54 +32,8 @@ class DigestTrypsin extends AbstractDigest implements DigestInterface
      */
     const CLEAVAGE_RULE = '/(?!P)(?<=[RK])/';
 
-    /**
-     * Digest the protein and produce peptides matching the enzyme rules.
-     *
-     * @param Protein $protein
-     *            Must contain a protein sequence
-     */
-    public function digest(Protein $protein)
+    public function __construct()
     {
-        $peptideSequences = preg_split(DigestTrypsin::CLEAVAGE_RULE, $protein->getSequence());
-        
-        $peptides = array();
-        $position = 0;
-        foreach ($peptideSequences as $peptideSequence) {
-            $peptide = new Peptide($peptideSequence);
-            $peptide->setProtein($protein);
-            $peptide->setPositionStart($position);
-            $endPosition = $position + strlen($peptideSequence) - 1;
-            $peptide->setPositionEnd($endPosition);
-            $peptide->setMissedCleavageCount(0);
-            
-            $peptides[] = $peptide;
-            $position = $endPosition + 1;
-        }
-        
-        $missedCleaveges = array();
-        
-        // Factor in missed cleaves
-        for ($index = 0; $index < count($peptides); $index ++) {
-            // Copy peptide
-            $basePeptide = $peptides[$index];
-            
-            $comulativeSequence = $peptides[$index]->getSequence();
-            for ($missedCleave = 1; $missedCleave <= $this->maxMissedCleavage; $missedCleave ++) {
-                if ($index + $missedCleave >= count($peptides)) {
-                    continue;
-                }
-                
-                $comulativeSequence .= $peptides[$index + $missedCleave]->getSequence();
-                
-                $peptide = new Peptide($comulativeSequence);
-                $peptide->setProtein($basePeptide->getProtein());
-                $peptide->setPositionStart($basePeptide->getPositionStart());
-                $peptide->setPositionEnd($peptide->getPositionStart() + strlen($comulativeSequence) - 1);
-                $peptide->setMissedCleavageCount($missedCleave);
-                $missedCleaveges[] = $peptide;
-            }
-        }
-        
-        return array_merge($peptides, $missedCleaveges);
+        parent::__construct(CLEAVAGE_RULE);
     }
 }

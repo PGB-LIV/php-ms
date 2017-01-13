@@ -16,7 +16,6 @@
 */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Peptide;
 
 class PeptideTest extends \PHPUnit_Framework_TestCase

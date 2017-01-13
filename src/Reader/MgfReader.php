@@ -160,7 +160,7 @@ class MgfReader implements \Iterator
             }
         }
         
-        // Scan for [m/z] [intensity]
+        // Scan for [m/z] [intensity] [charge]
         while ($line = $this->peekLine()) {
             if (strpos($line, 'END IONS') !== false) {
                 break;

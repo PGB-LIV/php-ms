@@ -17,28 +17,28 @@
 namespace pgb_liv\php_ms\Utility\Digest;
 
 /**
- * Abstract class for digestion algorithms.
+ * Factory class for digestion algorithms.
  *
  * @author Andrew Collins
  */
-abstract class AbstractDigest
+class DigestFactory
 {
 
     /**
-     * Maximum number of missed cleavages a peptide may contain
+     * Gets the digest object associated with the enzyme
      *
-     * @var integer
+     * @param string $digestName
+     *            Name of the enzyme
+     * @return \pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      */
-    protected $maxMissedCleavage = 0;
-
-    /**
-     * Set the maximum number of missed cleavages the algorithm should produce.
-     * By default no missed cleavages are produced.
-     *
-     * @param int $maxMissedCleavage            
-     */
-    public function setMaxMissedCleavage($maxMissedCleavage)
+    public static function getDigest($digestName)
     {
-        $this->maxMissedCleavage = $maxMissedCleavage;
+        $digestUp = strtoupper($digestName);
+        
+        if ($digestUp == 'TRYPSIN') {
+            return new DigestTrypsin();
+        }
+        
+        throw \InvalidArgumentException('Unknown digest algorithm - ' . $digestName);
     }
 }
