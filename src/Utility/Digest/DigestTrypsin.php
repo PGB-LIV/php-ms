@@ -34,6 +34,6 @@ class DigestTrypsin extends DigestRegularExpression implements DigestInterface
 
     public function __construct()
     {
-        parent::__construct(CLEAVAGE_RULE);
+        parent::__construct(DigestTrypsin::CLEAVAGE_RULE);
     }
 }
