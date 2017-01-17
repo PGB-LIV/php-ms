@@ -25,6 +25,8 @@ namespace pgb_liv\php_ms\Core;
 class Peptide
 {
 
+    const AMINO_ACID_X_MASS = 0;
+
     const HYDROGEN_MASS = 1.007825;
 
     const OXYGEN_MASS = 15.994915;
@@ -107,7 +109,11 @@ class Peptide
         
         $mass = static::HYDROGEN_MASS + static::HYDROGEN_MASS + static::OXYGEN_MASS;
         foreach ($acids as $acid) {
-            $mass += AminoAcidMono::getMonoisotopicMass($acid);
+            if ($acid == 'X') {
+                $mass += Peptide::AMINO_ACID_X_MASS;
+            } else {
+                $mass += AminoAcidMono::getMonoisotopicMass($acid);
+            }
         }
         
         return $mass;
