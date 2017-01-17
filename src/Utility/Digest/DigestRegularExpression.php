@@ -58,6 +58,10 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
         $peptides = array();
         $position = 0;
         foreach ($peptideSequences as $peptideSequence) {
+            if (strlen($peptideSequence) == 0) {
+                continue;
+            }
+            
             $peptide = new Peptide($peptideSequence);
             $peptide->setProtein($protein);
             $peptide->setPositionStart($position);
