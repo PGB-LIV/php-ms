@@ -94,7 +94,7 @@ class FilterChargeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValid
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValidSpectra
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterLength
      */
