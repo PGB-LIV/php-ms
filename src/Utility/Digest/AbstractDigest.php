@@ -35,10 +35,15 @@ abstract class AbstractDigest
      * Set the maximum number of missed cleavages the algorithm should produce.
      * By default no missed cleavages are produced.
      *
-     * @param int $maxMissedCleavage            
+     * @param int $maxMissedCleavage
+     *            Maximum number of cleavages to account for
      */
     public function setMaxMissedCleavage($maxMissedCleavage)
     {
+        if (! is_int($maxMissedCleavage)) {
+            throw new \InvalidArgumentException('Invalid argument type, integer expected. Received ' . gettype($maxMissedCleavage));
+        }
+        
         $this->maxMissedCleavage = $maxMissedCleavage;
     }
 }

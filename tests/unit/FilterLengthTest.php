@@ -37,7 +37,7 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValid
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValidPeptide
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterLength
      */
@@ -47,12 +47,12 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(6, 30);
         
-        $this->assertEquals(true, $filter->isValid($peptide));
+        $this->assertEquals(true, $filter->isValidPeptide($peptide));
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValid
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValidPeptide
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterLength
      */
@@ -63,13 +63,13 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(7, 14);
         
-        $this->assertEquals(true, $filter->isValid($peptideShort));
-        $this->assertEquals(true, $filter->isValid($peptideLong));
+        $this->assertEquals(true, $filter->isValidPeptide($peptideShort));
+        $this->assertEquals(true, $filter->isValidPeptide($peptideLong));
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValid
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValidPeptide
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterLength
      */
@@ -80,14 +80,14 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(10, 15);
         
-        $this->assertEquals(false, $filter->isValid($peptideShort));
-        $this->assertEquals(false, $filter->isValid($peptideLong));
+        $this->assertEquals(false, $filter->isValidPeptide($peptideShort));
+        $this->assertEquals(false, $filter->isValidPeptide($peptideLong));
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValid
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::filter
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::isValidPeptide
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterLength::filterPeptide
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterLength
      * @uses pgb_liv\php_ms\Utility\Filter\AbstractFilter
@@ -102,6 +102,6 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(10, 15);
         
-        $this->assertEquals(array(1 => $validPeptide), $filter->filter($peptides));
+        $this->assertEquals(array(1 => $validPeptide), $filter->filterPeptide($peptides));
     }
 }

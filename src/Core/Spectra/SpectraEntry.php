@@ -48,11 +48,27 @@ class SpectraEntry
         return $this->massCharge;
     }
 
+    /**
+     * Sets the charge of this object
+     * 
+     * @param int $charge
+     *            The positive or negative charge to set
+     * @throws \InvalidArgumentException If a non-integer value is passed
+     */
     public function setCharge($charge)
     {
+        if (! is_int($charge) > 1) {
+            throw new \InvalidArgumentException('Argument 1 must be of type int. Value is of type ' . gettype($charge));
+        }
+        
         $this->charge = $charge;
     }
 
+    /**
+     * Gets the charge value associated with this spectra
+     *
+     * @return int charge value
+     */
     public function getCharge()
     {
         return $this->charge;

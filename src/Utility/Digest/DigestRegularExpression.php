@@ -30,7 +30,8 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
     /**
      * Creates a new instance with the provided regular expression as the cleavage rule.
      *
-     * @param unknown $regularExpression            
+     * @param string $regularExpression
+     *            Regular expression definition of how to perform peptide digestion
      */
     public function __construct($regularExpression)
     {

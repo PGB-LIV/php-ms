@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Utility\Filter;
 
 use pgb_liv\php_ms\Core\Peptide;
+use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
 
 /**
  * Interface to common filtering methods
@@ -30,9 +31,17 @@ interface FilterInterface
      * Returns true if the Peptide matches the filter criteria, else false
      *
      * @param Peptide $peptide
-     *            Must contain a peptide sequence
+     *            Peptide object to filter
      */
-    public function isValid(Peptide $peptide);
+    public function isValidPeptide(Peptide $peptide);
+
+    /**
+     * Returns true if the SpectraEntry matches the filter criteria, else false
+     *
+     * @param SpectraEntry $peptide
+     *            Spectra object to filter
+     */
+    public function isValidSpectra(SpectraEntry $spectra);
 
     /**
      * Filters an array of peptides and returns an array of peptides which match the filter criteria
@@ -40,5 +49,13 @@ interface FilterInterface
      * @param array $peptides
      *            An array of Peptide elements
      */
-    public function filter(array $peptides);
+    public function filterPeptide(array $peptides);
+
+    /**
+     * Filters an array of spectra and returns an array of spectra which match the filter criteria
+     *
+     * @param array $spectra
+     *            An array of spectra elements
+     */
+    public function filterSpectra(array $spectra);
 }

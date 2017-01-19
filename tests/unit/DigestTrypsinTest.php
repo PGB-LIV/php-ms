@@ -186,4 +186,24 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals(3, count($peptides));
     }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     *
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     */
+    public function testCanValidateSiteAtEnd()
+    {
+        $protein = new Protein();
+        $protein->setSequence('PEPTIDER');
+        
+        $trypsin = new DigestTrypsin();
+        $trypsin->setMaxMissedCleavage(1);
+        $peptides = $trypsin->digest($protein);
+        
+        $this->assertEquals('PEPTIDER', $peptides[0]->getSequence());
+        
+        $this->assertEquals(1, count($peptides));
+    }
 }

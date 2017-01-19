@@ -44,7 +44,6 @@ class FilterLength extends AbstractFilter
     public function __construct($minLength, $maxLength)
     {
         $this->minLength = $minLength;
-        
         $this->maxLength = $maxLength;
     }
 
@@ -54,7 +53,7 @@ class FilterLength extends AbstractFilter
      * @param Peptide $peptide
      *            Must contain a peptide sequence
      */
-    public function isValid(Peptide $peptide)
+    public function isValidPeptide(Peptide $peptide)
     {
         if ($peptide->getLength() < $this->minLength) {
             return false;
