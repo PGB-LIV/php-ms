@@ -19,48 +19,48 @@ namespace pgb_liv\php_ms\Utility\Filter;
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
 
 /**
- * Creates an instance of a spectra filter than can be used with a list of spectra to
- * remove those which do not it the criteria.
+ * Creates an instance of a filter than can be used with a list to
+ * remove those which do not fit the criteria.
  *
  * @author Andrew Collins
  */
-class FilterCharge extends AbstractFilter
+class FilterMass extends AbstractFilter
 {
 
     /**
-     * Minimum spectra charge, inclusive
+     * Minimum mass, inclusive
      *
      * @var integer
      */
-    private $minCharge = 1;
+    private $minMass;
 
     /**
-     * Maximum spectra charge, inclusive
+     * Maximum mass, inclusive
      *
      * @var integer
      */
-    private $maxCharge = 3;
+    private $maxMass;
 
     /**
-     * Creates a new instance with the specified minimum and maximum charge values.
+     * Creates a new instance with the specified minimum and maximum mass values.
      *
-     * @param int $minCharge
-     *            Minimum spectra charge, inclusive
-     * @param int $maxCharge
-     *            Maximum spectra charge, inclusive
+     * @param int $minMass
+     *            Minimum mass, inclusive
+     * @param int $maxMass
+     *            Maximum mass, inclusive
      */
-    public function __construct($minCharge, $maxCharge)
+    public function __construct($minMass, $maxMass)
     {
-        if (! is_int($minCharge)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type int. Value is of type ' . gettype($minCharge));
+        if (! is_float($minMass)) {
+            throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($minMass));
         }
         
-        if (! is_int($maxCharge)) {
-            throw new \InvalidArgumentException('Argument 2 must be of type int. Value is of type ' . gettype($maxCharge));
+        if (! is_float($maxMass)) {
+            throw new \InvalidArgumentException('Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
         }
         
-        $this->minCharge = $minCharge;
-        $this->maxCharge = $maxCharge;
+        $this->minMass = $minMass;
+        $this->maxMass = $maxMass;
     }
 
     /**
@@ -71,11 +71,11 @@ class FilterCharge extends AbstractFilter
      */
     public function isValidSpectra(SpectraEntry $spectra)
     {
-        if ($spectra->getCharge() < $this->minCharge) {
+        if ($spectra->getMass() < $this->minMass) {
             return false;
         }
         
-        if ($spectra->getCharge() > $this->maxCharge) {
+        if ($spectra->getMass() > $this->maxMass) {
             return false;
         }
         

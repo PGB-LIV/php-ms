@@ -24,6 +24,8 @@ namespace pgb_liv\php_ms\Core\Spectra;
 class SpectraEntry
 {
 
+    private $mass;
+
     private $massCharge;
 
     private $charge;
@@ -38,6 +40,32 @@ class SpectraEntry
 
     private $spectra;
 
+    /**
+     * Sets the mass value for this spectra
+     *
+     * @param float $mass
+     *            Mass value expressed as a floating point value
+     * @throws \InvalidArgumentException If Mass is not a floating point value
+     */
+    public function setMass($mass)
+    {
+        if (! is_float($mass)) {
+            throw new \InvalidArgumentException('Argument 1 must be of type float. Received ' . gettype($mass));
+        }
+        
+        $this->mass = $mass;
+    }
+
+    /**
+     * Gets the mass value for this spectra
+     *
+     * @return float The mass value
+     */
+    public function getMass()
+    {
+        return $this->mass;
+    }
+
     public function setMassCharge($mz)
     {
         $this->massCharge = $mz;
@@ -50,7 +78,7 @@ class SpectraEntry
 
     /**
      * Sets the charge of this object
-     * 
+     *
      * @param int $charge
      *            The positive or negative charge to set
      * @throws \InvalidArgumentException If a non-integer value is passed

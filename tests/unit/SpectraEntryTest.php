@@ -38,19 +38,22 @@ class SpectraEntryTest extends \PHPUnit_Framework_TestCase
     public function testCanRetrieveEntry()
     {
         $title = 'VH_181016_Digest_mix_1.16140.16140.3 (intensity=192543543.5801)';
-        $massCharge = 370.217742939639;
+        $mass = 370.217742939639;
         $charge = 3;
+        $massCharge = $mass / $charge;
         $scans = 16140;
         $rt = 1854.661;
         
         $spectra = new SpectraEntry();
         $spectra->setTitle($title);
+        $spectra->setMass($mass);
         $spectra->setMassCharge($massCharge);
         $spectra->setCharge($charge);
         $spectra->setScans($scans);
         $spectra->setRetentionTime($rt);
         
         $this->assertEquals($title, $spectra->getTitle());
+        $this->assertEquals($mass, $spectra->getMass());
         $this->assertEquals($massCharge, $spectra->getMassCharge());
         $this->assertEquals($charge, $spectra->getCharge());
         $this->assertEquals($scans, $spectra->getScans());

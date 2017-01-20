@@ -16,120 +16,120 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Utility\Filter\FilterCharge;
+use pgb_liv\php_ms\Utility\Filter\FilterMass;
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
 
-class FilterChargeTest extends \PHPUnit_Framework_TestCase
+class FilterMassTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
-        $filter = new FilterCharge(1, 3);
-        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Filter\FilterCharge', $filter);
+        $filter = new FilterMass(400.0, 1000.0);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Filter\FilterMass', $filter);
         
         return $filter;
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments1()
     {
-        new FilterCharge('string', 3);
+        new FilterMass('string', 300.0);
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments2()
     {
-        new FilterCharge(1, array());
+        new FilterMass(1.0, array());
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidSpectra
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
     public function testCanValidateEntryInBounds()
     {
         $spectra = new SpectraEntry();
-        $spectra->setCharge(2);
+        $spectra->setMass(350.5);
         
-        $filter = new FilterCharge(1, 3);
+        $filter = new FilterMass(300.0, 400.0);
         
         $this->assertEquals(true, $filter->isValidSpectra($spectra));
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidSpectra
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
     public function testCanValidateEntryOnBounds()
     {
         $spectraLow = new SpectraEntry();
-        $spectraLow->setCharge(1);
+        $spectraLow->setMass(300.0);
         $spectraHigh = new SpectraEntry();
-        $spectraHigh->setCharge(3);
+        $spectraHigh->setMass(400.0);
         
-        $filter = new FilterCharge(1, 3);
+        $filter = new FilterMass(300.0, 400.0);
         
         $this->assertEquals(true, $filter->isValidSpectra($spectraLow));
         $this->assertEquals(true, $filter->isValidSpectra($spectraHigh));
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidSpectra
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
     public function testCanValidateEntryOutOfBounds()
     {
         $spectraLow = new SpectraEntry();
-        $spectraLow->setCharge(1);
+        $spectraLow->setMass(300.0);
         $spectraHigh = new SpectraEntry();
-        $spectraHigh->setCharge(5);
+        $spectraHigh->setMass(400.0);
         
-        $filter = new FilterCharge(2, 4);
+        $filter = new FilterMass(325.0, 375.0);
         
         $this->assertEquals(false, $filter->isValidSpectra($spectraLow));
         $this->assertEquals(false, $filter->isValidSpectra($spectraHigh));
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::__construct
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::isValidSpectra
-     * @covers pgb_liv\php_ms\Utility\Filter\FilterCharge::filterSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::filterSpectra
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\FilterCharge
+     * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      * @uses pgb_liv\php_ms\Utility\Filter\AbstractFilter
      */
     public function testCanValidateEntryArray()
     {
         $spectra = array();
         $spectra[0] = new SpectraEntry();
-        $spectra[0]->setCharge(1);
+        $spectra[0]->setMass(250.0);
         $spectra[1] = new SpectraEntry();
-        $spectra[1]->setCharge(3);
+        $spectra[1]->setMass(350.0);
         $spectra[2] = new SpectraEntry();
-        $spectra[2]->setCharge(5);
+        $spectra[2]->setMass(450.0);
         
-        $filter = new FilterCharge(2, 4);
+        $filter = new FilterMass(300.0, 400.0);
         
         $this->assertEquals(array(
             1 => $spectra[1]
