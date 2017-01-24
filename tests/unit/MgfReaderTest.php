@@ -27,7 +27,7 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
         for ($entryIndex = 0; $entryIndex < 10; $entryIndex ++) {
             $entry = new SpectraEntry();
             $entry->setTitle('MY TEST RUN  (intensity=192543543.5801)');
-            $entry->setMass(rand(10000000, 1000000000) / 100000);
+            $entry->setMassCharge(rand(10000000, 1000000000) / 100000);
             $entry->setCharge('3+');
             $entry->setScans(rand(1000, 10000));
             $entry->setRetentionTime(rand(1000, 90000) / 100);
@@ -51,7 +51,7 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
         foreach ($mgfEntries as $entry) {
             $mgf .= 'BEGIN IONS' . "\n";
             $mgf .= 'TITLE=' . $entry->getTitle() . "\n";
-            $mgf .= 'PEPMASS=' . $entry->getMass() . "\n";
+            $mgf .= 'PEPMASS=' . $entry->getMassCharge() . "\n";
             $mgf .= 'CHARGE=' . $entry->getCharge() . "\n";
             $mgf .= 'SCANS=' . $entry->getScans() . "\n";
             $mgf .= 'RTINSECONDS=' . $entry->getRetentionTime() . "\n";
