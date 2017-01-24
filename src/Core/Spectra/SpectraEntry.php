@@ -24,6 +24,8 @@ namespace pgb_liv\php_ms\Core\Spectra;
 class SpectraEntry
 {
 
+    const PROTON_MASS = 1.672621898;
+
     private $mass;
 
     private $massCharge;
@@ -41,7 +43,7 @@ class SpectraEntry
     private $spectra;
 
     /**
-     * Sets the mass value for this spectra
+     * Sets the neutral mass value for this spectra
      *
      * @param float $mass
      *            Mass value expressed as a floating point value
@@ -57,13 +59,28 @@ class SpectraEntry
     }
 
     /**
-     * Gets the mass value for this spectra
+     * Gets the neutral mass value for this spectra
      *
      * @return float The mass value
      */
     public function getMass()
     {
+        if (is_null($this->mass)) {
+            $this->mass = $this->calculateNeutralMass();
+        }
+        
         return $this->mass;
+    }
+
+    /**
+     * Calculates the neutral mass value from the mass and charge values
+     */
+    private function calculateNeutralMass()
+    {
+        $mass = $this->massCharge * $this->charge;
+        $mass -= $this->charge * SpectraEntry::PROTON_MASS;
+        
+        return $mass;
     }
 
     public function setMassCharge($mz)
