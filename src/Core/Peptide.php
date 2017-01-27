@@ -29,6 +29,8 @@ class Peptide
 
     const AMINO_ACID_B_MASS = 0;
 
+    const AMINO_ACID_Z_MASS = 0;
+
     const HYDROGEN_MASS = 1.007825;
 
     const OXYGEN_MASS = 15.994915;
@@ -117,6 +119,9 @@ class Peptide
                     break;
                 case 'B':
                     $mass += Peptide::AMINO_ACID_B_MASS;
+                    break;
+                case 'Z':
+                    $mass += Peptide::AMINO_ACID_Z_MASS;
                     break;
                 default:
                     $mass += AminoAcidMono::getMonoisotopicMass($acid);
