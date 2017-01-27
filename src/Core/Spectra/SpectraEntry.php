@@ -77,10 +77,7 @@ class SpectraEntry
      */
     private function calculateNeutralMass()
     {
-        $mass = $this->massCharge * $this->charge;
-        $mass -= $this->charge * SpectraEntry::PROTON_MASS;
-        
-        return $mass;
+        return ($this->massCharge * $this->charge) - ($this->charge * SpectraEntry::PROTON_MASS);
     }
 
     public function setMassCharge($mz)
