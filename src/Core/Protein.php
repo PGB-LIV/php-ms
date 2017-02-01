@@ -174,4 +174,12 @@ class Protein
     {
         return $this->sequenceVersion;
     }
+    
+    /**
+     * Reverses the current protein sequence. For creating decoy proteins.
+     */
+    public function reverseSequence()
+    {
+        $this->sequence = strrev($this->sequence);
+    }
 }
