@@ -24,7 +24,7 @@ namespace pgb_liv\php_ms\Core\Spectra;
 class SpectraEntry
 {
 
-    const PROTON_MASS = 1.672621898;
+    const PROTON_MASS = 1.007276466879;
 
     private $mass;
 
