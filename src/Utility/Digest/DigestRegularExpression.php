@@ -52,7 +52,7 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
      * @param Protein $protein
      *            Must contain a protein sequence
      */
-    public function digest(Protein $protein)
+    protected function performDigestion(Protein $protein)
     {
         $peptideSequences = preg_split($this->cleavageRule, $protein->getSequence());
         

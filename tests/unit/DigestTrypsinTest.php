@@ -199,10 +199,52 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
         $protein->setSequence('PEPTIDER');
         
         $trypsin = new DigestTrypsin();
-        $trypsin->setMaxMissedCleavage(1);
         $peptides = $trypsin->digest($protein);
         
         $this->assertEquals('PEPTIDER', $peptides[0]->getSequence());
+        
+        $this->assertEquals(1, count($peptides));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::setNmeEnabled
+     *
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     */
+    public function testCanValidiatePeptideNmeEnabled()
+    {
+        $protein = new Protein();
+        $protein->setSequence('MPEPTIDER');
+        
+        $trypsin = new DigestTrypsin();
+        $trypsin->setNmeEnabled(true);
+        $peptides = $trypsin->digest($protein);
+        
+        $this->assertEquals('MPEPTIDER', $peptides[0]->getSequence());
+        $this->assertEquals('PEPTIDER', $peptides[1]->getSequence());
+        
+        $this->assertEquals(2, count($peptides));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::setNmeEnabled
+     *
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     */
+    public function testCanValidiatePeptideNmeDisabled()
+    {
+        $protein = new Protein();
+        $protein->setSequence('MPEPTIDER');
+        
+        $trypsin = new DigestTrypsin();
+        $trypsin->setNmeEnabled(false);
+        $peptides = $trypsin->digest($protein);
+        
+        $this->assertEquals('MPEPTIDER', $peptides[0]->getSequence());
         
         $this->assertEquals(1, count($peptides));
     }

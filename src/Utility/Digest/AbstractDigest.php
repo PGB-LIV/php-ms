@@ -16,6 +16,9 @@
  */
 namespace pgb_liv\php_ms\Utility\Digest;
 
+use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Peptide;
+
 /**
  * Abstract class for digestion algorithms.
  *
@@ -23,6 +26,13 @@ namespace pgb_liv\php_ms\Utility\Digest;
  */
 abstract class AbstractDigest
 {
+
+    /**
+     * Whether to perform n-terminus methionine excision when generating peptides
+     *
+     * @var bool
+     */
+    protected $isNmeEnabled = true;
 
     /**
      * Maximum number of missed cleavages a peptide may contain
@@ -46,4 +56,66 @@ abstract class AbstractDigest
         
         $this->maxMissedCleavage = $maxMissedCleavage;
     }
+
+    /**
+     * Sets whether n-terminal methionine excision should be performed.
+     * When enabled any methionine at the n-terminus of a protein will be removed.
+     * Both the excised and non-excised peptide will be returned after
+     * digestion. Defaults to true.
+     *
+     * @param bool $isNmeEnabled
+     *            Set true to enable n-terminal methionine excision
+     */
+    public function setNmeEnabled($isNmeEnabled)
+    {
+        if (! is_bool($isNmeEnabled)) {
+            throw new \InvalidArgumentException('Invalid argument type, bool expected. Received ' . gettype($maxMissedCleavage));
+        }
+        
+        $this->isNmeEnabled = $isNmeEnabled;
+    }
+
+    /**
+     * Digest the protein and produce peptides matching the enzyme rules.
+     *
+     * @param Protein $protein
+     *            Must contain a protein sequence
+     */
+    public function digest(Protein $protein)
+    {
+        $peptides = $this->performDigestion($protein);
+        
+        if ($this->isNmeEnabled) {
+            $peptides = $this->performMethionineExcision($peptides);
+        }
+        
+        return $peptides;
+    }
+
+    private function performMethionineExcision(array $peptides)
+    {
+        $nmePeptides = array();
+        foreach ($peptides as $peptide) {
+            if ($peptide->getPositionStart() > 0) {
+                continue;
+            }
+            
+            $sequence = $peptide->getSequence();
+            if ($sequence[0] != 'M') {
+                continue;
+            }
+            
+            $nmePeptide = new Peptide(substr($sequence, 1));
+            $nmePeptide->setProtein($peptide->getProtein());
+            $nmePeptide->setPositionStart(1);
+            $nmePeptide->setPositionEnd($peptide->getPositionEnd());
+            $nmePeptide->setMissedCleavageCount($peptide->getMissedCleavageCount());
+            
+            $nmePeptides[] = $nmePeptide;
+        }
+        
+        return array_merge($peptides, $nmePeptides);
+    }
+
+    abstract protected function performDigestion(Protein $protein);
 }
