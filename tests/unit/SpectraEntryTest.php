@@ -218,8 +218,9 @@ class SpectraEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMassCharge
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setCharge
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMass
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getMass
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::calculateNeutralMass
      *
      * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
      */
