@@ -82,6 +82,10 @@ class SpectraEntry
 
     public function setMassCharge($mz)
     {
+        if (! is_float($mz)) {
+            throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($mz));
+        }
+        
         $this->massCharge = $mz;
     }
 
@@ -99,7 +103,7 @@ class SpectraEntry
      */
     public function setCharge($charge)
     {
-        if (! is_int($charge) > 1) {
+        if (! is_int($charge)) {
             throw new \InvalidArgumentException('Argument 1 must be of type int. Value is of type ' . gettype($charge));
         }
         
@@ -124,6 +128,11 @@ class SpectraEntry
      */
     public function setRetentionTime($retentionTime)
     {
+        if (! (is_int($retentionTime) || is_float($retentionTime))) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
+        }
+        
         $this->retentionTime = $retentionTime;
     }
 
@@ -144,6 +153,11 @@ class SpectraEntry
 
     public function setScans($scans)
     {
+        if (! (is_int($scans) || is_float($scans))) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int or float. Value is of type ' . gettype($scans));
+        }
+        
         $this->scans = $scans;
     }
 
@@ -154,6 +168,11 @@ class SpectraEntry
 
     public function setIntensity($intensity)
     {
+        if (! (is_int($intensity) || is_float($intensity))) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int or float. Value is of type ' . gettype($intensity));
+        }
+        
         $this->intensity = $intensity;
     }
 

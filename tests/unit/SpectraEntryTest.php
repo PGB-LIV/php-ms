@@ -22,43 +22,217 @@ class SpectraEntryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setTitle
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMass
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getMass
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetMassValid()
+    {
+        $value = 370.217742939639;
+        
+        $spectra = new SpectraEntry();
+        $spectra->setMass($value);
+        
+        $this->assertEquals($value, $spectra->getMass());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMass
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetMassInvalid()
+    {
+        $value = 'fail';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setMass($value);
+    }
+
+    /**
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMassCharge
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setCharge
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setScans
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setRetentionTime
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getTitle
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getMassCharge
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetMassChargeValid()
+    {
+        $value = 370.217742939639;
+        
+        $spectra = new SpectraEntry();
+        $spectra->setMassCharge($value);
+        
+        $this->assertEquals($value, $spectra->getMassCharge());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMassCharge
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetMassChargeInvalid()
+    {
+        $value = 'fail';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setMassCharge($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setCharge
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getCharge
-     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getScans
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetChargeValid()
+    {
+        $value = 5;
+        
+        $spectra = new SpectraEntry();
+        $spectra->setCharge($value);
+        
+        $this->assertEquals($value, $spectra->getCharge());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setCharge
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetChargeInvalid()
+    {
+        $value = 'fail';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setCharge($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setRetentionTime
      * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getRetentionTime
      *
      * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
      */
-    public function testCanRetrieveEntry()
+    public function testCanSetRetentionTimeValid()
     {
-        $title = 'VH_181016_Digest_mix_1.16140.16140.3 (intensity=192543543.5801)';
-        $mass = 370.217742939639;
-        $charge = 3;
-        $massCharge = $mass / $charge;
-        $scans = 16140;
-        $rt = 1854.661;
+        $value = 51.5;
         
         $spectra = new SpectraEntry();
-        $spectra->setTitle($title);
-        $spectra->setMass($mass);
-        $spectra->setMassCharge($massCharge);
+        $spectra->setRetentionTime($value);
+        
+        $this->assertEquals($value, $spectra->getRetentionTime());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setRetentionTime
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetRetentionTimeInvalid()
+    {
+        $value = 'fail';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setRetentionTime($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setTitle
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getTitle
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetTitle()
+    {
+        $value = 'MySpectra 1.0324 with intensity 500000';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setTitle($value);
+        
+        $this->assertEquals($value, $spectra->getTitle());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setScans
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getScans
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetScansValid()
+    {
+        $value = 1000;
+        
+        $spectra = new SpectraEntry();
+        $spectra->setScans($value);
+        
+        $this->assertEquals($value, $spectra->getScans());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setScans
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetScansInvalid()
+    {
+        $value = 'fail';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setScans($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setIntensity
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::getIntensity
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetIntensityValid()
+    {
+        $value = 3445.452411;
+        
+        $spectra = new SpectraEntry();
+        $spectra->setIntensity($value);
+        
+        $this->assertEquals($value, $spectra->getIntensity());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setIntensity
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanSetIntensityInvalid()
+    {
+        $value = 'fail';
+        
+        $spectra = new SpectraEntry();
+        $spectra->setIntensity($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setMassCharge
+     * @covers pgb_liv\php_ms\Core\Spectra\SpectraEntry::setCharge
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\SpectraEntry
+     */
+    public function testCanGetMassFromMz()
+    {
+        $mass = 799.41405;
+        $mz = 400.7143;
+        $charge = 2;
+        
+        $spectra = new SpectraEntry();
+        $spectra->setMassCharge($mz);
         $spectra->setCharge($charge);
-        $spectra->setScans($scans);
-        $spectra->setRetentionTime($rt);
         
-        $this->assertEquals($title, $spectra->getTitle());
-        $this->assertEquals($mass, $spectra->getMass());
-        $this->assertEquals($massCharge, $spectra->getMassCharge());
-        $this->assertEquals($charge, $spectra->getCharge());
-        $this->assertEquals($scans, $spectra->getScans());
-        $this->assertEquals($rt, $spectra->getRetentionTime());
-        
-        // TODO: Add MS2 testing
+        $this->assertEquals($mass, round($spectra->getMass(), 5));
     }
 }

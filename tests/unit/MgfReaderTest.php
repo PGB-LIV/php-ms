@@ -28,14 +28,14 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
             $entry = new SpectraEntry();
             $entry->setTitle('MY TEST RUN  (intensity=192543543.5801)');
             $entry->setMassCharge(rand(10000000, 1000000000) / 100000);
-            $entry->setCharge('3+');
+            $entry->setCharge(3);
             $entry->setScans(rand(1000, 10000));
             $entry->setRetentionTime(rand(1000, 90000) / 100);
             
             for ($ionIndex = 0; $ionIndex < 15; $ionIndex ++) {
                 $ion = new SpectraEntry();
                 
-                $ion->setMassCharge(rand(10000, 100000) / 100);
+                $ion->setMassCharge(rand(10000, 100000) / 100.0);
                 $ion->setIntensity(rand(100000, 10000000) / 100);
                 
                 $entry->addIon($ion);

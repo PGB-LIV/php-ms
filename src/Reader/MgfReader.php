@@ -150,13 +150,13 @@ class MgfReader implements \Iterator
             if ($pair[0] == 'TITLE') {
                 $entry->setTitle($pair[1]);
             } elseif ($pair[0] == 'PEPMASS') {
-                $entry->setMassCharge($pair[1] + 0);
+                $entry->setMassCharge((float) $pair[1] + 0);
             } elseif ($pair[0] == 'CHARGE') {
-                $entry->setCharge($pair[1]);
+                $entry->setCharge((int) $pair[1]);
             } elseif ($pair[0] == 'SCANS') {
-                $entry->setScans($pair[1] + 0);
+                $entry->setScans((float) $pair[1] + 0);
             } elseif ($pair[0] == 'RTINSECONDS') {
-                $entry->setRetentionTime($pair[1] + 0);
+                $entry->setRetentionTime((float) $pair[1] + 0);
             }
         }
         
