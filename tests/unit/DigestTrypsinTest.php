@@ -42,9 +42,11 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateEntryK()
     {
@@ -70,9 +72,11 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateEntryR()
     {
@@ -98,9 +102,11 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateEntryKR()
     {
@@ -127,9 +133,11 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateEntryKP()
     {
@@ -154,9 +162,11 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateEntryRP()
     {
@@ -181,9 +191,12 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::setMaxMissedCleavage
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateEntryMissCleave()
     {
@@ -205,9 +218,11 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidateSiteAtEnd()
     {
