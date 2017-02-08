@@ -101,6 +101,6 @@ class AminoAcidMono
     {
         $acidUp = strtoupper($acid);
         
-        return getMonoisotopicMass($acidUp);
+        return AminoAcidMono::getMonoisotopicMass($acidUp);
     }
 }

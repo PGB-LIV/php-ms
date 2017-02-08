@@ -72,4 +72,56 @@ class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
     {
         AminoAcidMono::getMonoisotopicMass('PEPTIDE');
     }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
+     *
+     * @uses pgb_liv\php_ms\Core\AminoAcidMono
+     */
+    public function testCanRetrieveEntryValidInsensitive()
+    {
+        $this->assertEquals(AminoAcidMono::A, AminoAcidMono::getMonoisotopicInsensitive('a'));
+        $this->assertEquals(AminoAcidMono::C, AminoAcidMono::getMonoisotopicInsensitive('c'));
+        $this->assertEquals(AminoAcidMono::D, AminoAcidMono::getMonoisotopicInsensitive('d'));
+        $this->assertEquals(AminoAcidMono::E, AminoAcidMono::getMonoisotopicInsensitive('e'));
+        $this->assertEquals(AminoAcidMono::F, AminoAcidMono::getMonoisotopicInsensitive('f'));
+        $this->assertEquals(AminoAcidMono::G, AminoAcidMono::getMonoisotopicInsensitive('g'));
+        $this->assertEquals(AminoAcidMono::H, AminoAcidMono::getMonoisotopicInsensitive('h'));
+        $this->assertEquals(AminoAcidMono::I, AminoAcidMono::getMonoisotopicInsensitive('i'));
+        $this->assertEquals(AminoAcidMono::K, AminoAcidMono::getMonoisotopicInsensitive('k'));
+        $this->assertEquals(AminoAcidMono::L, AminoAcidMono::getMonoisotopicInsensitive('l'));
+        $this->assertEquals(AminoAcidMono::M, AminoAcidMono::getMonoisotopicInsensitive('m'));
+        $this->assertEquals(AminoAcidMono::N, AminoAcidMono::getMonoisotopicInsensitive('n'));
+        $this->assertEquals(AminoAcidMono::P, AminoAcidMono::getMonoisotopicInsensitive('p'));
+        $this->assertEquals(AminoAcidMono::Q, AminoAcidMono::getMonoisotopicInsensitive('q'));
+        $this->assertEquals(AminoAcidMono::R, AminoAcidMono::getMonoisotopicInsensitive('r'));
+        $this->assertEquals(AminoAcidMono::S, AminoAcidMono::getMonoisotopicInsensitive('s'));
+        $this->assertEquals(AminoAcidMono::T, AminoAcidMono::getMonoisotopicInsensitive('t'));
+        $this->assertEquals(AminoAcidMono::U, AminoAcidMono::getMonoisotopicInsensitive('u'));
+        $this->assertEquals(AminoAcidMono::V, AminoAcidMono::getMonoisotopicInsensitive('v'));
+        $this->assertEquals(AminoAcidMono::W, AminoAcidMono::getMonoisotopicInsensitive('w'));
+        $this->assertEquals(AminoAcidMono::Y, AminoAcidMono::getMonoisotopicInsensitive('y'));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\AminoAcidMono
+     */
+    public function testCanRetrieveEntryInvalidCharInsensitive()
+    {
+        AminoAcidMono::getMonoisotopicInsensitive('x');
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\AminoAcidMono
+     */
+    public function testCanRetrieveEntryInvalidStringInsensitive()
+    {
+        AminoAcidMono::getMonoisotopicInsensitive('peptide');
+    }
 }

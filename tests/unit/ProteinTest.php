@@ -44,6 +44,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::setProteinName
      * @covers pgb_liv\php_ms\Core\Protein::setProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::setSequenceVersion
+     * @covers pgb_liv\php_ms\Core\Protein::reverseSequence
      *
      * @uses pgb_liv\php_ms\Core\Protein
      */
@@ -80,7 +81,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($identifier, $protein->getUniqueIdentifier());
         $this->assertEquals($description, $protein->getDescription());
         $this->assertEquals($sequence, $protein->getSequence());
-        
+
         $this->assertEquals($database, $protein->getDatabasePrefix());
         $this->assertEquals($accession, $protein->getAccession());
         $this->assertEquals($entryName, $protein->getEntryName());
@@ -90,5 +91,8 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($geneName, $protein->getGeneName());
         $this->assertEquals($pe, $protein->getProteinExistence());
         $this->assertEquals($sv, $protein->getSequenceVersion());
+        
+        $protein->reverseSequence();
+        $this->assertEquals(strrev($sequence), $protein->getSequence());
     }
 }

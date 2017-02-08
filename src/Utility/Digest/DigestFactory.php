@@ -39,6 +39,6 @@ class DigestFactory
             return new DigestTrypsin();
         }
         
-        throw \InvalidArgumentException('Unknown digest algorithm - ' . $digestName);
+        throw new \InvalidArgumentException('Unknown digest algorithm - ' . $digestName);
     }
 }

@@ -24,7 +24,9 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::__construct
      *
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
