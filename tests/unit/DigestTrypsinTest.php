@@ -41,8 +41,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateEntryK()
     {
@@ -67,8 +69,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateEntryR()
     {
@@ -93,8 +97,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateEntryKR()
     {
@@ -120,8 +126,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateEntryKP()
     {
@@ -145,8 +153,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateEntryRP()
     {
@@ -170,8 +180,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateEntryMissCleave()
     {
@@ -192,8 +204,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidateSiteAtEnd()
     {
@@ -212,8 +226,12 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::setNmeEnabled
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::performMethionineExcision
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testCanValidiatePeptideNmeEnabled()
     {
@@ -234,8 +252,10 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::digest
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::setNmeEnabled
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::performDigestion
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      */
     public function testCanValidiatePeptideNmeDisabled()
     {

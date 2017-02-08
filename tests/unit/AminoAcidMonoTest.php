@@ -74,7 +74,7 @@ class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicInsensitive
      *
      * @uses pgb_liv\php_ms\Core\AminoAcidMono
      */
@@ -104,7 +104,7 @@ class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicInsensitive
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\AminoAcidMono
@@ -115,7 +115,7 @@ class AminoAcidMonoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\AminoAcidMono::getMonoisotopicInsensitive
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\AminoAcidMono
