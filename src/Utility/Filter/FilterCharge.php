@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Utility\Filter;
 
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Creates an instance of a spectra filter than can be used with a list of spectra to

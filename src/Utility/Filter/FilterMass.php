@@ -16,6 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Filter;
 
+use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
 
 /**
