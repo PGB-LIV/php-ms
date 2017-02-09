@@ -52,11 +52,13 @@ class FilterMass extends AbstractFilter
     public function __construct($minMass, $maxMass)
     {
         if (! is_float($minMass)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($minMass));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type float. Value is of type ' . gettype($minMass));
         }
         
         if (! is_float($maxMass)) {
-            throw new \InvalidArgumentException('Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
+            throw new \InvalidArgumentException(
+                'Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
         }
         
         $this->minMass = $minMass;
@@ -80,5 +82,16 @@ class FilterMass extends AbstractFilter
         }
         
         return true;
+    }
+
+    /**
+     * Returns true if the Peptide matches the filter criteria, else false
+     *
+     * @param Peptide $peptide
+     *            Peptide object to filter
+     */
+    public function isValidPeptide(Peptide $peptide)
+    {
+        throw new \BadMethodCallException("isValidPeptide is not defined for this instance.");
     }
 }

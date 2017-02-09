@@ -52,11 +52,13 @@ class FilterCharge extends AbstractFilter
     public function __construct($minCharge, $maxCharge)
     {
         if (! is_int($minCharge)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type int. Value is of type ' . gettype($minCharge));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int. Value is of type ' . gettype($minCharge));
         }
         
         if (! is_int($maxCharge)) {
-            throw new \InvalidArgumentException('Argument 2 must be of type int. Value is of type ' . gettype($maxCharge));
+            throw new \InvalidArgumentException(
+                'Argument 2 must be of type int. Value is of type ' . gettype($maxCharge));
         }
         
         $this->minCharge = $minCharge;
@@ -80,5 +82,16 @@ class FilterCharge extends AbstractFilter
         }
         
         return true;
+    }
+
+    /**
+     * Returns true if the Peptide matches the filter criteria, else false
+     *
+     * @param Peptide $peptide
+     *            Peptide object to filter
+     */
+    public function isValidPeptide(Peptide $peptide)
+    {
+        throw new \BadMethodCallException("isValidPeptide is not defined for this instance.");
     }
 }

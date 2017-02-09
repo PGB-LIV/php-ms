@@ -33,10 +33,7 @@ abstract class AbstractFilter
      * @param Peptide $peptide
      *            Peptide object to filter
      */
-    public function isValidPeptide()
-    {
-        throw new \BadMethodCallException("isValidPeptide is not defined for this instance.");
-    }
+    abstract public function isValidPeptide(Peptide $peptide);
 
     /**
      * Returns true if the SpectraEntry matches the filter criteria, else false
@@ -44,10 +41,7 @@ abstract class AbstractFilter
      * @param SpectraEntry $peptide
      *            Spectra object to filter
      */
-    public function isValidSpectra()
-    {
-        throw new \BadMethodCallException("isValidPeptide is not defined for this instance.");
-    }
+    abstract public function isValidSpectra(SpectraEntry $spectra);
 
     /**
      * Filters an array of peptides and returns an array of peptides which match the filter criteria

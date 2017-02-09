@@ -65,4 +65,15 @@ class FilterLength extends AbstractFilter
         
         return true;
     }
+
+    /**
+     * Returns true if the SpectraEntry matches the filter criteria, else false
+     *
+     * @param SpectraEntry $peptide
+     *            Spectra object to filter
+     */
+    public function isValidSpectra(SpectraEntry $spectra)
+    {
+        throw new \BadMethodCallException("isValidSpectra is not defined for this instance.");
+    }
 }
