@@ -83,6 +83,14 @@ TACKV
 
     /**
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
+     * @covers pgb_liv\php_ms\Reader\FastaReader::current
+     * @covers pgb_liv\php_ms\Reader\FastaReader::next
+     * @covers pgb_liv\php_ms\Reader\FastaReader::key
+     * @covers pgb_liv\php_ms\Reader\FastaReader::rewind
+     * @covers pgb_liv\php_ms\Reader\FastaReader::valid
+     * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
+     * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
      */
