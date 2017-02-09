@@ -47,6 +47,10 @@ class Peptide
 
     public function __construct($sequence)
     {
+        if (preg_match('/^[A-Z]+$/', $sequence) !== 1) {
+            throw new \InvalidArgumentException('Argument 1 must be a valid peptide sequence.');
+        }        
+        
         $this->sequence = $sequence;
     }
 
@@ -57,16 +61,31 @@ class Peptide
 
     public function setPositionStart($position)
     {
+        if (! is_int($position)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type integer. Argument type is ' . gettype($position));
+        }
+        
         $this->positionStart = $position;
     }
 
     public function setPositionEnd($position)
     {
+        if (! is_int($position)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type integer. Argument type is ' . gettype($position));
+        }
+        
         $this->positionEnd = $position;
     }
 
     public function setMissedCleavageCount($count)
     {
+        if (! is_int($count)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type integer. Argument type is ' . gettype($count));
+        }
+        
         $this->missedCleavageCount = $count;
     }
 
