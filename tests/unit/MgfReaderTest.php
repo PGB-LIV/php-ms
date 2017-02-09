@@ -90,14 +90,6 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
-     * @covers pgb_liv\php_ms\Reader\MgfReader::current
-     * @covers pgb_liv\php_ms\Reader\MgfReader::next
-     * @covers pgb_liv\php_ms\Reader\MgfReader::key
-     * @covers pgb_liv\php_ms\Reader\MgfReader::rewind
-     * @covers pgb_liv\php_ms\Reader\MgfReader::valid
-     * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
-     * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
-     * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
      *
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
