@@ -166,7 +166,7 @@ class MascotSearch
         $args['display'] = 'logout_prompt';
         $args['savecookie'] = '1';
         $args['action'] = 'login';
-        $args['userid'] = '1046';
+        $args['userid'] = '';
         $args['onerrdisplay'] = 'login_prompt';
         
         $response = $this->sendPost('/mascot/cgi/login.pl', $args);
@@ -245,7 +245,7 @@ class MascotSearch
         $args['CalledFromForm'] = 1;
         $args['logfile'] = '../logs/searches.log';
         $args['start'] = - 1;
-        $args['howMany'] = 50;
+        $args['howMany'] = $limit;
         $args['pathToData'] = '';
         $args['column'] = 0;
         $args['s0'] = 1;
@@ -279,7 +279,7 @@ class MascotSearch
         $response = $this->sendGet('/mascot/x-cgi/ms-review.exe', $args);
         
         $pattern = '/<TR>\s+<TD><A HREF="..\/cgi\/master_results_2.pl\?file=(?<filename>.*)">\s?(?<job>[0-9]+)<\/A><\/TD>\s+<TD>\s?(?<pid>[0-9]+)<\/TD>\s+<TD>(?<dbase>.+)<\/TD>\s+<TD>(?<username>.*)<\/TD>\s*<TD>(?<email>.*)<\/TD>\s+<TD>(?<ti>.*)<\/TD>\s+<TD>.*<\/TD>\s+<TD NOWRAP>(?<start_time>.+)<\/TD>\s+<TD>\s*(?<dur>[0-9]+)<\/TD>\s+<TD>(?<status>.+)<\/TD>\s+<TD>(?<pr>.+)<\/TD>\s+<TD>(?<typ>.+)<\/TD>\s+<TD>(?<enzyme>.+)<\/TD>\s+<TD>\s?(?<ip>[0-9]*)<\/TD>\s+<TD>\s?(?<userid>[0-9]+)<\/TD>/sU';
-        $ret = preg_match_all($pattern, $response['content'], $matches);
+        preg_match_all($pattern, $response['content'], $matches);
         
         $searchLog = array();
         for ($i = 0; $i < count($matches['filename']); $i ++) {
