@@ -29,6 +29,8 @@ class MascotSearch
 
     private $port;
 
+    private $path;
+
     private $cookies = array();
 
     /**
@@ -39,11 +41,14 @@ class MascotSearch
      *            Server hostname or IP address
      * @param int $port
      *            Server port
+     * @param string $path
+     *            Path to base Mascot directory
      */
-    public function __construct($host, $port)
+    public function __construct($host, $port, $path)
     {
         $this->host = $host;
         $this->port = $port;
+        $this->path = $path;
     }
 
     private function getCookieHeader()
@@ -169,7 +174,7 @@ class MascotSearch
         $args['userid'] = '';
         $args['onerrdisplay'] = 'login_prompt';
         
-        $response = $this->sendPost('/mascot/cgi/login.pl', $args);
+        $response = $this->sendPost($this->path . '/cgi/login.pl', $args);
         
         $this->cookies = array();
         foreach (explode("\n", $response['header']) as $line) {
@@ -180,7 +185,7 @@ class MascotSearch
             }
         }
         
-        return is_array($this->cookies);
+        return count($this->cookies) >= 3;
     }
 
     function getXml($filePath)
@@ -231,7 +236,7 @@ class MascotSearch
         $args['pep_var_mod'] = '1';
         $args['pep_scan_title'] = '1';
         
-        $response = $this->sendPost('/mascot/cgi/export_dat_2.pl', $args);
+        $response = $this->sendPost($this->path . '/cgi/export_dat_2.pl', $args);
         
         return array(
             'name' => $response['attachmentName'],
@@ -276,7 +281,7 @@ class MascotSearch
         $args['f13'] = '';
         $args['f14'] = '';
         
-        $response = $this->sendGet('/mascot/x-cgi/ms-review.exe', $args);
+        $response = $this->sendGet($this->path . '/x-cgi/ms-review.exe', $args);
         
         $pattern = '/<TR>\s+<TD><A HREF="..\/cgi\/master_results_2.pl\?file=(?<filename>.*)">\s?(?<job>[0-9]+)<\/A><\/TD>\s+<TD>\s?(?<pid>[0-9]+)<\/TD>\s+<TD>(?<dbase>.+)<\/TD>\s+<TD>(?<username>.*)<\/TD>\s*<TD>(?<email>.*)<\/TD>\s+<TD>(?<ti>.*)<\/TD>\s+<TD>.*<\/TD>\s+<TD NOWRAP>(?<start_time>.+)<\/TD>\s+<TD>\s*(?<dur>[0-9]+)<\/TD>\s+<TD>(?<status>.+)<\/TD>\s+<TD>(?<pr>.+)<\/TD>\s+<TD>(?<typ>.+)<\/TD>\s+<TD>(?<enzyme>.+)<\/TD>\s+<TD>\s?(?<ip>[0-9]*)<\/TD>\s+<TD>\s?(?<userid>[0-9]+)<\/TD>/sU';
         preg_match_all($pattern, $response['content'], $matches);
