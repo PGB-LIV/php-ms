@@ -16,7 +16,6 @@
  */
 namespace pgb_liv\php_ms\Utility\Filter;
 
-use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
 
 /**
@@ -83,16 +82,5 @@ class FilterMass extends AbstractFilter
         }
         
         return true;
-    }
-
-    /**
-     * Returns true if the Peptide matches the filter criteria, else false
-     *
-     * @param Peptide $peptide
-     *            Peptide object to filter
-     */
-    public function isValidPeptide(Peptide $peptide)
-    {
-        throw new \BadMethodCallException("isValidPeptide is not defined for this instance.");
     }
 }

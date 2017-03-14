@@ -70,7 +70,7 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterMass(300.0, 400.0);
         
-        $this->assertEquals(true, $filter->isValidSpectra($spectra));
+        $this->assertTrue($filter->isValidSpectra($spectra));
     }
 
     /**
@@ -88,8 +88,8 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterMass(300.0, 400.0);
         
-        $this->assertEquals(true, $filter->isValidSpectra($spectraLow));
-        $this->assertEquals(true, $filter->isValidSpectra($spectraHigh));
+        $this->assertTrue($filter->isValidSpectra($spectraLow));
+        $this->assertTrue($filter->isValidSpectra($spectraHigh));
     }
 
     /**
@@ -107,8 +107,8 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterMass(325.0, 375.0);
         
-        $this->assertEquals(false, $filter->isValidSpectra($spectraLow));
-        $this->assertEquals(false, $filter->isValidSpectra($spectraHigh));
+        $this->assertFalse($filter->isValidSpectra($spectraLow));
+        $this->assertFalse($filter->isValidSpectra($spectraHigh));
     }
 
     /**

@@ -17,7 +17,6 @@
 namespace pgb_liv\php_ms\Utility\Filter;
 
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
-use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Creates an instance of a spectra filter than can be used with a list of spectra to
@@ -83,16 +82,5 @@ class FilterCharge extends AbstractFilter
         }
         
         return true;
-    }
-
-    /**
-     * Returns true if the Peptide matches the filter criteria, else false
-     *
-     * @param Peptide $peptide
-     *            Peptide object to filter
-     */
-    public function isValidPeptide(Peptide $peptide)
-    {
-        throw new \BadMethodCallException("isValidPeptide is not defined for this instance.");
     }
 }

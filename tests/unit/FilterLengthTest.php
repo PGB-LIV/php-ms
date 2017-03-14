@@ -47,7 +47,7 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(6, 30);
         
-        $this->assertEquals(true, $filter->isValidPeptide($peptide));
+        $this->assertTrue($filter->isValidPeptide($peptide));
     }
 
     /**
@@ -63,8 +63,8 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(7, 14);
         
-        $this->assertEquals(true, $filter->isValidPeptide($peptideShort));
-        $this->assertEquals(true, $filter->isValidPeptide($peptideLong));
+        $this->assertTrue($filter->isValidPeptide($peptideShort));
+        $this->assertTrue($filter->isValidPeptide($peptideLong));
     }
 
     /**
@@ -80,8 +80,8 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
         
         $filter = new FilterLength(10, 15);
         
-        $this->assertEquals(false, $filter->isValidPeptide($peptideShort));
-        $this->assertEquals(false, $filter->isValidPeptide($peptideLong));
+        $this->assertFalse($filter->isValidPeptide($peptideShort));
+        $this->assertFalse($filter->isValidPeptide($peptideLong));
     }
 
     /**
