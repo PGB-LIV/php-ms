@@ -25,7 +25,7 @@ class AbstractDigestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::setNmeEnabled
-     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::getNmeEnabled
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::isNmeEnabled
      *
      * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
