@@ -32,14 +32,14 @@ abstract class AbstractDigest
      *
      * @var bool
      */
-    protected $isNmeEnabled = true;
+    private $isNmeEnabled = true;
 
     /**
      * Maximum number of missed cleavages a peptide may contain
      *
      * @var integer
      */
-    protected $maxMissedCleavage = 0;
+    private $maxMissedCleavage = 0;
 
     /**
      * Set the maximum number of missed cleavages the algorithm should produce.
@@ -51,10 +51,21 @@ abstract class AbstractDigest
     public function setMaxMissedCleavage($maxMissedCleavage)
     {
         if (! is_int($maxMissedCleavage)) {
-            throw new \InvalidArgumentException('Invalid argument type, integer expected. Received ' . gettype($maxMissedCleavage));
+            throw new \InvalidArgumentException(
+                'Invalid argument type, integer expected. Received ' . gettype($maxMissedCleavage));
         }
         
         $this->maxMissedCleavage = $maxMissedCleavage;
+    }
+
+    /**
+     * Gets the maximum missed cleavage count value
+     *
+     * @return int max missed cleavage count
+     */
+    public function getMaxMissedCleavage()
+    {
+        return $this->maxMissedCleavage;
     }
 
     /**
@@ -69,10 +80,21 @@ abstract class AbstractDigest
     public function setNmeEnabled($isNmeEnabled)
     {
         if (! is_bool($isNmeEnabled)) {
-            throw new \InvalidArgumentException('Invalid argument type, bool expected. Received ' . gettype($maxMissedCleavage));
+            throw new \InvalidArgumentException(
+                'Invalid argument type, bool expected. Received ' . gettype($isNmeEnabled));
         }
         
         $this->isNmeEnabled = $isNmeEnabled;
+    }
+
+    /**
+     * Tells whether n-terminal methionine excision will be performed or not.
+     *
+     * @return boolean true if NME is enabled, else false
+     */
+    public function isNmeEnabled()
+    {
+        return $this->isNmeEnabled;
     }
 
     /**

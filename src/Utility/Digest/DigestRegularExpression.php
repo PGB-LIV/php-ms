@@ -82,7 +82,7 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
             $basePeptide = $peptides[$index];
             
             $comulativeSequence = $peptides[$index]->getSequence();
-            for ($missedCleave = 1; $missedCleave <= $this->maxMissedCleavage; $missedCleave ++) {
+            for ($missedCleave = 1; $missedCleave <= $this->getMaxMissedCleavage(); $missedCleave ++) {
                 if ($index + $missedCleave >= count($peptides)) {
                     continue;
                 }
