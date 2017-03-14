@@ -72,7 +72,7 @@ class MascotSearch
             fwrite($handle, $this->getCookieHeader() . "\r\n");
         }
         
-        $boundary = '---------------------------8793238275072';
+        $boundary = '---------------------------' . mt_rand();
         $data = '';
         foreach ($args as $key => $value) {
             $data .= '--' . $boundary . "\r\n";
