@@ -24,7 +24,7 @@ class AbstractFilterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Digest\AbstractFilter::isValidPeptide
+     * @covers pgb_liv\php_ms\Utility\Filter\AbstractFilter::isValidPeptide
      * @expectedException BadMethodCallException
      *
      * @uses pgb_liv\php_ms\Utility\Filter\AbstractFilter
@@ -37,7 +37,7 @@ class AbstractFilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Utility\Digest\AbstractFilter::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\AbstractFilter::isValidSpectra
      * @expectedException BadMethodCallException
      *
      * @uses pgb_liv\php_ms\Utility\Filter\AbstractFilter
