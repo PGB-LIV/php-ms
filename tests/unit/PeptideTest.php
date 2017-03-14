@@ -207,11 +207,30 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Peptide
      */
-    public function testCanCalculateMass()
+    public function testCanCalculateMass1()
     {
         $sequence = 'PEPTIDE';
         $peptide = new Peptide($sequence);
+        $mass = 799.3599;
+        $this->assertEquals($mass, $peptide->calculateMass(), '', 0.0001);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Peptide::calculateMass
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     */
+    public function testCanCalculateMass2()
+    {
+        $sequence = 'XBZ';
+        $peptide = new Peptide($sequence);
         
-        $this->assertEquals(799.36, round($peptide->calculateMass(), 4));
+        $mass = Peptide::AMINO_ACID_B_MASS;
+        $mass += Peptide::AMINO_ACID_X_MASS;
+        $mass += Peptide::AMINO_ACID_Z_MASS;
+        $mass += Peptide::HYDROGEN_MASS * 2;
+        $mass += Peptide::OXYGEN_MASS;
+        
+        $this->assertEquals($mass, $peptide->calculateMass(), '', 0.00001);
     }
 }
