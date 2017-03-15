@@ -117,18 +117,19 @@ class FastaReader implements \Iterator
     private function parseEntry()
     {
         $description = '';
-        while ($line = $this->getLine()) {
+        while ($line = $this->peekLine()) {   
             $line = trim($line);
+            
             if (strpos($line, '>') !== 0) {
-                continue;
+                break;
             }
             
-            $description = substr($line, 1);
-            break;
+            $line = trim($this->getLine());
+            $description .= substr($line, 1);
         }
         
         $identifier = substr($description, 0, strpos($description, ' '));
-        $description = substr($description, strpos($description, ' ')+1);
+        $description = substr($description, strpos($description, ' ') + 1);
         
         $sequence = '';
         while ($line = $this->peekLine()) {
@@ -140,7 +141,7 @@ class FastaReader implements \Iterator
             
             $sequence .= trim($this->getLine());
         }
-                
+        
         $entry = FastaFactory::getProtein($identifier, $description, $sequence);
         
         $this->key ++;

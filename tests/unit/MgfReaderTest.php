@@ -37,6 +37,7 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
                 
                 $ion->setMassCharge(rand(10000, 100000) / 100.0);
                 $ion->setIntensity(rand(100000, 10000000) / 100);
+                $ion->setCharge(rand(1, 3));
                 
                 $entry->addIon($ion);
             }
@@ -60,6 +61,8 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
                 $mgf .= $ion->getMassCharge();
                 $mgf .= ' ';
                 $mgf .= $ion->getIntensity();
+                $mgf .= ' ';
+                $mgf .= $ion->getCharge();
                 $mgf .= "\n";
             }
             
@@ -108,6 +111,44 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
         
         $mgf = new MgfReader($mgfPath);
         
+        $i = 0;
+        foreach ($mgf as $key => $entry) {
+            $this->assertEquals($mgfEntries[$key - 1], $entry);
+            $i ++;
+        }
+        
+        $this->assertEquals($i, count($mgfEntries));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
+     * @covers pgb_liv\php_ms\Reader\MgfReader::current
+     * @covers pgb_liv\php_ms\Reader\MgfReader::next
+     * @covers pgb_liv\php_ms\Reader\MgfReader::key
+     * @covers pgb_liv\php_ms\Reader\MgfReader::rewind
+     * @covers pgb_liv\php_ms\Reader\MgfReader::valid
+     * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
+     * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
+     * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
+     *
+     * @uses pgb_liv\php_ms\Reader\MgfReader
+     */
+    public function testCanRewind()
+    {
+        $mgfEntries = array();
+        $mgfPath = $this->createTestFile($mgfEntries);
+        
+        $mgf = new MgfReader($mgfPath);
+        
+        $i = 0;
+        foreach ($mgf as $key => $entry) {
+            $this->assertEquals($mgfEntries[$key - 1], $entry);
+            $i ++;
+        }
+        
+        $this->assertEquals($i, count($mgfEntries));
+        
+        // Ensure rewind fires correctly
         $i = 0;
         foreach ($mgf as $key => $entry) {
             $this->assertEquals($mgfEntries[$key - 1], $entry);

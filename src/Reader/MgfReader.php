@@ -167,7 +167,7 @@ class MgfReader implements \Iterator
             }
             
             $line = trim($this->getLine());
-            $pair = explode(' ', $line, 2);
+            $pair = explode(' ', $line, 3);
             
             $ion = new SpectraEntry();
             $ion->setMassCharge((float) $pair[0]);
@@ -176,7 +176,7 @@ class MgfReader implements \Iterator
             }
             
             if (count($pair) > 2) {
-                $ion->setCharge($pair[2]);
+                $ion->setCharge((int) $pair[2]);
             }
             
             $entry->addIon($ion);
