@@ -22,7 +22,7 @@ use pgb_liv\php_ms\Core\Database\Fasta\UniprotFastaEntry;
 class FastaReaderTest extends \PHPUnit_Framework_TestCase
 {
 
-    private function createTestFile(&$fastaEntries)
+    private function createTestFile(&$fastaEntries, $whitespace = false)
     {
         $fastaEntries[] = UniprotFastaEntry::getProtein('sp|P31947|1433S_HUMAN', 
             '14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1', 
@@ -37,7 +37,10 @@ class FastaReaderTest extends \PHPUnit_Framework_TestCase
             'HLA class I histocompatibility antigen, A-29 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=2', 
             'MAVMAPRTLLLLLLGALALTQTWAGSHSMRYFTTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDLQTRNVKAQSQTDRANLGTLRGYYNQSEAGSHTIQMMYGCHVGSDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITQRKWEAARVAEQLRAYLEGTCVEWLRRYLENGKETLQRTDAPKTHMTHHAVSDHEATLRCWALSFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWASVVVPSGQEQRYTCHVQHEGLPKPLTLRWEPSSQPTIPIVGIIAGLVLFGAVFAGAVVAAVRWRRKSSDRKGGSYSQAASSDSAQGSDMSLTACKV');
         
-        $fasta = '>sp|P31947|1433S_HUMAN 14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1
+        $fasta = '';
+        if ($whitespace);
+        $fasta .= "\n";
+        $fasta .= '>sp|P31947|1433S_HUMAN 14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1
 MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWR
 VLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFY
 LKMKGDYYRYLAEVATGDDKKRIIDSARSAYQEAMDISKKEMPPTNPIRLGLALNFSVFH
@@ -154,6 +157,40 @@ TACKV
         }
         
         $this->assertEquals($i, count($fastaEntries));
+        
+        $i = 0;
+        foreach ($fasta as $key => $entry) {
+            $this->assertEquals($fastaEntries[$key - 1], $entry);
+            $i ++;
+        }
+        
+        $this->assertEquals($i, count($fastaEntries));
+    }
+
+
+    /**
+     * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
+     * @covers pgb_liv\php_ms\Reader\FastaReader::current
+     * @covers pgb_liv\php_ms\Reader\FastaReader::next
+     * @covers pgb_liv\php_ms\Reader\FastaReader::key
+     * @covers pgb_liv\php_ms\Reader\FastaReader::rewind
+     * @covers pgb_liv\php_ms\Reader\FastaReader::valid
+     * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
+     * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
+     * @covers pgb_liv\php_ms\Core\Database\Fasta\UniprotFastaEntry::getProtein
+     * @covers pgb_liv\php_ms\Core\Database\Fasta\FastaFactory::getProtein
+     *
+     * @uses pgb_liv\php_ms\Reader\FastaReader
+     * @uses pgb_liv\php_ms\Core\Database\Fasta\UniprotFastaEntry
+     * @uses pgb_liv\php_ms\Core\Database\Fasta\FastaFactory
+     */
+    public function testCanSkipWhitespace()
+    {
+        $fastaEntries = array();
+        $fastaPath = $this->createTestFile($fastaEntries, true);
+        
+        $fasta = new FastaReader($fastaPath);
         
         $i = 0;
         foreach ($fasta as $key => $entry) {

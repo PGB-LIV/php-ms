@@ -140,14 +140,13 @@ class FastaReader implements \Iterator
         $description = substr($description, strpos($description, ' ') + 1);
         
         $sequence = '';
-        while ($line = $this->peekLine()) {
-            $line = trim($line);
-            
-            if (strpos($line, '>') === 0) {
+        while ($line = $this->getLine()) {
+            $sequence .= trim($line);
+
+            $nextLine = trim($this->peekLine());
+            if (strpos($nextLine, '>') === 0) {
                 break;
-            }
-            
-            $sequence .= trim($this->getLine());
+            }            
         }
         
         $entry = FastaFactory::getProtein($identifier, $description, $sequence);
