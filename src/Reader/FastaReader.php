@@ -116,16 +116,24 @@ class FastaReader implements \Iterator
 
     private function parseEntry()
     {
-        $description = '';
-        while ($line = $this->peekLine()) {   
-            $line = trim($line);
+        // Scan to first entry
+        do {
+            $line = trim($this->peekLine());
             
-            if (strpos($line, '>') !== 0) {
+            if (strpos($line, '>') === 0) {
                 break;
             }
-            
-            $line = trim($this->getLine());
+        } while ($line = $this->getLine());
+        
+        $description = '';
+        while ($line = $this->getLine()) {
+            $line = trim($line);
             $description .= substr($line, 1);
+            
+            $nextLine = trim($this->peekLine());
+            if (strpos($nextLine, '>') !== 0) {
+                break;
+            }
         }
         
         $identifier = substr($description, 0, strpos($description, ' '));
