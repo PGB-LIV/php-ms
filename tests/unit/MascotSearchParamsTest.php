@@ -61,7 +61,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanGetSetValidTitle()
     {
-        $value = 'example@example.com';
+        $value = 'My Mascot Search';
         
         $params = new MascotSearchParams();
         $params->setTitle($value);

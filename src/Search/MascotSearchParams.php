@@ -156,7 +156,7 @@ class MascotSearchParams
      */
     public function getTitle()
     {
-        return $this->searchTitle;
+        return $this->title;
     }
 
     public function setDatabases($databases)
@@ -207,7 +207,7 @@ class MascotSearchParams
     {
         return $this->quantitation;
     }
-    
+
     public function setTaxonomy($taxonomy)
     {
         // TODO: Validate taxonomy
