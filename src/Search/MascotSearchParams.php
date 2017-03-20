@@ -48,7 +48,7 @@ class MascotSearchParams
 
     private $userMail;
 
-    private $searchTitle;
+    private $title;
 
     private $databases;
 

@@ -149,7 +149,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $isAuthed = $search->authenticate(MASCOT_USER, MASCOT_PASS);
         
         $params = new MascotSearchParams();
-        $params->setUserName('php-ms unit test');
+        $params->setUserName('php-ms Unit Test');
+        $params->setUserMail('example@example.com');
         $params->setTitle('php-ms Unit Test');
         $params->setDatabases('Mouse_AndrewC_NOV16');
         $params->setFixedModifications('Carbamidomethyl (C)');

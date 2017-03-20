@@ -49,7 +49,7 @@ class Peptide
     {
         if (preg_match('/^[A-Z]+$/', $sequence) !== 1) {
             throw new \InvalidArgumentException('Argument 1 must be a valid peptide sequence.');
-        }        
+        }
         
         $this->sequence = $sequence;
     }

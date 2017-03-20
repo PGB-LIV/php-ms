@@ -167,7 +167,6 @@ TACKV
         $this->assertEquals($i, count($fastaEntries));
     }
 
-
     /**
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      * @covers pgb_liv\php_ms\Reader\FastaReader::current
