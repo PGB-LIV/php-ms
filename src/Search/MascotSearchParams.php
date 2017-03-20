@@ -24,6 +24,12 @@ namespace pgb_liv\php_ms\Search;
 class MascotSearchParams
 {
 
+    const UNIT_PPM = 'ppm';
+
+    const MASS_MONO = 'Monoisotopic';
+
+    const MASS_AVG = 'Average';
+
     private $formVersion = '1.01';
 
     private $intermediate = '';
@@ -82,14 +88,16 @@ class MascotSearchParams
 
     private $report = 'Auto';
 
+    private $isDecoyEnabled = 0;
+
     public function setIntermediate($intermediate)
     {
-        $this->intermidate = $intermediate;
+        $this->intermediate = $intermediate;
     }
 
     public function getIntermediate()
     {
-        return $this->intermidate;
+        return $this->intermediate;
     }
 
     public function setFormVersion($formVersion)
@@ -110,9 +118,9 @@ class MascotSearchParams
             case 'PMF':
                 $this->searchType = $searchType;
                 return;
+            default:
+                throw new \InvalidArgumentException('Unknown search type: ' . $searchType);
         }
-        
-        throw new \InvalidArgumentException('Unknown search type: '. $searchType);
     }
 
     public function getSearchType()
@@ -423,5 +431,22 @@ class MascotSearchParams
     public function getReport()
     {
         return $this->report;
+    }
+
+    public function setMassType($massType)
+    {
+        switch ($massType) {
+            case MascotSearchParams::MASS_MONO:
+            case MascotSearchParams::MASS_AVG:
+                $this->mass = $massType;
+                return;
+            default:
+                throw new \InvalidArgumentException('Mass type must be either monoistopic or average');
+        }
+    }
+
+    public function getMassType()
+    {
+        return $this->mass;
     }
 }

@@ -549,4 +549,34 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getReport());
     }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getMassType
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setMassType
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidMassType()
+    {
+        $value = MascotSearchParams::MASS_AVG;
+        
+        $params = new MascotSearchParams();
+        $params->setMassType($value);
+        
+        $this->assertEquals($value, $params->getMassType());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setMassType
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanSetInvalidMassType()
+    {
+        $value = 'fail';
+        
+        $params = new MascotSearchParams();
+        $params->setMassType($value);
+    }
 }

@@ -17,8 +17,7 @@
 namespace pgb_liv\php_ms\Search;
 
 /**
- * A FASTA parser that creates a new iterable object that will return a database
- * entry on each iteration.
+ * Client to perform Mascot search and results retrieval
  *
  * @author Andrew Collins
  */
@@ -73,17 +72,47 @@ class MascotSearch
         }
         
         $boundary = '---------------------------' . mt_rand();
-        $data = '';
+        
+        $size = 0;
         foreach ($args as $key => $value) {
-            $data .= '--' . $boundary . "\r\n";
-            $data .= 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n";
-            $data .= $value . "\r\n";
+            $size += 2 + strlen($boundary) + 2;
+            if (is_array($value)) {
+                $size += 38 + strlen($key) + 13 + strlen($value['filename']) + 3;
+                $size += strlen($value['mime']) + 4;
+                $size += filesize($value['data']) + 4;
+            } else {
+                $size += 38 + strlen($key) + 5;
+                $size += strlen($value) + 2;
+            }
         }
-        $data .= '--' . $boundary . "--\r\n";
+        $size += 2 + strlen($boundary) + 4;
         
         fwrite($handle, 'Content-Type: multipart/form-data; boundary=' . $boundary . "\r\n");
-        fwrite($handle, 'Content-Length: ' . strlen($data) . "\r\n\r\n");
-        fwrite($handle, $data . "\r\n");
+        fwrite($handle, 'Content-Length: ' . $size . "\r\n\r\n");
+        
+        foreach ($args as $key => $value) {
+            fwrite($handle, '--' . $boundary . "\r\n");
+            
+            if (is_array($value)) {
+                fwrite($handle, 
+                    'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value['filename'] . '"' . "\r\n");
+                fwrite($handle, $value['mime'] . "\r\n\r\n");
+                
+                $fileHandle = fopen($value['data'], 'r');
+                while (! feof($fileHandle)) {
+                    fwrite($handle, fgets($fileHandle));
+                }
+                
+                fclose($fileHandle);
+                
+                fwrite($handle, "\r\n\r\n");
+            } else {
+                fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");
+                fwrite($handle, $value . "\r\n");
+            }
+        }
+        
+        fwrite($handle, '--' . $boundary . "--\r\n");
         
         return $this->readResponse($handle);
     }
@@ -188,7 +217,7 @@ class MascotSearch
         return count($this->cookies) >= 3;
     }
 
-    function getXml($filePath)
+    public function getXml($filePath)
     {
         $args = array();
         $args['file'] = $filePath;
@@ -244,7 +273,7 @@ class MascotSearch
         );
     }
 
-    function getSearches($limit)
+    public function getSearches($limit)
     {
         $args = array();
         $args['CalledFromForm'] = 1;
@@ -306,5 +335,51 @@ class MascotSearch
         }
         
         return $searchLog;
+    }
+
+    public function search(MascotSearchParams $params)
+    {
+        $args = array();
+        $args['INTERMEDIATE'] = $params->getIntermediate();
+        $args['FORMVER'] = $params->getFormVersion();
+        $args['SEARCH'] = $params->getSearchType();
+        $args['PEAK'] = $params->getPeak();
+        $args['REPTYPE'] = $params->getRepType();
+        $args['ErrTolRepeat'] = $params->getErrorTolerantRepeat();
+        $args['SHOWALLMODS'] = $params->isShowAllModsEnabled();
+        $args['USERNAME'] = $params->getUserName();
+        $args['USEREMAIL'] = $params->getUserMail();
+        $args['COM'] = $params->getTitle();
+        $args['DB'] = $params->getDatabases();
+        $args['CLE'] = $params->getEnzyme();
+        $args['PFA'] = $params->getMissedCleavageCount();
+        $args['QUANTITATION'] = $params->getQuantitation();
+        $args['TAXONOMY'] = $params->getTaxonomy();
+        $args['MODS'] = $params->getFixedModifications();
+        $args['IT_MODS'] = $params->getVariableModifications();
+        $args['TOL'] = $params->getPrecursorTolerance();
+        $args['TOLU'] = $params->getPrecursorToleranceUnit();
+        $args['PEP_ISOTOPE_ERROR'] = $params->getPeptideIsotopeError();
+        $args['ITOL'] = $params->getFragmentTolerance();
+        $args['ITOLU'] = $params->getFragmentToleranceUnit();
+        $args['CHARGE'] = $params->getCharge();
+        $args['MASS'] = $params->getMassType();
+        $args['FILE'] = array(
+            'filename' => basename($params->getFilePath()),
+            'mime' => 'Content-Type: application/octet-stream',
+            'data' => $params->getFilePath()
+        );
+        $args['FORMAT'] = $params->getFileFormat();
+        $args['PRECURSOR'] = $params->getPrecursor();
+        $args['INSTRUMENT'] = $params->getInstrument();
+        $args['DECOY'] = $params->isDecoyEnabled();
+        $args['REPORT'] = $params->getReport();
+        
+        $response = $this->sendPost($this->path . '/cgi/nph-mascot.exe?1', $args);
+        
+        // Extra .dat path
+        preg_match('/master_results\\.pl\\?file=(.*[0-9]+\\/F[0-9]+\\.dat)/', $response['content'], $matches);
+        
+        return $matches[1];
     }
 }
