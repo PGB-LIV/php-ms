@@ -38,6 +38,9 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
+     * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
+     * @covers pgb_liv\php_ms\Search\MascotSearch::sendPost
+     * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      */
@@ -52,6 +55,9 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
+     * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
+     * @covers pgb_liv\php_ms\Search\MascotSearch::sendPost
+     * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      */
@@ -67,6 +73,9 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::getSearches
+     * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
+     * @covers pgb_liv\php_ms\Search\MascotSearch::sendGet
+     * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      */
@@ -86,6 +95,9 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::getSearches
      * @covers pgb_liv\php_ms\Search\MascotSearch::getXml
+     * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
+     * @covers pgb_liv\php_ms\Search\MascotSearch::sendPost
+     * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      */
@@ -120,6 +132,11 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
+     * @covers pgb_liv\php_ms\Search\MascotSearch::search
+     * @covers pgb_liv\php_ms\Search\MascotSearch::getXml
+     * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
+     * @covers pgb_liv\php_ms\Search\MascotSearch::sendPost
+     * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      * @uses pgb_liv\php_ms\Search\MascotSearchParams
