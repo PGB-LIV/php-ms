@@ -16,7 +16,7 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Search\MascotSearchParamsTest;
+use pgb_liv\php_ms\Search\MascotSearchParams;
 
 class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,7 +31,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
     {
         $value = 'fred';
         
-        $params = new MascotSearchParamsTest();
+        $params = new MascotSearchParams();
         $params->setUserName($value);
         
         $this->assertEquals($value, $params->getUserName());
@@ -47,7 +47,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
     {
         $value = 'example@example.com';
         
-        $params = new MascotSearchParamsTest();
+        $params = new MascotSearchParams();
         $params->setUserMail($value);
         
         $this->assertEquals($value, $params->getUserMail());
@@ -63,7 +63,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
     {
         $value = 'example@example.com';
         
-        $params = new MascotSearchParamsTest();
+        $params = new MascotSearchParams();
         $params->setTitle($value);
         
         $this->assertEquals($value, $params->getTitle());
@@ -79,7 +79,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
     {
         $value = 'SwissProt';
         
-        $params = new MascotSearchParamsTest();
+        $params = new MascotSearchParams();
         $params->setDatabases($value);
         
         $this->assertEquals($value, $params->getDatabases());
@@ -96,7 +96,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
         // TODO: Multi-DB test
         $value = 'SwissProt';
         
-        $params = new MascotSearchParamsTest();
+        $params = new MascotSearchParams();
         $params->setDatabases($value);
         
         $this->assertEquals($value, $params->getDatabases());
@@ -112,7 +112,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
     {
         $value = 'Trypsin/P';
         
-        $params = new MascotSearchParamsTest();
+        $params = new MascotSearchParams();
         $params->setEnzyme($value);
         
         $this->assertEquals($value, $params->getEnzyme());
