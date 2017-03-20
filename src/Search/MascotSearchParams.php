@@ -82,9 +82,19 @@ class MascotSearchParams
 
     private $report = 'Auto';
 
+    public function setIntermediate($intermediate)
+    {
+        $this->intermidate = $intermediate;
+    }
+
     public function getIntermediate()
     {
         return $this->intermidate;
+    }
+
+    public function setFormVersion($formVersion)
+    {
+        $this->formVersion = $formVersion;
     }
 
     public function getFormVersion()
@@ -92,9 +102,27 @@ class MascotSearchParams
         return $this->formVersion;
     }
 
+    public function setSearchType($searchType)
+    {
+        switch ($searchType) {
+            case 'MIS':
+            case 'SQ':
+            case 'PMF':
+                $this->searchType = $searchType;
+                return;
+        }
+        
+        throw new \InvalidArgumentException('Unknown search type: '. $searchType);
+    }
+
     public function getSearchType()
     {
         return $this->searchType;
+    }
+
+    public function setRepType($repType)
+    {
+        $this->repType = $repType;
     }
 
     public function getRepType()
@@ -102,14 +130,29 @@ class MascotSearchParams
         return $this->repType;
     }
 
+    public function setErrorTolerantRepeat($repeat)
+    {
+        $this->errTolRepeat = $repeat;
+    }
+
     public function getErrorTolerantRepeat()
     {
         return $this->errTolRepeat;
     }
 
+    public function setPeak($peak)
+    {
+        $this->peak = $peak;
+    }
+
     public function getPeak()
     {
         return $this->peak;
+    }
+
+    public function setShowAllModsEnabled($bool)
+    {
+        return $this->isShowAllModsEnabled = $bool;
     }
 
     public function isShowAllModsEnabled()

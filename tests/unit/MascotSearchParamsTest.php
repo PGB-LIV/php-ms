@@ -22,6 +22,132 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getIntermediate
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setIntermediate
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidIntermediate()
+    {
+        $value = 'Test';
+        
+        $params = new MascotSearchParams();
+        $params->setIntermediate($value);
+        
+        $this->assertEquals($value, $params->getIntermediate());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFormVersion
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFormVersion
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFormVersion()
+    {
+        $value = '1.2';
+        
+        $params = new MascotSearchParams();
+        $params->setFormVersion($value);
+        
+        $this->assertEquals($value, $params->getFormVersion());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getSearchType
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setSearchType
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidSearchType()
+    {
+        $value = 'SQ';
+        
+        $params = new MascotSearchParams();
+        $params->setSearchType($value);
+        
+        $this->assertEquals($value, $params->getSearchType());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setSearchType
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanSetInvalidSearchType()
+    {
+        $value = 'fail';
+        
+        $params = new MascotSearchParams();
+        $params->setSearchType($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getRepType
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setRepType
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidRepType()
+    {
+        $value = 'concise';
+        
+        $params = new MascotSearchParams();
+        $params->setRepType($value);
+        
+        $this->assertEquals($value, $params->getRepType());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getErrorTolerantRepeat
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setErrorTolerantRepeat
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidErrorTolerantRepeat()
+    {
+        $value = '1';
+        
+        $params = new MascotSearchParams();
+        $params->setErrorTolerantRepeat($value);
+        
+        $this->assertEquals($value, $params->getErrorTolerantRepeat());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getPeak
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setPeak
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidPeak()
+    {
+        $value = 'test';
+        
+        $params = new MascotSearchParams();
+        $params->setPeak($value);
+        
+        $this->assertEquals($value, $params->getPeak());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::isShowAllModsEnabled
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setShowAllModsEnabled
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidShowAllModsEnabled()
+    {
+        $value = 'test';
+        
+        $params = new MascotSearchParams();
+        $params->setShowAllModsEnabled($value);
+        
+        $this->assertEquals($value, $params->isShowAllModsEnabled());
+    }
+
+    /**
      * @covers pgb_liv\php_ms\Search\MascotSearchParams::setUserName
      * @covers pgb_liv\php_ms\Search\MascotSearchParams::getUserName
      *
