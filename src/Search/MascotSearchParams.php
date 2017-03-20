@@ -60,7 +60,7 @@ class MascotSearchParams
 
     private $precursorTolerance = 1.2;
 
-    private $precursorUnit = 'Da';
+    private $precursorToleranceUnit = 'Da';
 
     private $peptideIsotopeError = 0;
 
@@ -219,9 +219,21 @@ class MascotSearchParams
         return $this->taxonomy;
     }
 
+    public function setFixedModifications($fixedModifications)
+    {
+        // TODO: Validate mods
+        $this->fixedModificiations = $fixedModifications;
+    }
+
     public function getFixedModifications()
     {
         return $this->fixedModificiations;
+    }
+
+    public function setVariableModifications($variableModifications)
+    {
+        // TODO: Validate mods
+        $this->variableModifications = $variableModifications;
     }
 
     public function getVariableModifications()
@@ -229,14 +241,33 @@ class MascotSearchParams
         return $this->variableModifications;
     }
 
-    public function getPeptideTolerance()
+    public function setPrecursorTolerance($precursorTolerance)
     {
-        return $this->peptideTolerance;
+        // TODO: Validate float
+        $this->precursorTolerance = $precursorTolerance;
     }
 
-    public function getPeptideToleranceUnit()
+    public function getPrecursorTolerance()
     {
-        return $this->peptideToleranceUnit;
+        return $this->precursorTolerance;
+    }
+
+    public function setPrecursorToleranceUnit($unit)
+    {
+        // Validate unit
+        $this->precursorToleranceUnit = $unit;
+    }
+
+    public function getPrecursorToleranceUnit()
+    {
+        return $this->precursorToleranceUnit;
+    }
+
+    public function setPeptideIsotopeError($peptideIsotopeError)
+    {
+        // TODO: Validate int
+        // TODO: Validate >= 0 && <= 2
+        $this->peptideIsotopeError = $peptideIsotopeError;
     }
 
     public function getPeptideIsotopeError()
@@ -244,9 +275,21 @@ class MascotSearchParams
         return $this->peptideIsotopeError;
     }
 
+    public function setFragmentTolerance($fragmentTolerance)
+    {
+        // TODO: Validate float
+        $this->fragmentTolerance = $fragmentTolerance;
+    }
+
     public function getFragmentTolerance()
     {
         return $this->fragmentTolerance;
+    }
+
+    public function setFragmentToleranceUnit($fragmentToleranceUnit)
+    {
+        // TODO: Validate unit
+        $this->fragmentToleranceUnit = $fragmentToleranceUnit;
     }
 
     public function getFragmentToleranceUnit()
@@ -254,9 +297,21 @@ class MascotSearchParams
         return $this->fragmentToleranceUnit;
     }
 
+    public function setCharge($charge)
+    {
+        // TODO: Validate charge
+        $this->charge = $charge;
+    }
+
     public function getCharge()
     {
         return $this->charge;
+    }
+
+    public function setFilePath($filePath)
+    {
+        // TODO: Validate file exists
+        $this->file = $filePath;
     }
 
     public function getFilePath()
@@ -264,9 +319,29 @@ class MascotSearchParams
         return $this->file;
     }
 
+    public function setFileFormat($fileFormat)
+    {
+        // Validate valid file format
+        $this->fileFormat = $fileFormat;
+    }
+
     public function getFileFormat()
     {
         return $this->fileFormat;
+    }
+
+    /**
+     * Certain data file formats, SCIEX API III, PerSeptive (.PKS), and Bruker (.XML), do not include m/z information for the precursor peptide.
+     * For these formats only, the Precursor field is used to specify the m/z value of the parent peptide. The charge state is defined by the setting of the
+     * Peptide Charge field.
+     *
+     * @param float $precursorMass
+     *            Precursor mass value
+     */
+    public function setPrecursor($precursorMass)
+    {
+        // TODO: Validate float
+        $this->precursor = $precursorMass;
     }
 
     public function getPrecursor()
@@ -274,14 +349,32 @@ class MascotSearchParams
         return $this->precursor;
     }
 
+    public function setInstrument($instrument)
+    {
+        // TODO: Validate instrument
+        $this->instrument = $instrument;
+    }
+
     public function getInstrument()
     {
         return $this->instrument;
     }
 
+    public function setDecoyEnabled($bool)
+    {
+        // TODO: validate boolean
+        $this->isDecoyEnabled = $bool;
+    }
+
     public function isDecoyEnabled()
     {
-        return $this->isDecoyEnabled;
+        return $this->isDecoyEnabled ? 1 : 0;
+    }
+
+    public function setReport($top)
+    {
+        // TODO: Validiate Report top limit
+        $this->report = $top;
     }
 
     public function getReport()

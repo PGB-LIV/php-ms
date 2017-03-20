@@ -39,7 +39,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Search\MascotSearchParams::setUserMail
-     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setUserMail
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getUserMail
      *
      * @uses pgb_liv\php_ms\Search\MascotSearchParams
      */
@@ -116,5 +116,311 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
         $params->setEnzyme($value);
         
         $this->assertEquals($value, $params->getEnzyme());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setMissedCleavageCount
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getMissedCleavageCount
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidMissedCleavageCount()
+    {
+        $value = 2;
+        
+        $params = new MascotSearchParams();
+        $params->setMissedCleavageCount($value);
+        
+        $this->assertEquals($value, $params->getMissedCleavageCount());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setQuantitation
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getQuantitation
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidQuantitation()
+    {
+        $value = 'SILAC K+6 R+10 [MD]';
+        
+        $params = new MascotSearchParams();
+        $params->setQuantitation($value);
+        
+        $this->assertEquals($value, $params->getQuantitation());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setTaxonomy
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getTaxonomy
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidTaxonomy()
+    {
+        $value = '. . Viruses';
+        
+        $params = new MascotSearchParams();
+        $params->setTaxonomy($value);
+        
+        $this->assertEquals($value, $params->getTaxonomy());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFixedModifications
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFixedModifications
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFixedModifications1()
+    {
+        $value = 'Carbamidomethyl (C)';
+        
+        $params = new MascotSearchParams();
+        $params->setFixedModifications($value);
+        
+        $this->assertEquals($value, $params->getFixedModifications());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFixedModifications
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFixedModifications
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFixedModifications2()
+    {
+        // TODO: Support multiple mods
+        $value = 'Carbamidomethyl (C)';
+        
+        $params = new MascotSearchParams();
+        $params->setFixedModifications($value);
+        
+        $this->assertEquals($value, $params->getFixedModifications());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setVariableModifications
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getVariableModifications
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidVariableModifications1()
+    {
+        $value = 'Oxidation (M)';
+        
+        $params = new MascotSearchParams();
+        $params->setVariableModifications($value);
+        
+        $this->assertEquals($value, $params->getVariableModifications());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setVariableModifications
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getVariableModifications
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidVariableModifications2()
+    {
+        // TODO: Support multiple mods
+        $value = 'Oxidation (M)';
+        
+        $params = new MascotSearchParams();
+        $params->setVariableModifications($value);
+        
+        $this->assertEquals($value, $params->getVariableModifications());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setPrecursorTolerance
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getPrecursorTolerance
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidPeptideTolerance()
+    {
+        $value = 10;
+        
+        $params = new MascotSearchParams();
+        $params->setPrecursorTolerance($value);
+        
+        $this->assertEquals($value, $params->getPrecursorTolerance());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setPrecursorToleranceUnit
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getPrecursorToleranceUnit
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidPeptideToleranceUnit()
+    {
+        $value = 'ppm';
+        
+        $params = new MascotSearchParams();
+        $params->setPrecursorToleranceUnit($value);
+        
+        $this->assertEquals($value, $params->getPrecursorToleranceUnit());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setPeptideIsotopeError
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getPeptideIsotopeError
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidPeptideIsotopeError()
+    {
+        $value = 1;
+        
+        $params = new MascotSearchParams();
+        $params->setPeptideIsotopeError($value);
+        
+        $this->assertEquals($value, $params->getPeptideIsotopeError());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFragmentTolerance
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFragmentTolerance
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFragmentTolerance()
+    {
+        $value = 0.1;
+        
+        $params = new MascotSearchParams();
+        $params->setFragmentTolerance($value);
+        
+        $this->assertEquals($value, $params->getFragmentTolerance());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFragmentToleranceUnit
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFragmentToleranceUnit
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFragmentToleranceUnit()
+    {
+        $value = 'Da';
+        
+        $params = new MascotSearchParams();
+        $params->setFragmentToleranceUnit($value);
+        
+        $this->assertEquals($value, $params->getFragmentToleranceUnit());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setCharge
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getCharge
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidCharge()
+    {
+        $value = '2+ and 3+';
+        
+        $params = new MascotSearchParams();
+        $params->setCharge($value);
+        
+        $this->assertEquals($value, $params->getCharge());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFilePath
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFilePath
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFilePath()
+    {
+        $value = '/tmp/myfile.mgf';
+        
+        $params = new MascotSearchParams();
+        $params->setFilePath($value);
+        
+        $this->assertEquals($value, $params->getFilePath());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setFileFormat
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getFileFormat
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidFileFormat()
+    {
+        $value = 'mzML (.mzML)';
+        
+        $params = new MascotSearchParams();
+        $params->setFileFormat($value);
+        
+        $this->assertEquals($value, $params->getFileFormat());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getPrecursor
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setPrecursor
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidPrecursor()
+    {
+        $value = 125.4;
+        
+        $params = new MascotSearchParams();
+        $params->setPrecursor($value);
+        
+        $this->assertEquals($value, $params->getPrecursor());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getInstrument
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setInstrument
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidInstrument()
+    {
+        $value = 'CID+ETD';
+        
+        $params = new MascotSearchParams();
+        $params->setInstrument($value);
+        
+        $this->assertEquals($value, $params->getInstrument());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::isDecoyEnabled
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setDecoyEnabled
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidDecoyEnabled()
+    {
+        $value = 1;
+        
+        $params = new MascotSearchParams();
+        $params->setDecoyEnabled($value);
+        
+        $this->assertEquals($value, $params->isDecoyEnabled());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::getReport
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setReport
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanGetSetValidReport()
+    {
+        $value = 10;
+        
+        $params = new MascotSearchParams();
+        $params->setReport($value);
+        
+        $this->assertEquals($value, $params->getReport());
     }
 }
