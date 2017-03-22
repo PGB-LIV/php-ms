@@ -462,12 +462,14 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanGetSetValidFilePath()
     {
-        $value = '/tmp/myfile.mgf';
+        $value = tempnam(sys_get_temp_dir(), 'php-ms');
+        touch($value);
         
         $params = new MascotSearchParams();
         $params->setFilePath($value);
         
         $this->assertEquals($value, $params->getFilePath());
+        unlink($value);
     }
 
     /**
@@ -526,7 +528,7 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanGetSetValidDecoyEnabled()
     {
-        $value = 1;
+        $value = true;
         
         $params = new MascotSearchParams();
         $params->setDecoyEnabled($value);
