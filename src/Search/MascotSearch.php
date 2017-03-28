@@ -377,7 +377,7 @@ class MascotSearch
         
         $response = $this->sendPost($this->path . '/cgi/nph-mascot.exe?1', $args);
         
-        // Extra .dat path
+        // Extract .dat path
         preg_match('/master_results\\.pl\\?file=(.*[0-9]+\\/F[0-9]+\\.dat)/', $response['content'], $matches);
         
         return $matches[1];
