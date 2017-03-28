@@ -14,76 +14,76 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\crowdsource\Test\Unit;
+namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\crowdsource\Core\Tolerance;
+use pgb_liv\php_ms\Core\Tolerance;
 
 class ToleranceTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\crowdsource\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      *
-     * @uses pgb_liv\crowdsource\Core\Tolerance
+     * @uses pgb_liv\php_ms\Core\Tolerance
      */
     public function testObjectCanBeConstructedForValidConstructorArguments1()
     {
         $tolerance = new Tolerance(7.5, 'ppm');
-        $this->assertInstanceOf('pgb_liv\crowdsource\Core\Tolerance', $tolerance);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
         
         return $tolerance;
     }
 
     /**
-     * @covers pgb_liv\crowdsource\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      *
-     * @uses pgb_liv\crowdsource\Core\Tolerance
+     * @uses pgb_liv\php_ms\Core\Tolerance
      */
     public function testObjectCanBeConstructedForValidConstructorArguments2()
     {
         $tolerance = new Tolerance(0.5, 'da');
-        $this->assertInstanceOf('pgb_liv\crowdsource\Core\Tolerance', $tolerance);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
         
         return $tolerance;
     }
 
     /**
-     * @covers pgb_liv\crowdsource\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\crowdsource\Core\Tolerance
+     * @uses pgb_liv\php_ms\Core\Tolerance
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments1()
     {
         $tolerance = new Tolerance('fail', 'ppm');
-        $this->assertInstanceOf('pgb_liv\crowdsource\Core\Tolerance', $tolerance);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
     }
 
     /**
-     * @covers pgb_liv\crowdsource\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\crowdsource\Core\Tolerance
+     * @uses pgb_liv\php_ms\Core\Tolerance
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments2()
     {
         $tolerance = new Tolerance(0.6, 'dalton');
-        $this->assertInstanceOf('pgb_liv\crowdsource\Core\Tolerance', $tolerance);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
     }
 
     /**
-     * @covers pgb_liv\crowdsource\Core\Tolerance::__construct
-     * @covers pgb_liv\crowdsource\Core\Tolerance::getTolerance
-     * @covers pgb_liv\crowdsource\Core\Tolerance::getUnit
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::getTolerance
+     * @covers pgb_liv\php_ms\Core\Tolerance::getUnit
      *
-     * @uses pgb_liv\crowdsource\Core\Tolerance
+     * @uses pgb_liv\php_ms\Core\Tolerance
      */
     public function testObjectCanGetConstructorArgs()
     {
         $value = 15.6;
         $unit = 'ppm';
         $tolerance = new Tolerance($value, $unit);
-        $this->assertInstanceOf('pgb_liv\crowdsource\Core\Tolerance', $tolerance);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
         
         $this->assertEquals($value, $tolerance->getTolerance());
         $this->assertEquals($unit, $tolerance->getUnit());
