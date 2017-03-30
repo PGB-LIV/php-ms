@@ -17,24 +17,23 @@
 namespace pgb_liv\php_ms\Utility\Digest;
 
 /**
- * Trypsin digestion for generated trypsinated peptides.
  *
  * @author Andrew Collins
  */
-class DigestTrypsin extends DigestRegularExpression implements DigestInterface
+class DigestArgC extends DigestRegularExpression implements DigestInterface
 {
 
     /**
-     * Regular expression for Trypsin
+     * Regular expression for Arg-C.
      *
      * @var string
-     * @link http://purl.obolibrary.org/obo/MS_1001176
+     * @link http://purl.obolibrary.org/obo/MS_1001272
      */
-    const CLEAVAGE_RULE = '/(?<=[KR])(?!P)/';
+    const CLEAVAGE_RULE = '/(?<=R)(?!P)/';
 
     public function __construct()
     {
         parent::__construct(DigestTrypsin::CLEAVAGE_RULE);
-        $this->setName('Trypsin');
+        $this->setName('Endoproteinase Arg-C');
     }
 }

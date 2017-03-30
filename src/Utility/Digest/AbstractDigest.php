@@ -42,6 +42,13 @@ abstract class AbstractDigest
     private $maxMissedCleavage = 0;
 
     /**
+     * The name for this enzyme
+     *
+     * @var string
+     */
+    private $name = 'Unknown';
+
+    /**
      * Set the maximum number of missed cleavages the algorithm should produce.
      * By default no missed cleavages are produced.
      *
@@ -140,4 +147,14 @@ abstract class AbstractDigest
     }
 
     abstract protected function performDigestion(Protein $protein);
+
+    protected function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }

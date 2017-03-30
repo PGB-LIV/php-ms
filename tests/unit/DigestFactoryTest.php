@@ -16,24 +16,26 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Utility\Digest\DigestTrypsin;
 use pgb_liv\php_ms\Utility\Digest\DigestFactory;
 
 class DigestFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestFactory::getEnzymes
      * @covers pgb_liv\php_ms\Utility\Digest\DigestFactory::getDigest
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestFactory
      */
-    public function testCanConstructTrypsin()
+    public function testCanConstructByClassName()
     {
-        $trypsin = DigestFactory::getDigest('trypsin');
+        $enzymes = DigestFactory::getEnzymes();
         
-        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Digest\DigestTrypsin', $trypsin);
-        
-        return $trypsin;
+        foreach ($enzymes as $key => $value) {
+            $enzyme = DigestFactory::getDigest($key);
+            
+            $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Digest\Digest' . $key, $enzyme);
+        }
     }
 
     /**
@@ -46,5 +48,35 @@ class DigestFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCanConstructInvalid()
     {
         $trypsin = DigestFactory::getDigest('fail');
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestFactory::getEnzymes
+     *
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestFactory
+     */
+    public function testCanGetEnzymes()
+    {
+        $enzymes = DigestFactory::getEnzymes();
+        
+        $this->assertTrue(array_key_exists('2Iodobenzoate', $enzymes));
+        $this->assertTrue(array_key_exists('ArgC', $enzymes));
+        $this->assertTrue(array_key_exists('AspN', $enzymes));
+        $this->assertTrue(array_key_exists('AspNAmbic', $enzymes));
+        $this->assertTrue(array_key_exists('Chymotrypsin', $enzymes));
+        $this->assertTrue(array_key_exists('Cnbr', $enzymes));
+        $this->assertTrue(array_key_exists('FormicAcid', $enzymes));
+        $this->assertTrue(array_key_exists('GlutamylEndopeptidase', $enzymes));
+        $this->assertTrue(array_key_exists('LeukocyteElastase', $enzymes));
+        $this->assertTrue(array_key_exists('LysC', $enzymes));
+        $this->assertTrue(array_key_exists('LysCP', $enzymes));
+        $this->assertTrue(array_key_exists('PepsinA', $enzymes));
+        $this->assertTrue(array_key_exists('ProlineEndopeptidase', $enzymes));
+        $this->assertTrue(array_key_exists('TrypChymo', $enzymes));
+        $this->assertTrue(array_key_exists('Trypsin', $enzymes));
+        $this->assertTrue(array_key_exists('TrypsinP', $enzymes));
+        $this->assertTrue(array_key_exists('V8DE', $enzymes));
+        $this->assertTrue(array_key_exists('V8E', $enzymes));
+        $this->assertEquals(18, count($enzymes));
     }
 }

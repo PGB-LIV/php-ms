@@ -17,24 +17,23 @@
 namespace pgb_liv\php_ms\Utility\Digest;
 
 /**
- * Trypsin digestion for generated trypsinated peptides.
  *
  * @author Andrew Collins
  */
-class DigestTrypsin extends DigestRegularExpression implements DigestInterface
+class DigestPepsinA extends DigestRegularExpression implements DigestInterface
 {
 
     /**
-     * Regular expression for Trypsin
+     * Regular expression for PepsinA.
      *
      * @var string
-     * @link http://purl.obolibrary.org/obo/MS_1001176
+     * @link http://purl.obolibrary.org/obo/MS_1001337
      */
-    const CLEAVAGE_RULE = '/(?<=[KR])(?!P)/';
+    const CLEAVAGE_RULE = '/(?<=[FL])/';
 
     public function __construct()
     {
         parent::__construct(DigestTrypsin::CLEAVAGE_RULE);
-        $this->setName('Trypsin');
+        $this->setName('PepsinA Proteinase');
     }
 }

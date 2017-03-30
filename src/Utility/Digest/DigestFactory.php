@@ -33,12 +33,49 @@ class DigestFactory
      */
     public static function getDigest($digestName)
     {
+        $enzymes = DigestFactory::getEnzymes();
         $digestUp = strtoupper($digestName);
         
-        if ($digestUp == 'TRYPSIN') {
-            return new DigestTrypsin();
+        foreach ($enzymes as $key => $value) {
+            if (strtoupper($key) == $digestUp) {
+                $classPath = __NAMESPACE__ . '\\Digest' . $key;
+                return new $classPath();
+            }
         }
         
         throw new \InvalidArgumentException('Unknown digest algorithm - ' . $digestName);
+    }
+
+    public static function getEnzymes()
+    {
+        $blacklist = array(
+            'AbstractDigest.php',
+            'DigestInterface.php',
+            'DigestRegularExpression.php',
+            'DigestFactory.php'
+        );
+        
+        $files = scandir(__DIR__);
+        $enzymes = array();
+        
+        foreach ($files as $file) {
+            if (is_dir(__DIR__ . '/' . $file)) {
+                continue;
+            }
+            
+            if (in_array($file, $blacklist)) {
+                continue;
+            }
+            
+            $className = str_replace('.php', '', $file);
+            $classPath = __NAMESPACE__ . '\\' . $className;
+            $class = new $classPath();
+            
+            if (is_a($class, __NAMESPACE__ . '\\' . 'DigestInterface')) {
+                $enzymes[substr($className, 6)] = $class->getName();
+            }
+        }
+        
+        return $enzymes;
     }
 }
