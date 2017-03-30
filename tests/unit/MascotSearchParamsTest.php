@@ -261,6 +261,48 @@ class MascotSearchParamsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setMissedCleavageCount
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanSetInvalidMissedCleavageCountHigh()
+    {
+        $value = 10;
+        
+        $params = new MascotSearchParams();
+        $params->setMissedCleavageCount($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setMissedCleavageCount
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanSetInvalidMissedCleavageCountNegative()
+    {
+        $value = - 1;
+        
+        $params = new MascotSearchParams();
+        $params->setMissedCleavageCount($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MascotSearchParams::setMissedCleavageCount
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\MascotSearchParams
+     */
+    public function testCanSetInvalidMissedCleavageCountString()
+    {
+        $value = 'fail';
+        
+        $params = new MascotSearchParams();
+        $params->setMissedCleavageCount($value);
+    }
+
+    /**
      * @covers pgb_liv\php_ms\Search\MascotSearchParams::setQuantitation
      * @covers pgb_liv\php_ms\Search\MascotSearchParams::getQuantitation
      *
