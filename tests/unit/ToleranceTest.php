@@ -91,7 +91,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
-     * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonMass
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonDelta
      *
      * @uses pgb_liv\php_ms\Core\Tolerance
      */
@@ -107,7 +107,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
-     * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonMass
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonDelta
      *
      * @uses pgb_liv\php_ms\Core\Tolerance
      */

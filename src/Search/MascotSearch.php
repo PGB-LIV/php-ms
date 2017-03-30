@@ -32,6 +32,12 @@ class MascotSearch
 
     private $cookies = array();
 
+    const FILE_NAME = 'filename';
+
+    const MIME_TYPE = 'mime';
+
+    const FILE_DATA = 'data';
+
     /**
      * Create a new instance of this class.
      * Must supply server details.
@@ -77,9 +83,9 @@ class MascotSearch
         foreach ($args as $key => $value) {
             $size += 2 + strlen($boundary) + 2;
             if (is_array($value)) {
-                $size += 38 + strlen($key) + 13 + strlen($value['filename']) + 3;
-                $size += strlen($value['mime']) + 4;
-                $size += filesize($value['data']) + 4;
+                $size += 38 + strlen($key) + 13 + strlen($value[MascotSearch::FILE_NAME]) + 3;
+                $size += strlen($value[MascotSearch::MIME_TYPE]) + 4;
+                $size += filesize($value[MascotSearch::FILE_DATA]) + 4;
             } else {
                 $size += 38 + strlen($key) + 5;
                 $size += strlen($value) + 2;
@@ -95,10 +101,11 @@ class MascotSearch
             
             if (is_array($value)) {
                 fwrite($handle, 
-                    'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value['filename'] . '"' . "\r\n");
-                fwrite($handle, $value['mime'] . "\r\n\r\n");
+                    'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] .
+                         '"' . "\r\n");
+                fwrite($handle, $value[MascotSearch::MIME_TYPE] . "\r\n\r\n");
                 
-                $fileHandle = fopen($value['data'], 'r');
+                $fileHandle = fopen($value[MascotSearch::FILE_DATA], 'r');
                 while (! feof($fileHandle)) {
                     fwrite($handle, fgets($fileHandle));
                 }
@@ -365,9 +372,9 @@ class MascotSearch
         $args['CHARGE'] = $params->getCharge();
         $args['MASS'] = $params->getMassType();
         $args['FILE'] = array(
-            'filename' => basename($params->getFilePath()),
-            'mime' => 'Content-Type: application/octet-stream',
-            'data' => $params->getFilePath()
+            MascotSearch::FILE_NAME => basename($params->getFilePath()),
+            MascotSearch::MIME_TYPE => 'Content-Type: application/octet-stream',
+            MascotSearch::FILE_DATA => $params->getFilePath()
         );
         $args['FORMAT'] = $params->getFileFormat();
         $args['PRECURSOR'] = $params->getPrecursor();
