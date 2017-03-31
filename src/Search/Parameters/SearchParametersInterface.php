@@ -14,27 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Digest;
+namespace pgb_liv\php_ms\Search\Parameters;
 
 /**
- * Trypsin digestion for generated trypsinated peptides.
+ * Generic interface for accessing search paramaters.
+ * This interface will only document universal parameter options. See individual implementers for search engine specific parameters.
  *
  * @author Andrew Collins
  */
-class DigestTrypsin extends DigestRegularExpression implements DigestInterface
+interface SearchParametersInterface
 {
-
-    /**
-     * Regular expression for Trypsin
-     *
-     * @var string
-     * @link http://purl.obolibrary.org/obo/MS_1001176
-     */
-    const CLEAVAGE_RULE = '/(?<=[KR])(?!P|$)/';
-
-    public function __construct()
-    {
-        parent::__construct(DigestTrypsin::CLEAVAGE_RULE);
-        $this->setName('Trypsin');
-    }
 }

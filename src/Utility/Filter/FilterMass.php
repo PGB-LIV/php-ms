@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Utility\Filter;
 
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Creates an instance of a filter than can be used with a list to
@@ -78,6 +79,25 @@ class FilterMass extends AbstractFilter
         }
         
         if ($spectra->getMass() > $this->maxMass) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Returns true if the Peptide matches the filter criteria, else false
+     *
+     * @param Peptide $peptide
+     *            Peptide object to filter
+     */
+    public function isValidPeptide(Peptide $peptide)
+    {
+        if ($peptide->calculateMass() < $this->minMass) {
+            return false;
+        }
+        
+        if ($peptide->calculateMass() > $this->maxMass) {
             return false;
         }
         

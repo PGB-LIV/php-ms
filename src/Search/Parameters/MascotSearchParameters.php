@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Search;
+namespace pgb_liv\php_ms\Search\Parameters;
 
 /**
  * Encapsulation class for Mascot search parameters
  *
  * @author Andrew Collins
  */
-class MascotSearchParams
+class MascotSearchParameters extends AbstractSearchParameters implements SearchParametersInterface
 {
 
     const UNIT_PPM = 'ppm';
@@ -52,10 +52,6 @@ class MascotSearchParams
 
     private $databases;
 
-    private $enzyme = 'Trypsin';
-
-    private $missedCleavageCount = 1;
-
     private $quantitation = 'None';
 
     private $taxonomy = 'All Entries';
@@ -64,21 +60,11 @@ class MascotSearchParams
 
     private $variableModifications;
 
-    private $precursorTolerance = 1.2;
-
-    private $precursorToleranceUnit = 'Da';
-
     private $peptideIsotopeError = 0;
-
-    private $fragmentTolerance = 0.6;
-
-    private $fragmentToleranceUnit = 'Da';
 
     private $charge = '2+';
 
     private $mass = 'Monoisotopic';
-
-    private $file;
 
     private $fileFormat = 'Mascot generic';
 
@@ -87,8 +73,6 @@ class MascotSearchParams
     private $instrument = 'Default';
 
     private $report = 'Auto';
-
-    private $isDecoyEnabled = 0;
 
     public function setIntermediate($intermediate)
     {
@@ -210,46 +194,6 @@ class MascotSearchParams
         return $this->title;
     }
 
-    public function setDatabases($databases)
-    {
-        $this->databases = $databases;
-    }
-
-    /**
-     * The sequence database(s) to be searched.
-     *
-     * @return string
-     */
-    public function getDatabases()
-    {
-        return $this->databases;
-    }
-
-    public function setEnzyme($enzyme)
-    {
-        // TODO: Validate enzyme
-        $this->enzyme = $enzyme;
-    }
-
-    public function getEnzyme()
-    {
-        return $this->enzyme;
-    }
-
-    public function setMissedCleavageCount($maxCleave)
-    {
-        if (! is_int($maxCleave) || $maxCleave < 0 || $maxCleave > 9) {
-            throw new \InvalidArgumentException('Argument 1 must be an integer value between 0 and 9');
-        }
-        
-        $this->missedCleavageCount = $maxCleave;
-    }
-
-    public function getMissedCleavageCount()
-    {
-        return $this->missedCleavageCount;
-    }
-
     public function setQuantitation($quantitationMethod)
     {
         // TODO: Validate quantitation
@@ -294,31 +238,6 @@ class MascotSearchParams
         return $this->variableModifications;
     }
 
-    public function setPrecursorTolerance($precursorTolerance)
-    {
-        if ((! is_float($precursorTolerance) && ! is_int($precursorTolerance)) || $precursorTolerance < 0) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or integer value greater than 0');
-        }
-        
-        $this->precursorTolerance = $precursorTolerance;
-    }
-
-    public function getPrecursorTolerance()
-    {
-        return $this->precursorTolerance;
-    }
-
-    public function setPrecursorToleranceUnit($unit)
-    {
-        // Validate unit
-        $this->precursorToleranceUnit = $unit;
-    }
-
-    public function getPrecursorToleranceUnit()
-    {
-        return $this->precursorToleranceUnit;
-    }
-
     public function setPeptideIsotopeError($peptideIsotopeError)
     {
         if (! is_int($peptideIsotopeError) || $peptideIsotopeError < 0 || $peptideIsotopeError > 2) {
@@ -333,31 +252,6 @@ class MascotSearchParams
         return $this->peptideIsotopeError;
     }
 
-    public function setFragmentTolerance($fragmentTolerance)
-    {
-        if ((! is_float($fragmentTolerance) && ! is_int($fragmentTolerance)) || $fragmentTolerance < 0) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or integer value greater than 0');
-        }
-        
-        $this->fragmentTolerance = $fragmentTolerance;
-    }
-
-    public function getFragmentTolerance()
-    {
-        return $this->fragmentTolerance;
-    }
-
-    public function setFragmentToleranceUnit($fragmentToleranceUnit)
-    {
-        // TODO: Validate unit
-        $this->fragmentToleranceUnit = $fragmentToleranceUnit;
-    }
-
-    public function getFragmentToleranceUnit()
-    {
-        return $this->fragmentToleranceUnit;
-    }
-
     public function setCharge($charge)
     {
         $this->charge = $charge;
@@ -366,20 +260,6 @@ class MascotSearchParams
     public function getCharge()
     {
         return $this->charge;
-    }
-
-    public function setFilePath($filePath)
-    {
-        if (! file_exists($filePath)) {
-            throw new \InvalidArgumentException('Argument 1 must specify a valid file');
-        }
-        
-        $this->file = $filePath;
-    }
-
-    public function getFilePath()
-    {
-        return $this->file;
     }
 
     public function setFileFormat($fileFormat)
@@ -458,20 +338,6 @@ class MascotSearchParams
         return $this->instrument;
     }
 
-    public function setDecoyEnabled($bool)
-    {
-        if (! is_bool($bool)) {
-            throw new \InvalidArgumentException('Argument 1 must be a boolean value');
-        }
-        
-        $this->isDecoyEnabled = $bool;
-    }
-
-    public function isDecoyEnabled()
-    {
-        return $this->isDecoyEnabled ? 1 : 0;
-    }
-
     public function setReport($top)
     {
         // TODO: Validiate Report top limit
@@ -486,8 +352,8 @@ class MascotSearchParams
     public function setMassType($massType)
     {
         switch ($massType) {
-            case MascotSearchParams::MASS_MONO:
-            case MascotSearchParams::MASS_AVG:
+            case MascotSearchParameters::MASS_MONO:
+            case MascotSearchParameters::MASS_AVG:
                 $this->mass = $massType;
                 return;
             default:

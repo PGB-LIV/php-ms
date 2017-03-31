@@ -42,4 +42,38 @@ interface DigestInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * Set the maximum number of missed cleavages the algorithm should produce.
+     * By default no missed cleavages are produced.
+     *
+     * @param int $maxMissedCleavage
+     *            Maximum number of cleavages to account for
+     */
+    public function setMaxMissedCleavage($maxMissedCleavage);
+
+    /**
+     * Gets the maximum missed cleavage count value
+     *
+     * @return int max missed cleavage count
+     */
+    public function getMaxMissedCleavage();
+
+    /**
+     * Sets whether n-terminal methionine excision should be performed.
+     * When enabled any methionine at the n-terminus of a protein will be removed.
+     * Both the excised and non-excised peptide will be returned after
+     * digestion. Defaults to true.
+     *
+     * @param bool $isNmeEnabled
+     *            Set true to enable n-terminal methionine excision
+     */
+    public function setNmeEnabled($isNmeEnabled);
+
+    /**
+     * Tells whether n-terminal methionine excision will be performed or not.
+     *
+     * @return boolean true if NME is enabled, else false
+     */
+    public function isNmeEnabled();
 }
