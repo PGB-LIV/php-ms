@@ -139,7 +139,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanSubmitValidJob()
     {
