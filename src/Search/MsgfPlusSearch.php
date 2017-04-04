@@ -51,11 +51,19 @@ class MsgfPlusSearch
         if (! is_a($parameters, 'pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters')) {
             throw new \InvalidArgumentException('Argument 1 expected to be of type MsgfPlusSearchParameters');
         }
+        
         // TODO: Validate SpectraPath && Database have values
         
         $command = $this->getCommand($parameters);
         
         $result = $this->executeCommand($command);
+        
+        if (! is_null($parameters->getOutputFile())) {
+            return $parameters->getOutputFile();
+        } else {
+            $extensionPos = strrpos($parameters->getSpectraPath(), '.');
+            return substr($parameters->getSpectraPath(), 0, $extensionPos) . '.mzid';
+        }
     }
 
     private function getCommand(MsgfPlusSearchParameters $parameters)
@@ -68,7 +76,7 @@ class MsgfPlusSearch
         $command .= ' -d ' . $parameters->getDatabases();
         
         if (! is_null($parameters->getOutputFile())) {
-            $command .= ' -o ' . $parameters->getDatabases();
+            $command .= ' -o ' . $parameters->getOutputFile();
         }
         
         if (! is_null($parameters->getPrecursorTolerance()) && ! is_null($parameters->getPrecursorToleranceUnit())) {
@@ -150,14 +158,24 @@ class MsgfPlusSearch
         return $command;
     }
 
+    /**
+     * Executes the MSGF+ Command.
+     *
+     * @param string $command
+     *            Complete command line argument to execute
+     * @throws \InvalidArgumentException Thrown if MS-GF+ writes anything to stderr
+     * @return string Path to MS-GF+ stdout log file
+     */
     private function executeCommand($command)
     {
-        var_dump($command);
+        $stdoutPath = tempnam(sys_get_temp_dir(), 'php-ms') . '.log';
+        $stderrPath = tempnam(sys_get_temp_dir(), 'php-ms') . '.log';
         
-        $stdoutPath = tempnam(sys_get_temp_dir(), 'php-ms');
-        $stderrPath = tempnam(sys_get_temp_dir(), 'php-ms');
-        
-        $descriptorSpec = array(
+        $descriptors = array(
+            0 => array(
+                'pipe',
+                'r'
+            ),
             1 => array(
                 'file',
                 $stdoutPath,
@@ -170,16 +188,13 @@ class MsgfPlusSearch
             )
         );
         
-        $process = proc_open($command, $descriptorSpec, $pipes);
+        $process = proc_open($command, $descriptors, $pipes);
         proc_close($process);
         
-        if (filesize($stderrPath) == 0) 
-        {
-            var_dump(file_get_contents($stdoutPath));
-            return true;
-        } else {
-            var_dump(file_get_contents($stderrPath));
-            return false;
+        if (filesize($stderrPath) > 0) {
+            throw new \InvalidArgumentException(file_get_contents($stderrPath));
         }
+        
+        return $stdoutPath;
     }
 }

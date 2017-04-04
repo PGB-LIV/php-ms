@@ -28,17 +28,19 @@ abstract class AbstractSearchParameters
 
     private $spectraPath;
 
-    private $precursorValue;
+    private $precursorToleranceValue;
 
-    private $precursorUnit;
+    private $precursorToleranceUnit;
 
-    private $fragmentValue;
+    private $fragmentToleranceValue;
 
-    private $fragmentUnit;
+    private $fragmentToleranceUnit;
 
     private $enzyme;
 
     private $isDecoyEnabled = 0;
+
+    private $missedCleavageCount;
 
     public function setDatabases($databases)
     {

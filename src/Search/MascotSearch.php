@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Search;
 
+use pgb_liv\php_ms\Search\Parameters\MascotSearchParameters;
+
 /**
  * Client to perform Mascot search and results retrieval
  *
@@ -100,9 +102,7 @@ class MascotSearch
             fwrite($handle, '--' . $boundary . "\r\n");
             
             if (is_array($value)) {
-                fwrite($handle, 
-                    'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] .
-                         '"' . "\r\n");
+                fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] . '"' . "\r\n");
                 fwrite($handle, $value[MascotSearch::MIME_TYPE] . "\r\n\r\n");
                 
                 $fileHandle = fopen($value[MascotSearch::FILE_DATA], 'r');
@@ -344,7 +344,7 @@ class MascotSearch
         return $searchLog;
     }
 
-    public function search(MascotSearchParams $params)
+    public function search(MascotSearchParameters $params)
     {
         $args = array();
         $args['INTERMEDIATE'] = $params->getIntermediate();
@@ -372,9 +372,9 @@ class MascotSearch
         $args['CHARGE'] = $params->getCharge();
         $args['MASS'] = $params->getMassType();
         $args['FILE'] = array(
-            MascotSearch::FILE_NAME => basename($params->getFilePath()),
+            MascotSearch::FILE_NAME => basename($params->getSpectraPath()),
             MascotSearch::MIME_TYPE => 'Content-Type: application/octet-stream',
-            MascotSearch::FILE_DATA => $params->getFilePath()
+            MascotSearch::FILE_DATA => $params->getSpectraPath()
         );
         $args['FORMAT'] = $params->getFileFormat();
         $args['PRECURSOR'] = $params->getPrecursor();

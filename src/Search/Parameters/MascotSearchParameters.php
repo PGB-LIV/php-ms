@@ -74,6 +74,18 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
 
     private $report = 'Auto';
 
+    public function __construct()
+    {
+        // Set defaults
+        $this->setEnzyme('Trypsin');
+        $this->setMissedCleavageCount(1);
+        $this->setPrecursorTolerance(1.2);
+        $this->setPrecursorToleranceUnit('Da');
+        $this->setFragmentTolerance(0.6);
+        $this->setFragmentToleranceUnit('Da');
+        $this->setDecoyEnabled(true);
+    }
+
     public function setIntermediate($intermediate)
     {
         $this->intermediate = $intermediate;
