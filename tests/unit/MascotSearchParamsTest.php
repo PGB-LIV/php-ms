@@ -497,12 +497,12 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFilePath
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFilePath
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setSpectraPath
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getSpectraPath
      *
      * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
-    public function testCanGetSetValidFilePath()
+    public function testCanGetSetValidSpectraPath()
     {
         $value = tempnam(sys_get_temp_dir(), 'php-ms');
         touch($value);
