@@ -41,7 +41,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanBeConstructedForValidConstructorArguments2()
     {
-        $tolerance = new Tolerance(0.5, 'da');
+        $tolerance = new Tolerance(0.5, Tolerance::DA);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
         
         return $tolerance;
@@ -55,7 +55,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments1()
     {
-        $tolerance = new Tolerance('fail', 'ppm');
+        $tolerance = new Tolerance('fail', Tolerance::PPM);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
     }
 

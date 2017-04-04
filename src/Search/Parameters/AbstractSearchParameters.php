@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Search\Parameters;
 
+use pgb_liv\php_ms\Core\Tolerance;
+
 /**
  * Abstract class containing generic filtering methods
  *
@@ -28,13 +30,9 @@ abstract class AbstractSearchParameters
 
     private $spectraPath;
 
-    private $precursorToleranceValue;
+    private $precursorTolerance;
 
-    private $precursorToleranceUnit;
-
-    private $fragmentToleranceValue;
-
-    private $fragmentToleranceUnit;
+    private $fragmentTolerance;
 
     private $enzyme;
 
@@ -81,54 +79,29 @@ abstract class AbstractSearchParameters
         return $this->missedCleavageCount;
     }
 
-    public function setPrecursorTolerance($precursorTolerance)
-    {
-        if ((! is_float($precursorTolerance) && ! is_int($precursorTolerance)) || $precursorTolerance < 0) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or integer value greater than 0');
-        }
-        
-        $this->precursorTolerance = $precursorTolerance;
-    }
-
     public function getPrecursorTolerance()
     {
         return $this->precursorTolerance;
     }
 
-    public function setPrecursorToleranceUnit($unit)
+    public function setPrecursorTolerance(Tolerance $tolerance)
     {
-        // TODO: Validate unit
-        $this->precursorToleranceUnit = $unit;
+        $this->precursorTolerance = $tolerance;
     }
 
-    public function getPrecursorToleranceUnit()
+    public function setFragmentTolerance(Tolerance $tolerance)
     {
-        return $this->precursorToleranceUnit;
+        $this->fragmentTolerance = $tolerance;
     }
 
-    public function setFragmentTolerance($fragmentTolerance)
-    {
-        if ((! is_float($fragmentTolerance) && ! is_int($fragmentTolerance)) || $fragmentTolerance < 0) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or integer value greater than 0');
-        }
-        
-        $this->fragmentTolerance = $fragmentTolerance;
-    }
-
+    /**
+     * Gets the Fragment Tolerance object
+     * 
+     * @return \pgb_liv\php_ms\Core\Tolerance
+     */
     public function getFragmentTolerance()
     {
         return $this->fragmentTolerance;
-    }
-
-    public function setFragmentToleranceUnit($fragmentToleranceUnit)
-    {
-        // TODO: Validate unit
-        $this->fragmentToleranceUnit = $fragmentToleranceUnit;
-    }
-
-    public function getFragmentToleranceUnit()
-    {
-        return $this->fragmentToleranceUnit;
     }
 
     public function setSpectraPath($filePath)
@@ -137,12 +110,12 @@ abstract class AbstractSearchParameters
             throw new \InvalidArgumentException('Argument 1 must specify a valid file');
         }
         
-        $this->file = $filePath;
+        $this->spectraPath = $filePath;
     }
 
     public function getSpectraPath()
     {
-        return $this->file;
+        return $this->spectraPath;
     }
 
     public function setDecoyEnabled($bool)

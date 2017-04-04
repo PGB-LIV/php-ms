@@ -24,7 +24,7 @@ namespace pgb_liv\php_ms\Core;
 class Tolerance
 {
 
-    const DA = 'da';
+    const DA = 'Da';
 
     const PPM = 'ppm';
 
@@ -49,7 +49,7 @@ class Tolerance
         }
         
         if ($unit != Tolerance::DA && $unit != Tolerance::PPM) {
-            throw new \InvalidArgumentException('Argument 2 must equal "da" or "ppm". Valued passed is "' . $unit . '"');
+            throw new \InvalidArgumentException('Argument 2 must equal "Da" or "ppm". Valued passed is "' . $unit . '"');
         }
         
         $this->tolerance = $tolerance;

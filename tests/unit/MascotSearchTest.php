@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\MascotSearch;
 use pgb_liv\php_ms\Search\Parameters\MascotSearchParameters;
+use pgb_liv\php_ms\Core\Tolerance;
 
 class MascotSearchTest extends \PHPUnit_Framework_TestCase
 {
@@ -155,9 +156,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $params->setDatabases('Mouse_AndrewC_NOV16');
         $params->setFixedModifications('Carbamidomethyl (C)');
         $params->setVariableModifications('Phospho (ST)');
-        $params->setPrecursorTolerance(5);
-        $params->setPrecursorToleranceUnit(MascotSearchParameters::UNIT_PPM);
-        $params->setFragmentTolerance(0.01);
+        $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
+        $params->setFragmentTolerance(new Tolerance(0.01, Tolerance::DA));
         $params->setSpectraPath($filePath);
         
         $datPath = $search->search($params);

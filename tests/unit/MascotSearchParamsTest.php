@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\Parameters\MascotSearchParameters;
+use pgb_liv\php_ms\Core\Tolerance;
 
 class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
@@ -405,31 +406,19 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursorTolerance
      *
      * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Core\Tolerance
      */
     public function testCanGetSetValidPeptideTolerance()
     {
         $value = 10;
         
         $params = new MascotSearchParameters();
-        $params->setPrecursorTolerance($value);
+        $params->setPrecursorTolerance(new Tolerance($value, Tolerance::PPM));
         
-        $this->assertEquals($value, $params->getPrecursorTolerance());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursorToleranceUnit
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursorToleranceUnit
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidPeptideToleranceUnit()
-    {
-        $value = 'ppm';
-        
-        $params = new MascotSearchParameters();
-        $params->setPrecursorToleranceUnit($value);
-        
-        $this->assertEquals($value, $params->getPrecursorToleranceUnit());
+        $this->assertEquals($value, $params->getPrecursorTolerance()
+            ->getTolerance());
+        $this->assertEquals(Tolerance::PPM, $params->getPrecursorTolerance()
+            ->getUnit());
     }
 
     /**
@@ -459,25 +448,12 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $value = 0.1;
         
         $params = new MascotSearchParameters();
-        $params->setFragmentTolerance($value);
+        $params->setFragmentTolerance(new Tolerance($value, Tolerance::PPM));
         
-        $this->assertEquals($value, $params->getFragmentTolerance());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFragmentToleranceUnit
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFragmentToleranceUnit
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidFragmentToleranceUnit()
-    {
-        $value = 'Da';
-        
-        $params = new MascotSearchParameters();
-        $params->setFragmentToleranceUnit($value);
-        
-        $this->assertEquals($value, $params->getFragmentToleranceUnit());
+        $this->assertEquals($value, $params->getFragmentTolerance()
+            ->getTolerance());
+        $this->assertEquals(Tolerance::PPM, $params->getFragmentTolerance()
+            ->getUnit());
     }
 
     /**

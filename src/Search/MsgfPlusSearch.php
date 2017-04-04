@@ -52,11 +52,17 @@ class MsgfPlusSearch
             throw new \InvalidArgumentException('Argument 1 expected to be of type MsgfPlusSearchParameters');
         }
         
-        // TODO: Validate SpectraPath && Database have values
+        if (is_null($parameters->getSpectraPath()) || ! file_exists($parameters->getSpectraPath())) {
+            throw new \InvalidArgumentException('Valid Spectra file must be specified in paramaters.');
+        }
+        
+        if (is_null($parameters->getDatabases()) || ! file_exists($parameters->getDatabases())) {
+            throw new \InvalidArgumentException('Valid database file must be specified in paramaters.');
+        }
         
         $command = $this->getCommand($parameters);
         
-        $result = $this->executeCommand($command);
+        $this->executeCommand($command);
         
         if (! is_null($parameters->getOutputFile())) {
             return $parameters->getOutputFile();
@@ -79,12 +85,8 @@ class MsgfPlusSearch
             $command .= ' -o ' . $parameters->getOutputFile();
         }
         
-        if (! is_null($parameters->getPrecursorTolerance()) && ! is_null($parameters->getPrecursorToleranceUnit())) {
-            $command .= ' -t ' . $parameters->getPrecursorTolerance() . $parameters->getPrecursorToleranceUnit();
-        }
-        
-        if (! is_null($parameters->getIsotopeErrorRange())) {
-            $command .= ' -t ' . $parameters->getIsotopeErrorRange();
+        if (! is_null($parameters->getPrecursorTolerance())) {
+            $command .= ' -t ' . $parameters->getPrecursorTolerance()->getTolerance() . $parameters->getPrecursorTolerance()->getUnit();
         }
         
         if (! is_null($parameters->getIsotopeErrorRange())) {

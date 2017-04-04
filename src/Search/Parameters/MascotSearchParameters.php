@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Search\Parameters;
 
+use pgb_liv\php_ms\Core\Tolerance;
+
 /**
  * Encapsulation class for Mascot search parameters
  *
@@ -50,8 +52,6 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
 
     private $title;
 
-    private $databases;
-
     private $quantitation = 'None';
 
     private $taxonomy = 'All Entries';
@@ -79,10 +79,8 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
         // Set defaults
         $this->setEnzyme('Trypsin');
         $this->setMissedCleavageCount(1);
-        $this->setPrecursorTolerance(1.2);
-        $this->setPrecursorToleranceUnit('Da');
-        $this->setFragmentTolerance(0.6);
-        $this->setFragmentToleranceUnit('Da');
+        $this->setPrecursorTolerance(new Tolerance(1.2, Tolerance::DA));
+        $this->setFragmentTolerance(new Tolerance(0.6, Tolerance::DA));
         $this->setDecoyEnabled(true);
     }
 

@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\MsgfPlusSearch;
 use pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters;
+use pgb_liv\php_ms\Core\Tolerance;
 
 class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,38 +52,11 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
         
         $params = new MsgfPlusSearchParameters();
         $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
-        $params->setPrecursorTolerance(5);
-        $params->setPrecursorToleranceUnit('ppm');
-        $params->setFragmentTolerance(0.01);
+        $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
         $params->setSpectraPath($filePath);
         
         $datPath = $search->search($params);
         $this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
-     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::search
-     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::getCommand
-     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::executeCommand
-     * @expectedException InvalidArgumentException
-     *
-     * @uses pgb_liv\php_ms\Search\MsgfPlusSearch
-     */
-    public function testCanSubmitInvalidJob()
-    {
-        $filePath = $this->createMgf();
-        
-        $search = new MsgfPlusSearch(MSGFPLUS_PATH);
-        
-        $params = new MsgfPlusSearchParameters();
-        $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
-        $params->setPrecursorTolerance(5);
-        $params->setPrecursorToleranceUnit('mmu');
-        $params->setFragmentTolerance(0.01);
-        $params->setSpectraPath($filePath);
-        
-        $datPath = $search->search($params);
     }
 
     public function createMgf()

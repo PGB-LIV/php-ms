@@ -364,11 +364,11 @@ class MascotSearch
         $args['TAXONOMY'] = $params->getTaxonomy();
         $args['MODS'] = $params->getFixedModifications();
         $args['IT_MODS'] = $params->getVariableModifications();
-        $args['TOL'] = $params->getPrecursorTolerance();
-        $args['TOLU'] = $params->getPrecursorToleranceUnit();
+        $args['TOL'] = $params->getPrecursorTolerance()->getTolerance();
+        $args['TOLU'] = $params->getPrecursorTolerance()->getUnit();
         $args['PEP_ISOTOPE_ERROR'] = $params->getPeptideIsotopeError();
-        $args['ITOL'] = $params->getFragmentTolerance();
-        $args['ITOLU'] = $params->getFragmentToleranceUnit();
+        $args['ITOL'] = $params->getFragmentTolerance()->getTolerance();
+        $args['ITOLU'] = $params->getFragmentTolerance()->getUnit();
         $args['CHARGE'] = $params->getCharge();
         $args['MASS'] = $params->getMassType();
         $args['FILE'] = array(
