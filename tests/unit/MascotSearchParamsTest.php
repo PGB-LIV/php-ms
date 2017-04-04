@@ -22,10 +22,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getIntermediate
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setIntermediate
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getIntermediate
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setIntermediate
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidIntermediate()
     {
@@ -38,10 +38,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFormVersion
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFormVersion
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFormVersion
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFormVersion
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFormVersion()
     {
@@ -54,10 +54,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getSearchType
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setSearchType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getSearchType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setSearchType
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidSearchType()
     {
@@ -70,10 +70,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setSearchType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setSearchType
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanSetInvalidSearchType()
     {
@@ -84,10 +84,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getRepType
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setRepType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getRepType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setRepType
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidRepType()
     {
@@ -100,10 +100,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getErrorTolerantRepeat
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setErrorTolerantRepeat
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getErrorTolerantRepeat
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setErrorTolerantRepeat
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidErrorTolerantRepeat()
     {
@@ -116,10 +116,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getPeak
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setPeak
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPeak
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPeak
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidPeak()
     {
@@ -132,10 +132,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::isShowAllModsEnabled
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setShowAllModsEnabled
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::isShowAllModsEnabled
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setShowAllModsEnabled
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidShowAllModsEnabled()
     {
@@ -148,10 +148,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setUserName
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getUserName
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setUserName
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getUserName
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidUserName()
     {
@@ -164,10 +164,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setUserMail
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getUserMail
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setUserMail
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getUserMail
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidUserMail()
     {
@@ -180,10 +180,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setTitle
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getTitle
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setTitle
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getTitle
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidTitle()
     {
@@ -196,10 +196,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setDatabases
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getDatabases
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setDatabases
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getDatabases
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidDatabases1()
     {
@@ -212,10 +212,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setDatabases
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getDatabases
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setDatabases
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getDatabases
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidDatabases2()
     {
@@ -229,10 +229,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setEnzyme
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getEnzyme
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setEnzyme
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getEnzyme
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidEnzyme()
     {
@@ -245,10 +245,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setMissedCleavageCount
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getMissedCleavageCount
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getMissedCleavageCount
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidMissedCleavageCount()
     {
@@ -261,10 +261,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setMissedCleavageCount
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanSetInvalidMissedCleavageCountHigh()
     {
@@ -275,10 +275,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setMissedCleavageCount
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanSetInvalidMissedCleavageCountNegative()
     {
@@ -289,10 +289,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setMissedCleavageCount
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanSetInvalidMissedCleavageCountString()
     {
@@ -303,10 +303,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setQuantitation
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getQuantitation
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setQuantitation
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getQuantitation
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidQuantitation()
     {
@@ -319,10 +319,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setTaxonomy
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getTaxonomy
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setTaxonomy
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getTaxonomy
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidTaxonomy()
     {
@@ -335,10 +335,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFixedModifications
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFixedModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFixedModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFixedModifications
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFixedModifications1()
     {
@@ -351,10 +351,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFixedModifications
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFixedModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFixedModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFixedModifications
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFixedModifications2()
     {
@@ -368,10 +368,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setVariableModifications
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getVariableModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setVariableModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getVariableModifications
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidVariableModifications1()
     {
@@ -384,10 +384,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setVariableModifications
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getVariableModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setVariableModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getVariableModifications
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidVariableModifications2()
     {
@@ -401,10 +401,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setPrecursorTolerance
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getPrecursorTolerance
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursorTolerance
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursorTolerance
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidPeptideTolerance()
     {
@@ -417,10 +417,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setPrecursorToleranceUnit
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getPrecursorToleranceUnit
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursorToleranceUnit
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursorToleranceUnit
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidPeptideToleranceUnit()
     {
@@ -433,10 +433,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setPeptideIsotopeError
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getPeptideIsotopeError
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPeptideIsotopeError
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPeptideIsotopeError
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidPeptideIsotopeError()
     {
@@ -449,10 +449,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFragmentTolerance
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFragmentTolerance
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFragmentTolerance
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFragmentTolerance
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFragmentTolerance()
     {
@@ -465,10 +465,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFragmentToleranceUnit
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFragmentToleranceUnit
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFragmentToleranceUnit
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFragmentToleranceUnit
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFragmentToleranceUnit()
     {
@@ -481,10 +481,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setCharge
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getCharge
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setCharge
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getCharge
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidCharge()
     {
@@ -497,10 +497,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFilePath
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFilePath
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFilePath
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFilePath
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFilePath()
     {
@@ -515,10 +515,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setFileFormat
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getFileFormat
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFileFormat
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFileFormat
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFileFormat()
     {
@@ -531,10 +531,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getPrecursor
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setPrecursor
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursor
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursor
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidPrecursor()
     {
@@ -547,10 +547,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getInstrument
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setInstrument
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getInstrument
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setInstrument
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidInstrument()
     {
@@ -563,10 +563,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::isDecoyEnabled
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setDecoyEnabled
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::isDecoyEnabled
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setDecoyEnabled
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidDecoyEnabled()
     {
@@ -579,10 +579,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getReport
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setReport
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getReport
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setReport
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidReport()
     {
@@ -595,10 +595,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::getMassType
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setMassType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getMassType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMassType
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidMassType()
     {
@@ -611,10 +611,10 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\MascotSearchParameters::setMassType
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMassType
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Search\MascotSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanSetInvalidMassType()
     {
