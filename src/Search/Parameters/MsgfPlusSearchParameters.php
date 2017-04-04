@@ -135,7 +135,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setFragmentationMethodId($method)
     {
-        // TODO: Validate int >= 0 && <= 4
+        if (! is_int($method) || $method < 0 || $method > 4) {
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 4');
+        }
+        
         $this->fragmentationMethodId = $method;
     }
 
@@ -160,7 +163,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setMs2DetectorId($identifier)
     {
-        // TODO: Validate int >= 0 && <= 3
+        if (! is_int($$identifier) || $identifier < 0 || $identifier > 3) {
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 3');
+        }
+        
         $this->ms2DetectorId = $identifier;
     }
 
@@ -181,7 +187,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setEnzyme($enzyme)
     {
-        // TODO: Validate int >= 0 && <= 9
+        if (! is_int($enzyme) || $enzyme < 0 || $enzyme > 9) {
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 4');
+        }
+        
         parent::setEnzyme($enzyme);
     }
 
@@ -218,7 +227,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setTolerableTrypticTermini($identifier)
     {
-        // TODO: validate int >= 0 && <= 2
+        if (! is_int($identifier) || $identifier < 0 || $identifier > 2) {
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 4');
+        }
+        
         $this->tolerableTrypticTermini = $identifier;
     }
 
@@ -239,7 +251,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setModificationFile($filePath)
     {
-        // TODO: Validate file exists
+        if (! file_exists($filePath)) {
+            throw new \InvalidArgumentException('Argument 1 must be a validation modification file');
+        }
+        
         $this->modificationFile = $filePath;
     }
 
@@ -256,7 +271,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setMinPeptideLength($length)
     {
-        // TODO: Validate int
+        if (! is_int($length) || $length < 0) {
+            throw new \InvalidArgumentException('Argument 1 must be a positive integer');
+        }
+        
         $this->minPeptideLength = $length;
     }
 
@@ -273,7 +291,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setMaxPeptideLength($length)
     {
-        // TODO: Validate int
+        if (! is_int($length) || $length < 0) {
+            throw new \InvalidArgumentException('Argument 1 must be a positive integer');
+        }
+        
         $this->maxPeptideLength = $length;
     }
 
@@ -291,7 +312,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setMinPrecursorCharge($charge)
     {
-        // TODO: Validate int
+        if (! is_int($charge) || $charge < 0) {
+            throw new \InvalidArgumentException('Argument 1 must be a positive integer');
+        }
+        
         $this->minPrecursorCharge = $charge;
     }
 
@@ -309,7 +333,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setMaxPrecursorCharge($charge)
     {
-        // TODO: Validate int
+        if (! is_int($charge) || $charge < 0) {
+            throw new \InvalidArgumentException('Argument 1 must be a positive integer');
+        }
+        
         $this->maxPrecursorCharge = $charge;
     }
 
@@ -326,7 +353,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setNumMatchesPerSpectrum($psmCount)
     {
-        // TODO: Validate uint
+        if (! is_int($psmCount) || $psmCount < 0) {
+            throw new \InvalidArgumentException('Argument 1 must be a positive integer');
+        }
+        
         $this->numMatchesPerSpec = $psmCount;
     }
 
@@ -347,7 +377,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setAdditionalFeatures($bool)
     {
-        // TODO: Validate bool
+        if (! is_bool($bool)) {
+            throw new \InvalidArgumentException('Argument 1 must be a boolean');
+        }
+        
         $this->additionalFeatures = $bool;
     }
 
@@ -365,7 +398,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setShowQValue($bool)
     {
-        // TODO: Validate bool
+        if (! is_bool($bool)) {
+            throw new \InvalidArgumentException('Argument 1 must be a boolean');
+        }
+        
         $this->showQValue = $bool;
     }
 
@@ -382,7 +418,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setChargeCarrierMass($mass)
     {
-        // TODO: Validate float
+        if (! is_float($mass)) {
+            throw new \InvalidArgumentException('Argument 1 must be a float');
+        }
+        
         $this->chargeCarrierMass = $mass;
     }
 

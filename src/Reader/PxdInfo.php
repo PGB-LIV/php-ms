@@ -39,12 +39,11 @@ class PxdInfo
     {
         if (stripos($id, 'PXD') === 0) {
             $this->id = (int) substr($id, 3);
-        } else 
-            if (is_numeric($id) && (int) $id == $id) {
-                $this->id = (int) $id;
-            } else {
-                throw new \InvalidArgumentException('Identifier must be either an integer or PXD#### string');
-            }
+        } elseif (is_numeric($id) && (int) $id == $id) {
+            $this->id = (int) $id;
+        } else {
+            throw new \InvalidArgumentException('Identifier must be either an integer or PXD#### string');
+        }
         
         $this->parseInfo();
     }
@@ -65,8 +64,7 @@ class PxdInfo
         
         $file = array();
         if (isset($schema->DatasetFileList)) {
-            foreach ($schema->DatasetFileList->DatasetFile as $datasetFile) {
-                
+            foreach ($schema->DatasetFileList->DatasetFile as $datasetFile) {                
                 $file['id'] = (string) $datasetFile->attributes()->id;
                 $file['name'] = (string) $datasetFile->attributes()->name;
                 $file['location'] = (string) $datasetFile->cvParam->attributes()->value;
