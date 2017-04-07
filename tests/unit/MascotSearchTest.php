@@ -27,6 +27,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
+     * @group online
+     * @group mascot
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
@@ -44,6 +46,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
+     * @group online
+     * @group mascot
      */
     public function testCanGetValidAuthentication()
     {
@@ -61,6 +65,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
+     * @group online
+     * @group mascot
      */
     public function testCanGetInvalidAuthentication()
     {
@@ -79,6 +85,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
+     * @group online
+     * @group mascot
      */
     public function testCanGetValidRecentSearches()
     {
@@ -101,6 +109,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
+     * @group online
+     * @group mascot
      */
     public function testCanGetValidRecentSearchData()
     {
@@ -141,6 +151,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     * @group online
+     * @group mascot
      */
     public function testCanSubmitValidJob()
     {

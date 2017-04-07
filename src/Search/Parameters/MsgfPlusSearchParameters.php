@@ -38,6 +38,8 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
 
     private $tolerableTrypticTermini;
 
+    private $modifications = array();
+    
     private $modificationFile;
 
     private $minPeptideLength;
@@ -239,6 +241,16 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         return $this->tolerableTrypticTermini;
     }
 
+    public function addModification(MsgfPlusModification $modification)
+    {
+        $this->modifications[] = $modification;
+    }
+
+    public function clearModifications()
+    {
+        $this->modifications = array();
+    }
+
     /**
      * Modification file name.
      * ModificationFile contains the modifications to be considered in the search.
@@ -258,9 +270,22 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         $this->modificationFile = $filePath;
     }
 
+    /**
+     * Returns the modification file specified by setModificationFile.
+     * If no modification has been set, will generate a temporary file containing the modification data
+     * passed to setModification, if any.
+     * 
+     * @return string The path to the modification file set by setModificationFile or generated file from setModification. Else returns null.
+     */
     public function getModificationFile()
     {
-        return $this->modificationFile;
+        if (! is_null($this->modificationFile)) {
+            return $this->modificationFile;
+        } elseif (! empty($this->modifications)) {
+            return MsgfPlusModification::createModificationFile($this->modifications);
+        }
+        
+        return null;
     }
 
     /**

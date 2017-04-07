@@ -25,6 +25,7 @@ class PxdInfoTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\PxdInfo::__construct
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
+     * @group online
      */
     public function testObjectCanBeConstructedForValidConstructorArgumentsInt()
     {
@@ -39,6 +40,7 @@ class PxdInfoTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\PxdInfo::__construct
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
+     * @group online
      */
     public function testObjectCanBeConstructedForValidConstructorArgumentsString()
     {
@@ -53,6 +55,7 @@ class PxdInfoTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\PxdInfo::__construct
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
+     * @group online
      */
     public function testObjectCanBeConstructedForValidConstructorArgumentsStringInt()
     {
@@ -68,6 +71,7 @@ class PxdInfoTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
+     * @group online
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments()
     {

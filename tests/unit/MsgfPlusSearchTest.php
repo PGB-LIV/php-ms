@@ -19,6 +19,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 use pgb_liv\php_ms\Search\MsgfPlusSearch;
 use pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters;
 use pgb_liv\php_ms\Core\Tolerance;
+use pgb_liv\php_ms\Search\Parameters\MsgfPlusModification;
 
 class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,6 +55,41 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
         $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
         $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
         $params->setSpectraPath($filePath);
+        
+        $datPath = $search->search($params);
+        $this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
+     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::search
+     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::getCommand
+     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::executeCommand
+     *
+     * @uses pgb_liv\php_ms\Search\MsgfPlusSearch
+     */
+    public function testCanSubmitValidJobWithMods()
+    {
+        $filePath = $this->createMgf();
+        
+        $search = new MsgfPlusSearch(MSGFPLUS_PATH);
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
+        $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
+        $params->setSpectraPath($filePath);
+        $params->addModification(
+            new MsgfPlusModification(57.021464, 'C', MsgfPlusModification::MOD_TYPE_FIXED, 
+                MsgfPlusModification::POSITION_ANY, 'Carbamidomethyl'));
+        $params->addModification(
+            new MsgfPlusModification(15.994915, 'M', MsgfPlusModification::MOD_TYPE_VARIABLE, 
+                MsgfPlusModification::POSITION_ANY, 'Oxidation'));
+        $params->addModification(
+            new MsgfPlusModification(42.010565, 'K', MsgfPlusModification::MOD_TYPE_VARIABLE, 
+                MsgfPlusModification::POSITION_PROTEIN_NTERM, 'Acetyl'));
+        $params->addModification(
+            new MsgfPlusModification(79.966331, 'STY', MsgfPlusModification::MOD_TYPE_VARIABLE, 
+                MsgfPlusModification::POSITION_ANY, 'Phospho'));
         
         $datPath = $search->search($params);
         $this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
