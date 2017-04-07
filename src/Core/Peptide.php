@@ -35,6 +35,14 @@ class Peptide
 
     const OXYGEN_MASS = 15.994915;
 
+    const NITROGEN_MASS = 14.00307;
+
+    const PROTON_MASS = 1.007276;
+
+    const N_TERM_MASS = 1.007875;
+
+    const C_TERM_MASS = 17.00278;
+
     private $sequence;
 
     private $protein;
@@ -149,5 +157,101 @@ class Peptide
         }
         
         return $mass;
+    }
+
+    public function getIonsB()
+    {
+        // TODO: Add modification support
+        $ions = array();
+        $sequence = $this->getSequence();
+        $sum = 0;
+        
+        for ($i = 0; $i < $this->getLength(); $i ++) {
+            $aa = $sequence[$i];
+            $mass = AminoAcidMono::getMonoisotopicMass($aa);
+            
+            if ($i == 0) {
+                $mass += Peptide::N_TERM_MASS;
+                $mass -= Peptide::HYDROGEN_MASS;
+                $mass += Peptide::PROTON_MASS;
+            }
+            
+            $sum += $mass;
+            $ions[$i + 1] = $sum;
+        }
+        
+        return $ions;
+    }
+
+    public function getIonsY()
+    {
+        // TODO: Add modification support
+        $ions = array();
+        $sequence = $this->getSequence();
+        $sum = 0;
+        
+        for ($i = $this->getLength() - 1; $i >= 0; $i --) {
+            $aa = $sequence[$i];
+            $mass = AminoAcidMono::getMonoisotopicMass($aa);
+            
+            if ($i == $this->getLength() - 1) {
+                $mass += Peptide::C_TERM_MASS;
+                $mass += Peptide::HYDROGEN_MASS;
+                $mass += Peptide::PROTON_MASS;
+            }
+            
+            $sum += $mass;
+            $ions[($this->getLength() - $i)] = $sum;
+        }
+        
+        return $ions;
+    }
+
+    public function getIonsC()
+    {
+        // TODO: Add modification support
+        $ions = array();
+        $sequence = $this->getSequence();
+        $sum = 0;
+        
+        for ($i = 0; $i < $this->getLength(); $i ++) {
+            $aa = $sequence[$i];
+            $mass = AminoAcidMono::getMonoisotopicMass($aa);
+            
+            if ($i == 0) {
+                $mass += Peptide::N_TERM_MASS;
+                $mass += Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
+                $mass += Peptide::PROTON_MASS;
+            }
+            
+            $sum += $mass;
+            $ions[$i + 1] = $sum;
+        }
+        
+        return $ions;
+    }
+
+    public function getIonsZ()
+    {
+        // TODO: Add modification support
+        $ions = array();
+        $sequence = $this->getSequence();
+        $sum = 0;
+        
+        for ($i = $this->getLength() - 1; $i >= 0; $i --) {
+            $aa = $sequence[$i];
+            $mass = AminoAcidMono::getMonoisotopicMass($aa);
+            
+            if ($i == $this->getLength() - 1) {
+                $mass += Peptide::C_TERM_MASS;
+                $mass -= Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
+                $mass += Peptide::PROTON_MASS;
+                $mass += 0.00054858 * 2; // Add electrons??
+            }
+            
+            $sum += $mass;
+            $ions[($this->getLength() - $i)] = $sum;
+        }
+        return $ions;
     }
 }
