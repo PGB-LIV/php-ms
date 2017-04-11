@@ -25,45 +25,45 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class FilterMass extends AbstractFilter
+class FilterRetentionTime extends AbstractFilter
 {
 
     /**
-     * Minimum mass, inclusive
+     * Minimum retention time, inclusive
      *
      * @var float
      */
-    private $minMass;
+    private $minRetentionTime;
 
     /**
-     * Maximum mass, inclusive
+     * Maximum retention time, inclusive
      *
      * @var float
      */
-    private $maxMass;
+    private $maxRetentionTime;
 
     /**
-     * Creates a new instance with the specified minimum and maximum mass values.
+     * Creates a new instance with the specified minimum and maximum retention time values.
      *
-     * @param float $minMass
-     *            Minimum mass, inclusive
-     * @param float $maxMass
-     *            Maximum mass, inclusive
+     * @param float $minRetentionTime
+     *            Minimum retention time, inclusive
+     * @param float $maxRetentionTime
+     *            Maximum retention time, inclusive
      */
-    public function __construct($minMass, $maxMass)
+    public function __construct($minRetentionTime, $maxRetentionTime)
     {
-        if (! is_float($minMass)) {
+        if (! is_float($minRetentionTime)) {
             throw new \InvalidArgumentException(
-                'Argument 1 must be of type float. Value is of type ' . gettype($minMass));
+                'Argument 1 must be of type float. Value is of type ' . gettype($minRetentionTime));
         }
         
-        if (! is_float($maxMass)) {
+        if (! is_float($maxRetentionTime)) {
             throw new \InvalidArgumentException(
-                'Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
+                'Argument 2 must be of type float. Value is of type ' . gettype($maxRetentionTime));
         }
         
-        $this->minMass = $minMass;
-        $this->maxMass = $maxMass;
+        $this->minRetentionTime = $minRetentionTime;
+        $this->maxRetentionTime = $maxRetentionTime;
     }
 
     /**
@@ -74,30 +74,11 @@ class FilterMass extends AbstractFilter
      */
     public function isValidSpectra(SpectraEntry $spectra)
     {
-        if ($spectra->getMass() < $this->minMass) {
+        if ($spectra->getRetentionTime() < $this->minRetentionTime) {
             return false;
         }
         
-        if ($spectra->getMass() > $this->maxMass) {
-            return false;
-        }
-        
-        return true;
-    }
-
-    /**
-     * Returns true if the Peptide matches the filter criteria, else false
-     *
-     * @param Peptide $peptide
-     *            Peptide object to filter
-     */
-    public function isValidPeptide(Peptide $peptide)
-    {
-        if ($peptide->calculateMass() < $this->minMass) {
-            return false;
-        }
-        
-        if ($peptide->calculateMass() > $this->maxMass) {
+        if ($spectra->getRetentionTime() > $this->maxRetentionTime) {
             return false;
         }
         

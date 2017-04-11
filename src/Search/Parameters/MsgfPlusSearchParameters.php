@@ -256,7 +256,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * ModificationFile contains the modifications to be considered in the search.
      * If -mod option is not specified, standard amino acids with fixed Carboamidomethylation C will be used.
      *
-     * @see https://omics.pnl.gov/download/attachments/13533355/Mods.txt?version=2&modificationDate=1358975546000 Example modification file.
+     * @see https://raw.githubusercontent.com/sangtaekim/msgfplus/master/doc/examples/Mods.txt Example modification file.
      *     
      * @param string $filePath
      *            Modification file path
