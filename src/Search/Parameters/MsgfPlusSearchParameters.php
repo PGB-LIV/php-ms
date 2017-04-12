@@ -165,7 +165,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setMs2DetectorId($identifier)
     {
-        if (! is_int($$identifier) || $identifier < 0 || $identifier > 3) {
+        if (! is_int($identifier) || $identifier < 0 || $identifier > 3) {
             throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 3');
         }
         

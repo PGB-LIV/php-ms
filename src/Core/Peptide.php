@@ -53,6 +53,10 @@ class Peptide
 
     private $missedCleavageCount;
 
+    private $modifications;
+    
+    private $isDecoy;
+
     public function __construct($sequence)
     {
         if (preg_match('/^[A-Z]+$/', $sequence) !== 1) {
@@ -253,5 +257,26 @@ class Peptide
             $ions[($this->getLength() - $i)] = $sum;
         }
         return $ions;
+    }
+
+    public function setModification(Modification $modification)
+    {
+        $this->modifications[] = $modification;
+    }
+
+    public function getModifications()
+    {
+        return $this->modifications;
+    }
+    
+    public function setIsDecoy($bool)
+    {
+        // TODO: Validate bool
+        $this->isDecoy = $bool;
+    }
+    
+    public function isDecoy()
+    {
+        return $this->isDecoy;
     }
 }

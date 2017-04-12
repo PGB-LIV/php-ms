@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Core\Spectra;
 
+use pgb_liv\php_ms\Core\Identification;
+
 /**
  * A Spectra Entry object.
  *
@@ -41,6 +43,8 @@ class SpectraEntry
     private $intensity;
 
     private $spectra;
+
+    private $identification;
 
     /**
      * Sets the neutral mass value for this spectra
@@ -193,5 +197,15 @@ class SpectraEntry
     public function getIons()
     {
         return $this->spectra;
+    }
+
+    public function setIdentification(Identification $identification)
+    {
+        $this->identification = $identification;
+    }
+
+    public function getIdentification()
+    {
+        return $this->identification;
     }
 }
