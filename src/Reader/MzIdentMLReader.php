@@ -21,8 +21,7 @@ use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
 use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Core\Modification;
-use pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters;
-use pgb_liv\php_ms\Search\Parameters\MsgfPlusModification;
+use pgb_liv\php_ms\Core\Tolerance;
 
 /**
  *
@@ -31,41 +30,22 @@ use pgb_liv\php_ms\Search\Parameters\MsgfPlusModification;
 class MzIdentMLReader
 {
 
-    private $filePath;
-
     private $xmlReader;
 
     public function __construct($filePath)
     {
-        $this->filePath = $filePath;
-        
-        $this->xmlReader = new \SimpleXMLElement($this->filePath, null, true);
+        $this->xmlReader = new \SimpleXMLElement($filePath, null, true);
     }
 
     public function getAnalysisProtocolCollection()
     {
-        $xmlReader = new \SimpleXMLElement($this->filePath, null, true);
-        
-        foreach ($xmlReader->AnalysisProtocolCollection->SpectrumIdentificationProtocol as $spectrumIdentificationProtocol) {
-            // var_dump($spectrumIdentificationProtocol->SearchType);
-            
-            // var_dump($spectrumIdentificationProtocol->AdditionalSearchParams);
-            
-            $customStuff = array();
-            foreach ($spectrumIdentificationProtocol->AdditionalSearchParams->userParam as $userParam) {
-                $customStuff[(string) $userParam->attributes()->name] = (string) $userParam->attributes()->value;
-            }
-            
-            var_dump($customStuff);
-            
-            // var_dump($spectrumIdentificationProtocol->ModificationParams);
-            
-            // var_dump($spectrumIdentificationProtocol->Enzymes);
-            
-            // var_dump($spectrumIdentificationProtocol->ParentTolerance);
-            
-            // var_dump($spectrumIdentificationProtocol->Threshold);
+        $protocols = array();
+        foreach ($this->xmlReader->AnalysisProtocolCollection->SpectrumIdentificationProtocol as $spectrumIdentificationProtocol) {
+            $protocols[(string) $spectrumIdentificationProtocol->attributes()->id] = $this->getSpectrumIdentificationProtocol(
+                $spectrumIdentificationProtocol);
         }
+        
+        return $protocols;
     }
 
     public function getPeptides()
@@ -133,10 +113,86 @@ class MzIdentMLReader
         return $results;
     }
 
-    public function getDataCollection()
+    public function getInputs()
+    {
+        $inputs = array();
+        $inputs['SearchDatabase'] = $this->getSearchDatabases();
+        $inputs['SpectraData'] = $this->getSpectraDataSets();
+        
+        return $inputs;
+    }
+
+    public function getSearchDatabases()
+    {
+        $databases = array();
+        
+        foreach ($this->xmlReader->DataCollection->Inputs->SearchDatabase as $xmlDatabases) {
+            $databases[(string) $xmlDatabases->attributes()->id] = $this->getSearchDatabase($xmlDatabases);
+        }
+        
+        return $databases;
+    }
+
+    private function getSearchDatabase(\SimpleXMLElement $xml)
+    {
+        $database = array();
+        
+        // Required
+        $database['location'] = (string) $xml->attributes()->location;
+        
+        // Optional
+        if (isset($xml->attributes()->name)) {
+            $database['name'] = (string) $xml->attributes()->name;
+        }
+        
+        if (isset($xml->attributes()->numDatabaseSequences)) {
+            $database['numDatabaseSequences'] = (int) $xml->attributes()->numDatabaseSequences;
+        }
+        
+        if (isset($xml->attributes()->numResidues)) {
+            $database['numDatabaseSequences'] = (int) $xml->attributes()->numResidues;
+        }
+        
+        if (isset($xml->attributes()->releaseDate)) {
+            $database['numDatabaseSequences'] = (string) $xml->attributes()->releaseDate;
+        }
+        
+        if (isset($xml->attributes()->version)) {
+            $database['numDatabaseSequences'] = (string) $xml->attributes()->version;
+        }
+        
+        return $database;
+    }
+
+    public function getSpectraDataSets()
+    {
+        $spectra = array();
+        
+        foreach ($this->xmlReader->DataCollection->Inputs->SpectraData as $xmlSpectra) {
+            $spectra[(string) $xmlSpectra->attributes()->id] = $this->getSpectraDataSet($xmlSpectra);
+        }
+        
+        return $spectra;
+    }
+
+    private function getSpectraDataSet(\SimpleXMLElement $xml)
+    {
+        $spectra = array();
+        
+        // Required
+        $spectra['location'] = (string) $xml->attributes()->location;
+        
+        // Optional
+        if (isset($xml->attributes()->name)) {
+            $spectra['name'] = (string) $xml->attributes()->name;
+        }
+        
+        return $spectra;
+    }
+
+    public function getAnalysisData()
     {
         $sequences = $this->getSequenceCollection();
-        $features = array();
         foreach ($this->xmlReader->DataCollection->AnalysisData->SpectrumIdentificationList->SpectrumIdentificationResult as $spectrumIdentificationResult) {
             $spectraItem = $spectrumIdentificationResult->SpectrumIdentificationItem;
             
@@ -162,7 +218,6 @@ class MzIdentMLReader
                 }
             }
             
-            $scores = array();
             foreach ($spectraItem->cvParam as $cvParam) {
                 $identification->setScore((string) $cvParam->attributes()->accession, 
                     (string) $cvParam->attributes()->value);
@@ -172,6 +227,15 @@ class MzIdentMLReader
         }
         
         return $results;
+    }
+
+    public function getDataCollection()
+    {
+        $dataCollection = array();
+        $dataCollection['inputs'] = $this->getInputs();
+        $dataCollection['analysisData'] = $this->getAnalysisData();
+        
+        return $dataCollection;
     }
 
     public function getAnalysisSoftware()
@@ -197,7 +261,16 @@ class MzIdentMLReader
             $modification = new Modification();
             $modification->setLocation((int) $xmlModification->attributes()->location);
             $modification->setMass((float) $xmlModification->attributes()->massDelta);
-            $modification->setResidues((string) $xmlModification->attributes()->residues);
+            
+            $residues = (string) $xmlModification->attributes()->residues;
+            
+            if (strtolower($residues) == 'any') {
+                $residues = '*';
+            } else {
+                $residues = str_split($residues);
+            }
+            
+            $modification->setResidues($residues);
             
             if ((string) $xmlModification->attributes()->fixedMod == 'true') {
                 $modification->setType(Modification::TYPE_FIXED);
@@ -212,7 +285,7 @@ class MzIdentMLReader
         
         return $modifications;
     }
-    
+
     private function getProtocolAdditional($xml)
     {
         $additional = array();
@@ -220,38 +293,131 @@ class MzIdentMLReader
         $additional['user'] = array();
         
         foreach ($xml->cvParam as $cvParam) {
-            $param = (string) $cvParam->attributes()->accession;
-            $additional['cv'][] = $param;
+            $additional['cv'][] = $this->parseCvParam($cvParam);
         }
         
         foreach ($xml->userParam as $userParam) {
-            $param = array();
-            $param['name'] = (string) $userParam->attributes()->name;
-            $param['value'] = (string) $userParam->attributes()->value;
-            
-            $additional['user'][] = $param;
+            $additional['user'][(string) $userParam->attributes()->name] = (string) $userParam->attributes()->value;
         }
         
         return $additional;
-        
     }
 
-    public function getSearchParameters()
+    private function getSpectrumIdentificationProtocol($xml)
     {
         $software = $this->getAnalysisSoftware();
         
-        $params = array();
-        foreach ($this->xmlReader->AnalysisProtocolCollection->SpectrumIdentificationProtocol as $searchProtocol) {
-            $softwareId = (string) $searchProtocol->attributes()->analysisSoftware_ref;
+        $protocol = array();
+        $softwareId = (string) $xml->attributes()->analysisSoftware_ref;
+        
+        $protocol['software'] = $software[$softwareId];
+        
+        $protocol['modifications'] = $this->getProtocolModifications($xml->ModificationParams);
+        
+        $protocol['additions'] = $this->getProtocolAdditional($xml->AdditionalSearchParams);
+        
+        $protocol['enzymes'] = $this->getEnzymes($xml->Enzymes);
+        
+        $protocol['tolerance'] = $this->getParentTolerance($xml->ParentTolerance);
+        
+        return $protocol;
+    }
+
+    private function getEnzymes($xml)
+    {
+        $enzymes = array();
+        
+        foreach ($xml->Enzyme as $xmlEnzyme) {
+            $enzyme = array();
             
-            if ($software[$softwareId]['name'] == 'MS-GF+') {
-                $param = new MsgfPlusSearchParameters();
+            $id = - 1;
+            foreach ($xmlEnzyme->attributes() as $attribute => $value) {
+                switch ($attribute) {
+                    case 'cTermGain':
+                        $enzyme['cTermGain'] = (string) $value;
+                        break;
+                    case 'id':
+                        $id = (string) $value;
+                        break;
+                    case 'minDistance':
+                        $enzyme['minDistance'] = (int) $value;
+                        break;
+                    case 'missedCleavages':
+                        $enzyme['missedCleavages'] = (int) $value;
+                        break;
+                    case 'nTermGain':
+                        $enzyme['nTermGain'] = (string) $value;
+                        break;
+                    case 'name':
+                        $enzyme['name'] = (string) $value;
+                        break;
+                    case 'semiSpecific':
+                        $enzyme['semiSpecific'] = (string) $value == 'true';
+                        break;
+                }
             }
             
-            $params['mods'] = $this->getProtocolModifications($searchProtocol->ModificationParams);            
-            $params['additions'] = $this->getProtocolAdditional($searchProtocol->AdditionalSearchParams);
+            $enzyme['EnzymeName'] = $this->parseCvParam($xmlEnzyme->EnzymeName->cvParam);
+            
+            $enzymes[$id] = $enzyme;
         }
         
-        return $params;
+        return $enzymes;
+    }
+
+    private function getParentTolerance($xml)
+    {
+        $tolerances = array();
+        
+        foreach ($xml->cvParam as $xmlCvParam) {
+            $cvParam = $this->parseCvParam($xmlCvParam);
+            
+            switch ($cvParam['accession']) {
+                case 'MS:1001412':
+                case 'MS:1001413':
+                    $tolerance = new Tolerance((float) $cvParam['value'], $cvParam['unitAccession']);
+                    break;
+                default:
+                    $tolerance = $cvParam;
+                    break;
+            }
+            
+            $tolerances[] = $tolerance;
+        }
+        
+        return $tolerances;
+    }
+
+    /**
+     * Creates an array object from a CvParam object
+     *
+     * @param \SimpleXMLElement $xml            
+     */
+    private function parseCvParam($xml)
+    {
+        $cvParam = array();
+        // Required fields
+        $cvParam['cvRef'] = (string) $xml->attributes()->cvRef;
+        $cvParam['accession'] = (string) $xml->attributes()->accession;
+        $cvParam['name'] = (string) $xml->attributes()->name;
+        
+        // Optional fields
+        if (isset($xml->attributes()->value)) {
+            $cvParam['value'] = (string) $xml->attributes()->value;
+        }
+        
+        if (isset($xml->attributes()->unitAccession)) {
+            $cvParam['unitAccession'] = (string) $xml->attributes()->unitAccession;
+        }
+        
+        if (isset($xml->attributes()->unitName)) {
+            $cvParam['unitName'] = (string) $xml->attributes()->unitName;
+        }
+        
+        if (isset($xml->attributes()->unitCvRef)) {
+            $cvParam['unitCvRef'] = (string) $xml->attributes()->unitCvRef;
+        }
+        
+        return $cvParam;
     }
 }

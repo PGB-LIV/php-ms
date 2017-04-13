@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Search\Parameters;
 
 use pgb_liv\php_ms\Core\Tolerance;
+use pgb_liv\php_ms\Core\Modification;
 
 /**
  * Abstract class containing generic filtering methods
@@ -39,6 +40,8 @@ abstract class AbstractSearchParameters
     private $isDecoyEnabled = 0;
 
     private $missedCleavageCount;
+
+    private $modifications = array();
 
     public function setDatabases($databases)
     {
@@ -67,8 +70,8 @@ abstract class AbstractSearchParameters
 
     public function setMissedCleavageCount($maxCleave)
     {
-        if (! is_int($maxCleave) || $maxCleave < 0 || $maxCleave > 9) {
-            throw new \InvalidArgumentException('Argument 1 must be an integer value between 0 and 9');
+        if (! is_int($maxCleave) || $maxCleave < 0) {
+            throw new \InvalidArgumentException('Argument 1 must be an unsigned integer value');
         }
         
         $this->missedCleavageCount = $maxCleave;
@@ -96,7 +99,7 @@ abstract class AbstractSearchParameters
 
     /**
      * Gets the Fragment Tolerance object
-     * 
+     *
      * @return \pgb_liv\php_ms\Core\Tolerance
      */
     public function getFragmentTolerance()
@@ -130,5 +133,60 @@ abstract class AbstractSearchParameters
     public function isDecoyEnabled()
     {
         return $this->isDecoyEnabled;
+    }
+
+    public function addModification(Modification $modification)
+    {
+        $this->modifications[] = $modification;
+    }
+
+    /**
+     *
+     * @return Modification[]
+     */
+    public function getModifications()
+    {
+        return $this->modifications;
+    }
+
+    public function clearModifications()
+    {
+        $this->modifications = array();
+    }
+
+    public function addFixedModifications(Modification $modification)
+    {
+        $modification->setType(Modification::TYPE_FIXED);
+        $this->addModification($modification);
+    }
+
+    public function getFixedModifications()
+    {
+        $fixed = array();
+        foreach ($this->getModifications() as $modification) {
+            if ($modification->getType() == Modification::TYPE_FIXED) {
+                $fixed[] = $modification;
+            }
+        }
+        
+        return $fixed;
+    }
+
+    public function addVariableModifications(Modification $modification)
+    {
+        $modification->setType(Modification::TYPE_VARIABLE);
+        $this->addModification($modification);
+    }
+
+    public function getVariableModifications()
+    {
+        $variable = array();
+        foreach ($this->getModifications() as $modification) {
+            if ($modification->getType() == Modification::TYPE_VARIABLE) {
+                $variable[] = $modification;
+            }
+        }
+        
+        return $variable;
     }
 }

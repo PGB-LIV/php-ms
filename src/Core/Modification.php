@@ -29,6 +29,16 @@ class Modification
 
     const TYPE_VARIABLE = 1;
 
+    const POSITION_ANY = 'any';
+
+    const POSITION_NTERM = 'N-term';
+
+    const POSITION_CTERM = 'C-term';
+
+    const POSITION_PROTEIN_NTERM = 'Prot-N-term';
+
+    const POSITION_PROTEIN_CTERM = 'Prot-C-term';
+
     private $location;
 
     private $mass;
@@ -37,7 +47,9 @@ class Modification
 
     private $residues;
 
-    private $type;
+    private $type = Modification::TYPE_VARIABLE;
+
+    private $position = Modification::POSITION_ANY;
 
     public function setLocation($location)
     {
@@ -85,13 +97,39 @@ class Modification
         $this->type = $type;
     }
     
+    public function getType()
+    {
+        return $this->type;
+    }
+
     public function isFixed()
     {
         return $this->type == Modification::TYPE_FIXED;
     }
-    
+
     public function isVariable()
     {
         return $this->type == Modification::TYPE_VARIABLE;
+    }
+
+    public function setPosition($position)
+    {
+        switch ($position) {
+            case Modification::POSITION_ANY:
+            case Modification::POSITION_NTERM:
+            case Modification::POSITION_CTERM:
+            case Modification::POSITION_PROTEIN_NTERM:
+            case Modification::POSITION_PROTEIN_CTERM:
+                $this->position = $position;
+                
+                break;
+            default:
+                throw new \InvalidArgumentException('Postion must be any or terminus (see POSITION_XXXX)');
+        }
+    }
+    
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

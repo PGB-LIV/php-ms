@@ -25,8 +25,10 @@ class Tolerance
 {
 
     const DA = 'Da';
-
+    
     const PPM = 'ppm';
+    
+    const PSI_PPM_ACCESSION = 'UO:0000169';
 
     private $tolerance;
 
@@ -51,6 +53,7 @@ class Tolerance
         
         switch (strtolower($unit)) {
             case strtolower(Tolerance::PPM):
+            case strtolower(Tolerance::PSI_PPM_ACCESSION):
                 $this->unit = Tolerance::PPM;
                 break;
             case strtolower(Tolerance::DA):

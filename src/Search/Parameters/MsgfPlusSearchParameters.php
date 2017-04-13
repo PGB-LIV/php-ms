@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Search\Parameters;
 
+use pgb_liv\php_ms\Core\Modification;
+
 /**
  * Encapsulation class for MS-GF+ search parameters
  *
@@ -37,8 +39,6 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     private $protocolId;
 
     private $tolerableTrypticTermini;
-
-    private $modifications = array();
     
     private $modificationFile;
 
@@ -190,7 +190,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     public function setEnzyme($enzyme)
     {
         if (! is_int($enzyme) || $enzyme < 0 || $enzyme > 9) {
-            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 4');
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 9');
         }
         
         parent::setEnzyme($enzyme);
@@ -241,16 +241,6 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         return $this->tolerableTrypticTermini;
     }
 
-    public function addModification(MsgfPlusModification $modification)
-    {
-        $this->modifications[] = $modification;
-    }
-
-    public function clearModifications()
-    {
-        $this->modifications = array();
-    }
-
     /**
      * Modification file name.
      * ModificationFile contains the modifications to be considered in the search.
@@ -282,7 +272,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_null($this->modificationFile)) {
             return $this->modificationFile;
         } elseif (! empty($this->modifications)) {
-            return MsgfPlusModification::createModificationFile($this->modifications);
+            return MsgfPlusSearchParameters::createModificationFile($this->modifications);
         }
         
         return null;
@@ -453,5 +443,29 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     public function getChargeCarrierMass()
     {
         return $this->chargeCarrierMass;
+    }
+        
+    public static function createModificationFile(array $modifications, $numMods = 2)
+    {
+        // TODO:
+        // All array must be this class
+        // NumMods must be uint
+        $data = 'NumMods=' . $numMods . PHP_EOL;
+        
+        foreach ($modifications as $modification) {
+            $entry = $modification->getMass() . ',';
+            $entry .= $modification->getResidues() . ',';
+            $entry .= $modification->getModificationType() . ',';
+            $entry .= $modification->getPosition() . ',';
+            $entry .= $modification->getName();
+            
+            $data .= $entry . PHP_EOL;
+        }
+        
+        $modFile = tempnam(sys_get_temp_dir(), 'phpMs') . '.txt';
+        
+        file_put_contents($modFile, $data);
+        
+        return $modFile;
     }
 }

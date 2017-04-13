@@ -56,10 +56,6 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
 
     private $taxonomy = 'All Entries';
 
-    private $fixedModificiations;
-
-    private $variableModifications;
-
     private $peptideIsotopeError = 0;
 
     private $charge = '2+';
@@ -224,28 +220,6 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
     public function getTaxonomy()
     {
         return $this->taxonomy;
-    }
-
-    public function setFixedModifications($fixedModifications)
-    {
-        // TODO: Validate mods
-        $this->fixedModificiations = $fixedModifications;
-    }
-
-    public function getFixedModifications()
-    {
-        return $this->fixedModificiations;
-    }
-
-    public function setVariableModifications($variableModifications)
-    {
-        // TODO: Validate mods
-        $this->variableModifications = $variableModifications;
-    }
-
-    public function getVariableModifications()
-    {
-        return $this->variableModifications;
     }
 
     public function setPeptideIsotopeError($peptideIsotopeError)
