@@ -25,10 +25,12 @@ class Tolerance
 {
 
     const DA = 'Da';
-    
+
     const PPM = 'ppm';
-    
+
     const PSI_PPM_ACCESSION = 'UO:0000169';
+
+    const PSI_DA_ACCESSION = 'UO:0000221';
 
     private $tolerance;
 
@@ -46,7 +48,8 @@ class Tolerance
     public function __construct($tolerance, $unit)
     {
         if (! is_float($tolerance) && ! is_int($tolerance)) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or int value. Valued passed is of type ' . gettype($tolerance));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be a float or int value. Valued passed is of type ' . gettype($tolerance));
         }
         
         $this->tolerance = $tolerance;
@@ -57,10 +60,12 @@ class Tolerance
                 $this->unit = Tolerance::PPM;
                 break;
             case strtolower(Tolerance::DA):
+            case strtolower(Tolerance::PSI_DA_ACCESSION):
                 $this->unit = Tolerance::DA;
                 break;
             default:
-                throw new \InvalidArgumentException('Argument 2 must equal "Da" or "ppm". Valued passed is "' . $unit . '"');
+                throw new \InvalidArgumentException(
+                    'Argument 2 must equal "Da" or "ppm". Valued passed is "' . $unit . '"');
         }
     }
 

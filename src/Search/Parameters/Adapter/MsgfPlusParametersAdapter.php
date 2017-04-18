@@ -17,7 +17,7 @@
 namespace pgb_liv\php_ms\Search\Parameters\Adapter;
 
 use pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters;
-use pgb_liv\php_ms\Reader\MzIdentMLReader;
+use pgb_liv\php_ms\Reader\MzIdentMlReader1Interface;
 
 /**
  * Converts the parameters retreived from file formats to MS-GF+ parameters objects
@@ -27,11 +27,11 @@ use pgb_liv\php_ms\Reader\MzIdentMLReader;
 class MsgfPlusParametersAdapter
 {
 
-    public static function fromMzIdentML(MzIdentMLReader $reader)
+    public static function fromMzIdentML(MzIdentMlReader1Interface $reader)
     {
         $protocols = $reader->getAnalysisProtocolCollection();
         $parameters = array();
-        foreach ($protocols as $protocol) {
+        foreach ($protocols['spectrum'] as $protocol) {
             if ($protocol['software']['name'] == 'MS-GF+') {
                 $parameters[] = MsgfPlusParametersAdapter::createParameters($reader, $protocol);
             }
@@ -40,8 +40,8 @@ class MsgfPlusParametersAdapter
         return $parameters;
     }
 
-    private static function createParameters(MzIdentMLReader $reader, array $parameters)
-    {        
+    private static function createParameters(MzIdentMlReader1Interface $reader, array $parameters)
+    {
         $inputs = $reader->getInputs();
         $database = current($inputs['SearchDatabase']);
         $spectra = current($inputs['SearchDatabase']);
@@ -53,7 +53,7 @@ class MsgfPlusParametersAdapter
             $msgf->setDatabases($database['location']);
         }
         
-        $msgf->setSpectraPath($spectra['location']);
+        $msgf->setSpectraPath($spectra['location'], true);
         
         foreach ($parameters['modifications'] as $modification) {
             $msgf->addModification($modification);
@@ -69,8 +69,7 @@ class MsgfPlusParametersAdapter
         
         if (isset($enzyme)) {
             // TODO: Add other enzymes that are supported
-            switch($enzyme['EnzymeName']['accession'])
-            {
+            switch ($enzyme['EnzymeName']['accession']) {
                 case 'MS:1001251':
                     $msgf->setEnzyme(1);
                     break;
@@ -145,8 +144,8 @@ class MsgfPlusParametersAdapter
         }
         
         // TODO: Support async tolerance
-        if (isset($parameters['tolerance'][0])) {
-            $msgf->setPrecursorTolerance($parameters['tolerance'][0]);
+        if (isset($parameters['parentTolerance'][0])) {
+            $msgf->setPrecursorTolerance($parameters['parentTolerance'][0]);
         }
         
         if (isset($parameters['additions']['user']['Protocol'])) {

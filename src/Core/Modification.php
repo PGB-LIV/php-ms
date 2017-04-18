@@ -41,7 +41,9 @@ class Modification
 
     private $location;
 
-    private $mass;
+    private $monoisotopicMass;
+
+    private $averageMass;
 
     private $name;
 
@@ -61,14 +63,24 @@ class Modification
         return $this->location;
     }
 
-    public function setMass($mass)
+    public function setMonoisotopicMass($mass)
     {
-        $this->mass = $mass;
+        $this->monoisotopicMass = $mass;
     }
 
-    public function getMass()
+    public function getMonoisotopicMass()
     {
-        return $this->mass;
+        return $this->monoisotopicMass;
+    }
+
+    public function setAverageMass($mass)
+    {
+        $this->$averageMass = $mass;
+    }
+
+    public function getAverageMass()
+    {
+        return $this->$averageMass;
     }
 
     public function setName($name)
@@ -96,7 +108,7 @@ class Modification
     {
         $this->type = $type;
     }
-    
+
     public function getType()
     {
         return $this->type;
@@ -127,7 +139,7 @@ class Modification
                 throw new \InvalidArgumentException('Postion must be any or terminus (see POSITION_XXXX)');
         }
     }
-    
+
     public function getPosition()
     {
         return $this->position;

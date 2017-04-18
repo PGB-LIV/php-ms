@@ -107,9 +107,18 @@ abstract class AbstractSearchParameters
         return $this->fragmentTolerance;
     }
 
-    public function setSpectraPath($filePath)
+    /**
+     * Sets the spectra file location
+     *
+     * @param string $filePath
+     *            Path to the spectra file
+     * @param bool $ignoreValidation
+     *            If true will disable validation that the file must exist
+     * @throws \InvalidArgumentException Thrown if $ignoreValidation is false and the file does not exist
+     */
+    public function setSpectraPath($filePath, $ignoreValidation = false)
     {
-        if (! file_exists($filePath)) {
+        if (! $ignoreValidation && ! file_exists($filePath)) {
             throw new \InvalidArgumentException('Argument 1 must specify a valid file');
         }
         
