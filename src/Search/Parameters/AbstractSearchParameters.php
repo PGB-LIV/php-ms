@@ -163,7 +163,7 @@ abstract class AbstractSearchParameters
         $this->modifications = array();
     }
 
-    public function addFixedModifications(Modification $modification)
+    public function addFixedModification(Modification $modification)
     {
         $modification->setType(Modification::TYPE_FIXED);
         $this->addModification($modification);
@@ -181,7 +181,7 @@ abstract class AbstractSearchParameters
         return $fixed;
     }
 
-    public function addVariableModifications(Modification $modification)
+    public function addVariableModification(Modification $modification)
     {
         $modification->setType(Modification::TYPE_VARIABLE);
         $this->addModification($modification);

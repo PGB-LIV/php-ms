@@ -124,6 +124,14 @@ class Modification
         return $this->type == Modification::TYPE_VARIABLE;
     }
 
+    /**
+     * Sets the position this modification can occur on within the peptide or protein.
+     * Default is 'Any'.
+     * 
+     * @param int $position
+     *            Position the modification can occur, see POSITION_ for list of options.
+     * @throws \InvalidArgumentException If unknown position specified
+     */
     public function setPosition($position)
     {
         switch ($position) {

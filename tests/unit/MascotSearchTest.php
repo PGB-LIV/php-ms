@@ -19,6 +19,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 use pgb_liv\php_ms\Search\MascotSearch;
 use pgb_liv\php_ms\Search\Parameters\MascotSearchParameters;
 use pgb_liv\php_ms\Core\Tolerance;
+use pgb_liv\php_ms\Core\Modification;
 
 class MascotSearchTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,8 +28,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
-     * @group online
-     * @group mascot
+     *       @group online
+     *       @group mascot
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
@@ -46,8 +47,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
-     * @group online
-     * @group mascot
+     *       @group online
+     *       @group mascot
      */
     public function testCanGetValidAuthentication()
     {
@@ -65,8 +66,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
-     * @group online
-     * @group mascot
+     *       @group online
+     *       @group mascot
      */
     public function testCanGetInvalidAuthentication()
     {
@@ -85,8 +86,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
-     * @group online
-     * @group mascot
+     *       @group online
+     *       @group mascot
      */
     public function testCanGetValidRecentSearches()
     {
@@ -109,8 +110,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MascotSearch::readResponse
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
-     * @group online
-     * @group mascot
+     *       @group online
+     *       @group mascot
      */
     public function testCanGetValidRecentSearchData()
     {
@@ -151,8 +152,8 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
      * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     * @group online
-     * @group mascot
+     *       @group online
+     *       @group mascot
      */
     public function testCanSubmitValidJob()
     {
@@ -166,8 +167,21 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $params->setUserMail('example@example.com');
         $params->setTitle('php-ms Unit Test');
         $params->setDatabases('Mouse_AndrewC_NOV16');
-        $params->setFixedModifications('Carbamidomethyl (C)');
-        $params->setVariableModifications('Phospho (ST)');
+        
+        $carb = new Modification();
+        $carb->setName('Carbamidomethyl');
+        $carb->setResidues(array(
+            'C'
+        ));
+        $params->addFixedModification($carb);
+        
+        $phospho = new Modification();
+        $phospho->setName('Phospho');
+        $phospho->setResidues(array(
+            'S',
+            'T'
+        ));
+        $params->addVariableModification($phospho);
         $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
         $params->setFragmentTolerance(new Tolerance(0.01, Tolerance::DA));
         $params->setSpectraPath($filePath);

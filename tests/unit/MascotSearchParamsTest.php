@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\Parameters\MascotSearchParameters;
 use pgb_liv\php_ms\Core\Tolerance;
+use pgb_liv\php_ms\Core\Modification;
 
 class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
@@ -336,69 +337,57 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFixedModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addFixedModification
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addModification
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFixedModifications
      *
      * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidFixedModifications1()
     {
-        $value = 'Carbamidomethyl (C)';
+        $modification = new Modification();
+        $modification->setName('Carbamidomethyl');
+        $modification->setResidues(array(
+            'C'
+        ));
         
         $params = new MascotSearchParameters();
-        $params->setFixedModifications($value);
+        $params->addFixedModification($modification);
         
-        $this->assertEquals($value, $params->getFixedModifications());
+        $fixedMods = $params->getFixedModifications();
+        $this->assertEquals(1, count($fixedMods));
+        $this->assertEquals('Carbamidomethyl', $fixedMods[0]->getName());
+        $this->assertEquals(array(
+            'C'
+        ), $fixedMods[0]->getResidues());
+        $this->assertTrue($fixedMods[0]->isFixed());
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFixedModifications
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFixedModifications
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidFixedModifications2()
-    {
-        // TODO: Support multiple mods
-        $value = 'Carbamidomethyl (C)';
-        
-        $params = new MascotSearchParameters();
-        $params->setFixedModifications($value);
-        
-        $this->assertEquals($value, $params->getFixedModifications());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setVariableModifications
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addVariableModification
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addModification
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getVariableModifications
      *
      * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
      */
     public function testCanGetSetValidVariableModifications1()
     {
-        $value = 'Oxidation (M)';
+        $modification = new Modification();
+        $modification->setName('Oxidation');
+        $modification->setResidues(array(
+            'M'
+        ));
         
         $params = new MascotSearchParameters();
-        $params->setVariableModifications($value);
+        $params->addVariableModification($modification);
         
-        $this->assertEquals($value, $params->getVariableModifications());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setVariableModifications
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getVariableModifications
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidVariableModifications2()
-    {
-        // TODO: Support multiple mods
-        $value = 'Oxidation (M)';
-        
-        $params = new MascotSearchParameters();
-        $params->setVariableModifications($value);
-        
-        $this->assertEquals($value, $params->getVariableModifications());
+        $vardMods = $params->getVariableModifications();
+        $this->assertEquals(1, count($vardMods));
+        $this->assertEquals('Oxidation', $vardMods[0]->getName());
+        $this->assertEquals(array(
+            'M'
+        ), $vardMods[0]->getResidues());
+        $this->assertTrue($vardMods[0]->isVariable());
     }
 
     /**

@@ -84,10 +84,16 @@ class MascotSearch
         $size = 0;
         foreach ($args as $key => $value) {
             $size += 2 + strlen($boundary) + 2;
-            if (is_array($value)) {
+            if (is_array($value) && $key == 'FILE') {
                 $size += 38 + strlen($key) + 13 + strlen($value[MascotSearch::FILE_NAME]) + 3;
                 $size += strlen($value[MascotSearch::MIME_TYPE]) + 4;
                 $size += filesize($value[MascotSearch::FILE_DATA]) + 4;
+            } elseif ($key == 'MODS' || $key == 'IT_MODS') {
+                $size += 38 + strlen($key) + 5;
+                foreach ($value as $modification) {
+                    $size += strlen($modification->getName());
+                    $size += 3 + count($modification->getResidues()) + 2;
+                }
             } else {
                 $size += 38 + strlen($key) + 5;
                 $size += strlen($value) + 2;
@@ -101,8 +107,10 @@ class MascotSearch
         foreach ($args as $key => $value) {
             fwrite($handle, '--' . $boundary . "\r\n");
             
-            if (is_array($value)) {
-                fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] . '"' . "\r\n");
+            if (is_array($value) && $key == 'FILE') {
+                fwrite($handle, 
+                    'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] .
+                         '"' . "\r\n");
                 fwrite($handle, $value[MascotSearch::MIME_TYPE] . "\r\n\r\n");
                 
                 $fileHandle = fopen($value[MascotSearch::FILE_DATA], 'r');
@@ -113,6 +121,13 @@ class MascotSearch
                 fclose($fileHandle);
                 
                 fwrite($handle, "\r\n\r\n");
+            } elseif ($key == 'MODS' || $key == 'IT_MODS') {
+                fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");
+                
+                foreach ($value as $modification) {
+                    fwrite($handle, $modification->getName() . ' (' . implode('', $modification->getResidues()) .
+                         ")\r\n");
+                }
             } else {
                 fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");
                 fwrite($handle, $value . "\r\n");

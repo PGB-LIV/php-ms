@@ -349,4 +349,13 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
     {
         return $this->mass;
     }
+    
+    public function setMissedCleavageCount($maxCleave)
+    {
+        if (! is_int($maxCleave) || $maxCleave < 0 || $maxCleave > 9) {
+            throw new \InvalidArgumentException('Argument 1 must be an unsigned integer between 0 and 9');
+        }
+        
+        parent::setMissedCleavageCount($maxCleave);
+    }
 }
