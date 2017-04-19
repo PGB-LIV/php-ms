@@ -22,7 +22,8 @@ namespace pgb_liv\php_ms\Reader;
  */
 interface MzIdentMlReader1Interface
 {
+
     public function getInputs();
-    
+
     public function getAnalysisProtocolCollection();
 }

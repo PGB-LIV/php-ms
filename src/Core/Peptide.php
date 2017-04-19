@@ -54,7 +54,7 @@ class Peptide
     private $missedCleavageCount;
 
     private $modifications;
-    
+
     private $isDecoy;
 
     public function __construct($sequence)
@@ -250,7 +250,9 @@ class Peptide
                 $mass += Peptide::C_TERM_MASS;
                 $mass -= Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
                 $mass += Peptide::PROTON_MASS;
-                $mass += 0.00054858 * 2; // Add electrons??
+                
+                // Add electrons??
+                $mass += 0.00054858 * 2;
             }
             
             $sum += $mass;
@@ -268,13 +270,13 @@ class Peptide
     {
         return $this->modifications;
     }
-    
+
     public function setIsDecoy($bool)
     {
         // TODO: Validate bool
         $this->isDecoy = $bool;
     }
-    
+
     public function isDecoy()
     {
         return $this->isDecoy;

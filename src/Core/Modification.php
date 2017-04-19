@@ -75,12 +75,12 @@ class Modification
 
     public function setAverageMass($mass)
     {
-        $this->$averageMass = $mass;
+        $this->averageMass = $mass;
     }
 
     public function getAverageMass()
     {
-        return $this->$averageMass;
+        return $this->averageMass;
     }
 
     public function setName($name)
@@ -127,7 +127,7 @@ class Modification
     /**
      * Sets the position this modification can occur on within the peptide or protein.
      * Default is 'Any'.
-     * 
+     *
      * @param int $position
      *            Position the modification can occur, see POSITION_ for list of options.
      * @throws \InvalidArgumentException If unknown position specified

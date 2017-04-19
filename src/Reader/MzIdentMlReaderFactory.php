@@ -23,8 +23,6 @@ namespace pgb_liv\php_ms\Reader;
 class MzIdentMlReaderFactory
 {
 
-    private $xmlReader;
-
     /**
      * Parses the XML file to identify the specification version and then returns the appropriate reader
      *
@@ -37,12 +35,12 @@ class MzIdentMlReaderFactory
         $xmlReader = new \SimpleXMLElement($filePath, null, true);
         
         switch ($xmlReader->attributes()->version) {
-            case '1.0.0':
-                throw new \UnexpectedValueException('Version 1.0.0 is not supported');
             case '1.1.0':
-                return new MzIdentMlReader1_1($filePath);
+                return new MzIdentMlReader1r1($filePath);
             case '1.2.0':
-                return new MzIdentMlReader1_2($filePath);
+                return new MzIdentMlReader1r2($filePath);
+            default:
+                throw new \UnexpectedValueException('Version ' . $xmlReader->attributes()->version . ' is not supported');
         }
     }
 }

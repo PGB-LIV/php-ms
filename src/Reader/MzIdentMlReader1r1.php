@@ -27,8 +27,14 @@ use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
  *
  * @author Andrew Collins
  */
-class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
+class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 {
+
+    const CV_ACCESSION = 'accession';
+
+    const CV_VALUE = 'value';
+
+    const CV_UNITACCESSION = 'unitAccession';
 
     protected $xmlReader;
 
@@ -183,6 +189,10 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
             }
         }
         
+        if (isset($xml->Seq)) {
+            $protein->setSequence($this->getSeq($xml));
+        }
+        
         return $protein;
     }
 
@@ -241,6 +251,8 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
                     case 'semiSpecific':
                         $enzyme['semiSpecific'] = (string) $value == 'true';
                         break;
+                    default:
+                        continue;
                 }
             }
             
@@ -277,10 +289,11 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
             
-            switch ($cvParam['accession']) {
+            switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam['value'], $cvParam['unitAccession']);
+                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], 
+                        $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -386,10 +399,11 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
             
-            switch ($cvParam['accession']) {
+            switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam['value'], $cvParam['unitAccession']);
+                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], 
+                        $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -474,15 +488,15 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
         }
         
         if (isset($xml->attributes()->numResidues)) {
-            $database['numDatabaseSequences'] = (int) $xml->attributes()->numResidues;
+            $database['numResidues'] = (int) $xml->attributes()->numResidues;
         }
         
         if (isset($xml->attributes()->releaseDate)) {
-            $database['numDatabaseSequences'] = (string) $xml->attributes()->releaseDate;
+            $database['releaseDate'] = (string) $xml->attributes()->releaseDate;
         }
         
         if (isset($xml->attributes()->version)) {
-            $database['numDatabaseSequences'] = (string) $xml->attributes()->version;
+            $database['version'] = (string) $xml->attributes()->version;
         }
         
         return $database;
@@ -523,8 +537,10 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
     private function getSearchType()
     {}
 
-    private function getSeq()
-    {}
+    protected function getSeq(\SimpleXMLElement $xml)
+    {
+        return (string) $xml;
+    }
 
     public function getSequenceCollection()
     {
@@ -598,20 +614,8 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
     private function getSpectrumIdentification()
     {}
 
-    protected function getSpectrumIdentificationItem(\SimpleXMLElement $xml)
-    {
-        $item = array();
-        
-        $identification = new Identification();
-        $identification->setPeptide($sequences[(string) $xml->PeptideEvidenceRef->attributes()->peptideEvidence_ref]);
-        
-        $spectra = new SpectraEntry();
-        $spectra->setCharge((int) $xml->attributes()->chargeState);
-        $spectra->setMassCharge((float) $xml->attributes()->calculatedMassToCharge);
-        $spectra->setIdentification($identification);
-        
-        return $item;
-    }
+    private function getSpectrumIdentificationItem()
+    {}
 
     private function getSpectrumIdentificationItemRef()
     {}
@@ -674,16 +678,16 @@ class MzIdentMlReader1_1 implements MzIdentMlReader1Interface
         $cvParam = array();
         // Required fields
         $cvParam['cvRef'] = (string) $xml->attributes()->cvRef;
-        $cvParam['accession'] = (string) $xml->attributes()->accession;
+        $cvParam[MzIdentMlReader1r1::CV_ACCESSION] = (string) $xml->attributes()->accession;
         $cvParam['name'] = (string) $xml->attributes()->name;
         
         // Optional fields
         if (isset($xml->attributes()->value)) {
-            $cvParam['value'] = (string) $xml->attributes()->value;
+            $cvParam[MzIdentMlReader1r1::CV_VALUE] = (string) $xml->attributes()->value;
         }
         
         if (isset($xml->attributes()->unitAccession)) {
-            $cvParam['unitAccession'] = (string) $xml->attributes()->unitAccession;
+            $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION] = (string) $xml->attributes()->unitAccession;
         }
         
         if (isset($xml->attributes()->unitName)) {
