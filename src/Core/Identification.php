@@ -29,6 +29,13 @@ class Identification
 
     private $scores = array();
 
+    /**
+     * Number of ions matched from a search result
+     *
+     * @var int
+     */
+    private $ionsMatched;
+
     public function setPeptide(Peptide $peptide)
     {
         $this->peptide = $peptide;
@@ -57,5 +64,32 @@ class Identification
     public function clearScores()
     {
         $this->scores = array();
+    }
+
+    /**
+     * Sets the the number of fragment ions matched
+     *
+     * @param int $ionsMatched
+     *            The number of ions matched
+     * @throws \InvalidArgumentException If the arguments do not match the data types
+     */
+    public function setScore($ionsMatched)
+    {
+        if (! is_int($ionsMatched)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be an int value. Valued passed is of type ' . gettype($ionsMatched));
+        }
+        
+        $this->ionsMatched = $ionsMatched;
+    }
+
+    /**
+     * Gets the number of ions matched
+     *
+     * @return int
+     */
+    public function getIonsMatched()
+    {
+        return $this->ionsMatched;
     }
 }

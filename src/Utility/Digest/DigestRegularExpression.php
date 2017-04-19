@@ -63,7 +63,8 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
                 continue;
             }
             
-            $peptide = new Peptide($peptideSequence);
+            $peptide = new Peptide();
+            $peptide->setSequence($peptideSequence);
             $peptide->setProtein($protein);
             $peptide->setPositionStart($position);
             $endPosition = $position + strlen($peptideSequence) - 1;
@@ -81,18 +82,19 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
             // Copy peptide
             $basePeptide = $peptides[$index];
             
-            $comulativeSequence = $peptides[$index]->getSequence();
+            $cumulativeSequence = $peptides[$index]->getSequence();
             for ($missedCleave = 1; $missedCleave <= $this->getMaxMissedCleavage(); $missedCleave ++) {
                 if ($index + $missedCleave >= count($peptides)) {
                     continue;
                 }
                 
-                $comulativeSequence .= $peptides[$index + $missedCleave]->getSequence();
+                $cumulativeSequence .= $peptides[$index + $missedCleave]->getSequence();
                 
-                $peptide = new Peptide($comulativeSequence);
+                $peptide = new Peptide($cumulativeSequence);
+                $peptide->setSequence($cumulativeSequence);
                 $peptide->setProtein($basePeptide->getProtein());
                 $peptide->setPositionStart($basePeptide->getPositionStart());
-                $peptide->setPositionEnd($peptide->getPositionStart() + strlen($comulativeSequence) - 1);
+                $peptide->setPositionEnd($peptide->getPositionStart() + strlen($cumulativeSequence) - 1);
                 $peptide->setMissedCleavageCount($missedCleave);
                 $missedCleaveges[] = $peptide;
             }

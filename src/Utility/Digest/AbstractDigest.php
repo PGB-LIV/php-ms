@@ -134,7 +134,8 @@ abstract class AbstractDigest
                 continue;
             }
             
-            $nmePeptide = new Peptide(substr($sequence, 1));
+            $nmePeptide = new Peptide();
+            $nmePeptide->setSequence(substr($sequence, 1));
             $nmePeptide->setProtein($peptide->getProtein());
             $nmePeptide->setPositionStart(1);
             $nmePeptide->setPositionEnd($peptide->getPositionEnd());

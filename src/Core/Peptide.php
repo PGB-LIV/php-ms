@@ -57,7 +57,13 @@ class Peptide
 
     private $isDecoy;
 
-    public function __construct($sequence)
+    /**
+     * Sets the peptide sequence
+     *
+     * @param string $sequence
+     *            The sequence
+     */
+    public function setSequence($sequence)
     {
         if (preg_match('/^[A-Z]+$/', $sequence) !== 1) {
             throw new \InvalidArgumentException('Argument 1 must be a valid peptide sequence.');
@@ -66,6 +72,11 @@ class Peptide
         $this->sequence = $sequence;
     }
 
+    /**
+     * Gets the sequence
+     *
+     * @return string
+     */
     public function getSequence()
     {
         return $this->sequence;
@@ -261,14 +272,46 @@ class Peptide
         return $ions;
     }
 
-    public function setModification(Modification $modification)
+    /**
+     * Adds the specified modification to this peptide
+     *
+     * @param Modification $modification
+     *            Modification object to apply
+     */
+    public function addModification(Modification $modification)
     {
         $this->modifications[] = $modification;
     }
 
+    /**
+     * Adds the specified modifications to this peptide
+     *
+     * @param array $modifications
+     *            Modifications to apply
+     */
+    public function addModifications(array $modifications)
+    {
+        foreach ($modifications as $modification) {
+            $this->addModification($modification);
+        }
+    }
+
+    /**
+     * Gets the modifications
+     */
     public function getModifications()
     {
         return $this->modifications;
+    }
+
+    /**
+     * Returns whether this peptide contains modifications or not
+     *
+     * @return boolean True if the object contains modifications
+     */
+    public function isModified()
+    {
+        return count($this->modifications) != 0;
     }
 
     public function setIsDecoy($bool)

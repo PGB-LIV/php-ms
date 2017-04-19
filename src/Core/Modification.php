@@ -53,21 +53,55 @@ class Modification
 
     private $position = Modification::POSITION_ANY;
 
+    /**
+     * Sets the location for this modification
+     *
+     * @param int $location
+     *            The location to set this modification at
+     * @throws \InvalidArgumentException If argument 1 is not of type int
+     */
     public function setLocation($location)
     {
+        if (! is_int($location)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be an int value. Valued passed is of type ' . gettype($location));
+        }
+        
         $this->location = $location;
     }
 
+    /**
+     * Gets the location of this modification
+     *
+     * @return int
+     */
     public function getLocation()
     {
         return $this->location;
     }
 
+    /**
+     * Sets the monoisotopic mass for this modification
+     *
+     * @param float $mass
+     *            The monoisotopic mass to set
+     * @throws \InvalidArgumentException If argument 1 is not of type float
+     */
     public function setMonoisotopicMass($mass)
     {
+        if (! is_float($mass)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
+        }
+        
         $this->monoisotopicMass = $mass;
     }
 
+    /**
+     * Gets the monoisotopic mass
+     *
+     * @return float
+     */
     public function getMonoisotopicMass()
     {
         return $this->monoisotopicMass;
@@ -93,15 +127,43 @@ class Modification
         return $this->name;
     }
 
-    public function setResidues($residues)
+    /**
+     * Set residues for this modification
+     *
+     * @param array $residues
+     *            Array of residues this modification may occur on
+     * @throws \InvalidArgumentException If argument 1 is not of type float
+     */
+    public function setResidues(array $residues)
     {
-        // TODO: Should be array of single chars?
-        $this->residues = $residues;
+        // TODO: Validate for * or chars
+        if (empty($residues)) {
+            throw new \InvalidArgumentException('Argument 1 must not be empty.');
+        } else {
+            foreach ($residues as $residue) {
+                if (strlen($residue) != 1) {
+                    throw new \InvalidArgumentException(
+                        'Argument 1 must be an array of single char values. Value passed is of length ' .
+                             strlen($residue));
+                }
+            }
+        }
+        
+        // Force sort order
+        sort($residues);
+        
+        // Force unique residue positions
+        $this->residues = array_combine($residues, $residues);
     }
 
+    /**
+     * Gets the residues the modification is assosciated with
+     *
+     * @return array
+     */
     public function getResidues()
     {
-        return $this->residues;
+        return array_values($this->residues);
     }
 
     public function setType($type)

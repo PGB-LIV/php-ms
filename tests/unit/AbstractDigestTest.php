@@ -94,7 +94,8 @@ class AbstractDigestTest extends \PHPUnit_Framework_TestCase
         
         $stub = $this->getMockForAbstractClass('pgb_liv\php_ms\Utility\Digest\AbstractDigest');
         
-        $peptide = new Peptide('MPEPTIDER');
+        $peptide = new Peptide();
+        $peptide->setSequence('MPEPTIDER');
         $peptide->setProtein($protein);
         $peptide->setPositionStart(0);
         $peptide->setPositionEnd(strlen('MPEPTIDER') - 1);
@@ -129,7 +130,8 @@ class AbstractDigestTest extends \PHPUnit_Framework_TestCase
         
         $stub = $this->getMockForAbstractClass('pgb_liv\php_ms\Utility\Digest\AbstractDigest');
         
-        $peptide = new Peptide('MPEPTIDER');
+        $peptide = new Peptide();
+        $peptide->setSequence('MPEPTIDER');
         $peptide->setProtein($protein);
         $peptide->setPositionStart(0);
         $peptide->setPositionEnd(strlen('MPEPTIDER') - 1);

@@ -43,7 +43,8 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryInBounds()
     {
-        $peptide = new Peptide('PEPTIDE');
+        $peptide = new Peptide();
+        $peptide->setSequence('PEPTIDE');
         
         $filter = new FilterLength(6, 30);
         
@@ -59,7 +60,9 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
     public function testCanValidateEntryOnBounds()
     {
         $peptideShort = new Peptide('PEPTIDE');
+        $peptideShort->setSequence('PEPTIDE');
         $peptideLong = new Peptide('PEPTIDEPEPTIDE');
+        $peptideLong->setSequence('PEPTIDEPEPTIDE');
         
         $filter = new FilterLength(7, 14);
         
@@ -76,7 +79,9 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
     public function testCanValidateEntryOutOfBounds()
     {
         $peptideShort = new Peptide('PEPTIDE');
+        $peptideShort->setSequence('PEPTIDE');
         $peptideLong = new Peptide('PEPTIDEPEPTIDEPEPTIDEPEPTIDEPEPTIDE');
+        $peptideLong->setSequence('PEPTIDEPEPTIDEPEPTIDEPEPTIDEPEPTIDE');
         
         $filter = new FilterLength(10, 15);
         
@@ -96,12 +101,17 @@ class FilterLengthTest extends \PHPUnit_Framework_TestCase
     {
         $peptides = array();
         $peptides[0] = new Peptide('PEPTIDE');
+        $peptides[0]->setSequence('PEPTIDE');
         $validPeptide = new Peptide('PEPTIDEPEPTIDE');
+        $validPeptide->setSequence('PEPTIDEPEPTIDE');
         $peptides[1] = $validPeptide;
         $peptides[2] = new Peptide('PEPTIDEPEPTIDEPEPTIDEPEPTIDEPEPTIDE');
+        $peptides[2]->setSequence('PEPTIDEPEPTIDEPEPTIDEPEPTIDEPEPTIDE');
         
         $filter = new FilterLength(10, 15);
         
-        $this->assertEquals(array(1 => $validPeptide), $filter->filterPeptide($peptides));
+        $this->assertEquals(array(
+            1 => $validPeptide
+        ), $filter->filterPeptide($peptides));
     }
 }
