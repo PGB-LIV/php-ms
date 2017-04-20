@@ -86,7 +86,6 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $spectra->setMassCharge((float) $spectraItem->attributes()->calculatedMassToCharge);
             $spectra->addIdentification($identification);
             
-            
             foreach ($spectrumIdentificationResult->cvParam as $xml) {
                 $cvParam = $this->getCvParam($xml);
                 switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
@@ -421,6 +420,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         return $tolerances;
     }
 
+    /**
+     *
+     * @param \SimpleXMLElement $xml            
+     * @return Peptide
+     */
     protected function getPeptide(\SimpleXMLElement $xml)
     {
         $peptide = new Peptide();
@@ -517,10 +521,20 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $modification->setLocation((int) $xml->attributes()->location);
         $modification->setMonoisotopicMass((float) $xml->attributes()->massDelta);
         
+        if (isset($xml->SpecificityRules)) {
+            $modification->setPosition($this->getSpecifityRules($xml->SpecificityRules));
+        }
+        
         $residues = (string) $xml->attributes()->residues;
         
-        if (strtolower($residues) == 'any') {
-            $residues = '*';
+        if (strlen($residues) === 0 && $modification->getPosition() == Modification::POSITION_CTERM) {
+            $residues = array(
+                '['
+            );
+        } elseif (strlen($residues) === 0 && $modification->getPosition() == Modification::POSITION_NTERM) {
+            $residues = array(
+                ']'
+            );
         } else {
             $residues = str_split($residues);
         }
@@ -565,8 +579,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $proteinRef = (string) $peptideEvidence->attributes()->dBSequence_ref;
             $peptideRef = (string) $peptideEvidence->attributes()->peptide_ref;
             
-            $peptide = new Peptide();
-            $peptide->setSequence($peptides[$peptideRef]->getSequence());
+            $peptide = clone $peptides[$peptideRef];
             $peptide->setPositionStart((int) $peptideEvidence->attributes()->start);
             $peptide->setPositionEnd((int) $peptideEvidence->attributes()->end);
             $peptide->setProtein($proteins[$proteinRef]);
@@ -596,8 +609,26 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getSourceFile()
     {}
 
-    private function getSpecifityRules()
-    {}
+    protected function getSpecifityRules(\SimpleXMLElement $xml)
+    {
+        foreach ($xml->cvParam as $xmlParam) {
+            $cvParam = $this->getCvParam($xmlParam);
+            switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
+                case 'MS:1001189':
+                    return Modification::POSITION_NTERM;
+                case 'MS:1001190':
+                    return Modification::POSITION_CTERM;
+                case 'MS:1002057':
+                    return Modification::POSITION_PROTEIN_NTERM;
+                case 'MS:1002058':
+                    return Modification::POSITION_PROTEIN_CTERM;
+                default:
+                    // TODO: Correctly handle MS:1001875 / MS:1001876
+                    break;
+            }
+        }
+        return Modification::POSITION_ANY;
+    }
 
     protected function getSpectraData(\SimpleXMLElement $xml)
     {

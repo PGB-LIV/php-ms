@@ -204,6 +204,10 @@ class SpectraEntry
         $this->identifications[] = $identification;
     }
 
+    /**
+     * 
+     * @return Identification[]
+     */
     public function getIdentifications()
     {
         return $this->identifications;

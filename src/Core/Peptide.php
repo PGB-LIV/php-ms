@@ -53,7 +53,12 @@ class Peptide
 
     private $missedCleavageCount;
 
-    private $modifications;
+    /**
+     * Array of modifications on this peptide
+     *
+     * @var Modification[]
+     */
+    private $modifications = array();
 
     private $isDecoy;
 
@@ -298,6 +303,8 @@ class Peptide
 
     /**
      * Gets the modifications
+     *
+     * @return Modification[]
      */
     public function getModifications()
     {
@@ -323,5 +330,16 @@ class Peptide
     public function isDecoy()
     {
         return $this->isDecoy;
+    }
+
+    public function __clone()
+    {
+        // Create new instances of objects
+        $oldMods = $this->modifications;
+        $this->modifications = array();
+        
+        foreach ($oldMods as $modification) {
+            $this->modifications[] = clone $modification;
+        }
     }
 }
