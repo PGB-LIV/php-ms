@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
+use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+
 /**
  *
  * @author Andrew Collins
@@ -26,4 +28,10 @@ interface MzIdentMlReader1Interface
     public function getInputs();
 
     public function getAnalysisProtocolCollection();
+
+    /**
+     *
+     * @return SpectraEntry[]
+     */
+    public function getAnalysisData();
 }

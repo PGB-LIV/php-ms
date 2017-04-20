@@ -72,6 +72,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     public function getAnalysisData()
     {
         $sequences = $this->getSequenceCollection();
+        
+        $results = array();
         foreach ($this->xmlReader->DataCollection->AnalysisData->SpectrumIdentificationList->SpectrumIdentificationResult as $spectrumIdentificationResult) {
             $spectraItem = $spectrumIdentificationResult->SpectrumIdentificationItem;
             
@@ -421,7 +423,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $peptide = new Peptide($this->getPeptideSequence($xml->PeptideSequence));
         
         foreach ($xml->Modification as $xmlModification) {
-            $peptide->setModification($this->getModification($xmlModification));
+            $peptide->addModification($this->getModification($xmlModification));
         }
         
         return $peptide;

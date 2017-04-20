@@ -44,7 +44,7 @@ class SpectraEntry
 
     private $spectra;
 
-    private $identification;
+    private $identifications;
 
     /**
      * Sets the neutral mass value for this spectra
@@ -198,14 +198,32 @@ class SpectraEntry
     {
         return $this->spectra;
     }
-
+    
+    public function addIdentification(Identification $identification)
+    {
+        $this->identification[] = $identification;
+    }
+    
+    /**
+     * @deprecated
+     * @param Identification $identification
+     */
     public function setIdentification(Identification $identification)
     {
-        $this->identification = $identification;
+        $this->identifications[] = $identification;
     }
-
+    
+    public function getIdentifications()
+    {
+        return $this->identifications;
+    }
+    
+    /**
+     * @deprecated
+     * @return Identification
+     */
     public function getIdentification()
     {
-        return $this->identification;
+        return $this->identifications;
     }
 }

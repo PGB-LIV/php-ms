@@ -28,7 +28,7 @@ class MzIdentMlReaderFactory
      *
      * @param string $filePath
      *            Path to the location of the mzIdentML file
-     * @return \pgb_liv\php_ms\Reader\MzIdentMlReader1_0|\pgb_liv\php_ms\Reader\MzIdentMlReader1_1|\pgb_liv\php_ms\Reader\MzIdentMlReader1_2
+     * @return MzIdentMlReader1Interface
      */
     public static function getReader($filePath)
     {
