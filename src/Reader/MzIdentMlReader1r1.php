@@ -84,24 +84,27 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $spectra = new SpectraEntry();
             $spectra->setCharge((int) $spectraItem->attributes()->chargeState);
             $spectra->setMassCharge((float) $spectraItem->attributes()->calculatedMassToCharge);
-            $spectra->setIdentification($identification);
+            $spectra->addIdentification($identification);
             
-            foreach ($spectrumIdentificationResult->cvParam as $cvParam) {
-                switch ($cvParam->attributes()->accession) {
+            
+            foreach ($spectrumIdentificationResult->cvParam as $xml) {
+                $cvParam = $this->getCvParam($xml);
+                switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                     case 'MS:1000796':
-                        $spectra->setTitle((string) $cvParam->attributes()->value);
+                        $spectra->setTitle($cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                     case 'MS:1001115':
-                        $spectra->setScans((int) $cvParam->attributes()->value);
+                        $spectra->setScans($cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                     default:
                         continue;
                 }
             }
             
-            foreach ($spectraItem->cvParam as $cvParam) {
-                $identification->setScore((string) $cvParam->attributes()->accession, 
-                    (string) $cvParam->attributes()->value);
+            foreach ($spectraItem->cvParam as $xml) {
+                $cvParam = $this->getCvParam($xml);
+                $identification->setScore($cvParam[MzIdentMlReader1r1::CV_ACCESSION], 
+                    $cvParam[MzIdentMlReader1r1::CV_VALUE]);
             }
             
             $results[(string) $spectrumIdentificationResult->attributes()->id] = $spectra;
@@ -192,7 +195,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         }
         
         if (isset($xml->Seq)) {
-            $protein->setSequence($this->getSeq($xml));
+            $protein->setSequence($this->getSeq($xml->Seq));
         }
         
         return $protein;
@@ -420,7 +423,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     protected function getPeptide(\SimpleXMLElement $xml)
     {
-        $peptide = new Peptide($this->getPeptideSequence($xml->PeptideSequence));
+        $peptide = new Peptide();
+        $peptide->setSequence($this->getPeptideSequence($xml->PeptideSequence));
         
         foreach ($xml->Modification as $xmlModification) {
             $peptide->addModification($this->getModification($xmlModification));
@@ -548,7 +552,6 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     {
         $peptides = array();
         foreach ($this->xmlReader->SequenceCollection->Peptide as $xml) {
-            
             $peptides[(string) $xml->attributes()->id] = $this->getPeptide($xml);
         }
         
@@ -562,7 +565,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $proteinRef = (string) $peptideEvidence->attributes()->dBSequence_ref;
             $peptideRef = (string) $peptideEvidence->attributes()->peptide_ref;
             
-            $peptide = new Peptide($peptides[$peptideRef]->getSequence());
+            $peptide = new Peptide();
+            $peptide->setSequence($peptides[$peptideRef]->getSequence());
             $peptide->setPositionStart((int) $peptideEvidence->attributes()->start);
             $peptide->setPositionEnd((int) $peptideEvidence->attributes()->end);
             $peptide->setProtein($proteins[$proteinRef]);
