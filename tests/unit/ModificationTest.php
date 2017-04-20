@@ -22,7 +22,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
@@ -35,7 +34,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setMonoisotopicMass
      * @covers pgb_liv\php_ms\Core\Modification::getMonoisotopicMass
      *
@@ -54,7 +52,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setMonoisotopicMass
      * @expectedException InvalidArgumentException
      *
@@ -71,7 +68,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setLocation
      * @covers pgb_liv\php_ms\Core\Modification::getLocation
      *
@@ -90,7 +86,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setLocation
      * @expectedException InvalidArgumentException
      *
@@ -107,7 +102,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setResidues
      * @covers pgb_liv\php_ms\Core\Modification::getResidues
      *
@@ -130,7 +124,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setResidues
      * @expectedException InvalidArgumentException
      *
@@ -149,7 +142,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setResidues
      * @expectedException InvalidArgumentException
      *
@@ -169,7 +161,6 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      * @covers pgb_liv\php_ms\Core\Modification::setResidues
      * @expectedException InvalidArgumentException
      *

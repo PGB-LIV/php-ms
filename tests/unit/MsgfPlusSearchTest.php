@@ -19,7 +19,6 @@ namespace pgb_liv\php_ms\Test\Unit;
 use pgb_liv\php_ms\Search\MsgfPlusSearch;
 use pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters;
 use pgb_liv\php_ms\Core\Tolerance;
-use pgb_liv\php_ms\Search\Parameters\MsgfPlusModification;
 use pgb_liv\php_ms\Core\Modification;
 
 class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
