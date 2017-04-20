@@ -24,7 +24,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      *
      * @uses pgb_liv\php_ms\Core\Peptide
      */
@@ -38,7 +37,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::setSequence
      * @covers pgb_liv\php_ms\Core\Peptide::getSequence
      * @covers pgb_liv\php_ms\Core\Peptide::getLength
@@ -56,7 +54,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::getPositionStart
      * @covers pgb_liv\php_ms\Core\Peptide::setPositionStart
      *
@@ -73,7 +70,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::setPositionStart
      * @expectedException InvalidArgumentException
      *
@@ -88,7 +84,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::getPositionEnd
      * @covers pgb_liv\php_ms\Core\Peptide::setPositionEnd
      *
@@ -105,7 +100,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::setPositionEnd
      * @expectedException InvalidArgumentException
      *
@@ -120,7 +114,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::getMissedCleavageCount
      * @covers pgb_liv\php_ms\Core\Peptide::setMissedCleavageCount
      *
@@ -137,7 +130,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::setMissedCleavageCount
      * @expectedException InvalidArgumentException
      *
@@ -152,7 +144,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::getProtein
      * @covers pgb_liv\php_ms\Core\Peptide::setProtein
      *
@@ -203,10 +194,8 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::addModification
      * @covers pgb_liv\php_ms\Core\Peptide::getModifications
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      *
      * @uses pgb_liv\php_ms\Core\Peptide
      * @uses pgb_liv\php_ms\Core\Modification
@@ -229,11 +218,9 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::addModification
      * @covers pgb_liv\php_ms\Core\Peptide::addModifications
      * @covers pgb_liv\php_ms\Core\Peptide::getModifications
-     * @covers pgb_liv\php_ms\Core\Modification::__construct
      *
      * @uses pgb_liv\php_ms\Core\Peptide
      * @uses pgb_liv\php_ms\Core\Modification
@@ -276,7 +263,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::IsModified
      *
      * @uses pgb_liv\php_ms\Core\Peptide
