@@ -73,7 +73,7 @@ class Identification
      *            The number of ions matched
      * @throws \InvalidArgumentException If the arguments do not match the data types
      */
-    public function setScore($ionsMatched)
+    public function setIonsMatched($ionsMatched)
     {
         if (! is_int($ionsMatched)) {
             throw new \InvalidArgumentException(
