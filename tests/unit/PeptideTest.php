@@ -249,7 +249,6 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::IsModified
      *
      * @uses pgb_liv\php_ms\Core\Peptide
