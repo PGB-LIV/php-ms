@@ -205,6 +205,7 @@ class SpectraEntry
     }
 
     /**
+     * Gets the list of identifications for this spectra object
      * 
      * @return Identification[]
      */

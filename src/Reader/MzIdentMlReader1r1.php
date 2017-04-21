@@ -93,7 +93,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                         $spectra->setTitle($cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                     case 'MS:1001115':
-                        $spectra->setScans($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                        $spectra->setScans((float) $cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                     default:
                         continue;
@@ -383,7 +383,6 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     {
         $modifications = array();
         foreach ($xml->SearchModification as $xmlModification) {
-            
             $modifications[] = $this->getSearchModification($xmlModification);
         }
         
@@ -527,17 +526,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $residues = (string) $xml->attributes()->residues;
         
-        if (strlen($residues) === 0 && $modification->getPosition() == Modification::POSITION_CTERM) {
-            $residues = array(
-                '['
-            );
-        } elseif (strlen($residues) === 0 && $modification->getPosition() == Modification::POSITION_NTERM) {
-            $residues = array(
-                ']'
-            );
-        } else {
-            $residues = str_split($residues);
+        // Peaks fix
+        if (strlen($residues) === 0) {
+            $residues = '.';
         }
+        
+        $residues = explode(' ', $residues);
         
         $modification->setResidues($residues);
         

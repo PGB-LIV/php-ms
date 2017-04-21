@@ -86,7 +86,8 @@ class MsgfPlusSearch
         }
         
         if (! is_null($parameters->getPrecursorTolerance())) {
-            $command .= ' -t ' . $parameters->getPrecursorTolerance()->getTolerance() . $parameters->getPrecursorTolerance()->getUnit();
+            $command .= ' -t ' . $parameters->getPrecursorTolerance()->getTolerance() .
+                 $parameters->getPrecursorTolerance()->getUnit();
         }
         
         if (! is_null($parameters->getIsotopeErrorRange())) {
@@ -123,6 +124,9 @@ class MsgfPlusSearch
         
         if (! is_null($parameters->getModificationFile())) {
             $command .= ' -mod ' . $parameters->getModificationFile();
+        } elseif (count($parameters->getModifications()) > 0) {
+            $path = MsgfPlusSearchParameters::createModificationFile($parameters->getModifications());
+            $command .= ' -mod ' . $path;
         }
         
         if (! is_null($parameters->getMinPeptideLength())) {
@@ -170,8 +174,8 @@ class MsgfPlusSearch
      */
     private function executeCommand($command)
     {
-        $stdoutPath = tempnam(sys_get_temp_dir(), 'php-ms') . '.log';
-        $stderrPath = tempnam(sys_get_temp_dir(), 'php-ms') . '.log';
+        $stdoutPath = tempnam(sys_get_temp_dir(), 'php-msMsgfOut');
+        $stderrPath = tempnam(sys_get_temp_dir(), 'php-msMsGfErr');
         
         $descriptors = array(
             0 => array(

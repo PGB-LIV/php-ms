@@ -39,7 +39,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     private $protocolId;
 
     private $tolerableTrypticTermini;
-    
+
     private $modificationFile;
 
     private $minPeptideLength;
@@ -262,20 +262,12 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
 
     /**
      * Returns the modification file specified by setModificationFile.
-     * If no modification has been set, will generate a temporary file containing the modification data
-     * passed to setModification, if any.
-     * 
-     * @return string The path to the modification file set by setModificationFile or generated file from setModification. Else returns null.
+     *
+     * @return string The path to the modification file set by setModificationFile. Else returns null.
      */
     public function getModificationFile()
     {
-        if (! is_null($this->modificationFile)) {
-            return $this->modificationFile;
-        } elseif (! empty($this->modifications)) {
-            return MsgfPlusSearchParameters::createModificationFile($this->modifications);
-        }
-        
-        return null;
+        return $this->modificationFile;
     }
 
     /**
@@ -444,7 +436,15 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     {
         return $this->chargeCarrierMass;
     }
-        
+
+    /**
+     * Creates a modification file from an array of modifications
+     *
+     * @param Modification[] $modifications            
+     * @param number $numMods
+     *            Max number of modifications to search per peptide
+     * @return string File path the newly created modification file
+     */
     public static function createModificationFile(array $modifications, $numMods = 2)
     {
         // TODO:
@@ -453,17 +453,42 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         $data = 'NumMods=' . $numMods . PHP_EOL;
         
         foreach ($modifications as $modification) {
-            $entry = $modification->getMass() . ',';
-            $entry .= $modification->getResidues() . ',';
-            $entry .= $modification->getModificationType() . ',';
-            $entry .= $modification->getPosition() . ',';
+            $entry = $modification->getMonoisotopicMass() . ',';
+            $entry .= implode('', $modification->getResidues()) . ',';
+            
+            if ($modification->isFixed()) {
+                $entry .= 'fix,';
+            } else {
+                $entry .= 'opt,';
+            }
+            
+            $position = '';
+            switch ($modification->getPosition()) {
+                case Modification::POSITION_PROTEIN_NTERM:
+                    $position = 'Prot-N-term';
+                    break;
+                case Modification::POSITION_PROTEIN_CTERM:
+                    $position = 'Prot-C-term';
+                    break;
+                case Modification::POSITION_NTERM:
+                    $position = 'N-term';
+                    break;
+                case Modification::POSITION_CTERM:
+                    $position = 'C-term';
+                    break;
+                case Modification::POSITION_ANY:
+                default:
+                    $position = 'any';
+                    break;
+            }
+            
+            $entry .= $position . ',';
             $entry .= $modification->getName();
             
             $data .= $entry . PHP_EOL;
         }
         
-        $modFile = tempnam(sys_get_temp_dir(), 'phpMs') . '.txt';
-        
+        $modFile = tempnam(sys_get_temp_dir(), 'php-msMsgfMods');
         file_put_contents($modFile, $data);
         
         return $modFile;

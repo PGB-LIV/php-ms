@@ -248,8 +248,7 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
 
     public function setFileFormat($fileFormat)
     {
-        switch ($fileFormat) {
-            
+        switch ($fileFormat) {            
             case 'Mascot generic':
             case 'Sequest (.DTA)':
             case 'Finnigan (.ASC)':
