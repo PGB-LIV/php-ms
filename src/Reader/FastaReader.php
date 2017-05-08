@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Reader;
 
 use pgb_liv\php_ms\Core\Database\Fasta\FastaFactory;
 use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry;
 
 /**
  * A FASTA parser that creates a new iterable object that will return a database
@@ -37,6 +38,8 @@ class FastaReader implements \Iterator
     private $current;
 
     private $key = 0;
+
+    private $isPeff = false;
 
     public function __construct($filePath)
     {
@@ -69,6 +72,11 @@ class FastaReader implements \Iterator
         }
         
         $this->fileHandle = fopen($this->filePath, 'r');
+        
+        if (stripos($this->peekLine(), '# PEFF') === 0) {
+            $this->isPeff = true;
+        }
+        
         $this->key = 0;
         $this->current = $this->parseEntry();
     }
@@ -149,7 +157,11 @@ class FastaReader implements \Iterator
             }
         }
         
-        $entry = FastaFactory::getProtein($identifier, $description, $sequence);
+        if ($this->isPeff) {
+            $entry = PeffFastaEntry::getProtein($identifier, $description, $sequence);
+        } else {
+            $entry = FastaFactory::getProtein($identifier, $description, $sequence);
+        }
         
         $this->key ++;
         
