@@ -36,6 +36,7 @@ class PeffFastaEntry
         $identifierParts = explode(':', $identifier, 3);
         
         $protein = new Protein();
+        $protein->setUniqueIdentifier($identifier);
         $protein->setSequence($sequence);
         $protein->setDatabasePrefix($identifierParts[0]);
         $protein->setAccession($identifierParts[1]);
@@ -53,7 +54,7 @@ class PeffFastaEntry
         foreach ($attr as $key => $value) {
             switch ($key) {
                 case 'DbUniqueId':
-                    $protein->setUniqueIdentifier($value);
+                    $protein->setAccession($value);
                     break;
                 case 'Gname':
                     $protein->setGeneName($value);

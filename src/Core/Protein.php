@@ -24,10 +24,9 @@ namespace pgb_liv\php_ms\Core;
  */
 class Protein
 {
+    use ModifiableSequenceTrait;
 
     private $description;
-
-    private $sequence;
 
     private $uniqueIdentifier;
 
@@ -47,13 +46,6 @@ class Protein
 
     private $sequenceVersion;
 
-    /**
-     * Array of modifications on this protein sequence
-     *
-     * @var Modification[]
-     */
-    private $modifications = array();
-
     public function setUniqueIdentifier($identifier)
     {
         $this->uniqueIdentifier = $identifier;
@@ -72,16 +64,6 @@ class Protein
     public function getDescription()
     {
         return $this->description;
-    }
-
-    public function setSequence($sequence)
-    {
-        $this->sequence = $sequence;
-    }
-
-    public function getSequence()
-    {
-        return $this->sequence;
     }
 
     public function setDatabasePrefix($database)
@@ -189,49 +171,5 @@ class Protein
     public function reverseSequence()
     {
         $this->sequence = strrev($this->sequence);
-    }
-
-    /**
-     * Adds the specified modification to this protein
-     *
-     * @param Modification $modification
-     *            Modification object to apply
-     */
-    public function addModification(Modification $modification)
-    {
-        $this->modifications[] = $modification;
-    }
-
-    /**
-     * Adds the specified modifications to this protein
-     *
-     * @param array $modifications
-     *            Modifications to apply
-     */
-    public function addModifications(array $modifications)
-    {
-        foreach ($modifications as $modification) {
-            $this->addModification($modification);
-        }
-    }
-
-    /**
-     * Gets the modifications
-     *
-     * @return Modification[]
-     */
-    public function getModifications()
-    {
-        return $this->modifications;
-    }
-
-    /**
-     * Returns whether this protein contains modifications or not
-     *
-     * @return boolean True if the object contains modifications
-     */
-    public function isModified()
-    {
-        return count($this->modifications) != 0;
     }
 }

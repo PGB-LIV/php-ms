@@ -28,7 +28,7 @@ class FastaWriter
         $this->fileHandle = fopen($path, 'w');
     }
 
-    public function write(Protein $protein)
+    protected function writeDescription(Protein $protein)
     {
         // TODO: Verify file handle open
         fwrite($this->fileHandle, '>' . $protein->getUniqueIdentifier());
@@ -36,8 +36,17 @@ class FastaWriter
         if (! is_null($protein->getDescription())) {
             fwrite($this->fileHandle, ' ' . $protein->getDescription());
         }
-        
+    }
+
+    protected function writeSequence(Protein $protein)
+    {
         fwrite($this->fileHandle, PHP_EOL . wordwrap($protein->getSequence(), 60, PHP_EOL, true) . PHP_EOL);
+    }
+
+    public function write(Protein $protein)
+    {
+        $this->writeDescription($protein);
+        $this->writeSequence($protein);
     }
 
     public function close()

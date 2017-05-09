@@ -24,6 +24,7 @@ namespace pgb_liv\php_ms\Core;
  */
 class Peptide
 {
+    use ModifiableSequenceTrait;
 
     const AMINO_ACID_X_MASS = 0;
 
@@ -43,8 +44,6 @@ class Peptide
 
     const C_TERM_MASS = 17.00278;
 
-    private $sequence;
-
     private $protein;
 
     private $positionStart;
@@ -53,39 +52,7 @@ class Peptide
 
     private $missedCleavageCount;
 
-    /**
-     * Array of modifications on this peptide
-     *
-     * @var Modification[]
-     */
-    private $modifications = array();
-
     private $isDecoy;
-
-    /**
-     * Sets the peptide sequence
-     *
-     * @param string $sequence
-     *            The sequence
-     */
-    public function setSequence($sequence)
-    {
-        if (preg_match('/^[A-Z]+$/', $sequence) !== 1) {
-            throw new \InvalidArgumentException('Argument 1 must be a valid peptide sequence.');
-        }
-        
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * Gets the sequence
-     *
-     * @return string
-     */
-    public function getSequence()
-    {
-        return $this->sequence;
-    }
 
     public function setPositionStart($position)
     {
@@ -275,50 +242,6 @@ class Peptide
             $ions[($this->getLength() - $i)] = $sum;
         }
         return $ions;
-    }
-
-    /**
-     * Adds the specified modification to this peptide
-     *
-     * @param Modification $modification
-     *            Modification object to apply
-     */
-    public function addModification(Modification $modification)
-    {
-        $this->modifications[] = $modification;
-    }
-
-    /**
-     * Adds the specified modifications to this peptide
-     *
-     * @param array $modifications
-     *            Modifications to apply
-     */
-    public function addModifications(array $modifications)
-    {
-        foreach ($modifications as $modification) {
-            $this->addModification($modification);
-        }
-    }
-
-    /**
-     * Gets the modifications
-     *
-     * @return Modification[]
-     */
-    public function getModifications()
-    {
-        return $this->modifications;
-    }
-
-    /**
-     * Returns whether this peptide contains modifications or not
-     *
-     * @return boolean True if the object contains modifications
-     */
-    public function isModified()
-    {
-        return count($this->modifications) != 0;
     }
 
     public function setIsDecoy($bool)
