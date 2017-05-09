@@ -27,10 +27,10 @@ use pgb_liv\php_ms\Core\Modification;
  *
  * @author Andrew Collins
  */
-class PeffFastaEntry
+class PeffFastaEntry extends DefaultFastaEntry
 {
 
-    public static function getProtein($identifier, $description, $sequence)
+    protected static function parseProtein($identifier, $description, $sequence)
     {
         // Parse identifier
         $identifierParts = explode(':', $identifier, 3);
@@ -68,6 +68,9 @@ class PeffFastaEntry
                 case 'Pname':
                     $protein->setProteinName($value);
                     break;
+                case 'TaxName':
+                    $protein->setOrganismName($value);
+                    break;
                 case 'ModResPsi':
                     $modifications = PeffFastaEntry::parseModifications($value);
                     $protein->addModifications($modifications);
@@ -101,5 +104,40 @@ class PeffFastaEntry
         }
         
         return $modifications;
+    }
+
+    protected static function generateFasta(Protein $protein)
+    {
+        $description = '>' . $protein->getDatabasePrefix() . ':' . $protein->getAccession();
+        
+        if ($protein->getAccession()) {
+            $description .= ' /DbUniqueId=' . $protein->getAccession();
+        }
+        
+        if ($protein->getEntryName()) {
+            $description .= ' /CC=' . $protein->getEntryName();
+        }
+        
+        if ($protein->getProteinName()) {
+            $description .= ' /Pname=' . $protein->getProteinName();
+        }
+        
+        if ($protein->getGeneName()) {
+            $description .= ' /Gname=' . $protein->getGeneName();
+        }
+        
+        if ($protein->getOrganismName()) {
+            $description .= ' /TaxName=' . $protein->getOrganismName();
+        }
+        
+        if ($protein->getSequenceVersion()) {
+            $description .= ' /SV=' . $protein->getSequenceVersion();
+        }
+        
+        if ($protein->getProteinExistence()) {
+            $description .= ' /PE=' . $protein->getProteinExistence();
+        }
+        
+        return $description;
     }
 }

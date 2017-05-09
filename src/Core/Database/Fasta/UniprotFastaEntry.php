@@ -26,10 +26,10 @@ use pgb_liv\php_ms\Core\Protein;
  *
  * @author Andrew Collins
  */
-class UniprotFastaEntry
+class UniprotFastaEntry extends DefaultFastaEntry
 {
 
-    public static function getProtein($identifier, $description, $sequence)
+    protected static function parseProtein($identifier, $description, $sequence)
     {
         // Parse identifier
         $identifierParts = explode('|', $identifier, 3);
@@ -48,7 +48,7 @@ class UniprotFastaEntry
         $protein->setProteinName(substr($description, 0, $osPosition));
         
         $matches = array();
-        preg_match_all('/([OS|GN|PE|SV]{2})=(.+?(?=\s[GN|PE|SV]|$))/', $description, $matches);
+        preg_match_all('/([OS|GN|PE|SV]{2})=(.+?(?=\s(GN=|PE=|SV=)|$))/', $description, $matches);
         
         foreach ($matches[1] as $key => $value) {
             if ($value == 'OS') {

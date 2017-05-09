@@ -17,34 +17,47 @@
 namespace pgb_liv\php_ms\Writer;
 
 use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry;
 
 class FastaWriter
 {
 
     private $fileHandle = null;
 
-    public function __construct($path)
+    /**
+     * FASTA Format to use for description line
+     *
+     * @var callable
+     */
+    private $format;
+
+    public function __construct($path, $format = 'DefaultFastaEntry')
     {
         $this->fileHandle = fopen($path, 'w');
+        $this->format = $format;
     }
 
-    protected function writeDescription(Protein $protein)
+    private function writeDescription(Protein $protein)
     {
-        // TODO: Verify file handle open
-        fwrite($this->fileHandle, '>' . $protein->getUniqueIdentifier());
+        $output = call_user_func(array(
+            $this->format,
+            'toFasta'
+        ), $protein);
         
-        if (! is_null($protein->getDescription())) {
-            fwrite($this->fileHandle, ' ' . $protein->getDescription());
-        }
+        fwrite($this->fileHandle, $output);
     }
 
-    protected function writeSequence(Protein $protein)
+    private function writeSequence(Protein $protein)
     {
         fwrite($this->fileHandle, PHP_EOL . wordwrap($protein->getSequence(), 60, PHP_EOL, true) . PHP_EOL);
     }
 
     public function write(Protein $protein)
     {
+        if (is_null($this->fileHandle)) {
+            throw new \UnexpectedValueException('File handle is not open, write cannot be called after close');
+        }
+        
         $this->writeDescription($protein);
         $this->writeSequence($protein);
     }

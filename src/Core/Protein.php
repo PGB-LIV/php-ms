@@ -89,6 +89,8 @@ class Protein
             $this->databasePrefix = 'UniProtKB/Swiss-Prot';
         } elseif ($this->databasePrefix == 'tr') {
             $this->databasePrefix = 'UniProtKB/TrEMBL';
+        } elseif ($this->databasePrefix == 'nxp') {
+            $this->databasePrefix = 'NeXtProt';
         }
         
         return $databaseName;

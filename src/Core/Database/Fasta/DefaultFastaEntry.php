@@ -29,7 +29,17 @@ use pgb_liv\php_ms\Core\Protein;
 class DefaultFastaEntry
 {
 
+    public static function toFasta(Protein $protein)
+    {
+        return static::generateFasta($protein);
+    }
+
     public static function getProtein($identifier, $description, $sequence)
+    {
+        return static::parseProtein($identifier, $description, $sequence);
+    }
+
+    protected static function parseProtein($identifier, $description, $sequence)
     {
         $protein = new Protein();
         $protein->setUniqueIdentifier($identifier);
@@ -37,5 +47,16 @@ class DefaultFastaEntry
         $protein->setSequence($sequence);
         
         return $protein;
+    }
+
+    protected static function generateFasta(Protein $protein)
+    {
+        $description = '>' . $protein->getUniqueIdentifier();
+        
+        if (! is_null($protein->getDescription())) {
+            $description .= ' ' . $protein->getDescription();
+        }
+        
+        return $description;
     }
 }

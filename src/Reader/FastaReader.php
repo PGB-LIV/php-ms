@@ -35,6 +35,11 @@ class FastaReader implements \Iterator
 
     private $filePeek;
 
+    /**
+     * The current protein that will be returned by the current() method
+     *
+     * @var Protein
+     */
     private $current;
 
     private $key = 0;
@@ -46,6 +51,13 @@ class FastaReader implements \Iterator
         $this->filePath = $filePath;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see Iterator::current()
+     * @return Protein
+     */
     public function current()
     {
         return $this->current;
@@ -122,6 +134,11 @@ class FastaReader implements \Iterator
         return $this->filePeek;
     }
 
+    /**
+     * Parses the current chunk into a Protein object
+     *
+     * @return Protein
+     */
     private function parseEntry()
     {
         // Scan to first entry
