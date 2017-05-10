@@ -16,7 +16,8 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
+use pgb_liv\php_ms\Core\Spectra\FragmentIon;
 
 /**
  * An MGF reader that creates a new iterable object that will return a raw
@@ -74,7 +75,7 @@ class MgfReader implements \Iterator
 
     public function valid()
     {
-        if ($this->current instanceof SpectraEntry) {
+        if ($this->current instanceof PrecursorIon) {
             return true;
         }
         
@@ -115,7 +116,7 @@ class MgfReader implements \Iterator
 
     private function parseEntry()
     {
-        $entry = new SpectraEntry();
+        $entry = new PrecursorIon();
         
         // Scan to BEGIN IONS
         $isFound = false;
@@ -154,7 +155,7 @@ class MgfReader implements \Iterator
             } elseif ($pair[0] == 'CHARGE') {
                 $entry->setCharge((int) $pair[1]);
             } elseif ($pair[0] == 'SCANS') {
-                $entry->setScans((float) $pair[1] + 0);
+                $entry->setScan((float) $pair[1] + 0);
             } elseif ($pair[0] == 'RTINSECONDS') {
                 $entry->setRetentionTime((float) $pair[1] + 0);
             }
@@ -169,7 +170,7 @@ class MgfReader implements \Iterator
             $line = trim($this->getLine());
             $pair = explode(' ', $line, 3);
             
-            $ion = new SpectraEntry();
+            $ion = new FragmentIon();
             $ion->setMassCharge((float) $pair[0]);
             if (count($pair) > 1) {
                 $ion->setIntensity((float) $pair[1]);
@@ -179,7 +180,7 @@ class MgfReader implements \Iterator
                 $ion->setCharge((int) $pair[2]);
             }
             
-            $entry->addIon($ion);
+            $entry->addFragmentIon($ion);
         }
         
         $this->key ++;

@@ -64,7 +64,7 @@ class PxdInfo
         
         $file = array();
         if (isset($schema->DatasetFileList)) {
-            foreach ($schema->DatasetFileList->DatasetFile as $datasetFile) {                
+            foreach ($schema->DatasetFileList->DatasetFile as $datasetFile) {
                 $file['id'] = (string) $datasetFile->attributes()->id;
                 $file['name'] = (string) $datasetFile->attributes()->name;
                 $file['location'] = (string) $datasetFile->cvParam->attributes()->value;

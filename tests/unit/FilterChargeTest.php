@@ -17,7 +17,7 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Utility\Filter\FilterCharge;
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 
 class FilterChargeTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +65,7 @@ class FilterChargeTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryInBounds()
     {
-        $spectra = new SpectraEntry();
+        $spectra = new PrecursorIon();
         $spectra->setCharge(2);
         
         $filter = new FilterCharge(1, 3);
@@ -81,9 +81,9 @@ class FilterChargeTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryOnBounds()
     {
-        $spectraLow = new SpectraEntry();
+        $spectraLow = new PrecursorIon();
         $spectraLow->setCharge(1);
-        $spectraHigh = new SpectraEntry();
+        $spectraHigh = new PrecursorIon();
         $spectraHigh->setCharge(3);
         
         $filter = new FilterCharge(1, 3);
@@ -100,9 +100,9 @@ class FilterChargeTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryOutOfBounds()
     {
-        $spectraLow = new SpectraEntry();
+        $spectraLow = new PrecursorIon();
         $spectraLow->setCharge(1);
-        $spectraHigh = new SpectraEntry();
+        $spectraHigh = new PrecursorIon();
         $spectraHigh->setCharge(5);
         
         $filter = new FilterCharge(2, 4);
@@ -122,11 +122,11 @@ class FilterChargeTest extends \PHPUnit_Framework_TestCase
     public function testCanValidateEntryArray()
     {
         $spectra = array();
-        $spectra[0] = new SpectraEntry();
+        $spectra[0] = new PrecursorIon();
         $spectra[0]->setCharge(1);
-        $spectra[1] = new SpectraEntry();
+        $spectra[1] = new PrecursorIon();
         $spectra[1]->setCharge(3);
-        $spectra[2] = new SpectraEntry();
+        $spectra[2] = new PrecursorIon();
         $spectra[2]->setCharge(5);
         
         $filter = new FilterCharge(2, 4);

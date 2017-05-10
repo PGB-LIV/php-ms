@@ -18,7 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Utility\Filter\AbstractFilter;
 use pgb_liv\php_ms\Core\Peptide;
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 
 class AbstractFilterTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,6 +46,6 @@ class AbstractFilterTest extends \PHPUnit_Framework_TestCase
     {
         $stub = $this->getMockForAbstractClass('pgb_liv\php_ms\Utility\Filter\AbstractFilter');
         
-        $stub->isValidSpectra(new SpectraEntry());
+        $stub->isValidSpectra(new PrecursorIon());
     }
 }

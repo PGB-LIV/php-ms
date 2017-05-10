@@ -17,7 +17,7 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Utility\Filter\FilterMass;
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 
 class FilterMassTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +65,7 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryInBounds()
     {
-        $spectra = new SpectraEntry();
+        $spectra = new PrecursorIon();
         $spectra->setMass(350.5);
         
         $filter = new FilterMass(300.0, 400.0);
@@ -81,9 +81,9 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryOnBounds()
     {
-        $spectraLow = new SpectraEntry();
+        $spectraLow = new PrecursorIon();
         $spectraLow->setMass(300.0);
-        $spectraHigh = new SpectraEntry();
+        $spectraHigh = new PrecursorIon();
         $spectraHigh->setMass(400.0);
         
         $filter = new FilterMass(300.0, 400.0);
@@ -100,9 +100,9 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanValidateEntryOutOfBounds()
     {
-        $spectraLow = new SpectraEntry();
+        $spectraLow = new PrecursorIon();
         $spectraLow->setMass(300.0);
-        $spectraHigh = new SpectraEntry();
+        $spectraHigh = new PrecursorIon();
         $spectraHigh->setMass(400.0);
         
         $filter = new FilterMass(325.0, 375.0);
@@ -122,11 +122,11 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
     public function testCanValidateEntryArray()
     {
         $spectra = array();
-        $spectra[0] = new SpectraEntry();
+        $spectra[0] = new PrecursorIon();
         $spectra[0]->setMass(250.0);
-        $spectra[1] = new SpectraEntry();
+        $spectra[1] = new PrecursorIon();
         $spectra[1]->setMass(350.0);
-        $spectra[2] = new SpectraEntry();
+        $spectra[2] = new PrecursorIon();
         $spectra[2]->setMass(450.0);
         
         $filter = new FilterMass(300.0, 400.0);

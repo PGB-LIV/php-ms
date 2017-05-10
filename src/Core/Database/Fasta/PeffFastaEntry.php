@@ -87,7 +87,8 @@ class PeffFastaEntry extends DefaultFastaEntry
     /**
      * Parses ModResPsi element and returns the parsed modifications
      *
-     * @param string $value            
+     * @param string $value
+     *            The ModResXXX value
      * @return Modification[]
      */
     private static function parseModifications($value)

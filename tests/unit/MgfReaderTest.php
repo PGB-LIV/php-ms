@@ -17,7 +17,8 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Reader\MgfReader;
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
+use pgb_liv\php_ms\Core\Spectra\FragmentIon;
 
 class MgfReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,21 +26,21 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
     private function createTestFile(&$mgfEntries)
     {
         for ($entryIndex = 0; $entryIndex < 10; $entryIndex ++) {
-            $entry = new SpectraEntry();
+            $entry = new PrecursorIon();
             $entry->setTitle('MY TEST RUN  (intensity=192543543.5801)');
             $entry->setMassCharge(rand(10000000, 1000000000) / 100000);
             $entry->setCharge(3);
-            $entry->setScans(rand(1000, 10000));
+            $entry->setScan(rand(1000, 10000));
             $entry->setRetentionTime(rand(1000, 90000) / 100);
             
             for ($ionIndex = 0; $ionIndex < 15; $ionIndex ++) {
-                $ion = new SpectraEntry();
+                $ion = new FragmentIon();
                 
                 $ion->setMassCharge(rand(10000, 100000) / 100.0);
                 $ion->setIntensity(rand(100000, 10000000) / 100);
                 $ion->setCharge(rand(1, 3));
                 
-                $entry->addIon($ion);
+                $entry->addFragmentIon($ion);
             }
             
             $mgfEntries[] = $entry;
@@ -54,10 +55,10 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
             $mgf .= 'TITLE=' . $entry->getTitle() . "\n";
             $mgf .= 'PEPMASS=' . $entry->getMassCharge() . "\n";
             $mgf .= 'CHARGE=' . $entry->getCharge() . "\n";
-            $mgf .= 'SCANS=' . $entry->getScans() . "\n";
+            $mgf .= 'SCANS=' . $entry->getScan() . "\n";
             $mgf .= 'RTINSECONDS=' . $entry->getRetentionTime() . "\n";
             
-            foreach ($entry->getIons() as $ion) {
+            foreach ($entry->getFragmentIons() as $ion) {
                 $mgf .= $ion->getMassCharge();
                 $mgf .= ' ';
                 $mgf .= $ion->getIntensity();

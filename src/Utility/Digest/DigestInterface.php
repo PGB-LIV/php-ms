@@ -31,7 +31,6 @@ interface DigestInterface
      *
      * @param Protein $protein
      *            Must contain a protein sequence
-     *            
      * @return array
      */
     public function digest(Protein $protein);

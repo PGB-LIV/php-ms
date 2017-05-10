@@ -44,6 +44,11 @@ class Peptide
 
     const C_TERM_MASS = 17.00278;
 
+    /**
+     * The parent protein of this peptide
+     *
+     * @var Protein
+     */
     private $protein;
 
     private $positionStart;
@@ -51,8 +56,6 @@ class Peptide
     private $positionEnd;
 
     private $missedCleavageCount;
-
-    private $isDecoy;
 
     public function setPositionStart($position)
     {
@@ -94,6 +97,11 @@ class Peptide
         $this->protein = $protein;
     }
 
+    /**
+     * Gets the parent protein of this peptide
+     * 
+     * @return Protein
+     */
     public function getProtein()
     {
         return $this->protein;
@@ -107,11 +115,6 @@ class Peptide
     public function getPositionEnd()
     {
         return $this->positionEnd;
-    }
-
-    public function getLength()
-    {
-        return strlen($this->getSequence());
     }
 
     /**
@@ -242,17 +245,6 @@ class Peptide
             $ions[($this->getLength() - $i)] = $sum;
         }
         return $ions;
-    }
-
-    public function setIsDecoy($bool)
-    {
-        // TODO: Validate bool
-        $this->isDecoy = $bool;
-    }
-
-    public function isDecoy()
-    {
-        return $this->isDecoy;
     }
 
     public function __clone()

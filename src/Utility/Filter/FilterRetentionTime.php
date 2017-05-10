@@ -16,8 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Filter;
 
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
-use pgb_liv\php_ms\Core\Peptide;
+use pgb_liv\php_ms\Core\Spectra\IonInterface;
 
 /**
  * Creates an instance of a filter than can be used with a list to
@@ -67,12 +66,12 @@ class FilterRetentionTime extends AbstractFilter
     }
 
     /**
-     * Returns true if the SpectraEntry matches the filter criteria, else false
      *
-     * @param SpectraEntry $peptide
-     *            Spectra object to filter
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Utility\Filter\AbstractFilter::isValidSpectra()
      */
-    public function isValidSpectra(SpectraEntry $spectra)
+    public function isValidSpectra(IonInterface $spectra)
     {
         if ($spectra->getRetentionTime() < $this->minRetentionTime) {
             return false;

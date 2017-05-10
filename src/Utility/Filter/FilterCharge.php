@@ -16,7 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Filter;
 
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\IonInterface;
 
 /**
  * Creates an instance of a spectra filter than can be used with a list of spectra to
@@ -66,12 +66,12 @@ class FilterCharge extends AbstractFilter
     }
 
     /**
-     * Returns true if the SpectraEntry matches the filter criteria, else false
      *
-     * @param SpectraEntry $peptide
-     *            Spectra object to filter
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Utility\Filter\AbstractFilter::isValidSpectra()
      */
-    public function isValidSpectra(SpectraEntry $spectra)
+    public function isValidSpectra(IonInterface $spectra)
     {
         if ($spectra->getCharge() < $this->minCharge) {
             return false;

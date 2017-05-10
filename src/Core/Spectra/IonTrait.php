@@ -16,42 +16,55 @@
  */
 namespace pgb_liv\php_ms\Core\Spectra;
 
-use pgb_liv\php_ms\Core\Identification;
-
 /**
- * A Spectra Entry object.
+ * Generic trait for providing ion properties such as mass, charge and intensity
  *
  * @author Andrew Collins
  */
-class SpectraEntry
+trait IonTrait
 {
 
-    const PROTON_MASS = 1.007276466879;
-
-    private $mass;
-
-    private $massCharge;
-
-    private $charge;
-
-    private $retentionTime;
-
-    private $title;
-
-    private $scans;
-
-    private $intensity;
-
-    private $spectra;
-
-    private $identifications;
+    /**
+     * The Proton neutral mass value
+     *
+     * @var float
+     */
+    private static $protonMass = 1.007276466879;
 
     /**
-     * Sets the neutral mass value for this spectra
+     * The neutral mass value of this ion
+     *
+     * @var float
+     */
+    private $mass;
+
+    /**
+     * The mass-over-charge ratio of this ion
+     *
+     * @var float
+     */
+    private $massCharge;
+
+    /**
+     * The charge value of this ion
+     *
+     * @var int
+     */
+    private $charge;
+
+    /**
+     * The intensity value of this ion
+     *
+     * @var float
+     */
+    private $intensity;
+
+    /**
+     * Sets the neutral mass value for this ion
      *
      * @param float $mass
      *            Mass value expressed as a floating point value
-     * @throws \InvalidArgumentException If Mass is not a floating point value
+     * @throws \InvalidArgumentException If mass is not a floating point value
      */
     public function setMass($mass)
     {
@@ -63,7 +76,7 @@ class SpectraEntry
     }
 
     /**
-     * Gets the neutral mass value for this spectra
+     * Gets the neutral mass value for this ion
      *
      * @return float The mass value
      */
@@ -77,13 +90,12 @@ class SpectraEntry
     }
 
     /**
-     * Calculates the neutral mass value from the mass and charge values
+     * Sets the mass-to-charge ratio for this ion
+     *
+     * @param float $mz
+     *            The mass-to-charge ratio to set to
+     * @throws \InvalidArgumentException If $mz is not a valid floating point value
      */
-    private function calculateNeutralMass()
-    {
-        return ($this->massCharge * $this->charge) - ($this->charge * SpectraEntry::PROTON_MASS);
-    }
-
     public function setMassCharge($mz)
     {
         if (! is_float($mz)) {
@@ -93,6 +105,11 @@ class SpectraEntry
         $this->massCharge = $mz;
     }
 
+    /**
+     * Gets the mass-to-charge ratio for this ion
+     *
+     * @return float
+     */
     public function getMassCharge()
     {
         return $this->massCharge;
@@ -125,51 +142,12 @@ class SpectraEntry
     }
 
     /**
-     * Sets the spectra elements retention time.
+     * Sets the intensity value for this ion
      *
-     * @param float $retentionTime
-     *            Column retention time in seconds.
+     * @param float $intensity
+     *            The intensity value to set
+     * @throws \InvalidArgumentException If the intensity is not of type float
      */
-    public function setRetentionTime($retentionTime)
-    {
-        if (! (is_int($retentionTime) || is_float($retentionTime))) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
-        }
-        
-        $this->retentionTime = $retentionTime;
-    }
-
-    public function getRetentionTime()
-    {
-        return $this->retentionTime;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function setScans($scans)
-    {
-        if (! (is_int($scans) || is_float($scans))) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type int or float. Value is of type ' . gettype($scans));
-        }
-        
-        $this->scans = $scans;
-    }
-
-    public function getScans()
-    {
-        return $this->scans;
-    }
-
     public function setIntensity($intensity)
     {
         if (! (is_int($intensity) || is_float($intensity))) {
@@ -180,37 +158,21 @@ class SpectraEntry
         $this->intensity = $intensity;
     }
 
+    /**
+     * Gets the intensity value for this object
+     *
+     * @return float
+     */
     public function getIntensity()
     {
         return $this->intensity;
     }
 
-    public function addIon(SpectraEntry $spectra)
-    {
-        if (is_null($this->spectra)) {
-            $this->spectra = array();
-        }
-        
-        $this->spectra[] = $spectra;
-    }
-
-    public function getIons()
-    {
-        return $this->spectra;
-    }
-
-    public function addIdentification(Identification $identification)
-    {
-        $this->identifications[] = $identification;
-    }
-
     /**
-     * Gets the list of identifications for this spectra object
-     * 
-     * @return Identification[]
+     * Calculates the neutral mass value from the mass and charge values
      */
-    public function getIdentifications()
+    private function calculateNeutralMass()
     {
-        return $this->identifications;
+        return ($this->massCharge * $this->charge) - ($this->charge * self::$protonMass);
     }
 }

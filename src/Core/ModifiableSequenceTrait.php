@@ -39,6 +39,13 @@ trait ModifiableSequenceTrait
     private $modifications = array();
 
     /**
+     * Sets whether this sequence is a decoy or not
+     *
+     * @var bool
+     */
+    private $isDecoy;
+
+    /**
      * Sets the sequence for this object
      *
      * @param string $sequence
@@ -105,5 +112,37 @@ trait ModifiableSequenceTrait
     public function isModified()
     {
         return count($this->modifications) != 0;
+    }
+
+    /**
+     * Sets whether this sequence is a decoy sequence
+     *
+     * @param bool $bool
+     *            Value to set to
+     */
+    public function setIsDecoy($bool)
+    {
+        // TODO: Validate bool
+        $this->isDecoy = $bool;
+    }
+
+    /**
+     * Gets whether this sequence is a decoy sequence
+     *
+     * @return boolean
+     */
+    public function isDecoy()
+    {
+        return $this->isDecoy;
+    }
+
+    /**
+     * Gets the length of the sequence in this object
+     *
+     * @return int
+     */
+    public function getLength()
+    {
+        return strlen($this->getSequence());
     }
 }

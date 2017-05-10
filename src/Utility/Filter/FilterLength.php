@@ -48,10 +48,10 @@ class FilterLength extends AbstractFilter
     }
 
     /**
-     * Returns true if the Peptide matches the filter criteria, else false
      *
-     * @param Peptide $peptide
-     *            Must contain a peptide sequence
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Utility\Filter\AbstractFilter::isValidPeptide()
      */
     public function isValidPeptide(Peptide $peptide)
     {

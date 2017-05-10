@@ -31,7 +31,6 @@ interface SearchInterface
      *
      * @param SearchParameters $parameters
      *            The parameters to search with
-     *            
      * @return string An identifier that can be passed to getResults for retrieving the search results data
      */
     public function search(SearchParametersInterface $parameters);
