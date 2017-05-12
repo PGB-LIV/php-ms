@@ -21,7 +21,7 @@ use pgb_liv\php_ms\Core\Tolerance;
 use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Identification;
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 
 /**
  *
@@ -81,7 +81,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $identification->setPeptide(
                 $sequences[(string) $spectraItem->PeptideEvidenceRef->attributes()->peptideEvidence_ref]);
             
-            $spectra = new SpectraEntry();
+            $spectra = new PrecursorIon();
             $spectra->setCharge((int) $spectraItem->attributes()->chargeState);
             $spectra->setMassCharge((float) $spectraItem->attributes()->calculatedMassToCharge);
             $spectra->addIdentification($identification);

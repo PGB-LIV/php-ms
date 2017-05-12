@@ -16,7 +16,7 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\FragmentIon;
 
 /**
  *
@@ -31,7 +31,7 @@ interface MzIdentMlReader1Interface
 
     /**
      *
-     * @return SpectraEntry[]
+     * @return FragmentIon[]
      */
     public function getAnalysisData();
 }
