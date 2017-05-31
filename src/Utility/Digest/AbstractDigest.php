@@ -109,6 +109,7 @@ abstract class AbstractDigest
      *
      * @param Protein $protein
      *            Must contain a protein sequence
+     * @return Peptide[]
      */
     public function digest(Protein $protein)
     {

@@ -35,6 +35,8 @@ class MzMlMerge
 
     private $idOffset;
 
+    private $spectrumIdRef = array();
+
     /**
      * Creates a new instance of this class with a set of files to merge and a target output file
      *
@@ -69,6 +71,8 @@ class MzMlMerge
         // Write header
         $this->writeHeader($firstFile, $spectrumCount);
         
+        // Resets vars
+        $this->spectrumIdRef = array();
         $this->timeOffset = 0;
         $this->indexOffset = 0;
         $this->idOffset = 0;
@@ -152,7 +156,7 @@ class MzMlMerge
                 break;
             }
             
-            if (preg_match('/<spectrum(?=.*(index="([0-9.]+)"))(?=.*(id=".*(scan=([0-9]+)).*"))/', $line, $matches)) {
+            if (preg_match('/<spectrum(?=.*(index="([0-9.]+)"))(?=.*(id=".*(scan=([0-9]+)).*?"))/', $line, $matches)) {
                 $index = $matches[2];
                 $index += $indexOffset;
                 
@@ -170,7 +174,13 @@ class MzMlMerge
                 $line = str_replace($matches[1], 'index="' . $index . '"', $line);
                 $idChunk = str_replace($matches[4], 'scan=' . $scan, $matches[3]);
                 
+                $this->spectrumIdRef[substr($matches[3], 4, - 1)] = substr($idChunk, 4, - 1);
+                
                 $line = str_replace($matches[3], $idChunk, $line);
+            }
+            
+            if (preg_match('/<precursor(?=.*(spectrumRef="(.*?)"))/', $line, $matches)) {
+                $line = str_replace($matches[2], $this->spectrumIdRef[$matches[2]], $line);
             }
             
             if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 

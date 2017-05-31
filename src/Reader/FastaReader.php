@@ -161,7 +161,11 @@ class FastaReader implements \Iterator
             }
         }
         
-        $identifier = substr($description, 0, strpos($description, ' '));
+        if (strpos($description, ' ') !== false) {
+            $identifier = substr($description, 0, strpos($description, ' '));
+        } else {
+            $identifier = $description;
+        }
         $description = substr($description, strpos($description, ' ') + 1);
         
         $sequence = '';

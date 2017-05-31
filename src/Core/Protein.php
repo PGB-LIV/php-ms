@@ -36,7 +36,7 @@ class Protein
 
     private $entryName;
 
-    private $proteinName;
+    private $name;
 
     private $organismName;
 
@@ -116,14 +116,45 @@ class Protein
         return $this->entryName;
     }
 
-    public function setProteinName($proteinName)
+    /**
+     * Sets the protein name.
+     * 
+     * @param string $name
+     *            name of the protein
+     */
+    public function setName($name)
     {
-        $this->proteinName = $proteinName;
+        $this->name = $name;
     }
 
+    /**
+     * Gets the protein name.
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the protein name.
+     * 
+     * @param string $proteinName
+     *            name of the protein
+     * @deprecated Use setName()
+     */
+    public function setProteinName($proteinName)
+    {
+        $this->setName($proteinName);
+    }
+
+    /**
+     * Gets the protein name.
+     * 
+     * @deprecated Use getName()
+     */
     public function getProteinName()
     {
-        return $this->proteinName;
+        $this->getName();
     }
 
     public function setOrganismName($organismName)
