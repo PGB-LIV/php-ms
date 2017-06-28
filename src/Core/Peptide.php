@@ -60,8 +60,7 @@ class Peptide
     public function setPositionStart($position)
     {
         if (! is_int($position)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type integer. Argument type is ' . gettype($position));
+            throw new \InvalidArgumentException('Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
         
         $this->positionStart = $position;
@@ -70,8 +69,7 @@ class Peptide
     public function setPositionEnd($position)
     {
         if (! is_int($position)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type integer. Argument type is ' . gettype($position));
+            throw new \InvalidArgumentException('Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
         
         $this->positionEnd = $position;
@@ -80,8 +78,7 @@ class Peptide
     public function setMissedCleavageCount($count)
     {
         if (! is_int($count)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type integer. Argument type is ' . gettype($count));
+            throw new \InvalidArgumentException('Argument 1 must be of type integer. Argument type is ' . gettype($count));
         }
         
         $this->missedCleavageCount = $count;
@@ -99,7 +96,7 @@ class Peptide
 
     /**
      * Gets the parent protein of this peptide
-     * 
+     *
      * @return Protein
      */
     public function getProtein()
@@ -244,6 +241,7 @@ class Peptide
             $sum += $mass;
             $ions[($this->getLength() - $i)] = $sum;
         }
+        
         return $ions;
     }
 
@@ -256,5 +254,63 @@ class Peptide
         foreach ($oldMods as $modification) {
             $this->modifications[] = clone $modification;
         }
+    }
+
+    /**
+     * Gets the molecular formula for this peptide string.
+     *
+     * @return string Molecular formula
+     */
+    public function getMolecularFormula()
+    {
+        $acids = str_split($this->getSequence(), 1);
+        
+        $frequency = array(
+            'C' => 0,
+            'H' => 0,
+            'N' => 0,
+            'O' => 0,
+            'S' => 0
+        );
+        
+        foreach ($acids as $acid) {
+            $composition = AminoAcidComposition::getFormula($acid);
+            
+            $matches = array();
+            preg_match('/([A-Z])([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)/', $composition, $matches);
+            
+            for ($i = 1; $i < count($matches); $i += 2) {
+                if ($matches[$i] == '') {
+                    continue;
+                }
+                
+                $chemical = $matches[$i];
+                $count = $matches[$i + 1];
+                
+                $frequency[$chemical] += $count == '' ? 1 : $count;
+            }
+        }
+        
+        // Remove hydrogen and oxygen from C-TERM
+        $frequency['H'] -= count($acids) - 1;
+        $frequency['O'] -= count($acids) - 1;
+        
+        // Remove hydrogen from N-TERM.
+        $frequency['H'] -= count($acids) - 1;
+        
+        $formula = '';
+        foreach ($frequency as $chemical => $count) {
+            if ($count == 0) {
+                continue;
+            }
+            
+            $formula .= $chemical;
+            
+            if ($count > 1) {
+                $formula .= $count;
+            }
+        }
+        
+        return $formula;
     }
 }
