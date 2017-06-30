@@ -72,7 +72,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $protein->setEntryName($entryName);
         
         $protein->setDescription($description);
-        $protein->setProteinName($proteinName);
+        $protein->setName($proteinName);
         $protein->setOrganismName($organism);
         $protein->setGeneName($geneName);
         $protein->setProteinExistence($pe);

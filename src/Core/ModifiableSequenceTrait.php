@@ -145,4 +145,32 @@ trait ModifiableSequenceTrait
     {
         return strlen($this->getSequence());
     }
+
+    /**
+     * Gets the theoretical neutral mass for this sequence
+     *
+     * @param string $sequence
+     *            The peptide sequence to calculate for
+     * @return The neutral mass of the sequence
+     */
+    public function getMass()
+    {
+        $acids = str_split($this->getSequence(), 1);
+        
+        $mass = Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::OXYGEN_MASS;
+        
+        foreach ($acids as $acid) {
+            switch ($acid) {
+                case 'X':
+                case 'B':
+                case 'Z':
+                    continue;
+                default:
+                    $mass += AminoAcidMono::getMonoisotopicMass($acid);
+                    break;
+            }
+        }
+        
+        return $mass;
+    }
 }

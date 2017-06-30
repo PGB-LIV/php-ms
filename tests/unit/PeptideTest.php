@@ -18,7 +18,6 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Protein;
-use pgb_liv\php_ms\Core\Modification;
 
 class PeptideTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +36,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Peptide::setSequence
+     * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::getSequence
      * @covers pgb_liv\php_ms\Core\Peptide::getLength
      *
@@ -46,8 +45,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     public function testCanGetSequence()
     {
         $sequence = 'PEPTIDE';
-        $peptide = new Peptide();
-        $peptide->setSequence($sequence);
+        $peptide = new Peptide($sequence);
         
         $this->assertEquals($sequence, $peptide->getSequence());
         $this->assertEquals(strlen($sequence), $peptide->getLength());
@@ -157,130 +155,5 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $peptide->setProtein($protein);
         
         $this->assertEquals($protein, $peptide->getProtein());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Peptide::calculateMass
-     *
-     * @uses pgb_liv\php_ms\Core\Peptide
-     */
-    public function testCanCalculateMass1()
-    {
-        $sequence = 'PEPTIDE';
-        $peptide = new Peptide();
-        $peptide->setSequence($sequence);
-        $mass = 799.3599;
-        $this->assertEquals($mass, $peptide->calculateMass(), '', 0.0001);
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Peptide::calculateMass
-     *
-     * @uses pgb_liv\php_ms\Core\Peptide
-     */
-    public function testCanCalculateMass2()
-    {
-        $sequence = 'XBZ';
-        $peptide = new Peptide();
-        $peptide->setSequence($sequence);
-        
-        $mass = Peptide::AMINO_ACID_B_MASS;
-        $mass += Peptide::AMINO_ACID_X_MASS;
-        $mass += Peptide::AMINO_ACID_Z_MASS;
-        $mass += Peptide::HYDROGEN_MASS * 2;
-        $mass += Peptide::OXYGEN_MASS;
-        
-        $this->assertEquals($mass, $peptide->calculateMass(), '', 0.00001);
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Peptide::addModification
-     * @covers pgb_liv\php_ms\Core\Peptide::getModifications
-     *
-     * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\Modification
-     */
-    public function testObjectCanGetSetValidModification()
-    {
-        $peptide = new Peptide();
-        $this->assertInstanceOf('pgb_liv\php_ms\Core\Peptide', $peptide);
-        
-        $mods = array();
-        $mods[0] = new Modification();
-        $mods[0]->setMonoisotopicMass(146.14);
-        $mods[0]->setResidues(array(
-            'M'
-        ));
-        
-        $peptide->addModification($mods[0]);
-        
-        $this->assertEquals($mods, $peptide->getModifications());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Peptide::addModification
-     * @covers pgb_liv\php_ms\Core\Peptide::addModifications
-     * @covers pgb_liv\php_ms\Core\Peptide::getModifications
-     *
-     * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\Modification
-     */
-    public function testObjectCanGetSetValidModifications()
-    {
-        $peptide = new Peptide();
-        $this->assertInstanceOf('pgb_liv\php_ms\Core\Peptide', $peptide);
-        
-        $mods = array();
-        $mods[0] = new Modification();
-        $mods[0]->setMonoisotopicMass(146.14);
-        $mods[0]->setResidues(array(
-            'M'
-        ));
-        
-        $mods[1] = new Modification();
-        $mods[1]->setMonoisotopicMass(146.14);
-        $mods[1]->setResidues(array(
-            'M'
-        ));
-        
-        $peptide->addModifications($mods);
-        
-        $this->assertEquals($mods, $peptide->getModifications());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Peptide::IsModified
-     *
-     * @uses pgb_liv\php_ms\Core\Peptide
-     */
-    public function testObjectCanGetIsModified1()
-    {
-        $peptide = new Peptide();
-        $this->assertInstanceOf('pgb_liv\php_ms\Core\Peptide', $peptide);
-        
-        $this->assertEquals(false, $peptide->isModified());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Peptide::IsModified
-     *
-     * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\Modification
-     */
-    public function testObjectCanGetIsModified2()
-    {
-        $peptide = new Peptide();
-        $this->assertInstanceOf('pgb_liv\php_ms\Core\Peptide', $peptide);
-        
-        $mods = array();
-        $mods[0] = new Modification();
-        $mods[0]->setMonoisotopicMass(146.14);
-        $mods[0]->setResidues(array(
-            'M'
-        ));
-        
-        $peptide->addModification($mods[0]);
-        
-        $this->assertEquals(true, $peptide->isModified());
     }
 }

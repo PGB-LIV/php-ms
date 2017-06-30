@@ -19,13 +19,12 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Abstract class containing generic filtering methods
+ * Generates the Z ions from a peptide
  *
  * @author Andrew Collins
  */
 class ZFragment extends AbstractFragment
 {
-
     public function __construct(Peptide $peptide)
     {
         $this->setIsReversed(true);
@@ -38,15 +37,9 @@ class ZFragment extends AbstractFragment
      *
      * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminusMass()
      */
-    public function getNTerminusMass()
+    protected function getCTerminusMass()
     {
-        $mass = Peptide::C_TERM_MASS;
-        $mass -= Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
-        $mass += Peptide::PROTON_MASS;
-        
-        // Add electrons??
-        $mass += 0.00054858 * 2;
-        
-        return $mass;
+        // Z has electrons added??
+        return (Peptide::C_TERM_MASS - Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS) + Peptide::PROTON_MASS + (0.00054858 * 2);
     }
 }

@@ -127,38 +127,6 @@ class Peptide
     }
 
     /**
-     * Calculates the neutral mass of a sequence
-     *
-     * @param string $sequence
-     *            The peptide sequence to calculate for
-     * @return The neutral mass of the sequence
-     */
-    public function calculateMass()
-    {
-        $acids = str_split($this->getSequence(), 1);
-        
-        $mass = static::HYDROGEN_MASS + static::HYDROGEN_MASS + static::OXYGEN_MASS;
-        foreach ($acids as $acid) {
-            switch ($acid) {
-                case 'X':
-                    $mass += Peptide::AMINO_ACID_X_MASS;
-                    break;
-                case 'B':
-                    $mass += Peptide::AMINO_ACID_B_MASS;
-                    break;
-                case 'Z':
-                    $mass += Peptide::AMINO_ACID_Z_MASS;
-                    break;
-                default:
-                    $mass += AminoAcidMono::getMonoisotopicMass($acid);
-                    break;
-            }
-        }
-        
-        return $mass;
-    }
-
-    /**
      *
      * @deprecated
      *

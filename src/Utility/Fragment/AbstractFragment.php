@@ -53,10 +53,10 @@ abstract class AbstractFragment
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
             // Add mass
-            if ((!$this->isReversed && $i == 0)) {
-                $mass += $this->getCTerminusMass();
-            } else if (($this->isReversed && $i == 0)) {
+            if (! $this->isReversed && $i == 0) {
                 $mass += $this->getNTerminusMass();
+            } elseif ($this->isReversed && $i == 0) {
+                $mass += $this->getCTerminusMass();
             }
             
             $sum += $mass;
@@ -66,17 +66,17 @@ abstract class AbstractFragment
         return $ions;
     }
 
-    public function getCTerminusMass()
+    protected function getCTerminusMass()
     {
         return 0;
     }
 
-    public function getNTerminusMass()
+    protected function getNTerminusMass()
     {
         return 0;
     }
 
-    public function setIsReversed($bool)
+    protected function setIsReversed($bool)
     {
         $this->isReversed = $bool;
     }

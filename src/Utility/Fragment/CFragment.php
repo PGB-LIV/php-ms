@@ -19,25 +19,21 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Abstract class containing generic filtering methods
+ * Generates the C ions from a peptide
  *
  * @author Andrew Collins
  */
 class CFragment extends AbstractFragment
 {
-    
+
     /**
      *
      * {@inheritdoc}
      *
      * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminusMass()
      */
-    public function getCTerminusMass()
+    protected function getNTerminusMass()
     {
-        $mass = Peptide::N_TERM_MASS;
-        $mass += Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
-        $mass += Peptide::PROTON_MASS;
-        
-        return $mass;
+        return Peptide::N_TERM_MASS + Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
     }
 }

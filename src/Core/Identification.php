@@ -17,16 +17,25 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * Abstract database entry object, by default the identifier, description and sequence are required.
- * Extending classes may use the additional fields.
+ * Class for spectra identification object, provides storage for assigning a Peptide and scoring.
  *
  * @author Andrew Collins
  */
 class Identification
 {
 
+    /**
+     * Peptide assigned to this identification
+     *
+     * @var Peptide
+     */
     private $peptide;
 
+    /**
+     * Map of identification scores
+     *
+     * @var array
+     */
     private $scores = array();
 
     /**
@@ -36,31 +45,71 @@ class Identification
      */
     private $ionsMatched;
 
+    /**
+     * Sets the peptide for this identification
+     *
+     * @param Peptide $peptide
+     *            The peptide to assign this identification object
+     */
     public function setPeptide(Peptide $peptide)
     {
         $this->peptide = $peptide;
     }
 
+    /**
+     * Gets the peptide associated with this identification
+     *
+     * @return Peptide
+     */
     public function getPeptide()
     {
         return $this->peptide;
     }
 
+    /**
+     * Sets the score for this identification, a key must be specified that can be used for retreiving the score type later.
+     * E.g. eValue or pValue
+     *
+     * @param string $key
+     *            The key to identify this score entry by
+     * @param mixed $value
+     *            The score value. Both numeric and string types are allowable.
+     */
     public function setScore($key, $value)
     {
         $this->scores[$key] = $value;
     }
 
+    /**
+     * Gets the scores for this identification as an associative array.
+     *
+     * @return array
+     */
     public function getScores()
     {
         return $this->scores;
     }
 
+    /**
+     * Gets the value for a score identified by the key that was set when setScore was called.
+     *
+     * @param sring $key
+     *            The key to retrieve the value for
+     * @throws \OutOfBoundsException If the key was not found on this identification
+     * @return mixed
+     */
     public function getScore($key)
     {
+        if (! array_key_exists($key, $this->scores)) {
+            throw new \OutOfBoundsException('The key "' . $key . ' was not found.');
+        }
+        
         return $this->scores[$key];
     }
 
+    /**
+     * Clears all scores held by this instance.
+     */
     public function clearScores()
     {
         $this->scores = array();
@@ -76,8 +125,7 @@ class Identification
     public function setIonsMatched($ionsMatched)
     {
         if (! is_int($ionsMatched)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be an int value. Valued passed is of type ' . gettype($ionsMatched));
+            throw new \InvalidArgumentException('Argument 1 must be an int value. Valued passed is of type ' . gettype($ionsMatched));
         }
         
         $this->ionsMatched = $ionsMatched;

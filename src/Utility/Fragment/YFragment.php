@@ -19,12 +19,13 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Abstract class containing generic filtering methods
+ * Generates the Y ions from a peptide
  *
  * @author Andrew Collins
  */
 class YFragment extends AbstractFragment
 {
+
     public function __construct(Peptide $peptide)
     {
         $this->setIsReversed(true);
@@ -37,12 +38,8 @@ class YFragment extends AbstractFragment
      *
      * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminusMass()
      */
-    public function getNTerminusMass()
+    protected function getCTerminusMass()
     {
-        $mass = Peptide::C_TERM_MASS;
-        $mass += Peptide::HYDROGEN_MASS;
-        $mass += Peptide::PROTON_MASS;
-        
-        return $mass;
+        return Peptide::C_TERM_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
     }
 }
