@@ -16,6 +16,9 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
+use pgb_liv\php_ms\Core\Peptide;
+use pgb_liv\php_ms\Core\AminoAcidMono;
+
 /**
  * Abstract class containing generic filtering methods
  *
@@ -24,22 +27,36 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 abstract class AbstractFragment
 {
 
+    private $isReversed = false;
+
+    private $peptide;
+
+    public function __construct(Peptide $peptide)
+    {
+        $this->peptide = $peptide;
+    }
+
     public function getIons()
-    {        
+    {
         // TODO: Add modification support
         $ions = array();
-        $sequence = $this->getSequence();
+        $sequence = $this->peptide->getSequence();
+        
+        if ($this->isReversed) {
+            $sequence = strrev($sequence);
+        }
+        
         $sum = 0;
         
-        for ($i = 0; $i < $this->getLength(); $i ++) {
+        for ($i = 0; $i < strlen($sequence); $i ++) {
             $aa = $sequence[$i];
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
             // Add mass
-            if ($i == 0) {
-                $mass += Peptide::N_TERM_MASS;
-                $mass -= Peptide::HYDROGEN_MASS;
-                $mass += Peptide::PROTON_MASS;
+            if ((!$this->isReversed && $i == 0)) {
+                $mass += $this->getCTerminusMass();
+            } else if (($this->isReversed && $i == 0)) {
+                $mass += $this->getNTerminusMass();
             }
             
             $sum += $mass;
@@ -48,14 +65,19 @@ abstract class AbstractFragment
         
         return $ions;
     }
-    
+
     public function getCTerminusMass()
     {
         return 0;
     }
-    
+
     public function getNTerminusMass()
     {
         return 0;
+    }
+
+    public function setIsReversed($bool)
+    {
+        $this->isReversed = $bool;
     }
 }

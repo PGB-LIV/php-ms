@@ -118,7 +118,7 @@ class Protein
 
     /**
      * Sets the protein name.
-     * 
+     *
      * @param string $name
      *            name of the protein
      */
@@ -137,7 +137,7 @@ class Protein
 
     /**
      * Sets the protein name.
-     * 
+     *
      * @param string $proteinName
      *            name of the protein
      * @deprecated Use setName()
@@ -149,12 +149,12 @@ class Protein
 
     /**
      * Gets the protein name.
-     * 
+     *
      * @deprecated Use getName()
      */
     public function getProteinName()
     {
-        $this->getName();
+        return $this->getName();
     }
 
     public function setOrganismName($organismName)

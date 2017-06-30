@@ -16,6 +16,11 @@
  */
 namespace pgb_liv\php_ms\Core;
 
+use pgb_liv\php_ms\Utility\Fragment\BFragment;
+use pgb_liv\php_ms\Utility\Fragment\YFragment;
+use pgb_liv\php_ms\Utility\Fragment\CFragment;
+use pgb_liv\php_ms\Utility\Fragment\ZFragment;
+
 /**
  * Abstract database entry object, by default the identifier, description and sequence are required.
  * Extending classes may use the additional fields.
@@ -56,6 +61,13 @@ class Peptide
     private $positionEnd;
 
     private $missedCleavageCount;
+
+    public function __construct($sequence = null)
+    {
+        if (! is_null($sequence)) {
+            $this->setSequence($sequence);
+        }
+    }
 
     public function setPositionStart($position)
     {
@@ -146,103 +158,44 @@ class Peptide
         return $mass;
     }
 
+    /**
+     *
+     * @deprecated
+     *
+     */
     public function getIonsB()
     {
-        // TODO: Add modification support
-        $ions = array();
-        $sequence = $this->getSequence();
-        $sum = 0;
-        
-        for ($i = 0; $i < $this->getLength(); $i ++) {
-            $aa = $sequence[$i];
-            $mass = AminoAcidMono::getMonoisotopicMass($aa);
-            
-            if ($i == 0) {
-                $mass += Peptide::N_TERM_MASS;
-                $mass -= Peptide::HYDROGEN_MASS;
-                $mass += Peptide::PROTON_MASS;
-            }
-            
-            $sum += $mass;
-            $ions[$i + 1] = $sum;
-        }
-        
-        return $ions;
+        return (new BFragment($this))->getIons();
     }
 
+    /**
+     *
+     * @deprecated
+     *
+     */
     public function getIonsY()
     {
-        // TODO: Add modification support
-        $ions = array();
-        $sequence = $this->getSequence();
-        $sum = 0;
-        
-        for ($i = $this->getLength() - 1; $i >= 0; $i --) {
-            $aa = $sequence[$i];
-            $mass = AminoAcidMono::getMonoisotopicMass($aa);
-            
-            if ($i == $this->getLength() - 1) {
-                $mass += Peptide::C_TERM_MASS;
-                $mass += Peptide::HYDROGEN_MASS;
-                $mass += Peptide::PROTON_MASS;
-            }
-            
-            $sum += $mass;
-            $ions[($this->getLength() - $i)] = $sum;
-        }
-        
-        return $ions;
+        return (new YFragment($this))->getIons();
     }
 
+    /**
+     *
+     * @deprecated
+     *
+     */
     public function getIonsC()
     {
-        // TODO: Add modification support
-        $ions = array();
-        $sequence = $this->getSequence();
-        $sum = 0;
-        
-        for ($i = 0; $i < $this->getLength(); $i ++) {
-            $aa = $sequence[$i];
-            $mass = AminoAcidMono::getMonoisotopicMass($aa);
-            
-            if ($i == 0) {
-                $mass += Peptide::N_TERM_MASS;
-                $mass += Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
-                $mass += Peptide::PROTON_MASS;
-            }
-            
-            $sum += $mass;
-            $ions[$i + 1] = $sum;
-        }
-        
-        return $ions;
+        return (new CFragment($this))->getIons();
     }
 
+    /**
+     *
+     * @deprecated
+     *
+     */
     public function getIonsZ()
     {
-        // TODO: Add modification support
-        $ions = array();
-        $sequence = $this->getSequence();
-        $sum = 0;
-        
-        for ($i = $this->getLength() - 1; $i >= 0; $i --) {
-            $aa = $sequence[$i];
-            $mass = AminoAcidMono::getMonoisotopicMass($aa);
-            
-            if ($i == $this->getLength() - 1) {
-                $mass += Peptide::C_TERM_MASS;
-                $mass -= Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS;
-                $mass += Peptide::PROTON_MASS;
-                
-                // Add electrons??
-                $mass += 0.00054858 * 2;
-            }
-            
-            $sum += $mass;
-            $ions[($this->getLength() - $i)] = $sum;
-        }
-        
-        return $ions;
+        return (new ZFragment($this))->getIons();
     }
 
     public function __clone()

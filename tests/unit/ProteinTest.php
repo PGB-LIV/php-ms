@@ -86,7 +86,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accession, $protein->getAccession());
         $this->assertEquals($entryName, $protein->getEntryName());
         
-        $this->assertEquals($proteinName, $protein->getProteinName());
+        $this->assertEquals($proteinName, $protein->getName());
         $this->assertEquals($organism, $protein->getOrganismName());
         $this->assertEquals($geneName, $protein->getGeneName());
         $this->assertEquals($pe, $protein->getProteinExistence());
