@@ -23,7 +23,6 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\Identification::__construct
      *
      * @uses pgb_liv\php_ms\Core\Identification
      */
@@ -36,7 +35,6 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Identification::__construct
      * @covers pgb_liv\php_ms\Core\Identification::setPeptide
      * @covers pgb_liv\php_ms\Core\Identification::getPeptide
      *
@@ -53,7 +51,6 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Identification::__construct
      * @covers pgb_liv\php_ms\Core\Identification::setScore
      * @covers pgb_liv\php_ms\Core\Identification::getScore
      *
@@ -72,7 +69,6 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Identification::__construct
      * @covers pgb_liv\php_ms\Core\Identification::setScore
      * @covers pgb_liv\php_ms\Core\Identification::getScore
      * @covers pgb_liv\php_ms\Core\Identification::clearScore
@@ -94,7 +90,6 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Identification::__construct
      * @covers pgb_liv\php_ms\Core\Identification::setIonsMatched
      * @covers pgb_liv\php_ms\Core\Identification::getIonsMatched
      *
