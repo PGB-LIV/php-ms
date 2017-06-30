@@ -71,7 +71,7 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Core\Identification::setScore
      * @covers pgb_liv\php_ms\Core\Identification::getScore
-     * @covers pgb_liv\php_ms\Core\Identification::clearScore
+     * @covers pgb_liv\php_ms\Core\Identification::clearScores
      * @expectedException OutOfBoundsException
      *
      * @uses pgb_liv\php_ms\Core\Identification
