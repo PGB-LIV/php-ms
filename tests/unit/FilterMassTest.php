@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Utility\Filter\FilterMass;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
+use pgb_liv\php_ms\Core\Peptide;
 
 class FilterMassTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,6 +61,7 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
      * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidPeptide
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
@@ -71,6 +73,9 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
         $filter = new FilterMass(300.0, 400.0);
         
         $this->assertTrue($filter->isValidSpectra($spectra));
+        
+        $peptide = new Peptide('PEP');
+        $this->assertTrue($filter->isValidPeptide($peptide));
     }
 
     /**
@@ -95,6 +100,7 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::__construct
      * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidSpectra
+     * @covers pgb_liv\php_ms\Utility\Filter\FilterMass::isValidPeptide
      *
      * @uses pgb_liv\php_ms\Utility\Filter\FilterMass
      */
@@ -109,6 +115,12 @@ class FilterMassTest extends \PHPUnit_Framework_TestCase
         
         $this->assertFalse($filter->isValidSpectra($spectraLow));
         $this->assertFalse($filter->isValidSpectra($spectraHigh));
+        
+        $peptideLow = new Peptide('PE');
+        $this->assertFalse($filter->isValidPeptide($peptideLow), 'Peptide mass ' . $peptideLow->getMass() . ' > 325.0');
+        
+        $peptideHigh = new Peptide('PEPTIDE');
+        $this->assertFalse($filter->isValidPeptide($peptideHigh));
     }
 
     /**

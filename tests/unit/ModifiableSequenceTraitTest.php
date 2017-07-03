@@ -119,6 +119,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModification
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModifications
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getModifications
      *
      * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait

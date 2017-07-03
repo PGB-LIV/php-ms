@@ -135,28 +135,6 @@ class Protein
         return $this->name;
     }
 
-    /**
-     * Sets the protein name.
-     *
-     * @param string $proteinName
-     *            name of the protein
-     * @deprecated Use setName()
-     */
-    public function setProteinName($proteinName)
-    {
-        $this->setName($proteinName);
-    }
-
-    /**
-     * Gets the protein name.
-     *
-     * @deprecated Use getName()
-     */
-    public function getProteinName()
-    {
-        return $this->getName();
-    }
-
     public function setOrganismName($organismName)
     {
         $this->organismName = $organismName;

@@ -39,7 +39,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
-    public function testObjectCanGetSetValidMass()
+    public function testObjectCanGetSetValidMonoMass()
     {
         $id = 21;
         $monoMass = 321.4621;
@@ -57,7 +57,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
-    public function testObjectCanSetInvalidMass()
+    public function testObjectCanSetInvalidMonoMass()
     {
         $id = 21;
         $monoMass = 'fail';
@@ -65,6 +65,40 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setMonoisotopicMass($monoMass);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setAverageMass
+     * @covers pgb_liv\php_ms\Core\Modification::getAverageMass
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetValidAvgMass()
+    {
+        $id = 21;
+        $avgMass = 321.4621;
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $modification->setAverageMass($avgMass);
+        
+        $this->assertEquals($avgMass, $modification->getAverageMass());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setAverageMass
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanSetInvalidAvgMass()
+    {
+        $id = 21;
+        $avgMass = 'fail';
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $modification->setAverageMass($avgMass);
     }
 
     /**
@@ -174,5 +208,111 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setResidues($residues);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setName
+     * @covers pgb_liv\php_ms\Core\Modification::getName
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetName()
+    {
+        $name = 'Phospho';
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $modification->setName($name);
+        
+        $this->assertEquals($name, $modification->getName());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setType
+     * @covers pgb_liv\php_ms\Core\Modification::getType
+     * @covers pgb_liv\php_ms\Core\Modification::isFixed
+     * @covers pgb_liv\php_ms\Core\Modification::isVariable
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetTypeFixed()
+    {
+        $type = Modification::TYPE_FIXED;
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $modification->setType($type);
+        
+        $this->assertEquals($type, $modification->getType());
+        $this->assertTrue($modification->isFixed());
+        $this->assertFalse($modification->isVariable());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setType
+     * @covers pgb_liv\php_ms\Core\Modification::getType
+     * @covers pgb_liv\php_ms\Core\Modification::isFixed
+     * @covers pgb_liv\php_ms\Core\Modification::isVariable
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetTypeVariable()
+    {
+        $type = Modification::TYPE_VARIABLE;
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $modification->setType($type);
+        
+        $this->assertEquals($type, $modification->getType());
+        $this->assertFalse($modification->isFixed());
+        $this->assertTrue($modification->isVariable());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setPosition
+     * @covers pgb_liv\php_ms\Core\Modification::getPosition
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetPositionValid()
+    {
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $position = Modification::POSITION_ANY;
+        $modification->setPosition($position);
+        $this->assertEquals($position, $modification->getPosition());
+        
+        $position = Modification::POSITION_CTERM;
+        $modification->setPosition($position);
+        $this->assertEquals($position, $modification->getPosition());
+        
+        $position = Modification::POSITION_NTERM;
+        $modification->setPosition($position);
+        $this->assertEquals($position, $modification->getPosition());
+        
+        $position = Modification::POSITION_PROTEIN_CTERM;
+        $modification->setPosition($position);
+        $this->assertEquals($position, $modification->getPosition());
+        
+        $position = Modification::POSITION_PROTEIN_NTERM;
+        $modification->setPosition($position);
+        $this->assertEquals($position, $modification->getPosition());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setPosition
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetPositionInvalid()
+    {
+        $modification = new Modification($id);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $position = 'fail';
+        $modification->setPosition($position);
     }
 }

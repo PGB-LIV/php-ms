@@ -53,7 +53,7 @@ class PrecursorIon implements IonInterface
      *
      * @var FragmentIon[]
      */
-    private $fragmentIons;
+    private $fragmentIons = array();
 
     /**
      * A list of identifications associated with precursor ion
@@ -71,8 +71,7 @@ class PrecursorIon implements IonInterface
     public function setRetentionTime($retentionTime)
     {
         if (! (is_int($retentionTime) || is_float($retentionTime))) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
+            throw new \InvalidArgumentException('Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
         }
         
         $this->retentionTime = $retentionTime;
@@ -118,8 +117,7 @@ class PrecursorIon implements IonInterface
     public function setScan($scan)
     {
         if (! (is_int($scan) || is_float($scan))) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type int or float. Value is of type ' . gettype($scan));
+            throw new \InvalidArgumentException('Argument 1 must be of type int or float. Value is of type ' . gettype($scan));
         }
         
         $this->scan = $scan;
@@ -143,10 +141,6 @@ class PrecursorIon implements IonInterface
      */
     public function addFragmentIon(FragmentIon $ion)
     {
-        if (is_null($this->fragmentIons)) {
-            $this->fragmentIons = array();
-        }
-        
         $this->fragmentIons[] = $ion;
     }
 
@@ -158,6 +152,14 @@ class PrecursorIon implements IonInterface
     public function getFragmentIons()
     {
         return $this->fragmentIons;
+    }
+
+    /**
+     * Clears the fragment ion list stored by this instance.
+     */
+    public function clearFragmentIons()
+    {
+        $this->fragmentIons = array();
     }
 
     /**
@@ -179,5 +181,13 @@ class PrecursorIon implements IonInterface
     public function getIdentifications()
     {
         return $this->identifications;
+    }
+
+    /**
+     * Clears the identification list stored by this instance.
+     */
+    public function clearIdentifications()
+    {
+        $this->identifications = array();
     }
 }

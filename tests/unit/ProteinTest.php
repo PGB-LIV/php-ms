@@ -30,7 +30,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::getEntryName
      * @covers pgb_liv\php_ms\Core\Protein::getOrganismName
      * @covers pgb_liv\php_ms\Core\Protein::getGeneName
-     * @covers pgb_liv\php_ms\Core\Protein::getProteinName
+     * @covers pgb_liv\php_ms\Core\Protein::getName
      * @covers pgb_liv\php_ms\Core\Protein::getProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::getSequenceVersion
      * @covers pgb_liv\php_ms\Core\Protein::setUniqueIdentifier
@@ -41,7 +41,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::setEntryName
      * @covers pgb_liv\php_ms\Core\Protein::setOrganismName
      * @covers pgb_liv\php_ms\Core\Protein::setGeneName
-     * @covers pgb_liv\php_ms\Core\Protein::setProteinName
+     * @covers pgb_liv\php_ms\Core\Protein::setName
      * @covers pgb_liv\php_ms\Core\Protein::setProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::setSequenceVersion
      * @covers pgb_liv\php_ms\Core\Protein::reverseSequence

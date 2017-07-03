@@ -71,6 +71,7 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Core\Identification::setScore
      * @covers pgb_liv\php_ms\Core\Identification::getScore
+     * @covers pgb_liv\php_ms\Core\Identification::getScores
      * @covers pgb_liv\php_ms\Core\Identification::clearScores
      * @expectedException OutOfBoundsException
      *
@@ -86,21 +87,36 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
         
         $identification->clearScores();
         
+        $this->assertEquals(0, count($identification->getScores()));
+        
         $identification->getScore('pValue');
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Core\Identification::setIonsMatched
      * @covers pgb_liv\php_ms\Core\Identification::getIonsMatched
      *
      * @uses pgb_liv\php_ms\Core\Identification
      */
-    public function testCanGetSetIonsMatched()
+    public function testCanGetSetIonsMatchedValid()
     {
         $ionsMatched = 9;
         $identification = new Identification();
         $identification->setIonsMatched($ionsMatched);
         
         $this->assertEquals($ionsMatched, $identification->getIonsMatched());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\Identification::setIonsMatched
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Identification
+     */
+    public function testCanGetSetIonsMatchedInvalid()
+    {
+        $ionsMatched = 'fail';
+        $identification = new Identification();
+        $identification->setIonsMatched($ionsMatched);
     }
 }

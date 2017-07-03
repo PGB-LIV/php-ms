@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Modification;
 
 class PeptideTest extends \PHPUnit_Framework_TestCase
 {
@@ -140,7 +141,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $peptide = new Peptide($sequence);
         $peptide->setMissedCleavageCount($cleavages);
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Core\Peptide::getProtein
      * @covers pgb_liv\php_ms\Core\Peptide::setProtein
@@ -155,5 +156,25 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $peptide->setProtein($protein);
         
         $this->assertEquals($protein, $peptide->getProtein());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\Peptide::__clone
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     */
+    public function testCanClone()
+    {
+        $sequence = 'PEPTIDE';
+        $protein = new Protein();
+        $peptide = new Peptide($sequence);
+        $peptide->setProtein($protein);
+        $modification = new Modification();
+        $modification->setMonoisotopicMass(79.97);
+        $peptide->addModification($modification);
+        
+        $peptideClone = clone $peptide;
+        
+        $this->assertEquals($peptideClone, $peptide);
     }
 }

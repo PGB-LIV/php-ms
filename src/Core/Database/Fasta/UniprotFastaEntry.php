@@ -45,7 +45,7 @@ class UniprotFastaEntry extends DefaultFastaEntry
         
         // Parse description
         $osPosition = strpos($description, ' OS=');
-        $protein->setProteinName(substr($description, 0, $osPosition));
+        $protein->setName(substr($description, 0, $osPosition));
         
         $matches = array();
         preg_match_all('/([OS|GN|PE|SV]{2})=(.+?(?=\s(GN=|PE=|SV=)|$))/', $description, $matches);
