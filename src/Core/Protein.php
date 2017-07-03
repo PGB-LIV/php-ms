@@ -86,11 +86,11 @@ class Protein
         $databaseName = null;
         
         if ($this->databasePrefix == 'sp') {
-            $this->databasePrefix = 'UniProtKB/Swiss-Prot';
+            $databaseName = 'UniProtKB/Swiss-Prot';
         } elseif ($this->databasePrefix == 'tr') {
-            $this->databasePrefix = 'UniProtKB/TrEMBL';
+            $databaseName = 'UniProtKB/TrEMBL';
         } elseif ($this->databasePrefix == 'nxp') {
-            $this->databasePrefix = 'NeXtProt';
+            $databaseName = 'NeXtProt';
         }
         
         return $databaseName;

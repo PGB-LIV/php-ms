@@ -81,7 +81,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($identifier, $protein->getUniqueIdentifier());
         $this->assertEquals($description, $protein->getDescription());
         $this->assertEquals($sequence, $protein->getSequence());
-
+        
         $this->assertEquals($database, $protein->getDatabasePrefix());
         $this->assertEquals($accession, $protein->getAccession());
         $this->assertEquals($entryName, $protein->getEntryName());
@@ -94,5 +94,25 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         
         $protein->reverseSequence();
         $this->assertEquals(strrev($sequence), $protein->getSequence());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Protein::setDatabasePrefix
+     * @covers pgb_liv\php_ms\Core\Protein::setDatabasePrefix
+     *
+     * @uses pgb_liv\php_ms\Core\Protein
+     */
+    public function testCanGetDatabaseName()
+    {
+        $protein = new Protein();
+        
+        $protein->setDatabasePrefix('sp');
+        $this->assertEquals('UniProtKB/Swiss-Prot', $protein->getDatabaseName(), $protein->getDatabasePrefix() .' is not mapped to UniProtKB/Swiss-Prot');
+        
+        $protein->setDatabasePrefix('tr');
+        $this->assertEquals('UniProtKB/TrEMBL', $protein->getDatabaseName(), $protein->getDatabasePrefix() .' is not mapped to UniProtKB/TrEMBL');
+        
+        $protein->setDatabasePrefix('nxp');
+        $this->assertEquals('NeXtProt', $protein->getDatabaseName(), $protein->getDatabasePrefix() .' is not mapped to NeXtProt');
     }
 }

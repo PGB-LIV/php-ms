@@ -72,9 +72,7 @@ class FilterMass extends AbstractFilter
      */
     public function isValidSpectra(IonInterface $spectra)
     {
-        if ($spectra->getMass() < $this->minMass) {
-            return false;
-        } elseif ($spectra->getMass() > $this->maxMass) {
+        if (($spectra->getMass() < $this->minMass) || ($spectra->getMass() > $this->maxMass)) {
             return false;
         }
         
@@ -91,9 +89,7 @@ class FilterMass extends AbstractFilter
     {
         // Mass is calculated at request so must be cached
         $mass = $peptide->getMass();
-        if ($mass < $this->minMass) {
-            return false;
-        } elseif ($mass > $this->maxMass) {
+        if (($mass < $this->minMass) || ($mass > $this->maxMass)) {
             return false;
         }
         

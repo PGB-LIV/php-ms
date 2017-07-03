@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
+use pgb_liv\php_ms\Utility\Filter\FilterRetentionTime;
 
 class FilterRetentionTimeTest extends \PHPUnit_Framework_TestCase
 {

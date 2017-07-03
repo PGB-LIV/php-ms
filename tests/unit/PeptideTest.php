@@ -177,4 +177,16 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($peptideClone, $peptide);
     }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\Peptide::getMolecularFormula
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     */
+    public function testCanGetMolecularFormula()
+    {        
+        $peptide = new Peptide('PEPTIDE');
+        
+        $this->assertEquals('C34H53N7O15', $peptide->getMolecularFormula());
+    }
 }
