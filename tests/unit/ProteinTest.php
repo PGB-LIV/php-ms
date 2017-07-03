@@ -98,7 +98,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Core\Protein::setDatabasePrefix
-     * @covers pgb_liv\php_ms\Core\Protein::setDatabasePrefix
+     * @covers pgb_liv\php_ms\Core\Protein::getDatabaseName
      *
      * @uses pgb_liv\php_ms\Core\Protein
      */
