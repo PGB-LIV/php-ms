@@ -61,11 +61,7 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::__construct
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::write
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::close
-     *
-     * @uses pgb_liv\php_ms\Reader\MgfWriter
+     * 
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -88,11 +84,7 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::__construct
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::write
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::close
      *
-     * @uses pgb_liv\php_ms\Reader\MgfWriter
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testCanRetrieveEntry()
@@ -121,11 +113,7 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::__construct
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::write
-     * @covers pgb_liv\php_ms\Reader\MgfWriter::close
      *
-     * @uses pgb_liv\php_ms\Reader\MgfWriter
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testCanRewind()
