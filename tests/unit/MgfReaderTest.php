@@ -19,6 +19,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 use pgb_liv\php_ms\Reader\MgfReader;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\Spectra\FragmentIon;
+use pgb_liv\php_ms\Writer\MgfWriter;
 
 class MgfReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,40 +47,25 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
             $mgfEntries[] = $entry;
         }
         
-        // Header
-        $mgf = 'SEARCH=MIS';
-        $mgf .= 'MASS=Monoisotopic' . "\n";
+        $tempFile = tempnam(sys_get_temp_dir(), 'MgfReaderTest');
+        $mgfWriter = new MgfWriter($tempFile);
         
         foreach ($mgfEntries as $entry) {
-            $mgf .= 'BEGIN IONS' . "\n";
-            $mgf .= 'TITLE=' . $entry->getTitle() . "\n";
-            $mgf .= 'PEPMASS=' . $entry->getMassCharge() . "\n";
-            $mgf .= 'CHARGE=' . $entry->getCharge() . "\n";
-            $mgf .= 'SCANS=' . $entry->getScan() . "\n";
-            $mgf .= 'RTINSECONDS=' . $entry->getRetentionTime() . "\n";
-            
-            foreach ($entry->getFragmentIons() as $ion) {
-                $mgf .= $ion->getMassCharge();
-                $mgf .= ' ';
-                $mgf .= $ion->getIntensity();
-                $mgf .= ' ';
-                $mgf .= $ion->getCharge();
-                $mgf .= "\n";
-            }
-            
-            $mgf .= 'END IONS' . "\n";
+            $mgfWriter->write($entry);
         }
         
-        $tempFile = tempnam(sys_get_temp_dir(), 'MgfReaderTest');
-        
-        file_put_contents($tempFile, $mgf);
+        $mgfWriter->close();
         
         return $tempFile;
     }
 
     /**
      * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::__construct
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::write
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::close
      *
+     * @uses pgb_liv\php_ms\Reader\MgfWriter
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -102,7 +88,11 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::__construct
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::write
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::close
      *
+     * @uses pgb_liv\php_ms\Reader\MgfWriter
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testCanRetrieveEntry()
@@ -131,7 +121,11 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::__construct
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::write
+     * @covers pgb_liv\php_ms\Reader\MgfWriter::close
      *
+     * @uses pgb_liv\php_ms\Reader\MgfWriter
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testCanRewind()

@@ -155,7 +155,7 @@ class MgfReader implements \Iterator
             } elseif ($pair[0] == 'CHARGE') {
                 $entry->setCharge((int) $pair[1]);
             } elseif ($pair[0] == 'SCANS') {
-                $entry->setScan((float) $pair[1] + 0);
+                $entry->setScan((int) $pair[1] + 0);
             } elseif ($pair[0] == 'RTINSECONDS') {
                 $entry->setRetentionTime((float) $pair[1] + 0);
             }

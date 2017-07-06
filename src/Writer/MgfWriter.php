@@ -16,13 +16,29 @@
  */
 namespace pgb_liv\php_ms\Writer;
 
-use pgb_liv\php_ms\Core\Spectra\SpectraEntry;
+use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 
+/**
+ * A file writer class for creating Mascot Generic Format (MGF) files.
+ *
+ * @author Andrew Collins
+ */
 class MgfWriter
 {
 
     private $fileHandle = null;
 
+    /**
+     * Creates a new instance of an MGF file writer.
+     * A close() should be called once all entries have been written.
+     *
+     * @param string $path
+     *            The path to the file to save to
+     * @param string $searchType
+     *            The type of search (Default: MIS)
+     * @param string $massType
+     *            The mass type (Default: Monoisotopic)
+     */
     public function __construct($path, $searchType = 'MIS', $massType = 'Monoisotopic')
     {
         $this->fileHandle = fopen($path, 'w');
@@ -30,24 +46,40 @@ class MgfWriter
         fwrite($this->fileHandle, 'MASS=' . $massType . PHP_EOL);
     }
 
-    public function write(SpectraEntry $spectra)
+    /**
+     * Writes the precursor ion and it's associated fragments to the file associated with this instance
+     *
+     * @param PrecursorIon $precursor
+     *            The precursor ion to write
+     */
+    public function write(PrecursorIon $precursor)
     {
         // TODO: Verify file handle open
         // TODO: Validate mandatory/optional fields
         fwrite($this->fileHandle, 'BEGIN IONS' . PHP_EOL);
-        fwrite($this->fileHandle, 'TITLE=' . $spectra->getTitle() . PHP_EOL);
-        fwrite($this->fileHandle, 'PEPMASS=' . $spectra->getMass() . PHP_EOL);
-        fwrite($this->fileHandle, 'CHARGE=' . $spectra->getCharge() . '+' . PHP_EOL);
-        fwrite($this->fileHandle, 'SCANS=' . $spectra->getScans() . PHP_EOL);
-        fwrite($this->fileHandle, 'RTINSECONDS=' . $spectra->getRetentionTime() . PHP_EOL);
+        fwrite($this->fileHandle, 'TITLE=' . $precursor->getTitle() . PHP_EOL);
+        fwrite($this->fileHandle, 'PEPMASS=' . $precursor->getMassCharge() . PHP_EOL);
+        fwrite($this->fileHandle, 'CHARGE=' . $precursor->getCharge() . '+' . PHP_EOL);
+        fwrite($this->fileHandle, 'SCANS=' . $precursor->getScan() . PHP_EOL);
+        fwrite($this->fileHandle, 'RTINSECONDS=' . $precursor->getRetentionTime() . PHP_EOL);
         
-        foreach ($spectra->getIons() as $ion) {
-            fwrite($this->fileHandle, $ion->getMassCharge() . ' ' . $ion->getIntensity() . PHP_EOL);
+        foreach ($precursor->getFragmentIons() as $ion) {
+            fwrite($this->fileHandle, $ion->getMassCharge() . ' ');
+            fwrite($this->fileHandle, $ion->getIntensity() . ' ');
+            
+            if (! is_null($ion->getCharge())) {
+                fwrite($this->fileHandle, $ion->getCharge());
+            }
+            
+            fwrite($this->fileHandle, PHP_EOL);
         }
         
         fwrite($this->fileHandle, 'END IONS' . PHP_EOL);
     }
 
+    /**
+     * Closes the file handle for this instance and releases resources.
+     */
     public function close()
     {
         if (! is_null($this->fileHandle)) {
@@ -56,6 +88,9 @@ class MgfWriter
         }
     }
 
+    /**
+     * Finalise method to ensure the instance is correctly closed.
+     */
     public function __destruct()
     {
         $this->close();

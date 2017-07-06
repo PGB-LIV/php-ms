@@ -25,15 +25,20 @@ class DigestTrypsinTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
      * @covers pgb_liv\php_ms\Utility\Digest\DigestRegularExpression::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::setName
+     * @covers pgb_liv\php_ms\Utility\Digest\AbstractDigest::getName
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestRegularExpression
      * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\AbstractDigest
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
         $trypsin = new DigestTrypsin();
         
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Digest\DigestTrypsin', $trypsin);
+        
+        $this->assertEquals('Trypsin', $trypsin->getName());
         
         return $trypsin;
     }
