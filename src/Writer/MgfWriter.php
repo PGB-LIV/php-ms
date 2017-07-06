@@ -54,7 +54,10 @@ class MgfWriter
      */
     public function write(PrecursorIon $precursor)
     {
-        // TODO: Verify file handle open
+        if (is_null($this->fileHandle)) {
+            throw new \RuntimeException('The file handle is closed. Cannot write after close() has been called.');
+        }
+        
         // TODO: Validate mandatory/optional fields
         fwrite($this->fileHandle, 'BEGIN IONS' . PHP_EOL);
         fwrite($this->fileHandle, 'TITLE=' . $precursor->getTitle() . PHP_EOL);

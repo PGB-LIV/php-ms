@@ -71,4 +71,63 @@ class MgfWriterTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($precursor, $mgfReader->current());
     }
+
+    /**
+     * @covers pgb_liv\php_ms\Writer\MgfWriter::__construct
+     * @covers pgb_liv\php_ms\Writer\MgfWriter::write
+     * @covers pgb_liv\php_ms\Writer\MgfWriter::close
+     * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
+     * @covers pgb_liv\php_ms\Reader\MgfReader::rewind
+     * @covers pgb_liv\php_ms\Reader\MgfReader::current
+     *
+     * @uses pgb_liv\php_ms\Reader\MgfReader
+     * @uses pgb_liv\php_ms\Writer\MgfWriter
+     */
+    public function testCanWriteLongEntry()
+    {
+        $filePath = tempnam(sys_get_temp_dir(), 'MgfWriterTest');
+        
+        $precursor = new PrecursorIon();
+        $precursor->setMassCharge(mt_rand(1000000, 3000000) / 1000);
+        $precursor->setCharge(2);
+        $precursor->setRetentionTime(mt_rand(1000, 90000) / 1000);
+        $precursor->setScan(mt_rand(1, 3000));
+        $precursor->setTitle('Mgf scan entry');
+        
+        $frag = new FragmentIon();
+        $frag->setMassCharge(mt_rand(100000, 200000) / 1000);
+        $frag->setIntensity(mt_rand(100000, 200000));
+        $frag->setCharge(2);
+        
+        $precursor->addFragmentIon($frag);
+        
+        $mgf = new MgfWriter($filePath);
+        $mgf->write($precursor);
+        $mgf->close();
+        
+        $mgfReader = new MgfReader($filePath);
+        $mgfReader->rewind();
+        
+        $this->assertEquals($precursor, $mgfReader->current());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Writer\MgfWriter::__construct
+     * @covers pgb_liv\php_ms\Writer\MgfWriter::write
+     * @covers pgb_liv\php_ms\Writer\MgfWriter::__destruct
+     *
+     * @expectedException RuntimeException
+     *
+     * @uses pgb_liv\php_ms\Writer\MgfWriter
+     */
+    public function testCanDestruct()
+    {
+        $filePath = tempnam(sys_get_temp_dir(), 'MgfWriterTest');
+        
+        $precursor = new PrecursorIon();
+        
+        $mgf = new MgfWriter($filePath);
+        $mgf->__destruct();
+        $mgf->write($precursor);
+    }
 }
