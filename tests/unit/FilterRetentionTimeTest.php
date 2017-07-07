@@ -82,9 +82,9 @@ class FilterRetentionTimeTest extends \PHPUnit_Framework_TestCase
     public function testCanValidateEntryOnBounds()
     {
         $spectraLow = new PrecursorIon();
-        $spectra->setRetentionTime(10.0);
+        $spectraLow->setRetentionTime(10.0);
         $spectraHigh = new PrecursorIon();
-        $spectra->setRetentionTime(20.0);
+        $spectraHigh->setRetentionTime(20.0);
         
         $filter = new FilterRetentionTime(10.0, 20.0);
         

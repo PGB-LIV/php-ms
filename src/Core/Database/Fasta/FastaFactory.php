@@ -29,12 +29,8 @@ class FastaFactory
 
     public static function getProtein($identifier, $description, $sequence)
     {
-        // TODO: This is temporary, and will not work as it is using the database prefix
-        // to detect the FASTA generator, rather than validing the line as matching the parsing
-        // rules of the database
-        $database = substr($identifier, 0, 2);
-                
-        if ($database == 'sp' || $database == 'tr') {
+        $matches = array();
+        if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description, $matches)) {
             $entry = UniprotFastaEntry::getProtein($identifier, $description, $sequence);
         } else {
             $entry = DefaultFastaEntry::getProtein($identifier, $description, $sequence);

@@ -31,7 +31,7 @@ class FastaWriter
      */
     private $format;
 
-    public function __construct($path, $format = 'DefaultFastaEntry')
+    public function __construct($path, $format = 'pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry')
     {
         $this->fileHandle = fopen($path, 'w');
         $this->format = $format;
@@ -55,7 +55,7 @@ class FastaWriter
     public function write(Protein $protein)
     {
         if (is_null($this->fileHandle)) {
-            throw new \UnexpectedValueException('File handle is not open, write cannot be called after close');
+            throw new \BadMethodCallException('File handle is not open, write cannot be called after close');
         }
         
         $this->writeDescription($protein);

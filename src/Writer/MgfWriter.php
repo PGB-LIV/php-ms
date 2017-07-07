@@ -55,7 +55,7 @@ class MgfWriter
     public function write(PrecursorIon $precursor)
     {
         if (is_null($this->fileHandle)) {
-            throw new \RuntimeException('The file handle is closed. Cannot write after close() has been called.');
+            throw new \BadMethodCallException('The file handle is closed. Cannot write after close() has been called.');
         }
         
         // TODO: Validate mandatory/optional fields

@@ -116,7 +116,7 @@ class MgfWriterTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Writer\MgfWriter::write
      * @covers pgb_liv\php_ms\Writer\MgfWriter::__destruct
      *
-     * @expectedException RuntimeException
+     * @expectedException BadMethodCallException
      *
      * @uses pgb_liv\php_ms\Writer\MgfWriter
      */

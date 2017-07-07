@@ -29,6 +29,23 @@ use pgb_liv\php_ms\Core\Protein;
 class UniprotFastaEntry extends DefaultFastaEntry
 {
 
+    protected static function generateFasta(Protein $protein)
+    {
+        $description = '>' . $protein->getUniqueIdentifier();
+        
+        $description .= ' ' . $protein->getName();
+        $description .= ' OS=' . $protein->getOrganismName();
+        
+        if (! is_null($protein->getGeneName())) {
+            $description .= ' GN=' . $protein->getGeneName();
+        }
+        
+        $description .= ' PE=' . $protein->getProteinExistence();
+        $description .= ' SV=' . $protein->getSequenceVersion();
+        
+        return $description;
+    }
+
     protected static function parseProtein($identifier, $description, $sequence)
     {
         // Parse identifier
