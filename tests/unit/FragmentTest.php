@@ -45,8 +45,8 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\BFragment::getNTerminusMass
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\AbstractFragment
-     * @uses pgb_liv\php_ms\Utility\Filter\BFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\BFragment
      *       @group fragment
      */
     public function testObjectCanGetIonsB()
@@ -75,8 +75,8 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getNTerminusMass
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\AbstractFragment
-     * @uses pgb_liv\php_ms\Utility\Filter\CFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\CFragment
      *       @group fragment
      */
     public function testObjectCanGetIonsC()
@@ -105,8 +105,8 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::setIsReversed
      * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::getCTerminusMass
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\AbstractFragment
-     * @uses pgb_liv\php_ms\Utility\Filter\YFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\YFragment
      *       @group fragment
      */
     public function testObjectCanGetIonsY()
@@ -136,8 +136,8 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::setIsReversed
      * @covers pgb_liv\php_ms\Utility\Fragment\ZFragment::getCTerminusMass
      *
-     * @uses pgb_liv\php_ms\Utility\Filter\AbstractFragment
-     * @uses pgb_liv\php_ms\Utility\Filter\ZFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\ZFragment
      *       @group fragment
      */
     public function testObjectCanGetIonsZ()
