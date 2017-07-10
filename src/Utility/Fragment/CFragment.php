@@ -36,4 +36,9 @@ class CFragment extends AbstractFragment
     {
         return Peptide::N_TERM_MASS + Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
     }
+
+    protected function getLength()
+    {
+        return parent::getLength() - 1;
+    }
 }

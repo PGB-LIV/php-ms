@@ -48,7 +48,7 @@ abstract class AbstractFragment
         
         $sum = 0;
         
-        for ($i = 0; $i < strlen($sequence); $i ++) {
+        for ($i = 0; $i < $this->getLength(); $i ++) {
             $aa = $sequence[$i];
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
@@ -64,6 +64,11 @@ abstract class AbstractFragment
         }
         
         return $ions;
+    }
+
+    protected function getLength()
+    {
+        return $this->peptide->getLength();
     }
 
     protected function getCTerminusMass()
