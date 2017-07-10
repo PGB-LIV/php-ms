@@ -36,9 +36,9 @@ class ZFragment extends AbstractFragment
      *
      * {@inheritdoc}
      *
-     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminusMass()
+     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getAdditiveMass()
      */
-    protected function getCTerminusMass()
+    protected function getAdditiveMass()
     {
         // Z has electrons added??
         return Peptide::C_TERM_MASS - (Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS) + Peptide::PROTON_MASS + (0.00054858 * 2);

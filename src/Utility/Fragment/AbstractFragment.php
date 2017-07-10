@@ -54,9 +54,9 @@ abstract class AbstractFragment
             
             // Add mass
             if (! $this->isReversed && $i == 0) {
-                $mass += $this->getNTerminusMass();
+                $mass += $this->getAdditiveMass();
             } elseif ($this->isReversed && $i == 0) {
-                $mass += $this->getCTerminusMass();
+                $mass += $this->getAdditiveMass();
             }
             
             $sum += $mass;
@@ -66,20 +66,22 @@ abstract class AbstractFragment
         return $ions;
     }
 
+    /**
+     * Gets the length of the fragment chain
+     * 
+     * @return int
+     */
     protected function getLength()
     {
         return $this->peptide->getLength();
     }
 
-    protected function getCTerminusMass()
-    {
-        return 0;
-    }
-
-    protected function getNTerminusMass()
-    {
-        return 0;
-    }
+    /**
+     * Gets the additional mass gained in fragmentation
+     *
+     * @return double
+     */
+    abstract protected function getAdditiveMass();
 
     protected function setIsReversed($bool)
     {

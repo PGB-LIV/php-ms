@@ -30,13 +30,20 @@ class CFragment extends AbstractFragment
      *
      * {@inheritdoc}
      *
-     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminusMass()
+     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getAdditiveMass()
      */
-    protected function getNTerminusMass()
+    protected function getAdditiveMass()
     {
         return Peptide::N_TERM_MASS + Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
     }
-
+    
+    
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength()
+     */
     protected function getLength()
     {
         return parent::getLength() - 1;

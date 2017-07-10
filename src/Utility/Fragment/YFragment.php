@@ -36,10 +36,11 @@ class YFragment extends AbstractFragment
      *
      * {@inheritdoc}
      *
-     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminusMass()
+     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getAdditiveMass()
      */
-    protected function getCTerminusMass()
+    protected function getAdditiveMass()
     {
         return Peptide::C_TERM_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
     }
+    
 }

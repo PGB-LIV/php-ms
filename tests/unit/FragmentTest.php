@@ -42,9 +42,8 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
-     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminusMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
-     * @covers pgb_liv\php_ms\Utility\Fragment\BFragment::getNTerminusMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\BFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
      * @uses pgb_liv\php_ms\Utility\Fragment\BFragment
@@ -73,9 +72,8 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
-     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminusMass
      * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getLength
-     * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getNTerminusMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
      * @uses pgb_liv\php_ms\Utility\Fragment\CFragment
@@ -103,11 +101,10 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
-     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminusMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::setIsReversed
      * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::__construct
-     * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::getCTerminusMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
      * @uses pgb_liv\php_ms\Utility\Fragment\YFragment
@@ -136,11 +133,10 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
-     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminusMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::setIsReversed
      * @covers pgb_liv\php_ms\Utility\Fragment\ZFragment::__construct
-     * @covers pgb_liv\php_ms\Utility\Fragment\ZFragment::getCTerminusMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\ZFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
      * @uses pgb_liv\php_ms\Utility\Fragment\ZFragment
