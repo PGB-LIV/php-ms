@@ -41,9 +41,7 @@ class UniprotFastaEntry extends DefaultFastaEntry implements FastaInterface
         }
         
         $description .= ' PE=' . $protein->getProteinExistence();
-        $description .= ' SV=' . $protein->getSequenceVersion();
-        
-        return $description;
+        return $description . ' SV=' . $protein->getSequenceVersion();
     }
 
     public function getProtein($identifier, $description, $sequence)

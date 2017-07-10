@@ -20,12 +20,48 @@ use pgb_liv\php_ms\Utility\Digest\DigestFactory;
 
 class DigestFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @covers pgb_liv\php_ms\Utility\Digest\DigestFactory::getEnzymes
      * @covers pgb_liv\php_ms\Utility\Digest\DigestFactory::getDigest
+     * @covers pgb_liv\php_ms\Utility\Digest\Digest2Iodobenzoate::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestArgC::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestAspN::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestAspNAmbic::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestChymotrypsin::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestCnbr::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestFormicAcid::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestGlutamylEndopeptidase::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestLeukocyteElastase::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestLysC::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestLysCP::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestPepsinA::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestProlineEndopeptidase::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypChymo::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsin::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestTrypsinP::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestV8DE::__construct
+     * @covers pgb_liv\php_ms\Utility\Digest\DigestV8E::__construct
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestFactory
+     * @uses pgb_liv\php_ms\Utility\Digest\Digest2Iodobenzoate
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestArgC
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestAspN
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestAspNAmbic
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestChymotrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestCnbr
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestFormicAcid
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestGlutamylEndopeptidase
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestLeukocyteElastase
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestLysC
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestLysCP
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestPepsinA
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestProlineEndopeptidase
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypChymo
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsin
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestTrypsinP
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestV8DE
+     * @uses pgb_liv\php_ms\Utility\Digest\DigestV8E
+     *       @group digest
      */
     public function testCanConstructByClassName()
     {
@@ -44,6 +80,7 @@ class DigestFactoryTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestFactory
+     *       @group digest
      */
     public function testCanConstructInvalid()
     {
@@ -54,6 +91,7 @@ class DigestFactoryTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Utility\Digest\DigestFactory::getEnzymes
      *
      * @uses pgb_liv\php_ms\Utility\Digest\DigestFactory
+     *       @group digest
      */
     public function testCanGetEnzymes()
     {
