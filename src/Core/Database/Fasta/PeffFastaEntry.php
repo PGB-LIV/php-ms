@@ -27,10 +27,50 @@ use pgb_liv\php_ms\Core\Modification;
  *
  * @author Andrew Collins
  */
-class PeffFastaEntry extends DefaultFastaEntry
+class PeffFastaEntry implements FastaInterface
 {
 
-    protected static function parseProtein($identifier, $description, $sequence)
+    public function getHeader()
+    {
+        return '# PEFF 1.0draft24' . PHP_EOL;
+    }
+
+    public function getDescription(Protein $protein)
+    {
+        $description = '>' . $protein->getDatabasePrefix() . ':' . $protein->getAccession();
+        
+        if ($protein->getAccession()) {
+            $description .= ' \DbUniqueId=' . $protein->getAccession();
+        }
+        
+        if ($protein->getEntryName()) {
+            $description .= ' \CC=' . $protein->getEntryName();
+        }
+        
+        if ($protein->getName()) {
+            $description .= ' \Pname=' . $protein->getName();
+        }
+        
+        if ($protein->getGeneName()) {
+            $description .= ' \Gname=' . $protein->getGeneName();
+        }
+        
+        if ($protein->getOrganismName()) {
+            $description .= ' \TaxName=' . $protein->getOrganismName();
+        }
+        
+        if ($protein->getSequenceVersion()) {
+            $description .= ' \SV=' . $protein->getSequenceVersion();
+        }
+        
+        if ($protein->getProteinExistence()) {
+            $description .= ' \PE=' . $protein->getProteinExistence();
+        }
+        
+        return $description;
+    }
+
+    public function getProtein($identifier, $description, $sequence)
     {
         // Parse identifier
         $identifierParts = explode(':', $identifier, 3);
@@ -44,7 +84,7 @@ class PeffFastaEntry extends DefaultFastaEntry
         $protein->setDescription($description);
         
         // Parse description
-        preg_match_all('/\\\\(\\w+)=(.+?(?=\\\\|$))/', $description, $matches);
+        preg_match_all('/\\\\(\\w+)=(.+?(?= \\\\|$))/', $description, $matches);
         
         $attr = array();
         foreach ($matches[1] as $index => $key) {
@@ -56,6 +96,9 @@ class PeffFastaEntry extends DefaultFastaEntry
                 case 'DbUniqueId':
                     $protein->setAccession($value);
                     break;
+                case 'CC':
+                    $protein->setEntryName($value);
+                    break;
                 case 'Gname':
                     $protein->setGeneName($value);
                     break;
@@ -66,7 +109,7 @@ class PeffFastaEntry extends DefaultFastaEntry
                     $protein->setProteinExistence($value);
                     break;
                 case 'Pname':
-                    $protein->setProteinName($value);
+                    $protein->setName($value);
                     break;
                 case 'TaxName':
                     $protein->setOrganismName($value);
@@ -105,40 +148,5 @@ class PeffFastaEntry extends DefaultFastaEntry
         }
         
         return $modifications;
-    }
-
-    protected static function generateFasta(Protein $protein)
-    {
-        $description = '>' . $protein->getDatabasePrefix() . ':' . $protein->getAccession();
-        
-        if ($protein->getAccession()) {
-            $description .= ' /DbUniqueId=' . $protein->getAccession();
-        }
-        
-        if ($protein->getEntryName()) {
-            $description .= ' /CC=' . $protein->getEntryName();
-        }
-        
-        if ($protein->getProteinName()) {
-            $description .= ' /Pname=' . $protein->getProteinName();
-        }
-        
-        if ($protein->getGeneName()) {
-            $description .= ' /Gname=' . $protein->getGeneName();
-        }
-        
-        if ($protein->getOrganismName()) {
-            $description .= ' /TaxName=' . $protein->getOrganismName();
-        }
-        
-        if ($protein->getSequenceVersion()) {
-            $description .= ' /SV=' . $protein->getSequenceVersion();
-        }
-        
-        if ($protein->getProteinExistence()) {
-            $description .= ' /PE=' . $protein->getProteinExistence();
-        }
-        
-        return $description;
     }
 }

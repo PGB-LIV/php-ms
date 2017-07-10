@@ -26,30 +26,15 @@ use pgb_liv\php_ms\Core\Protein;
  *
  * @author Andrew Collins
  */
-class DefaultFastaEntry
+class DefaultFastaEntry implements FastaInterface
 {
 
-    public static function toFasta(Protein $protein)
+    public function getHeader()
     {
-        return static::generateFasta($protein);
+        return '';
     }
 
-    public static function getProtein($identifier, $description, $sequence)
-    {
-        return static::parseProtein($identifier, $description, $sequence);
-    }
-
-    protected static function parseProtein($identifier, $description, $sequence)
-    {
-        $protein = new Protein();
-        $protein->setUniqueIdentifier($identifier);
-        $protein->setDescription($description);
-        $protein->setSequence($sequence);
-        
-        return $protein;
-    }
-
-    protected static function generateFasta(Protein $protein)
+    public function getDescription(Protein $protein)
     {
         $description = '>' . $protein->getUniqueIdentifier();
         
@@ -58,5 +43,15 @@ class DefaultFastaEntry
         }
         
         return $description;
+    }
+
+    public function getProtein($identifier, $description, $sequence)
+    {
+        $protein = new Protein();
+        $protein->setUniqueIdentifier($identifier);
+        $protein->setDescription($description);
+        $protein->setSequence($sequence);
+        
+        return $protein;
     }
 }

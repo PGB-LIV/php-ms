@@ -26,10 +26,10 @@ use pgb_liv\php_ms\Core\Protein;
  *
  * @author Andrew Collins
  */
-class UniprotFastaEntry extends DefaultFastaEntry
+class UniprotFastaEntry extends DefaultFastaEntry implements FastaInterface
 {
 
-    protected static function generateFasta(Protein $protein)
+    public function getDescription(Protein $protein)
     {
         $description = '>' . $protein->getUniqueIdentifier();
         
@@ -46,7 +46,7 @@ class UniprotFastaEntry extends DefaultFastaEntry
         return $description;
     }
 
-    protected static function parseProtein($identifier, $description, $sequence)
+    public function getProtein($identifier, $description, $sequence)
     {
         // Parse identifier
         $identifierParts = explode('|', $identifier, 3);

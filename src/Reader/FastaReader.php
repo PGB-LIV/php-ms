@@ -16,9 +16,11 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
-use pgb_liv\php_ms\Core\Database\Fasta\FastaFactory;
 use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry;
+use pgb_liv\php_ms\Core\Database\Fasta\UniprotFastaEntry;
+use pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry;
+use pgb_liv\php_ms\Core\Database\Fasta\FastaInterface;
 
 /**
  * A FASTA parser that creates a new iterable object that will return a database
@@ -44,7 +46,12 @@ class FastaReader implements \Iterator
 
     private $key = 0;
 
-    private $isPeff = false;
+    /**
+     * The FASTA format engine to use for parsing
+     *
+     * @var FastaInterface
+     */
+    private $format;
 
     public function __construct($filePath)
     {
@@ -86,7 +93,7 @@ class FastaReader implements \Iterator
         $this->fileHandle = fopen($this->filePath, 'r');
         
         if (stripos($this->peekLine(), '# PEFF') === 0) {
-            $this->isPeff = true;
+            $this->format = new PeffFastaEntry();
         }
         
         $this->key = 0;
@@ -166,7 +173,16 @@ class FastaReader implements \Iterator
         } else {
             $identifier = $description;
         }
+        
         $description = substr($description, strpos($description, ' ') + 1);
+        
+        if ($this->format == null) {
+            if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description, $matches)) {
+                $this->format = new UniprotFastaEntry();
+            } else {
+                $this->format = new DefaultFastaEntry();
+            }
+        }
         
         $sequence = '';
         while ($line = $this->getLine()) {
@@ -178,14 +194,8 @@ class FastaReader implements \Iterator
             }
         }
         
-        if ($this->isPeff) {
-            $entry = PeffFastaEntry::getProtein($identifier, $description, $sequence);
-        } else {
-            $entry = FastaFactory::getProtein($identifier, $description, $sequence);
-        }
-        
         $this->key ++;
         
-        return $entry;
+        return $this->format->getProtein($identifier, $description, $sequence);
     }
 }
