@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters;
 use pgb_liv\php_ms\Core\Modification;
+use pgb_liv\php_ms\Core\Tolerance;
 
 class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
@@ -299,5 +300,44 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $mods = $params->getModifications();
         $this->assertEquals(0, count($mods));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setPrecursorTolerance
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getPrecursorTolerance
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     * @uses pgb_liv\php_ms\Core\Tolerance
+     */
+    public function testCanGetSetValidPrecursorTolerance()
+    {
+        $value = 10;
+        
+        $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
+        $params->setPrecursorTolerance(new Tolerance($value, Tolerance::PPM));
+        
+        $this->assertEquals($value, $params->getPrecursorTolerance()
+            ->getTolerance());
+        $this->assertEquals(Tolerance::PPM, $params->getPrecursorTolerance()
+            ->getUnit());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setFragmentTolerance
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getFragmentTolerance
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanGetSetValidFragmentTolerance()
+    {
+        $value = 0.1;
+        
+        $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
+        $params->setFragmentTolerance(new Tolerance($value, Tolerance::PPM));
+        
+        $this->assertEquals($value, $params->getFragmentTolerance()
+            ->getTolerance());
+        $this->assertEquals(Tolerance::PPM, $params->getFragmentTolerance()
+            ->getUnit());
     }
 }

@@ -37,7 +37,7 @@ class FastaWriterTest extends \PHPUnit_Framework_TestCase
         
         return $fasta;
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Writer\FastaWriter::__construct
      * @covers pgb_liv\php_ms\Writer\FastaWriter::write
@@ -48,6 +48,7 @@ class FastaWriterTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      * @covers pgb_liv\php_ms\Reader\FastaReader::rewind
      * @covers pgb_liv\php_ms\Reader\FastaReader::current
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
      * @covers pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getProtein
      * @covers pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getDescription
      * @covers pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getHeader
@@ -63,6 +64,43 @@ class FastaWriterTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $protein->setUniqueIdentifier('sp|Q12471|6P22_YEAST');
         $protein->setDescription('6-phosphofructo-2-kinase 2');
+        $protein->setSequence('MGGSSDSDSHDGYLTSEYNSSNSLFSLNTGNSYSSASLDRATLDCQDSVFFDNHKSSLLS' . 'TEVPRFISNDPLHLPITLNYKRDNADPTYTNGKVNKFMIVLIGLPATGKSTISSHLIQCL' . 'KNNPLTNSLRCKVFNAGKIRRQISCATISKPLLLSNTSSEDLFNPKNNDKKETYARITLQ' . 'KLFHEINNDECDVGIFDATNSTIERRRFIFEEVCSFNTDELSSFNLVPIILQVSCFNRSF' . 'IKYNIHNKSFNEDYLDKPYELAIKDFAKRLKHYYSQFTPFSLDEFNQIHRYISQHEEIDT' . 'SLFFFNVINAGVVEPHSLNQSHYPSTCGKQIRDTIMVIENFINHYSQMFGFEYIEAVKLF' . 'FESFGNSSEETLTTLDSVVNDKFFDDLQSLIESNGFA');
+        
+        $fasta = new FastaWriter($filePath);
+        $fasta->write($protein);
+        $fasta->close();
+        
+        $fastaReader = new FastaReader($filePath);
+        $fastaReader->rewind();
+        
+        $this->assertEquals($protein, $fastaReader->current());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Writer\FastaWriter::__construct
+     * @covers pgb_liv\php_ms\Writer\FastaWriter::write
+     * @covers pgb_liv\php_ms\Writer\FastaWriter::writeHeader
+     * @covers pgb_liv\php_ms\Writer\FastaWriter::writeDescription
+     * @covers pgb_liv\php_ms\Writer\FastaWriter::writeSequence
+     * @covers pgb_liv\php_ms\Writer\FastaWriter::close
+     * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
+     * @covers pgb_liv\php_ms\Reader\FastaReader::rewind
+     * @covers pgb_liv\php_ms\Reader\FastaReader::current
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
+     * @covers pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getProtein
+     * @covers pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getDescription
+     * @covers pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getHeader
+     *
+     * @uses pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry
+     * @uses pgb_liv\php_ms\Reader\FastaReader
+     * @uses pgb_liv\php_ms\Writer\FastaWriter
+     */
+    public function testCanWriteDefaultEntryNoDesc()
+    {
+        $filePath = tempnam(sys_get_temp_dir(), 'FastaWriterTest');
+        
+        $protein = new Protein();
+        $protein->setUniqueIdentifier('sp|Q12471|6P22_YEAST');
         $protein->setSequence('MGGSSDSDSHDGYLTSEYNSSNSLFSLNTGNSYSSASLDRATLDCQDSVFFDNHKSSLLS' . 'TEVPRFISNDPLHLPITLNYKRDNADPTYTNGKVNKFMIVLIGLPATGKSTISSHLIQCL' . 'KNNPLTNSLRCKVFNAGKIRRQISCATISKPLLLSNTSSEDLFNPKNNDKKETYARITLQ' . 'KLFHEINNDECDVGIFDATNSTIERRRFIFEEVCSFNTDELSSFNLVPIILQVSCFNRSF' . 'IKYNIHNKSFNEDYLDKPYELAIKDFAKRLKHYYSQFTPFSLDEFNQIHRYISQHEEIDT' . 'SLFFFNVINAGVVEPHSLNQSHYPSTCGKQIRDTIMVIENFINHYSQMFGFEYIEAVKLF' . 'FESFGNSSEETLTTLDSVVNDKFFDDLQSLIESNGFA');
         
         $fasta = new FastaWriter($filePath);

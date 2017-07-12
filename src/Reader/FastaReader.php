@@ -170,11 +170,12 @@ class FastaReader implements \Iterator
         
         if (strpos($description, ' ') !== false) {
             $identifier = substr($description, 0, strpos($description, ' '));
+            $description = substr($description, strpos($description, ' ') + 1);
         } else {
             $identifier = $description;
+            $description = '';
         }
         
-        $description = substr($description, strpos($description, ' ') + 1);
         
         if ($this->format == null) {
             if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description, $matches)) {

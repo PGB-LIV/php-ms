@@ -17,8 +17,6 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\Parameters\MascotSearchParameters;
-use pgb_liv\php_ms\Core\Tolerance;
-use pgb_liv\php_ms\Core\Modification;
 
 class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
@@ -244,26 +242,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursorTolerance
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursorTolerance
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     * @uses pgb_liv\php_ms\Core\Tolerance
-     */
-    public function testCanGetSetValidPeptideTolerance()
-    {
-        $value = 10;
-        
-        $params = new MascotSearchParameters();
-        $params->setPrecursorTolerance(new Tolerance($value, Tolerance::PPM));
-        
-        $this->assertEquals($value, $params->getPrecursorTolerance()
-            ->getTolerance());
-        $this->assertEquals(Tolerance::PPM, $params->getPrecursorTolerance()
-            ->getUnit());
-    }
-    
-    /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPeptideIsotopeError
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPeptideIsotopeError
      *
@@ -278,7 +256,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getPeptideIsotopeError());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPeptideIsotopeError
      * @expectedException InvalidArgumentException
@@ -291,26 +269,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $params = new MascotSearchParameters();
         $params->setPeptideIsotopeError($value);
-        
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFragmentTolerance
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFragmentTolerance
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidFragmentTolerance()
-    {
-        $value = 0.1;
-        
-        $params = new MascotSearchParameters();
-        $params->setFragmentTolerance(new Tolerance($value, Tolerance::PPM));
-        
-        $this->assertEquals($value, $params->getFragmentTolerance()
-            ->getTolerance());
-        $this->assertEquals(Tolerance::PPM, $params->getFragmentTolerance()
-            ->getUnit());
     }
 
     /**
@@ -328,7 +286,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getCharge());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFileFormat
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFileFormat
@@ -344,7 +302,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getFileFormat());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFileFormat
      * @expectedException InvalidArgumentException
@@ -358,7 +316,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MascotSearchParameters();
         $params->setFileFormat($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursor
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursor
@@ -374,7 +332,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getPrecursor());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursor
      * @expectedException InvalidArgumentException
@@ -404,7 +362,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getInstrument());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setInstrument
      * @expectedException InvalidArgumentException

@@ -126,7 +126,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getIsotopeErrorRange());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMaxPeptideLength
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getMaxPeptideLength
@@ -142,7 +142,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getMaxPeptideLength());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMaxPeptideLength
      * @expectedException InvalidArgumentException
@@ -156,7 +156,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setMaxPeptideLength($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMinPeptideLength
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getMinPeptideLength
@@ -172,7 +172,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getMinPeptideLength());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMinPeptideLength
      * @expectedException InvalidArgumentException
@@ -186,7 +186,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setMinPeptideLength($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMaxPrecursorCharge
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getMaxPrecursorCharge
@@ -202,7 +202,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getMaxPrecursorCharge());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMaxPrecursorCharge
      * @expectedException InvalidArgumentException
@@ -216,7 +216,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setMaxPrecursorCharge($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMinPrecursorCharge
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getMinPrecursorCharge
@@ -232,7 +232,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getMinPrecursorCharge());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMinPrecursorCharge
      * @expectedException InvalidArgumentException
@@ -246,7 +246,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setMinPrecursorCharge($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMs2DetectorId
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getMs2DetectorId
@@ -262,7 +262,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getMs2DetectorId());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMs2DetectorId
      * @expectedException InvalidArgumentException
@@ -276,7 +276,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setMs2DetectorId($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setNumMatchesPerSpectrum
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getNumMatchesPerSpectrum
@@ -292,7 +292,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getNumMatchesPerSpectrum());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setNumMatchesPerSpectrum
      * @expectedException InvalidArgumentException
@@ -306,7 +306,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setNumMatchesPerSpectrum($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setProtocolId
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getProtocolId
@@ -322,7 +322,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getProtocolId());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setProtocolId
      * @expectedException InvalidArgumentException
@@ -336,7 +336,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setProtocolId($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setShowQValue
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getShowQValue
@@ -352,7 +352,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getShowQValue());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setShowQValue
      * @expectedException InvalidArgumentException
@@ -366,7 +366,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setShowQValue($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setTolerableTrypticTermini
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getTolerableTrypticTermini
@@ -382,7 +382,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getTolerableTrypticTermini());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setTolerableTrypticTermini
      * @expectedException InvalidArgumentException
@@ -396,7 +396,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setTolerableTrypticTermini($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setNumOfThreads
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getNumOfThreads
@@ -412,7 +412,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getNumOfThreads());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setNumOfThreads
      * @expectedException InvalidArgumentException
@@ -426,7 +426,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MsgfPlusSearchParameters();
         $params->setNumOfThreads($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setAdditionalFeatures
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getAdditionalFeatures
@@ -442,7 +442,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getAdditionalFeatures());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setAdditionalFeatures
      * @expectedException InvalidArgumentException
@@ -455,5 +455,54 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $params = new MsgfPlusSearchParameters();
         $params->setAdditionalFeatures($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setOutputFile
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getOutputFile
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
+     */
+    public function testCanGetSetValidOutputFile()
+    {
+        $value = '/tmp/phpms_test';
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setOutputFile($value);
+        
+        $this->assertEquals($value, $params->getOutputFile());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setModificationFile
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getModificationFile
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanGetSetValidModificationFile()
+    {
+        $value = tempnam(sys_get_temp_dir(), 'php-ms');
+        touch($value);
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setModificationFile($value);
+        
+        $this->assertEquals($value, $params->getModificationFile());
+        unlink($value);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setModificationFile
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanGetSetInvalidModificationFile()
+    {
+        $value = tempnam(sys_get_temp_dir(), 'php-ms');
+        unlink($value);
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setModificationFile($value);
     }
 }
