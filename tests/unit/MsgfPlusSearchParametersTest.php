@@ -474,10 +474,10 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setModificationFile
-     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getModificationFile
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setModificationFile
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getModificationFile
      *
-     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
      */
     public function testCanGetSetValidModificationFile()
     {
@@ -492,10 +492,10 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setModificationFile
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setModificationFile
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
      */
     public function testCanGetSetInvalidModificationFile()
     {
