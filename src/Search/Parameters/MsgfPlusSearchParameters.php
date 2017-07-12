@@ -209,6 +209,10 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setProtocolId($identifier)
     {
+        if (! is_int($identifier) || $identifier < 0 || $identifier > 3) {
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 3');
+        }
+        
         $this->protocolId = $identifier;
     }
 
@@ -230,7 +234,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     public function setTolerableTrypticTermini($identifier)
     {
         if (! is_int($identifier) || $identifier < 0 || $identifier > 2) {
-            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 4');
+            throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 2');
         }
         
         $this->tolerableTrypticTermini = $identifier;
@@ -397,8 +401,8 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     }
 
     /**
-     * If 0, QValue and PepQValue are not reported.
-     * If 1, QValue (PSM-level Q-value) and PepQValue (peptide-level Q-value) are reported (Default).
+     * If false, QValue and PepQValue are not reported.
+     * If true, QValue (PSM-level Q-value) and PepQValue (peptide-level Q-value) are reported (Default).
      * This parameter is ignored when "-tda 0".
      *
      * @param bool $bool            

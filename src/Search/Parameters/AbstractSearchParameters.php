@@ -37,7 +37,7 @@ abstract class AbstractSearchParameters
 
     private $enzyme;
 
-    private $isDecoyEnabled = 0;
+    private $isDecoyEnabled = false;
 
     private $missedCleavageCount;
 

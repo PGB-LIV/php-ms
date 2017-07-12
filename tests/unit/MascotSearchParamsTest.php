@@ -197,112 +197,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $params->getTitle());
     }
 
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setDatabases
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getDatabases
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidDatabases1()
-    {
-        $value = 'SwissProt';
-        
-        $params = new MascotSearchParameters();
-        $params->setDatabases($value);
-        
-        $this->assertEquals($value, $params->getDatabases());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setDatabases
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getDatabases
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidDatabases2()
-    {
-        // TODO: Multi-DB test
-        $value = 'SwissProt';
-        
-        $params = new MascotSearchParameters();
-        $params->setDatabases($value);
-        
-        $this->assertEquals($value, $params->getDatabases());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setEnzyme
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getEnzyme
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidEnzyme()
-    {
-        $value = 'Trypsin/P';
-        
-        $params = new MascotSearchParameters();
-        $params->setEnzyme($value);
-        
-        $this->assertEquals($value, $params->getEnzyme());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getMissedCleavageCount
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidMissedCleavageCount()
-    {
-        $value = 2;
-        
-        $params = new MascotSearchParameters();
-        $params->setMissedCleavageCount($value);
-        
-        $this->assertEquals($value, $params->getMissedCleavageCount());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
-     * @expectedException InvalidArgumentException
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanSetInvalidMissedCleavageCountHigh()
-    {
-        $value = 10;
-        
-        $params = new MascotSearchParameters();
-        $params->setMissedCleavageCount($value);
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
-     * @expectedException InvalidArgumentException
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanSetInvalidMissedCleavageCountNegative()
-    {
-        $value = - 1;
-        
-        $params = new MascotSearchParameters();
-        $params->setMissedCleavageCount($value);
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
-     * @expectedException InvalidArgumentException
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanSetInvalidMissedCleavageCountString()
-    {
-        $value = 'fail';
-        
-        $params = new MascotSearchParameters();
-        $params->setMissedCleavageCount($value);
-    }
 
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setQuantitation
@@ -462,24 +356,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setSpectraPath
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getSpectraPath
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidSpectraPath()
-    {
-        $value = tempnam(sys_get_temp_dir(), 'php-ms');
-        touch($value);
-        
-        $params = new MascotSearchParameters();
-        $params->setSpectraPath($value);
-        
-        $this->assertEquals($value, $params->getSpectraPath());
-        unlink($value);
-    }
-
-    /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFileFormat
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFileFormat
      *
@@ -528,22 +404,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::isDecoyEnabled
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setDecoyEnabled
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidDecoyEnabled()
-    {
-        $value = true;
-        
-        $params = new MascotSearchParameters();
-        $params->setDecoyEnabled($value);
-        
-        $this->assertEquals($value, $params->isDecoyEnabled());
-    }
-
-    /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getReport
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setReport
      *
@@ -587,5 +447,19 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $params = new MascotSearchParameters();
         $params->setMassType($value);
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     */
+    public function testCanSetInvalidMissedCleavageCountHigh()
+    {
+        $value = 10;
+        
+        $params = new MascotSearchParameters();
+        $params->setMissedCleavageCount($value);
     }
 }
