@@ -24,6 +24,20 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::__construct
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     */
+    public function testObjectCanBeConstructedForValidConstructorArguments()
+    {
+        $params = new MascotSearchParameters();
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Search\Parameters\MascotSearchParameters', $params);
+        
+        return $params;
+    }
+
+    /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getIntermediate
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setIntermediate
      *
@@ -197,7 +211,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $params->getTitle());
     }
 
-
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setQuantitation
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getQuantitation
@@ -231,60 +244,6 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addFixedModification
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addModification
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFixedModifications
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidFixedModifications1()
-    {
-        $modification = new Modification();
-        $modification->setName('Carbamidomethyl');
-        $modification->setResidues(array(
-            'C'
-        ));
-        
-        $params = new MascotSearchParameters();
-        $params->addFixedModification($modification);
-        
-        $fixedMods = $params->getFixedModifications();
-        $this->assertEquals(1, count($fixedMods));
-        $this->assertEquals('Carbamidomethyl', $fixedMods[0]->getName());
-        $this->assertEquals(array(
-            'C'
-        ), $fixedMods[0]->getResidues());
-        $this->assertTrue($fixedMods[0]->isFixed());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addVariableModification
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::addModification
-     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getVariableModifications
-     *
-     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
-     */
-    public function testCanGetSetValidVariableModifications1()
-    {
-        $modification = new Modification();
-        $modification->setName('Oxidation');
-        $modification->setResidues(array(
-            'M'
-        ));
-        
-        $params = new MascotSearchParameters();
-        $params->addVariableModification($modification);
-        
-        $vardMods = $params->getVariableModifications();
-        $this->assertEquals(1, count($vardMods));
-        $this->assertEquals('Oxidation', $vardMods[0]->getName());
-        $this->assertEquals(array(
-            'M'
-        ), $vardMods[0]->getResidues());
-        $this->assertTrue($vardMods[0]->isVariable());
-    }
-
-    /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursorTolerance
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursorTolerance
      *
@@ -303,7 +262,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Tolerance::PPM, $params->getPrecursorTolerance()
             ->getUnit());
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPeptideIsotopeError
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPeptideIsotopeError
@@ -318,6 +277,21 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params->setPeptideIsotopeError($value);
         
         $this->assertEquals($value, $params->getPeptideIsotopeError());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPeptideIsotopeError
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     */
+    public function testCanGetSetInvalidPeptideIsotopeError()
+    {
+        $value = 'fail';
+        
+        $params = new MascotSearchParameters();
+        $params->setPeptideIsotopeError($value);
+        
     }
 
     /**
@@ -354,7 +328,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getCharge());
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFileFormat
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getFileFormat
@@ -370,7 +344,21 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getFileFormat());
     }
-
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setFileFormat
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     */
+    public function testCanGetSetInvalidFileFormat()
+    {
+        $value = 'fail (.fail)';
+        
+        $params = new MascotSearchParameters();
+        $params->setFileFormat($value);
+    }
+    
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::getPrecursor
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursor
@@ -385,6 +373,20 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params->setPrecursor($value);
         
         $this->assertEquals($value, $params->getPrecursor());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setPrecursor
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     */
+    public function testCanGetSetInvalidPrecursor()
+    {
+        $value = 'string';
+        
+        $params = new MascotSearchParameters();
+        $params->setPrecursor($value);
     }
 
     /**
@@ -401,6 +403,20 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params->setInstrument($value);
         
         $this->assertEquals($value, $params->getInstrument());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setInstrument
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MascotSearchParameters
+     */
+    public function testCanGetSetInvalidInstrument()
+    {
+        $value = 'FailTD';
+        
+        $params = new MascotSearchParameters();
+        $params->setInstrument($value);
     }
 
     /**
@@ -448,7 +464,7 @@ class MascotSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = new MascotSearchParameters();
         $params->setMassType($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\MascotSearchParameters::setMissedCleavageCount
      * @expectedException InvalidArgumentException

@@ -264,7 +264,7 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMinPrecursorCharge
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setMs2DetectorId
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
@@ -395,5 +395,65 @@ class MsgfPlusSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $params = new MsgfPlusSearchParameters();
         $params->setTolerableTrypticTermini($value);
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setNumOfThreads
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getNumOfThreads
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
+     */
+    public function testCanGetSetValidNumOfThreads()
+    {
+        $value = 10;
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setNumOfThreads($value);
+        
+        $this->assertEquals($value, $params->getNumOfThreads());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setNumOfThreads
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
+     */
+    public function testCanGetSetInvalidNumOfThreads()
+    {
+        $value = 'string';
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setNumOfThreads($value);
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setAdditionalFeatures
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::getAdditionalFeatures
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
+     */
+    public function testCanGetSetValidAdditionalFeatures()
+    {
+        $value = true;
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setAdditionalFeatures($value);
+        
+        $this->assertEquals($value, $params->getAdditionalFeatures());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters::setAdditionalFeatures
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters
+     */
+    public function testCanGetSetInvalidAdditionalFeatures()
+    {
+        $value = 'string';
+        
+        $params = new MsgfPlusSearchParameters();
+        $params->setAdditionalFeatures($value);
     }
 }

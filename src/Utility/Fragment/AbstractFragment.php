@@ -53,9 +53,7 @@ abstract class AbstractFragment
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
             // Add mass
-            if (! $this->isReversed && $i == 0) {
-                $mass += $this->getAdditiveMass();
-            } elseif ($this->isReversed && $i == 0) {
+            if ($i == 0) {
                 $mass += $this->getAdditiveMass();
             }
             

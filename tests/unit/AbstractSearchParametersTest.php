@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters;
+use pgb_liv\php_ms\Core\Modification;
 
 class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,7 +46,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
      * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
      */
     public function testCanGetSetValidDatabases2()
-    {        
+    {
         // TODO: Multi-DB test
         $value = 'SwissProt';
         $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
@@ -70,6 +71,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getEnzyme());
     }
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setMissedCleavageCount
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getMissedCleavageCount
@@ -85,7 +87,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->getMissedCleavageCount());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setMissedCleavageCount
      * @expectedException InvalidArgumentException
@@ -99,7 +101,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
         $params->setMissedCleavageCount($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setMissedCleavageCount
      * @expectedException InvalidArgumentException
@@ -113,7 +115,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
         $params->setMissedCleavageCount($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setSpectraPath
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getSpectraPath
@@ -131,7 +133,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $params->getSpectraPath());
         unlink($value);
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setSpectraPath
      * @expectedException InvalidArgumentException
@@ -145,9 +147,8 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
         $params->setSpectraPath($value);
-        
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setDecoyEnabled
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::isDecoyEnabled
@@ -163,7 +164,7 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($value, $params->isDecoyEnabled());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::setDecoyEnabled
      * @expectedException InvalidArgumentException
@@ -178,5 +179,125 @@ class AbstractSearchParametersTest extends \PHPUnit_Framework_TestCase
         $params->setDecoyEnabled($value);
         
         $this->assertEquals($value, $params->isDecoyEnabled());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::addFixedModification
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::addModification
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getFixedModifications
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanGetSetValidFixedModifications1()
+    {
+        $modification = new Modification();
+        $modification->setName('Carbamidomethyl');
+        $modification->setResidues(array(
+            'C'
+        ));
+        
+        $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
+        $params->addFixedModification($modification);
+        
+        $fixedMods = $params->getFixedModifications();
+        $this->assertEquals(1, count($fixedMods));
+        $this->assertEquals('Carbamidomethyl', $fixedMods[0]->getName());
+        $this->assertEquals(array(
+            'C'
+        ), $fixedMods[0]->getResidues());
+        $this->assertTrue($fixedMods[0]->isFixed());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::addVariableModification
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::addModification
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getVariableModifications
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanGetSetValidVariableModifications1()
+    {
+        $modification = new Modification();
+        $modification->setName('Oxidation');
+        $modification->setResidues(array(
+            'M'
+        ));
+        
+        $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
+        $params->addVariableModification($modification);
+        
+        $vardMods = $params->getVariableModifications();
+        $this->assertEquals(1, count($vardMods));
+        $this->assertEquals('Oxidation', $vardMods[0]->getName());
+        $this->assertEquals(array(
+            'M'
+        ), $vardMods[0]->getResidues());
+        $this->assertTrue($vardMods[0]->isVariable());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::addModification
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::getModifications
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanGetSetValidModifications()
+    {
+        $modification = new Modification();
+        $modification->setName('Oxidation');
+        $modification->setResidues(array(
+            'M'
+        ));
+        
+        $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
+        $params->addModification($modification);
+        
+        $modification = new Modification();
+        $modification->setName('Carbamidomethyl');
+        $modification->setResidues(array(
+            'C'
+        ));
+        
+        $params->addFixedModification($modification);
+        
+        $mods = $params->getModifications();
+        $this->assertEquals(2, count($mods));
+        $this->assertEquals('Oxidation', $mods[0]->getName());
+        $this->assertEquals(array(
+            'M'
+        ), $mods[0]->getResidues());
+        $this->assertTrue($mods[0]->isVariable());
+        
+        $this->assertEquals('Carbamidomethyl', $mods[1]->getName());
+        $this->assertEquals(array(
+            'C'
+        ), $mods[1]->getResidues());
+        $this->assertTrue($mods[1]->isFixed());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::addModification
+     * @covers pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters::clearModifications
+     *
+     * @uses pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters
+     */
+    public function testCanClearModifications()
+    {
+        $modification = new Modification();
+        $modification->setName('Oxidation');
+        $modification->setResidues(array(
+            'M'
+        ));
+        
+        $params = $this->getMockForAbstractClass('pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters');
+        $params->addModification($modification);
+        
+        $mods = $params->getModifications();
+        $this->assertEquals(1, count($mods));
+        
+        $params->clearModifications();
+        
+        $mods = $params->getModifications();
+        $this->assertEquals(0, count($mods));
     }
 }
