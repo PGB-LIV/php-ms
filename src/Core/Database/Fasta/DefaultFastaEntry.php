@@ -29,11 +29,23 @@ use pgb_liv\php_ms\Core\Protein;
 class DefaultFastaEntry implements FastaInterface
 {
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\FastaInterface::getHeader()
+     */
     public function getHeader()
     {
         return '';
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\FastaInterface::getDescription()
+     */
     public function getDescription(Protein $protein)
     {
         $description = '>' . $protein->getUniqueIdentifier();
@@ -45,6 +57,12 @@ class DefaultFastaEntry implements FastaInterface
         return $description;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\FastaInterface::getProtein()
+     */
     public function getProtein($identifier, $description, $sequence)
     {
         $protein = new Protein();

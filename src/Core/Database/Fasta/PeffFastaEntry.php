@@ -30,11 +30,23 @@ use pgb_liv\php_ms\Core\Modification;
 class PeffFastaEntry implements FastaInterface
 {
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\FastaInterface::getHeader()
+     */
     public function getHeader()
     {
         return '# PEFF 1.0draft24' . PHP_EOL;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\FastaInterface::getDescription()
+     */
     public function getDescription(Protein $protein)
     {
         $description = '>' . $protein->getDatabasePrefix() . ':' . $protein->getAccession();
@@ -70,6 +82,12 @@ class PeffFastaEntry implements FastaInterface
         return $description;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\FastaInterface::getProtein()
+     */
     public function getProtein($identifier, $description, $sequence)
     {
         // Parse identifier
@@ -86,12 +104,28 @@ class PeffFastaEntry implements FastaInterface
         // Parse description
         preg_match_all('/\\\\(\\w+)=(.+?(?= \\\\|$))/', $description, $matches);
         
-        $attr = array();
+        $attributes = array();
         foreach ($matches[1] as $index => $key) {
-            $attr[$key] = $matches[2][$index];
+            $attributes[$key] = $matches[2][$index];
         }
         
-        foreach ($attr as $key => $value) {
+        $this->parseAttributes($protein, $attributes);
+        
+        return $protein;
+    }
+
+    /**
+     * Parses the attribute array and inputs the data into the protein
+     *
+     * @param Protein $protein
+     *            Object to input values to
+     * @param array $attributes
+     *            Array to read from
+     * @return void
+     */
+    private function parseAttributes(Protein $protein, array $attributes)
+    {
+        foreach ($attributes as $key => $value) {
             switch ($key) {
                 case 'DbUniqueId':
                     $protein->setAccession($value);
@@ -119,12 +153,10 @@ class PeffFastaEntry implements FastaInterface
                     $protein->addModifications($modifications);
                     break;
                 default:
-                    // TODO: Not yet supported fields
+                    // Invalid or not yet supported fields
                     break;
             }
         }
-        
-        return $protein;
     }
 
     /**

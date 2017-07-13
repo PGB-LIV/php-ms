@@ -16,14 +16,8 @@
  */
 namespace pgb_liv\php_ms\Core;
 
-use pgb_liv\php_ms\Utility\Fragment\BFragment;
-use pgb_liv\php_ms\Utility\Fragment\YFragment;
-use pgb_liv\php_ms\Utility\Fragment\CFragment;
-use pgb_liv\php_ms\Utility\Fragment\ZFragment;
-
 /**
- * Abstract database entry object, by default the identifier, description and sequence are required.
- * Extending classes may use the additional fields.
+ * A peptide object that encapsulates a modifiable sequence and provides additional properties
  *
  * @author Andrew Collins
  */
@@ -124,46 +118,6 @@ class Peptide
     public function getPositionEnd()
     {
         return $this->positionEnd;
-    }
-
-    /**
-     *
-     * @deprecated
-     *
-     */
-    public function getIonsB()
-    {
-        return (new BFragment($this))->getIons();
-    }
-
-    /**
-     *
-     * @deprecated
-     *
-     */
-    public function getIonsY()
-    {
-        return (new YFragment($this))->getIons();
-    }
-
-    /**
-     *
-     * @deprecated
-     *
-     */
-    public function getIonsC()
-    {
-        return (new CFragment($this))->getIons();
-    }
-
-    /**
-     *
-     * @deprecated
-     *
-     */
-    public function getIonsZ()
-    {
-        return (new ZFragment($this))->getIons();
     }
 
     public function __clone()

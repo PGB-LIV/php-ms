@@ -29,6 +29,12 @@ use pgb_liv\php_ms\Core\Protein;
 class UniprotFastaEntry extends DefaultFastaEntry implements FastaInterface
 {
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getDescription()
+     */
     public function getDescription(Protein $protein)
     {
         $description = '>' . $protein->getUniqueIdentifier();
@@ -44,6 +50,12 @@ class UniprotFastaEntry extends DefaultFastaEntry implements FastaInterface
         return $description . ' SV=' . $protein->getSequenceVersion();
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry::getProtein()
+     */
     public function getProtein($identifier, $description, $sequence)
     {
         // Parse identifier

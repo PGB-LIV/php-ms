@@ -17,8 +17,7 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * Abstract database entry object, by default the identifier, description and sequence are required.
- * Extending classes may use the additional fields.
+ * A protein object that encapsulates a modifiable sequence and provides additional properties
  *
  * @author Andrew Collins
  */

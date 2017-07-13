@@ -17,8 +17,7 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * Abstract database entry object, by default the identifier, description and sequence are required.
- * Extending classes may use the additional fields.
+ * A modification object which may be applied to a peptide or protein
  *
  * @author Andrew Collins
  */
@@ -63,8 +62,7 @@ class Modification
     public function setLocation($location)
     {
         if (! is_int($location)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be an int value. Valued passed is of type ' . gettype($location));
+            throw new \InvalidArgumentException('Argument 1 must be an int value. Valued passed is of type ' . gettype($location));
         }
         
         $this->location = $location;
@@ -90,8 +88,7 @@ class Modification
     public function setMonoisotopicMass($mass)
     {
         if (! is_float($mass)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
+            throw new \InvalidArgumentException('Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
         }
         
         $this->monoisotopicMass = $mass;
@@ -110,8 +107,7 @@ class Modification
     public function setAverageMass($mass)
     {
         if (! is_float($mass)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
+            throw new \InvalidArgumentException('Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
         }
         
         $this->averageMass = $mass;
@@ -141,15 +137,12 @@ class Modification
      */
     public function setResidues(array $residues)
     {
-        // TODO: Validate for * or chars
         if (empty($residues)) {
             throw new \InvalidArgumentException('Argument 1 must not be empty.');
         } else {
             foreach ($residues as $residue) {
                 if (strlen($residue) != 1) {
-                    throw new \InvalidArgumentException(
-                        'Argument 1 must be an array of single char values. Value passed is of length ' .
-                             strlen($residue));
+                    throw new \InvalidArgumentException('Argument 1 must be an array of single char values. Value passed is of length ' . strlen($residue));
                 }
             }
         }

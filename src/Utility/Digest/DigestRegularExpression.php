@@ -20,7 +20,7 @@ use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Trypsin digestion for generated trypsinated peptides.
+ * A base digestion class that can be used to perform digestion with a valid regular expression.
  *
  * @author Andrew Collins
  */

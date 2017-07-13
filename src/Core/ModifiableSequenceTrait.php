@@ -122,7 +122,10 @@ trait ModifiableSequenceTrait
      */
     public function setIsDecoy($bool)
     {
-        // TODO: Validate bool
+        if (! is_bool($bool)) {
+            throw new \InvalidArgumentException('Argument 1 must be a boolean value');
+        }
+        
         $this->isDecoy = $bool;
     }
 
