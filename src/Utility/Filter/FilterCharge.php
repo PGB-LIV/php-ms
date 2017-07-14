@@ -49,16 +49,16 @@ class FilterCharge extends AbstractFilter
      * @param int $maxCharge
      *            Maximum spectra charge, inclusive
      */
-    public function __construct($minCharge, $maxCharge)
+    public function __construct($minCharge, $maxCharge = null)
     {
-        if (! is_int($minCharge)) {
+        if (! is_int($minCharge) && ! is_null($minCharge)) {
             throw new \InvalidArgumentException(
-                'Argument 1 must be of type int. Value is of type ' . gettype($minCharge));
+                'Argument 1 must be of type int or null. Value is of type ' . gettype($minCharge));
         }
         
-        if (! is_int($maxCharge)) {
+        if (! is_int($maxCharge) && ! is_null($maxCharge)) {
             throw new \InvalidArgumentException(
-                'Argument 2 must be of type int. Value is of type ' . gettype($maxCharge));
+                'Argument 2 must be of type int or null. Value is of type ' . gettype($maxCharge));
         }
         
         $this->minCharge = $minCharge;
@@ -73,11 +73,11 @@ class FilterCharge extends AbstractFilter
      */
     public function isValidSpectra(IonInterface $spectra)
     {
-        if ($spectra->getCharge() < $this->minCharge) {
+        if (! is_null($this->minCharge) && $spectra->getCharge() < $this->minCharge) {
             return false;
         }
         
-        if ($spectra->getCharge() > $this->maxCharge) {
+        if (! is_null($this->maxCharge) && $spectra->getCharge() > $this->maxCharge) {
             return false;
         }
         

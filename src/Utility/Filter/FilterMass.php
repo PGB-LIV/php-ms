@@ -52,11 +52,11 @@ class FilterMass extends AbstractFilter
      */
     public function __construct($minMass, $maxMass)
     {
-        if (! is_float($minMass)) {
+        if (! is_float($minMass) && ! is_int($minMass) && ! is_null($minMass)) {
             throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($minMass));
         }
         
-        if (! is_float($maxMass)) {
+        if (! is_float($maxMass) && ! is_int($maxMass) && ! is_null($maxMass)) {
             throw new \InvalidArgumentException('Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
         }
         
@@ -72,7 +72,11 @@ class FilterMass extends AbstractFilter
      */
     public function isValidSpectra(IonInterface $spectra)
     {
-        if (($spectra->getMass() < $this->minMass) || ($spectra->getMass() > $this->maxMass)) {
+        if (! is_null($this->minMass) && $spectra->getMass() < $this->minMass) {
+            return false;
+        }
+        
+        if (! is_null($this->maxMass) && $spectra->getMass() > $this->maxMass) {
             return false;
         }
         
@@ -89,7 +93,12 @@ class FilterMass extends AbstractFilter
     {
         // Mass is calculated at request so must be cached
         $mass = $peptide->getMass();
-        if (($mass < $this->minMass) || ($mass > $this->maxMass)) {
+        
+        if (! is_null($this->minMass) && $mass < $this->minMass) {
+            return false;
+        }
+        
+        if (! is_null($this->maxMass) && $mass > $this->maxMass) {
             return false;
         }
         

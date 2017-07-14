@@ -30,35 +30,33 @@ class FilterRetentionTime extends AbstractFilter
     /**
      * Minimum retention time, inclusive
      *
-     * @var float
+     * @var numeric
      */
     private $minRetentionTime;
 
     /**
      * Maximum retention time, inclusive
      *
-     * @var float
+     * @var numeric
      */
     private $maxRetentionTime;
 
     /**
      * Creates a new instance with the specified minimum and maximum retention time values.
      *
-     * @param float $minRetentionTime
+     * @param numeric $minRetentionTime
      *            Minimum retention time, inclusive
-     * @param float $maxRetentionTime
+     * @param numeric $maxRetentionTime
      *            Maximum retention time, inclusive
      */
-    public function __construct($minRetentionTime, $maxRetentionTime)
+    public function __construct($minRetentionTime, $maxRetentionTime = NULL)
     {
-        if (! is_float($minRetentionTime)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type float. Value is of type ' . gettype($minRetentionTime));
+        if (! is_float($minRetentionTime) && ! is_int($minRetentionTime) && ! is_null($minRetentionTime)) {
+            throw new \InvalidArgumentException('Argument 1 must be type numeric or null. Value is of type ' . gettype($minRetentionTime));
         }
         
-        if (! is_float($maxRetentionTime)) {
-            throw new \InvalidArgumentException(
-                'Argument 2 must be of type float. Value is of type ' . gettype($maxRetentionTime));
+        if (! is_float($maxRetentionTime) && ! is_int($maxRetentionTime) && ! is_null($maxRetentionTime)) {
+            throw new \InvalidArgumentException('Argument 2 must be of type numeric or null. Value is of type ' . gettype($maxRetentionTime));
         }
         
         $this->minRetentionTime = $minRetentionTime;
@@ -73,11 +71,11 @@ class FilterRetentionTime extends AbstractFilter
      */
     public function isValidSpectra(IonInterface $spectra)
     {
-        if ($spectra->getRetentionTime() < $this->minRetentionTime) {
+        if (! is_null($this->minRetentionTime) && $spectra->getRetentionTime() < $this->minRetentionTime) {
             return false;
         }
         
-        if ($spectra->getRetentionTime() > $this->maxRetentionTime) {
+        if (! is_null($this->maxRetentionTime) && $spectra->getRetentionTime() > $this->maxRetentionTime) {
             return false;
         }
         
