@@ -20,6 +20,6 @@ namespace pgb_liv\php_ms\Reader;
  *
  * @author Andrew Collins
  */
-class MzIdentMlReader1r2 extends MzIdentMLReader1r1
+class MzIdentMlReader1r2 extends MzIdentMlReader1r1
 {
 }

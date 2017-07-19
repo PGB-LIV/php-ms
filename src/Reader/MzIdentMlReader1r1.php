@@ -671,7 +671,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $protocol['enzymes'] = $this->getEnzymes($xml->Enzymes);
         
-        $protocol['fragmentTolerance'] = $this->getFragmentTolerance($xml->FragmentTolerance);
+        if (isset($xml->FragmentTolerance)) {
+            $protocol['fragmentTolerance'] = $this->getFragmentTolerance($xml->FragmentTolerance);
+        }
         
         $protocol['parentTolerance'] = $this->getParentTolerance($xml->ParentTolerance);
         
