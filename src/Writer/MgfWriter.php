@@ -68,10 +68,10 @@ class MgfWriter
         
         foreach ($precursor->getFragmentIons() as $ion) {
             fwrite($this->fileHandle, $ion->getMassCharge() . ' ');
-            fwrite($this->fileHandle, $ion->getIntensity() . ' ');
+            fwrite($this->fileHandle, $ion->getIntensity());
             
             if (! is_null($ion->getCharge())) {
-                fwrite($this->fileHandle, $ion->getCharge());
+                fwrite($this->fileHandle, ' ' . $ion->getCharge());
             }
             
             fwrite($this->fileHandle, PHP_EOL);

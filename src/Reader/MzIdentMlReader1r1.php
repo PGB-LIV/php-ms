@@ -93,7 +93,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                         $spectra->setTitle($cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                     case 'MS:1001115':
-                        $spectra->setScans((float) $cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                        $spectra->setScan((float) $cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                     default:
                         continue;
