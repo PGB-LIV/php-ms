@@ -111,7 +111,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      */
     public function setNumOfThreads($threadCount)
     {
-        if (! is_int($threadCount) || $threadCount< 0) {
+        if (! is_int($threadCount) || $threadCount < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
         
