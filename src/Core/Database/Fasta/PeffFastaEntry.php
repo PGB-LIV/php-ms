@@ -126,29 +126,29 @@ class PeffFastaEntry implements FastaInterface
     private function parseAttributes(Protein $protein, array $attributes)
     {
         foreach ($attributes as $key => $value) {
-            switch ($key) {
-                case 'DbUniqueId':
+            switch (strtolower($key)) {
+                case 'dbuniqueid':
                     $protein->setAccession($value);
                     break;
-                case 'CC':
+                case 'cc':
                     $protein->setEntryName($value);
                     break;
-                case 'Gname':
+                case 'gname':
                     $protein->setGeneName($value);
                     break;
-                case 'SV':
+                case 'sv':
                     $protein->setSequenceVersion($value);
                     break;
-                case 'PE':
+                case 'pe':
                     $protein->setProteinExistence($value);
                     break;
-                case 'Pname':
+                case 'pname':
                     $protein->setName($value);
                     break;
-                case 'TaxName':
+                case 'taxname':
                     $protein->setOrganismName($value);
                     break;
-                case 'ModResPsi':
+                case 'modrespsi':
                     $modifications = PeffFastaEntry::parseModifications($value);
                     $protein->addModifications($modifications);
                     break;

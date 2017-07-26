@@ -88,7 +88,7 @@ class Tolerance
     {
         return $this->unit;
     }
-
+    
     /**
      * Calculates the Dalton tolerance value of this mass using the set tolerance value
      *
@@ -105,5 +105,23 @@ class Tolerance
         $tolerance = $this->tolerance / 1000000;
         
         return $mass * $tolerance;
+    }
+    
+    /**
+     * Calculates the ppm tolerance value of this mass using the set tolerance value
+     *
+     * @param float $mass
+     *            Mass to calculate tolerance for
+     * @return float Tolerance value
+     */
+    public function getPpmDelta($mass)
+    {
+        if ($this->unit == Tolerance::PPM) {
+            return $this->tolerance;
+        }
+        
+        $tolerance = $this->tolerance / $mass;
+        
+        return $tolerance * 1000000;
     }
 }
