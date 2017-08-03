@@ -81,46 +81,22 @@ class MsgfPlusSearch
         $command .= ' -s ' . $parameters->getSpectraPath();
         $command .= ' -d ' . $parameters->getDatabases();
         
-        if (! is_null($parameters->getOutputFile())) {
-            $command .= ' -o ' . $parameters->getOutputFile();
-        }
+        $command .= $this->appendArgument(' -o', $parameters->getOutputFile());
         
         if (! is_null($parameters->getPrecursorTolerance())) {
             $command .= ' -t ' . $parameters->getPrecursorTolerance()->getTolerance() .
                  $parameters->getPrecursorTolerance()->getUnit();
         }
         
-        if (! is_null($parameters->getIsotopeErrorRange())) {
-            $command .= ' -ti ' . $parameters->getIsotopeErrorRange();
-        }
+        $command .= $this->appendArgument(' -ti', $parameters->getIsotopeErrorRange());
+        $command .= $this->appendArgument(' -thread', $parameters->getNumOfThreads());
+        $command .= $this->appendArgument(' -tda', $parameters->isDecoyEnabled() ? 1 : 0);
+        $command .= $this->appendArgument(' -m', $parameters->getFragmentationMethodId());
+        $command .= $this->appendArgument(' -inst', $parameters->getMs2DetectorId());
+        $command .= $this->appendArgument(' -e', $parameters->getEnzyme());
         
-        if (! is_null($parameters->getNumOfThreads())) {
-            $command .= ' -thread ' . $parameters->getNumOfThreads();
-        }
-        
-        if (! is_null($parameters->isDecoyEnabled())) {
-            $command .= ' -tda ' . ($parameters->isDecoyEnabled() ? 1 : 0);
-        }
-        
-        if (! is_null($parameters->getFragmentationMethodId())) {
-            $command .= ' -m ' . $parameters->getFragmentationMethodId();
-        }
-        
-        if (! is_null($parameters->getMs2DetectorId())) {
-            $command .= ' -inst ' . $parameters->getMs2DetectorId();
-        }
-        
-        if (! is_null($parameters->getEnzyme())) {
-            $command .= ' -e ' . $parameters->getEnzyme();
-        }
-        
-        if (! is_null($parameters->getProtocolId())) {
-            $command .= ' -protocol ' . $parameters->getProtocolId();
-        }
-        
-        if (! is_null($parameters->getTolerableTrypticTermini())) {
-            $command .= ' -ntt ' . $parameters->getTolerableTrypticTermini();
-        }
+        $command .= $this->appendArgument(' -protocol', $parameters->getProtocolId());
+        $command .= $this->appendArgument(' -ntt', $parameters->getTolerableTrypticTermini());
         
         if (! is_null($parameters->getModificationFile())) {
             $command .= ' -mod ' . $parameters->getModificationFile();
@@ -129,39 +105,25 @@ class MsgfPlusSearch
             $command .= ' -mod ' . $path;
         }
         
-        if (! is_null($parameters->getMinPeptideLength())) {
-            $command .= ' -minLength ' . $parameters->getMinPeptideLength();
-        }
-        
-        if (! is_null($parameters->getMinPeptideLength())) {
-            $command .= ' -maxLength ' . $parameters->getMaxPeptideLength();
-        }
-        
-        if (! is_null($parameters->getMinPrecursorCharge())) {
-            $command .= ' -minCharge ' . $parameters->getMinPrecursorCharge();
-        }
-        
-        if (! is_null($parameters->getMaxPeptideLength())) {
-            $command .= ' -maxCharge ' . $parameters->getMaxPeptideLength();
-        }
-        
-        if (! is_null($parameters->getNumMatchesPerSpectrum())) {
-            $command .= ' -n ' . $parameters->getNumMatchesPerSpectrum();
-        }
-        
-        if (! is_null($parameters->getAdditionalFeatures())) {
-            $command .= ' -addFeatures ' . $parameters->getAdditionalFeatures();
-        }
-        
-        if (! is_null($parameters->getChargeCarrierMass())) {
-            $command .= ' -ccm ' . $parameters->getChargeCarrierMass();
-        }
-        
-        if (! is_null($parameters->getShowQValue())) {
-            $command .= ' -showQValue ' . $parameters->getShowQValue();
-        }
+        $command .= $this->appendArgument(' -minLength', $parameters->getMinPeptideLength());
+        $command .= $this->appendArgument(' -maxLength', $parameters->getMaxPeptideLength());
+        $command .= $this->appendArgument(' -minCharge', $parameters->getMinPrecursorCharge());
+        $command .= $this->appendArgument(' -maxCharge', $parameters->getMaxPrecursorCharge());
+        $command .= $this->appendArgument(' -n', $parameters->getNumMatchesPerSpectrum());
+        $command .= $this->appendArgument(' -addFeatures', $parameters->getAdditionalFeatures());
+        $command .= $this->appendArgument(' -ccm', $parameters->getChargeCarrierMass());
+        $command .= $this->appendArgument(' -showQValue', $parameters->getShowQValue());
         
         return $command;
+    }
+
+    private function appendArgument($key, $value)
+    {
+        if (is_null($value)) {
+            return '';
+        }
+        
+        return $key . ' ' . $value;
     }
 
     /**

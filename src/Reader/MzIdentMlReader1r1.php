@@ -78,7 +78,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $spectraItem = $spectrumIdentificationResult->SpectrumIdentificationItem;
             
             $identification = new Identification();
-            $identification->setPeptide($sequences[(string) $spectraItem->PeptideEvidenceRef->attributes()->peptideEvidence_ref]);
+            $identification->setPeptide(
+                $sequences[(string) $spectraItem->PeptideEvidenceRef->attributes()->peptideEvidence_ref]);
             
             $spectra = new PrecursorIon();
             $spectra->setCharge((int) $spectraItem->attributes()->chargeState);
@@ -103,22 +104,19 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                 $cvParam = $this->getCvParam($xml);
                 switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                     case 'MS:1001363':
-                        // peptide unique to one protein - not supported
-                        break;
+                    // peptide unique to one protein - not supported
                     case 'MS:1001175':
-                        // Peptide shared in multipe proteins - not supported
-                        break;
+                    // Peptide shared in multipe proteins - not supported
                     case 'MS:1000016':
-                        // Scan start time - not supported
-                        break;
+                    // Scan start time - not supported
                     case 'MS:1000796':
-                        // Spectrum title - not supported
-                        break;
+                    // Spectrum title - not supported
                     case 'MS:1002315':
                         // Concensus result - not supported
                         break;
                     default:
-                        $identification->setScore($cvParam[MzIdentMlReader1r1::CV_ACCESSION], $cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                        $identification->setScore($cvParam[MzIdentMlReader1r1::CV_ACCESSION], 
+                            $cvParam[MzIdentMlReader1r1::CV_VALUE]);
                         break;
                 }
             }
@@ -236,7 +234,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     {}
 
     /**
-     * The details of an individual cleavage enzyme should be provided by giving a regular expression or a CV term if a "standard" enzyme cleavage has been performed.
+     * The details of an individual cleavage enzyme should be provided by giving a regular expression or a CV term if a "standard" enzyme cleavage has been
+     * performed.
      *
      * @param \SimpleXMLElement $xmlEnzyme
      *            The XML element
@@ -341,7 +340,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
+                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], 
+                        $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -452,7 +452,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
+                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], 
+                        $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
