@@ -63,8 +63,14 @@ class MgfWriter
         fwrite($this->fileHandle, 'TITLE=' . $precursor->getTitle() . PHP_EOL);
         fwrite($this->fileHandle, 'PEPMASS=' . $precursor->getMassCharge() . PHP_EOL);
         fwrite($this->fileHandle, 'CHARGE=' . $precursor->getCharge() . '+' . PHP_EOL);
-        fwrite($this->fileHandle, 'SCANS=' . $precursor->getScan() . PHP_EOL);
-        fwrite($this->fileHandle, 'RTINSECONDS=' . $precursor->getRetentionTime() . PHP_EOL);
+        
+        if (! is_null($precursor->getScan())) {
+            fwrite($this->fileHandle, 'SCANS=' . $precursor->getScan() . PHP_EOL);
+        }
+        
+        if (! is_null($precursor->getRetentionTime())) {
+            fwrite($this->fileHandle, 'RTINSECONDS=' . $precursor->getRetentionTime() . PHP_EOL);
+        }
         
         foreach ($precursor->getFragmentIons() as $ion) {
             fwrite($this->fileHandle, $ion->getMassCharge() . ' ');

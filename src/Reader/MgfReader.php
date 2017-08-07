@@ -168,6 +168,11 @@ class MgfReader implements \Iterator
             }
             
             $line = trim($this->getLine());
+            
+            if (strlen($line) == 0) {
+                continue;
+            }
+            
             $pair = explode(' ', $line, 3);
             
             $ion = new FragmentIon();
