@@ -71,58 +71,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     public function getAnalysisData()
     {
-        $sequences = $this->getSequenceCollection();
+        $results = $this->getSpectrumIdentificationList();
         
-        $results = array();
-        foreach ($this->xmlReader->DataCollection->AnalysisData->SpectrumIdentificationList->SpectrumIdentificationResult as $spectrumIdentificationResult) {
-            $spectraItem = $spectrumIdentificationResult->SpectrumIdentificationItem;
-            
-            $identification = new Identification();
-            $identification->setPeptide(
-                $sequences[(string) $spectraItem->PeptideEvidenceRef->attributes()->peptideEvidence_ref]);
-            
-            $spectra = new PrecursorIon();
-            $spectra->setCharge((int) $spectraItem->attributes()->chargeState);
-            $spectra->setMassCharge((float) $spectraItem->attributes()->calculatedMassToCharge);
-            $spectra->addIdentification($identification);
-            
-            foreach ($spectrumIdentificationResult->cvParam as $xml) {
-                $cvParam = $this->getCvParam($xml);
-                switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
-                    case 'MS:1000796':
-                        $spectra->setTitle($cvParam[MzIdentMlReader1r1::CV_VALUE]);
-                        break;
-                    case 'MS:1001115':
-                        $spectra->setScan((float) $cvParam[MzIdentMlReader1r1::CV_VALUE]);
-                        break;
-                    default:
-                        continue;
-                }
-            }
-            
-            foreach ($spectraItem->cvParam as $xml) {
-                $cvParam = $this->getCvParam($xml);
-                switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
-                    case 'MS:1001363':
-                    // peptide unique to one protein - not supported
-                    case 'MS:1001175':
-                    // Peptide shared in multipe proteins - not supported
-                    case 'MS:1000016':
-                    // Scan start time - not supported
-                    case 'MS:1000796':
-                    // Spectrum title - not supported
-                    case 'MS:1002315':
-                        // Concensus result - not supported
-                        break;
-                    default:
-                        $identification->setScore($cvParam[MzIdentMlReader1r1::CV_ACCESSION], 
-                            $cvParam[MzIdentMlReader1r1::CV_VALUE]);
-                        break;
-                }
-            }
-            
-            $results[(string) $spectrumIdentificationResult->attributes()->id] = $spectra;
-        }
+        // TODO: This should link to:
+        // $results2 = $this->getProteinDetectionList();
         
         return $results;
     }
@@ -340,8 +292,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], 
-                        $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
+                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -452,8 +403,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], 
-                        $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
+                    $tolerance = new Tolerance((float) $cvParam[MzIdentMlReader1r1::CV_VALUE], $cvParam[MzIdentMlReader1r1::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -489,8 +439,27 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getPeptideEvidenceRef()
     {}
 
-    private function getPeptideHypothesis()
-    {}
+    /**
+     * Peptide evidence on which this ProteinHypothesis is based by reference to a PeptideEvidence element.
+     *
+     * @param \SimpleXMLElement $xml
+     *            XML to parse
+     */
+    private function getPeptideHypothesis(\SimpleXMLElement $xml)
+    {
+        $hypothesis = array();
+        $ref = (string) $xml->attributes()->peptideEvidence_ref;
+        
+        $hypothesis['peptide'] = $ref;
+        $hypothesis['spectra'] = array();
+        
+        // TODO: Nothing we can currently do with this data - yet
+        foreach ($xml->SpectrumIdentificationItemRef as $spectrumIdentificationItemRef) {
+            $hypothesis['spectra'][] = $this->getSpectrumIdentificationItemRef($spectrumIdentificationItemRef);
+        }
+        
+        return $hypothesis;
+    }
 
     protected function getPeptideSequence(\SimpleXMLElement $xml)
     {
@@ -500,17 +469,94 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getPerson()
     {}
 
-    private function getProteinAmbiguityGroup()
-    {}
+    /**
+     * A set of logically related results from a protein detection, for example to represent conflicting assignments of peptides to proteins.
+     *
+     * @param \SimpleXMLElement $xml
+     *            XML to parse
+     */
+    private function getProteinAmbiguityGroup(\SimpleXMLElement $xml)
+    {
+        $hypos = array();
+        foreach ($xml->ProteinDetectionHypothesis as $proteinDetectionHypothesis) {
+            $hypo = $this->getProteinDetectionHypothesis($proteinDetectionHypothesis);
+            $hypos[$hypo['id']] = $hypo;
+        }
+        
+        return $hypos;
+    }
 
     private function getProteinDetection()
     {}
 
-    private function getProteinDetectionHypothesis()
-    {}
+    /**
+     * A single result of the ProteinDetection analysis (i.e.
+     * a protein).
+     *
+     * @param \SimpleXMLElement $xml
+     *            XML to parse
+     */
+    private function getProteinDetectionHypothesis(\SimpleXMLElement $xml)
+    {        
+        $peptides = array();
+        $hypothesis= array();
+        
+        $hypothesis['id'] = (string) $xml->attributes()->id;
+        $hypothesis['passThreshold'] = ((string) $xml->attributes()->passThreshold) == 'true' ? true : false;
+        
+        if (isset($xml->attributes()->name)) {
+            $hypothesis['name'] = (string) $xml->attributes()->name;
+        }
+        
+        if (isset($xml->attributes()->dBSequence_ref)) {
+            $ref = (string) $xml->attributes()->dBSequence_ref;
+            $hypothesis['protein'] = $ref;
+        }
+        
+        foreach ($xml->PeptideHypothesis as $peptideHypothesis) {
+            $peptides[] = $this->getPeptideHypothesis($peptideHypothesis);
+        }
+        
+        $hypothesis['peptides'] = $peptides;
+        
+        return $hypothesis;
+    }
 
-    private function getProteinDetectionList()
-    {}
+    /**
+     * The protein list resulting from a protein detection process.
+     */
+    public function getProteinDetectionList()
+    {
+        $peptides = $this->getSequenceCollection();
+        $proteins = $this->getSequenceCollectionProteins();
+        
+        $groups = array();
+        
+        if (!isset($this->xmlReader->DataCollection->AnalysisData->ProteinDetectionList->ProteinAmbiguityGroup))
+        {
+            return null;
+        }
+        
+        foreach ($this->xmlReader->DataCollection->AnalysisData->ProteinDetectionList->ProteinAmbiguityGroup as $proteinAmbiguityGroup) {
+            $group = $this->getProteinAmbiguityGroup($proteinAmbiguityGroup);
+            $groupId = (string) $proteinAmbiguityGroup->attributes()->id;
+            // Reprocess each group to change refs to element
+            foreach ($group as $id => $value)
+            {
+                $group[$id]['protein'] = $proteins[$value['protein']];
+                
+                foreach ($value['peptides'] as $pepId => $peptide)
+                {
+                    $group[$id]['peptides'][$pepId] = $peptides[$peptide['peptide']];
+                    
+                }                
+            }
+            
+            $groups[$groupId] = $group;
+        }
+        
+        return $groups;
+    }
 
     public function getProteinDetectionProtocol()
     {
@@ -618,18 +664,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     public function getSequenceCollection()
     {
-        $peptides = array();
-        foreach ($this->xmlReader->SequenceCollection->Peptide as $xml) {
-            $peptides[(string) $xml->attributes()->id] = $this->getPeptide($xml);
-        }
-        
-        $proteins = array();
-        foreach ($this->xmlReader->SequenceCollection->DBSequence as $xml) {
-            $proteins[(string) $xml->attributes()->id] = $this->getDbSequence($xml);
-        }
+        $peptides = $this->getSequenceCollectionPeptides();
+        $proteins = $this->getSequenceCollectionProteins();
         
         $results = array();
         foreach ($this->xmlReader->SequenceCollection->PeptideEvidence as $peptideEvidence) {
+            
             $proteinRef = (string) $peptideEvidence->attributes()->dBSequence_ref;
             $peptideRef = (string) $peptideEvidence->attributes()->peptide_ref;
             
@@ -643,6 +683,26 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         }
         
         return $results;
+    }
+
+    private function getSequenceCollectionPeptides()
+    {
+        $peptides = array();
+        foreach ($this->xmlReader->SequenceCollection->Peptide as $xml) {
+            $peptides[(string) $xml->attributes()->id] = $this->getPeptide($xml);
+        }
+        
+        return $peptides;
+    }
+
+    private function getSequenceCollectionProteins()
+    {
+        $proteins = array();
+        foreach ($this->xmlReader->SequenceCollection->DBSequence as $xml) {
+            $proteins[(string) $xml->attributes()->id] = $this->getDbSequence($xml);
+        }
+        
+        return $proteins;
     }
 
     private function getSiteRegexp()
@@ -708,11 +768,73 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getSpectrumIdentificationItem()
     {}
 
-    private function getSpectrumIdentificationItemRef()
-    {}
+    /**
+     * PeptideEvidence element.
+     * Using these references it is possible to indicate which spectra were actually accepted as evidence for this peptide identification in the given protein.
+     *
+     * @param \SimpleXMLElement $xml
+     *            XML to parse
+     * @return string
+     */
+    private function getSpectrumIdentificationItemRef(\SimpleXMLElement $xml)
+    {
+        return (string) $xml->attributes()->spectrumIdentificationItem_ref;
+    }
 
     private function getSpectrumIdentificationList()
-    {}
+    {
+        $sequences = $this->getSequenceCollection();
+        
+        foreach ($this->xmlReader->DataCollection->AnalysisData->SpectrumIdentificationList->SpectrumIdentificationResult as $spectrumIdentificationResult) {
+            $spectraItem = $spectrumIdentificationResult->SpectrumIdentificationItem;
+            
+            $identification = new Identification();
+            $identification->setPeptide($sequences[(string) $spectraItem->PeptideEvidenceRef->attributes()->peptideEvidence_ref]);
+            
+            $spectra = new PrecursorIon();
+            $spectra->setCharge((int) $spectraItem->attributes()->chargeState);
+            $spectra->setMassCharge((float) $spectraItem->attributes()->calculatedMassToCharge);
+            $spectra->addIdentification($identification);
+            
+            foreach ($spectrumIdentificationResult->cvParam as $xml) {
+                $cvParam = $this->getCvParam($xml);
+                switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
+                    case 'MS:1000796':
+                        $spectra->setTitle($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                        break;
+                    case 'MS:1001115':
+                        $spectra->setScan((float) $cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+            
+            foreach ($spectraItem->cvParam as $xml) {
+                $cvParam = $this->getCvParam($xml);
+                switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
+                    case 'MS:1001363':
+                    // peptide unique to one protein - not supported
+                    case 'MS:1001175':
+                    // Peptide shared in multipe proteins - not supported
+                    case 'MS:1000016':
+                    // Scan start time - not supported
+                    case 'MS:1000796':
+                    // Spectrum title - not supported
+                    case 'MS:1002315':
+                        // Concensus result - not supported
+                        break;
+                    default:
+                        $identification->setScore($cvParam[MzIdentMlReader1r1::CV_ACCESSION], $cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                        break;
+                }
+            }
+            
+            $results[(string) $spectrumIdentificationResult->attributes()->id] = $spectra;
+        }
+        
+        return $results;
+    }
 
     protected function getSpectrumIdentificationProtocol(\SimpleXMLElement $xml)
     {

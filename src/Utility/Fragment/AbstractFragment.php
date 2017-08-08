@@ -27,6 +27,11 @@ use pgb_liv\php_ms\Core\AminoAcidMono;
 abstract class AbstractFragment
 {
 
+    /**
+     * Whether the fragments should be read right-left or left-right
+     *
+     * @var bool
+     */
     private $isReversed = false;
 
     private $peptide;
@@ -38,11 +43,10 @@ abstract class AbstractFragment
 
     public function getIons()
     {
-        // TODO: Add modification support
         $ions = array();
         $sequence = $this->peptide->getSequence();
         
-        if ($this->isReversed) {
+        if ($this->isReversed()) {
             $sequence = strrev($sequence);
         }
         
@@ -57,6 +61,20 @@ abstract class AbstractFragment
                 $mass += $this->getAdditiveMass();
             }
             
+            // Add modification mass
+            // Catch modification on position, residue or terminus
+            foreach ($this->peptide->getModifications() as $modification) {
+                if (! is_null($modification->getLocation()) && $modification->getLocation() == $i + 1) {
+                    $mass += $modification->getMonoisotopicMass();
+                } else if (in_array($aa, $modification->getResidues())) {
+                    $mass += $modification->getMonoisotopicMass();
+                } else if ($i == 0 && in_array('[', $modification->getResidues())) {
+                    $mass += $modification->getMonoisotopicMass();
+                } else if ($i == ($this->peptide->getLength() - 1) && in_array(']', $modification->getResidues())) {
+                    $mass += $modification->getMonoisotopicMass();
+                }
+            }
+            
             $sum += $mass;
             $ions[$i + 1] = $sum;
         }
@@ -66,7 +84,7 @@ abstract class AbstractFragment
 
     /**
      * Gets the length of the fragment chain
-     * 
+     *
      * @return int
      */
     protected function getLength()
@@ -84,5 +102,15 @@ abstract class AbstractFragment
     protected function setIsReversed($bool)
     {
         $this->isReversed = $bool;
+    }
+
+    /**
+     * Gets the direction ions should be read
+     * 
+     * @return boolean
+     */
+    public function isReversed()
+    {
+        return $this->isReversed;
     }
 }

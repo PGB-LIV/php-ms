@@ -161,6 +161,10 @@ class Modification
      */
     public function getResidues()
     {
+        if (is_null($this->residues)) {
+            return array();
+        }
+        
         return array_values($this->residues);
     }
 
