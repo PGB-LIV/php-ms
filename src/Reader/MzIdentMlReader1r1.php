@@ -30,6 +30,13 @@ use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 {
 
+    /**
+     * Builds an index of seen CvParams of Accession -> Name
+     *
+     * @var string[]
+     */
+    private $cvParamIndex = array();
+
     const CV_ACCESSION = 'accession';
 
     const CV_VALUE = 'value';
@@ -497,9 +504,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      *            XML to parse
      */
     private function getProteinDetectionHypothesis(\SimpleXMLElement $xml)
-    {        
-        $peptides = array();
-        $hypothesis= array();
+    {
+        $hypothesis = array();
         
         $hypothesis['id'] = (string) $xml->attributes()->id;
         $hypothesis['passThreshold'] = ((string) $xml->attributes()->passThreshold) == 'true' ? true : false;
@@ -513,11 +519,18 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $hypothesis['protein'] = $ref;
         }
         
+        $peptides = array();
         foreach ($xml->PeptideHypothesis as $peptideHypothesis) {
             $peptides[] = $this->getPeptideHypothesis($peptideHypothesis);
         }
         
+        $cvParams = array();
+        foreach ($xml->cvParam as $cvParam) {
+            $cvParams[] = $this->getCvParam($cvParam);
+        }
+        
         $hypothesis['peptides'] = $peptides;
+        $hypothesis['cvParam'] = $cvParams;
         
         return $hypothesis;
     }
@@ -532,8 +545,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $groups = array();
         
-        if (!isset($this->xmlReader->DataCollection->AnalysisData->ProteinDetectionList->ProteinAmbiguityGroup))
-        {
+        if (! isset($this->xmlReader->DataCollection->AnalysisData->ProteinDetectionList->ProteinAmbiguityGroup)) {
             return null;
         }
         
@@ -541,15 +553,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $group = $this->getProteinAmbiguityGroup($proteinAmbiguityGroup);
             $groupId = (string) $proteinAmbiguityGroup->attributes()->id;
             // Reprocess each group to change refs to element
-            foreach ($group as $id => $value)
-            {
+            foreach ($group as $id => $value) {
                 $group[$id]['protein'] = $proteins[$value['protein']];
                 
-                foreach ($value['peptides'] as $pepId => $peptide)
-                {
+                foreach ($value['peptides'] as $pepId => $peptide) {
                     $group[$id]['peptides'][$pepId] = $peptides[$peptide['peptide']];
-                    
-                }                
+                }
             }
             
             $groups[$groupId] = $group;
@@ -911,6 +920,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $cvParam[MzIdentMlReader1r1::CV_ACCESSION] = (string) $xml->attributes()->accession;
         $cvParam['name'] = (string) $xml->attributes()->name;
         
+        if (! isset($this->cvParamIndex[$cvParam[MzIdentMlReader1r1::CV_ACCESSION]])) {
+            $this->cvParamIndex[$cvParam[MzIdentMlReader1r1::CV_ACCESSION]] = $cvParam['name'];
+        }
+        
         // Optional fields
         if (isset($xml->attributes()->value)) {
             $cvParam[MzIdentMlReader1r1::CV_VALUE] = (string) $xml->attributes()->value;
@@ -933,4 +946,21 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     private function getUserParam()
     {}
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Reader\MzIdentMlReader1Interface::getCvParamName()
+     */
+    public function getCvParamName($accession)
+    {
+        $name = $this->cvParamIndex[$accession];
+        
+        if (is_null($name)) {
+            throw new \OutOfRangeException($accession . ' not seen in data source');
+        }
+        
+        return $name;
+    }
 }

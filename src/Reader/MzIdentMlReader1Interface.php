@@ -36,4 +36,16 @@ interface MzIdentMlReader1Interface
     public function getAnalysisData();
     
     public function getProteinDetectionList();
+    
+    /**
+     * Gets the CvParam name attribute from any previously seen and indexed CvParam.
+     * For this method to return a value the accession should already have been read by this parser.
+     *
+     * @param string $accession
+     *            The accession to return the name value for.
+     *
+     * @throws \OutOfRangeException The accession was not found and consequently has not yet been parsed by this instance.
+     * @return string
+     */
+    public function getCvParamName($accession);
 }
