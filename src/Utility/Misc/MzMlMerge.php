@@ -24,11 +24,6 @@ namespace pgb_liv\php_ms\Utility\Misc;
  */
 class MzMlMerge
 {
-
-    private $fileList;
-
-    private $outputPath;
-
     private $timeOffset;
 
     private $indexOffset;
@@ -37,22 +32,155 @@ class MzMlMerge
 
     private $spectrumIdRef = array();
 
+    private $dataFiles = array();
+    
+    private $outputFiles = array();
+    
+    private $fractionOffsets = array();
+    
+    private $spectrumCount = array();
+
     /**
-     * Creates a new instance of this class with a set of files to merge and a target output file
-     *
-     * @param array $files
-     *            List of files to merge, files are merged in order of array
-     * @param string $outputPath
-     *            Output target file path
+     * Sets the output path for a specified replicate
+     * 
+     * @param int $replicate
+     *            The replicate ID
+     * @param string $path
+     *            The path to write to
      */
-    public function __construct(array $files, $outputPath)
+    public function setOutputPath($replicate, $path)
     {
-        if (count($files) < 2) {
-            throw new \InvalidArgumentException('At least 2 MzML files must be specified');
+        $this->outputFiles[$replicate] = $path;
+    }
+
+    /**
+     * Adds a data file for processing.
+     * The index is the fraction order which should be consistent across replicates
+     * 
+     * @param int $replicate            
+     * @param string $file            
+     * @param int $index            
+     */
+    public function addDataFile($replicate, $index, $file)
+    {        
+        $this->dataFiles[$replicate][$index] = array(
+            'path' => $file,
+            'endTime' => -1,
+            'endIndex' => -1,
+            'endScans' => -1,
+            'spectra' => 0
+        );
+    }
+
+    public function analyseData()
+    {
+        // TODO: Validate input and output
+        
+        // Perform first pass on each data file to identify start, stop RT
+        foreach ($this->dataFiles as $replicate => $fractions) {
+            foreach ($fractions as $index => $file) {
+                $this->dataFiles[$replicate][$index] = $this->analyseFile($file);
+            }
         }
         
-        $this->fileList = $files;
-        $this->outputPath = $outputPath;
+        // Set replicate start time
+        foreach ($this->dataFiles as $replicate => $fractions)
+        {
+            foreach ($fractions as $index => $file)
+            {
+                if (!isset($this->fractionOffsets[$index]) || $file['endTime'] > $this->fractionOffsets[$index])
+                {
+                    $this->fractionOffsets[$index] = $file['endTime'];
+                }
+                
+                if (!isset($this->spectrumCount[$replicate]))
+                {
+                    $this->spectrumCount[$replicate] = 0;
+                }
+                
+                $this->spectrumCount[$replicate] += $file['spectra'];
+            }
+        }
+        
+        // Push forward
+        $sum = 0;
+        foreach ($this->fractionOffsets as $index => $time)
+        {
+            // Add time to force seperation in alignment tools
+            $this->fractionOffsets[$index] = $sum;
+            $sum += $time + 60;
+        }
+        
+        return $this->dataFiles;
+    }
+
+    public function getFractionOffsets()
+    {
+        return $this->fractionOffsets;
+    }
+    
+    private function analyseFile($file)
+    {
+        $reader = fopen($file['path'], 'r');
+        
+        $isSpectrumList = false;
+        $timeOffset = $this->timeOffset;
+        $indexOffset = $this->indexOffset;
+        $idOffset = $this->idOffset;
+        
+        while (! feof($reader)) {
+            $line = fgets($reader);
+            
+            if (stripos($line, '<spectrumList') !== false) {
+                $isSpectrumList = true;
+                
+                if (preg_match('/<spectrumList(?=.*count="([0-9.]+)")/', $line, $matches)) {
+                    $file['spectra'] = $matches[1];
+                }
+                
+                continue;
+            }
+            
+            if (! $isSpectrumList) {
+                continue;
+            }
+            
+            
+            if (stripos($line, '</spectrumList') !== false) {
+                break;
+            }
+            
+            if (preg_match('/<spectrum(?=.*(index="([0-9.]+)"))(?=.*(id=".*(scan=([0-9]+)).*?"))/', $line, $matches)) {
+                $index = $matches[2];
+                
+                if ($index > $file['endIndex']) {
+                    $file['endIndex'] = $index;
+                }
+                
+                $scan = $matches[5];
+                
+                if ($scan > $file['endScans']) {
+                    $file['endScans'] = $scan;
+                }
+            }
+            
+            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, $matches)) {
+                $scanTime = $matches[2];
+                if ($matches[3] == 'UO:0000031') {
+                    $scanTime *= 60;
+                }                
+                
+                if ($scanTime > $file['endTime']) {
+                    $file['endTime']= $scanTime;
+                }
+                
+                if ($matches[3] == 'UO:0000031') {
+                    $scanTime /= 60;
+                }
+            }
+        }
+        
+        return $file;
     }
 
     /**
@@ -60,34 +188,35 @@ class MzMlMerge
      */
     public function merge()
     {
-        $spectrumCount = 0;
-        foreach ($this->fileList as $file) {
-            $spectrumCount += $this->countSpectrum($file);
+        // TODO: veryify analysis phase run
+        
+        var_dump($this->fractionOffsets);
+        var_dump($this->dataFiles);
+        
+        foreach ($this->dataFiles as $replicate => $fractions)
+        {        
+            $firstFile = current($fractions);
+            // Write header
+            $this->writeHeader($firstFile['path'], $this->spectrumCount[$replicate], $this->outputFiles[$replicate]);
+            
+            // Resets vars
+            $this->spectrumIdRef = array();
+            $this->timeOffset = 0;
+            $this->indexOffset = 0;
+            $this->idOffset = 0;
+            
+            foreach ($fractions as $fractionIndex => $file) {
+                $this->writeSpectrum($file['path'], $this->outputFiles[$replicate], $this->fractionOffsets[$fractionIndex]);
+            }
+            
+            $this->writeFooter($firstFile['path'], $this->outputFiles[$replicate]);
         }
-        
-        reset($this->fileList);
-        
-        $firstFile = current($this->fileList);
-        // Write header
-        $this->writeHeader($firstFile, $spectrumCount);
-        
-        // Resets vars
-        $this->spectrumIdRef = array();
-        $this->timeOffset = 0;
-        $this->indexOffset = 0;
-        $this->idOffset = 0;
-        
-        foreach ($this->fileList as $file) {
-            $this->writeSpectrum($file);
-        }
-        
-        $this->writeFooter($firstFile);
     }
 
-    private function writeHeader($file, $spectrumCount)
+    private function writeHeader($file, $spectrumCount, $outputFile)
     {
         $reader = fopen($file, 'r');
-        $writer = fopen($this->outputPath, 'w');
+        $writer = fopen($outputFile, 'w');
         
         while (! feof($reader)) {
             $line = fgets($reader);
@@ -107,10 +236,10 @@ class MzMlMerge
         fclose($writer);
     }
 
-    private function writeFooter($file)
+    private function writeFooter($file, $outputFile)
     {
         $reader = fopen($file, 'r');
-        $writer = fopen($this->outputPath, 'a');
+        $writer = fopen($outputFile, 'a');
         
         $isPastSpectrumList = false;
         while (! feof($reader)) {
@@ -129,14 +258,13 @@ class MzMlMerge
         fclose($writer);
     }
 
-    private function writeSpectrum($file)
+    private function writeSpectrum($file, $outputFile, $timeOffset)
     {
         $reader = fopen($file, 'r');
-        $writer = fopen($this->outputPath, 'a');
+        $writer = fopen($outputFile, 'a');
         
         $isSpectrumList = false;
         // Local offsets
-        $timeOffset = $this->timeOffset;
         $indexOffset = $this->indexOffset;
         $idOffset = $this->idOffset;
         
@@ -183,18 +311,13 @@ class MzMlMerge
                 $line = str_replace($matches[2], $this->spectrumIdRef[$matches[2]], $line);
             }
             
-            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
-                $matches)) {
+            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, $matches)) {
                 $scanTime = $matches[2];
                 if ($matches[3] == 'UO:0000031') {
                     $scanTime *= 60;
                 }
                 
                 $scanTime += $timeOffset;
-                
-                if ($scanTime > $this->timeOffset) {
-                    $this->timeOffset = $scanTime;
-                }
                 
                 if ($matches[3] == 'UO:0000031') {
                     $scanTime /= 60;
