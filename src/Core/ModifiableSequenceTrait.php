@@ -150,13 +150,22 @@ trait ModifiableSequenceTrait
     }
 
     /**
-     * Gets the theoretical neutral mass for this sequence
+     * Gets the theoretical monoisotopic neutral mass for this sequence and it's modifications
      *
-     * @param string $sequence
-     *            The peptide sequence to calculate for
      * @return The neutral mass of the sequence
+     * @deprecated Use getMonoisotopicMass() directly
      */
     public function getMass()
+    {
+        return $this->getMonoisotopicMass();
+    }
+
+    /**
+     * Gets the theoretical monoisotopic neutral mass for this sequence and it's modifications
+     *
+     * @return The neutral mass of the sequence
+     */
+    public function getMonoisotopicMass()
     {
         $acids = str_split($this->getSequence(), 1);
         
@@ -171,6 +180,24 @@ trait ModifiableSequenceTrait
                 default:
                     $mass += AminoAcidMono::getMonoisotopicMass($acid);
                     break;
+            }
+        }
+        
+        // Add modification mass
+        // Catch modification on position, residue or terminus
+        foreach ($this->getModifications() as $modification) {
+            if (! is_null($modification->getLocation())) {
+                $mass += $modification->getMonoisotopicMass();
+            } else {                
+                foreach ($acids as $acid) {
+                    if (in_array($acid, $modification->getResidues())) {
+                        $mass += $modification->getMonoisotopicMass();
+                    }
+                }
+                
+                if (in_array('[', $modification->getResidues()) || in_array(']', $modification->getResidues())) {
+                    $mass += $modification->getMonoisotopicMass();
+                }
             }
         }
         
