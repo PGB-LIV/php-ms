@@ -88,7 +88,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $tolerance->getTolerance());
         $this->assertEquals($unit, $tolerance->getUnit());
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonDelta
@@ -104,7 +104,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals(0.01, $tolerance->getDaltonDelta(1000), '', 0.001);
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonDelta
@@ -119,5 +119,37 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
         
         $this->assertEquals($value, $tolerance->getDaltonDelta(1000));
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::getPpmDelta
+     *
+     * @uses pgb_liv\php_ms\Core\Tolerance
+     */
+    public function testCanGetPpmDeltaPpm()
+    {
+        $value = 10;
+        $unit = Tolerance::PPM;
+        $tolerance = new Tolerance($value, $unit);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
+        
+        $this->assertEquals($value, $tolerance->getPpmDelta(1000));
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::getPpmDelta
+     *
+     * @uses pgb_liv\php_ms\Core\Tolerance
+     */
+    public function testCanGetPpmDeltaDa()
+    {
+        $value = 0.5;
+        $unit = Tolerance::DA;
+        $tolerance = new Tolerance($value, $unit);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
+        
+        $this->assertEquals(500, $tolerance->getPpmDelta(1000), '', 0.001);
     }
 }

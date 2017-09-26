@@ -54,6 +54,7 @@ abstract class AbstractFilter
      *
      * @param Peptide[] $peptides
      *            An array of Peptide elements
+     * @return Peptide[]
      */
     public function filterPeptide(array $peptides)
     {

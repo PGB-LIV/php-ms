@@ -41,7 +41,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($sequence, $mock->getSequence());
         $this->assertEquals(strlen($sequence), $mock->getLength());
     }
-
+    
     /**
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setIsDecoy
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::isDecoy
@@ -55,6 +55,19 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         $mock->setIsDecoy(true);
         
         $this->assertTrue($mock->isDecoy());
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setIsDecoy
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanValidiateGetSetIsDecoyInvalid()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+        
+        $mock->setIsDecoy(0);
     }
 
     /**
