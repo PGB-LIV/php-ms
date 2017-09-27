@@ -27,8 +27,10 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse
      *       @group fragment
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -37,12 +39,18 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         
         $fragment = new BFragment($peptide);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $fragment);
+        
+        $fragment = new BFragment($peptide);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $fragment);
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
      * @covers pgb_liv\php_ms\Utility\Fragment\BFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
@@ -67,11 +75,15 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $ions = $fragment->getIons();
         
         $this->assertEquals($expected, $ions, null, 0.00001);
+        $this->assertFalse($fragment->isReversed());
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
      * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\CFragment::getAdditiveMass
      *
@@ -96,17 +108,24 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $ions = $fragment->getIons();
         
         $this->assertEquals($expected, $ions, null, 0.00001);
+        $this->assertFalse($fragment->isReversed());
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::setIsReversed
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse
      * @uses pgb_liv\php_ms\Utility\Fragment\YFragment
      *       @group fragment
      */
@@ -128,17 +147,24 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $ions = $fragment->getIons();
         
         $this->assertEquals($expected, $ions, null, 0.00001);
+        $this->assertTrue($fragment->isReversed());
     }
 
     /**
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getLength
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::setIsReversed
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\ZFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\ZFragment::getAdditiveMass
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse
      * @uses pgb_liv\php_ms\Utility\Fragment\ZFragment
      *       @group fragment
      */
@@ -160,5 +186,6 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $ions = $fragment->getIons();
         
         $this->assertEquals($expected, $ions, null, 0.00001);
+        $this->assertTrue($fragment->isReversed());
     }
 }
