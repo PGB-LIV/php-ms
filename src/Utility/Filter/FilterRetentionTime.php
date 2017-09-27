@@ -49,7 +49,7 @@ class FilterRetentionTime extends AbstractFilter
      * @param numeric $maxRetentionTime
      *            Maximum retention time, inclusive
      */
-    public function __construct($minRetentionTime, $maxRetentionTime = NULL)
+    public function __construct($minRetentionTime, $maxRetentionTime = null)
     {
         if (! is_float($minRetentionTime) && ! is_int($minRetentionTime) && ! is_null($minRetentionTime)) {
             throw new \InvalidArgumentException('Argument 1 must be type numeric or null. Value is of type ' . gettype($minRetentionTime));

@@ -80,8 +80,7 @@ abstract class AbstractFragment
             
             // Add modification mass
             // Catch modification on position or residue
-            foreach ($this->peptide->getModifications() as $modification) {
-                
+            foreach ($this->peptide->getModifications() as $modification) {                
                 // Check every position or residue
                 if ($modification->getLocation() === $i + 1 || in_array($aa, $modification->getResidues())) {
                     // Residue is modified
@@ -115,8 +114,7 @@ abstract class AbstractFragment
     protected function getCTerminalMass()
     {
         $mass = 0;
-        foreach ($this->peptide->getModifications() as $modification) {
-            
+        foreach ($this->peptide->getModifications() as $modification) {            
             if ($modification->getLocation() === $this->peptide->getLength() + 1 ||
                  in_array(']', $modification->getResidues())) {
                 $mass += $modification->getMonoisotopicMass();

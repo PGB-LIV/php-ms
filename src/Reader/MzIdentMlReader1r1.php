@@ -677,8 +677,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $proteins = $this->getSequenceCollectionProteins();
         
         $results = array();
-        foreach ($this->xmlReader->SequenceCollection->PeptideEvidence as $peptideEvidence) {
-            
+        foreach ($this->xmlReader->SequenceCollection->PeptideEvidence as $peptideEvidence) {            
             $proteinRef = (string) $peptideEvidence->attributes()->dBSequence_ref;
             $peptideRef = (string) $peptideEvidence->attributes()->peptide_ref;
             
