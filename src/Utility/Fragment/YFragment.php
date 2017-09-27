@@ -23,14 +23,8 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class YFragment extends AbstractFragment
+class YFragment extends AbstractFragmentReverse
 {
-
-    public function __construct(Peptide $peptide)
-    {
-        $this->setIsReversed(true);
-        parent::__construct($peptide);
-    }
 
     /**
      *
@@ -42,5 +36,4 @@ class YFragment extends AbstractFragment
     {
         return Peptide::C_TERM_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
     }
-    
 }

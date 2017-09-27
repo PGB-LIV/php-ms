@@ -23,14 +23,8 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class ZFragment extends AbstractFragment
+class ZFragment extends AbstractFragmentReverse
 {
-
-    public function __construct(Peptide $peptide)
-    {
-        $this->setIsReversed(true);
-        parent::__construct($peptide);
-    }
 
     /**
      *
@@ -41,6 +35,7 @@ class ZFragment extends AbstractFragment
     protected function getAdditiveMass()
     {
         // Z has electrons added??
-        return Peptide::C_TERM_MASS - (Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS) + Peptide::PROTON_MASS + (0.00054858 * 2);
+        return Peptide::C_TERM_MASS - (Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS) +
+             Peptide::PROTON_MASS + (0.00054858 * 2);
     }
 }

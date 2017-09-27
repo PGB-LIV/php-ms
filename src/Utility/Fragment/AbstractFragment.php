@@ -26,31 +26,39 @@ use pgb_liv\php_ms\Core\AminoAcidMono;
  */
 abstract class AbstractFragment
 {
+    protected $peptide;
 
     /**
-     * Whether the fragments should be read right-left or left-right
+     * Creates a new instance of this fragmenter using the specified peptide
      *
-     * @var bool
+     * @param Peptide $peptide
+     *            Peptide object which must contain a sequence
+     *            
+     * @throws \InvalidArgumentException If the peptide object does not contain a sequence
      */
-    private $isReversed = false;
-
-    private $peptide;
-
     public function __construct(Peptide $peptide)
     {
+        if (is_null($peptide->getSequence()) || strlen($peptide->getSequence()) == 0) {
+            throw new \InvalidArgumentException('Null or empty sequence received.');
+        }
+        
         $this->peptide = $peptide;
     }
 
+    /**
+     * Gets the fragmentation ions for this instances peptide sequence
+     *
+     * @return number[]
+     */
     public function getIons()
     {
         $ions = array();
         $sequence = $this->peptide->getSequence();
         
-        if ($this->isReversed()) {
-            $sequence = strrev($sequence);
-        }
-        
         $sum = 0;
+        
+        $cTermMass = $this->getCTerminalMass();
+        $nTermMass = $this->getNTerminalMass();
         
         for ($i = 0; $i < $this->getLength(); $i ++) {
             $aa = $sequence[$i];
@@ -59,20 +67,22 @@ abstract class AbstractFragment
             // Add mass
             if ($i == 0) {
                 $mass += $this->getAdditiveMass();
+                $mass += $nTermMass;
             }
             
             // Add modification mass
-            // Catch modification on position, residue or terminus
+            // Catch modification on position or residue
             foreach ($this->peptide->getModifications() as $modification) {
-                if (! is_null($modification->getLocation()) && $modification->getLocation() == $i + 1) {
-                    $mass += $modification->getMonoisotopicMass();
-                } else if (in_array($aa, $modification->getResidues())) {
-                    $mass += $modification->getMonoisotopicMass();
-                } else if ($i == 0 && in_array('[', $modification->getResidues())) {
-                    $mass += $modification->getMonoisotopicMass();
-                } else if ($i == ($this->peptide->getLength() - 1) && in_array(']', $modification->getResidues())) {
+                
+                // Check every position or residue
+                if ($modification->getLocation() === $i + 1 || in_array($aa, $modification->getResidues())) {
+                    // Residue is modified
                     $mass += $modification->getMonoisotopicMass();
                 }
+            }
+            
+            if ($i + 1 == $this->peptide->getLength()) {
+                $mass += $cTermMass;
             }
             
             $sum += $mass;
@@ -80,6 +90,32 @@ abstract class AbstractFragment
         }
         
         return $ions;
+    }
+
+    protected function getNTerminalMass()
+    {
+        $mass = 0;
+        foreach ($this->peptide->getModifications() as $modification) {
+            if ($modification->getLocation() === 0 || in_array('[', $modification->getResidues())) {
+                $mass += $modification->getMonoisotopicMass();
+            }
+        }
+        
+        return $mass;
+    }
+
+    protected function getCTerminalMass()
+    {
+        $mass = 0;
+        foreach ($this->peptide->getModifications() as $modification) {
+            
+            if ($modification->getLocation() === $this->peptide->getLength() + 1 ||
+                 in_array(']', $modification->getResidues())) {
+                $mass += $modification->getMonoisotopicMass();
+            }
+        }
+        
+        return $mass;
     }
 
     /**
@@ -106,7 +142,7 @@ abstract class AbstractFragment
 
     /**
      * Gets the direction ions should be read
-     * 
+     *
      * @return boolean
      */
     public function isReversed()
