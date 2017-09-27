@@ -26,6 +26,14 @@ use pgb_liv\php_ms\Core\AminoAcidMono;
  */
 abstract class AbstractFragment
 {
+
+    /**
+     * Whether the fragments should be read right-left or left-right
+     *
+     * @var bool
+     */
+    private $isReversed = false;
+
     protected $peptide;
 
     /**
