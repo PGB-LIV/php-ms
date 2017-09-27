@@ -41,6 +41,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::search
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::getCommand
+     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::appendArgument
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::executeCommand
      *
      * @uses pgb_liv\php_ms\Search\MsgfPlusSearch
@@ -64,6 +65,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::search
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::getCommand
+     * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::appendArgument
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::executeCommand
      *
      * @uses pgb_liv\php_ms\Search\MsgfPlusSearch

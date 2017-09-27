@@ -40,7 +40,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $fragment = new BFragment($peptide);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $fragment);
         
-        $fragment = new BFragment($peptide);
+        $fragment = new YFragment($peptide);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $fragment);
     }
 
