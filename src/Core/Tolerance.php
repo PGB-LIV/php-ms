@@ -88,7 +88,7 @@ class Tolerance
     {
         return $this->unit;
     }
-    
+
     /**
      * Calculates the Dalton tolerance value of this mass using the set tolerance value
      *
@@ -102,11 +102,11 @@ class Tolerance
             return $this->tolerance;
         }
         
-        $tolerance = $this->tolerance / 1000000;
+        $toleranceRatio = $this->tolerance / 1000000;
         
-        return $mass * $tolerance;
+        return $mass * $toleranceRatio;
     }
-    
+
     /**
      * Calculates the ppm tolerance value of this mass using the set tolerance value
      *
@@ -120,8 +120,8 @@ class Tolerance
             return $this->tolerance;
         }
         
-        $tolerance = $this->tolerance / $mass;
+        $toleranceRatio = $this->tolerance / $mass;
         
-        return $tolerance * 1000000;
+        return $toleranceRatio * 1000000;
     }
 }

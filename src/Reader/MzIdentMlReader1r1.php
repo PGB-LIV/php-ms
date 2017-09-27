@@ -508,7 +508,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $hypothesis = array();
         
         $hypothesis['id'] = (string) $xml->attributes()->id;
-        $hypothesis['passThreshold'] = ((string) $xml->attributes()->passThreshold) == 'true' ? true : false;
+        $hypothesis['passThreshold'] = ((string) $xml->attributes()->passThreshold) == 'true';
         
         if (isset($xml->attributes()->name)) {
             $hypothesis['name'] = (string) $xml->attributes()->name;

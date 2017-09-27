@@ -24,6 +24,7 @@ namespace pgb_liv\php_ms\Utility\Misc;
  */
 class MzMlMerge
 {
+
     private $timeOffset;
 
     private $indexOffset;
@@ -33,16 +34,24 @@ class MzMlMerge
     private $spectrumIdRef = array();
 
     private $dataFiles = array();
-    
+
     private $outputFiles = array();
-    
+
     private $fractionOffsets = array();
-    
+
     private $spectrumCount = array();
 
     /**
-     * Sets the output path for a specified replicate
+     * The number of seconds that should be used as padding between scans.
+     * This should be high enough that image recognition alignment tools can identify a distinct boundary
      * 
+     * @var integer
+     */
+    private $paddingBetweenScans = 600;
+
+    /**
+     * Sets the output path for a specified replicate
+     *
      * @param int $replicate
      *            The replicate ID
      * @param string $path
@@ -56,18 +65,18 @@ class MzMlMerge
     /**
      * Adds a data file for processing.
      * The index is the fraction order which should be consistent across replicates
-     * 
+     *
      * @param int $replicate            
      * @param string $file            
      * @param int $index            
      */
     public function addDataFile($replicate, $index, $file)
-    {        
+    {
         $this->dataFiles[$replicate][$index] = array(
             'path' => $file,
-            'endTime' => -1,
-            'endIndex' => -1,
-            'endScans' => -1,
+            'endTime' => - 1,
+            'endIndex' => - 1,
+            'endScans' => - 1,
             'spectra' => 0
         );
     }
@@ -84,17 +93,13 @@ class MzMlMerge
         }
         
         // Set replicate start time
-        foreach ($this->dataFiles as $replicate => $fractions)
-        {
-            foreach ($fractions as $index => $file)
-            {
-                if (!isset($this->fractionOffsets[$index]) || $file['endTime'] > $this->fractionOffsets[$index])
-                {
+        foreach ($this->dataFiles as $replicate => $fractions) {
+            foreach ($fractions as $index => $file) {
+                if (! isset($this->fractionOffsets[$index]) || $file['endTime'] > $this->fractionOffsets[$index]) {
                     $this->fractionOffsets[$index] = $file['endTime'];
                 }
                 
-                if (!isset($this->spectrumCount[$replicate]))
-                {
+                if (! isset($this->spectrumCount[$replicate])) {
                     $this->spectrumCount[$replicate] = 0;
                 }
                 
@@ -104,11 +109,10 @@ class MzMlMerge
         
         // Push forward
         $sum = 0;
-        foreach ($this->fractionOffsets as $index => $time)
-        {
+        foreach ($this->fractionOffsets as $index => $time) {
             // Add time to force seperation in alignment tools
             $this->fractionOffsets[$index] = $sum;
-            $sum += $time + 60;
+            $sum += $time + $this->paddingBetweenScans;
         }
         
         return $this->dataFiles;
@@ -118,15 +122,12 @@ class MzMlMerge
     {
         return $this->fractionOffsets;
     }
-    
+
     private function analyseFile($file)
     {
         $reader = fopen($file['path'], 'r');
         
         $isSpectrumList = false;
-        $timeOffset = $this->timeOffset;
-        $indexOffset = $this->indexOffset;
-        $idOffset = $this->idOffset;
         
         while (! feof($reader)) {
             $line = fgets($reader);
@@ -144,7 +145,6 @@ class MzMlMerge
             if (! $isSpectrumList) {
                 continue;
             }
-            
             
             if (stripos($line, '</spectrumList') !== false) {
                 break;
@@ -164,14 +164,15 @@ class MzMlMerge
                 }
             }
             
-            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, $matches)) {
+            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
+                $matches)) {
                 $scanTime = $matches[2];
                 if ($matches[3] == 'UO:0000031') {
                     $scanTime *= 60;
-                }                
+                }
                 
                 if ($scanTime > $file['endTime']) {
-                    $file['endTime']= $scanTime;
+                    $file['endTime'] = $scanTime;
                 }
                 
                 if ($matches[3] == 'UO:0000031') {
@@ -188,13 +189,8 @@ class MzMlMerge
      */
     public function merge()
     {
-        // TODO: veryify analysis phase run
-        
-        var_dump($this->fractionOffsets);
-        var_dump($this->dataFiles);
-        
-        foreach ($this->dataFiles as $replicate => $fractions)
-        {        
+        // TODO: verify analysis phase run
+        foreach ($this->dataFiles as $replicate => $fractions) {
             $firstFile = current($fractions);
             // Write header
             $this->writeHeader($firstFile['path'], $this->spectrumCount[$replicate], $this->outputFiles[$replicate]);
@@ -206,7 +202,8 @@ class MzMlMerge
             $this->idOffset = 0;
             
             foreach ($fractions as $fractionIndex => $file) {
-                $this->writeSpectrum($file['path'], $this->outputFiles[$replicate], $this->fractionOffsets[$fractionIndex]);
+                $this->writeSpectrum($file['path'], $this->outputFiles[$replicate], 
+                    $this->fractionOffsets[$fractionIndex]);
             }
             
             $this->writeFooter($firstFile['path'], $this->outputFiles[$replicate]);
@@ -311,7 +308,8 @@ class MzMlMerge
                 $line = str_replace($matches[2], $this->spectrumIdRef[$matches[2]], $line);
             }
             
-            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, $matches)) {
+            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
+                $matches)) {
                 $scanTime = $matches[2];
                 if ($matches[3] == 'UO:0000031') {
                     $scanTime *= 60;
@@ -331,20 +329,5 @@ class MzMlMerge
         
         fclose($reader);
         fclose($writer);
-    }
-
-    private function countSpectrum($file)
-    {
-        $reader = fopen($file, 'r');
-        
-        while (! feof($reader)) {
-            $line = fgets($reader);
-            
-            if (preg_match('/<spectrumList(?=.*count="([0-9.]+)")/', $line, $matches)) {
-                return $matches[1];
-            }
-        }
-        
-        return 0;
     }
 }
