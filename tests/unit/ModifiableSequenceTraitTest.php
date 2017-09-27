@@ -73,6 +73,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
      *
      * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
      */
@@ -83,12 +84,14 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         $sequence = 'PEPTIDE';
         $mock->setSequence($sequence);
         $mass = 799.3599;
-        $this->assertEquals($mass, $mock->getMass(), '', 0.0001);
+        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
+        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
     }
 
     /**
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
      *
      * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
      */
@@ -105,7 +108,8 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         $mass += Peptide::HYDROGEN_MASS * 2;
         $mass += Peptide::OXYGEN_MASS;
         
-        $this->assertEquals($mass, $mock->getMass(), '', 0.0001);
+        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
+        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
     }
 
     /**
