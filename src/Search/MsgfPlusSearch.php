@@ -78,8 +78,8 @@ class MsgfPlusSearch
         $command .= ' -jar ';
         $command .= $this->exePath;
         
-        $command .= ' -s ' . $parameters->getSpectraPath();
-        $command .= ' -d ' . $parameters->getDatabases();
+        $command .= ' -s "' . $parameters->getSpectraPath().'"';
+        $command .= ' -d "' . $parameters->getDatabases().'"';
         
         $command .= $this->appendArgument(' -o', $parameters->getOutputFile());
         
@@ -102,7 +102,7 @@ class MsgfPlusSearch
             $command .= ' -mod ' . $parameters->getModificationFile();
         } elseif (count($parameters->getModifications()) > 0) {
             $path = MsgfPlusSearchParameters::createModificationFile($parameters->getModifications());
-            $command .= ' -mod ' . $path;
+            $command .= ' -mod "' . $path.'"';
         }
         
         $command .= $this->appendArgument(' -minLength', $parameters->getMinPeptideLength());

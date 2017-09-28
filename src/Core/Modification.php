@@ -87,8 +87,8 @@ class Modification
      */
     public function setMonoisotopicMass($mass)
     {
-        if (! is_float($mass)) {
-            throw new \InvalidArgumentException('Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
+        if (! is_float($mass) && ! is_int($mass)) {
+            throw new \InvalidArgumentException('Argument 1 must be a float or integer value. Valued passed is of type ' . gettype($mass));
         }
         
         $this->monoisotopicMass = $mass;
@@ -106,8 +106,8 @@ class Modification
 
     public function setAverageMass($mass)
     {
-        if (! is_float($mass)) {
-            throw new \InvalidArgumentException('Argument 1 must be a float value. Valued passed is of type ' . gettype($mass));
+        if (! is_float($mass) && ! is_int($mass)) {
+            throw new \InvalidArgumentException('Argument 1 must be a float or integer value. Valued passed is of type ' . gettype($mass));
         }
         
         $this->averageMass = $mass;
