@@ -46,6 +46,15 @@ class MsgfPlusSearch
         $this->javaPath = $javaPath;
     }
 
+    /**
+     * Perform the MS-GF+ search using the specified parameters.
+     * Any paramaters not specified will use the MS-GF+ defaults.
+     *
+     * @param SearchParametersInterface $parameters
+     *            Paramaters object for any arguments to send to MS-GF+
+     * @throws \InvalidArgumentException Thrown if any of the required properties are missing
+     * @return string Path to the results file
+     */
     public function search(SearchParametersInterface $parameters)
     {
         if (! is_a($parameters, 'pgb_liv\php_ms\Search\Parameters\MsgfPlusSearchParameters')) {
@@ -78,8 +87,8 @@ class MsgfPlusSearch
         $command .= ' -jar ';
         $command .= $this->exePath;
         
-        $command .= ' -s "' . $parameters->getSpectraPath().'"';
-        $command .= ' -d "' . $parameters->getDatabases().'"';
+        $command .= ' -s "' . $parameters->getSpectraPath() . '"';
+        $command .= ' -d "' . $parameters->getDatabases() . '"';
         
         $command .= $this->appendArgument(' -o', $parameters->getOutputFile());
         
@@ -102,7 +111,7 @@ class MsgfPlusSearch
             $command .= ' -mod ' . $parameters->getModificationFile();
         } elseif (count($parameters->getModifications()) > 0) {
             $path = MsgfPlusSearchParameters::createModificationFile($parameters->getModifications());
-            $command .= ' -mod "' . $path.'"';
+            $command .= ' -mod "' . $path . '"';
         }
         
         $command .= $this->appendArgument(' -minLength', $parameters->getMinPeptideLength());
