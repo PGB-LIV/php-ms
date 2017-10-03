@@ -121,9 +121,8 @@ class MsgfPlusSearch
         $command .= $this->appendArgument(' -n', $parameters->getNumMatchesPerSpectrum());
         $command .= $this->appendArgument(' -addFeatures', $parameters->getAdditionalFeatures());
         $command .= $this->appendArgument(' -ccm', $parameters->getChargeCarrierMass());
-        $command .= $this->appendArgument(' -showQValue', $parameters->getShowQValue());
         
-        return $command;
+        return $command . $this->appendArgument(' -showQValue', $parameters->getShowQValue());
     }
 
     private function appendArgument($key, $value)

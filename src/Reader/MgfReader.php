@@ -140,25 +140,7 @@ class MgfReader implements \Iterator
                 break;
             }
             
-            $line = trim($this->getLine());
-            $pair = explode('=', $line, 2);
-            
-            $value = $pair[1];
-            if (is_numeric($value)) {
-                $value += 0;
-            }
-            
-            if ($pair[0] == 'TITLE') {
-                $entry->setTitle($pair[1]);
-            } elseif ($pair[0] == 'PEPMASS') {
-                $entry->setMassCharge((float) $pair[1] + 0);
-            } elseif ($pair[0] == 'CHARGE') {
-                $entry->setCharge((int) $pair[1]);
-            } elseif ($pair[0] == 'SCANS') {
-                $entry->setScan((int) $pair[1] + 0);
-            } elseif ($pair[0] == 'RTINSECONDS') {
-                $entry->setRetentionTime((float) $pair[1] + 0);
-            }
+            $this->parseMeta($entry);
         }
         
         // Scan for [m/z] [intensity] [charge]
@@ -167,29 +149,69 @@ class MgfReader implements \Iterator
                 break;
             }
             
-            $line = trim($this->getLine());
-            
-            if (strlen($line) == 0) {
-                continue;
-            }
-            
-            $pair = explode(' ', $line, 3);
-            
-            $ion = new FragmentIon();
-            $ion->setMassCharge((float) $pair[0]);
-            if (count($pair) > 1) {
-                $ion->setIntensity((float) $pair[1]);
-            }
-            
-            if (count($pair) > 2) {
-                $ion->setCharge((int) $pair[2]);
-            }
-            
-            $entry->addFragmentIon($ion);
+            $this->parseFragments($entry);
         }
         
         $this->key ++;
         
         return $entry;
+    }
+
+    /**
+     * Parses the meta information from the scan and writes it to the precursor entry
+     *
+     * @param PrecursorIon $precursor
+     *            The precursor to append to
+     */
+    function parseMeta(PrecursorIon $precursor)
+    {
+        $line = trim($this->getLine());
+        $pair = explode('=', $line, 2);
+        
+        $value = $pair[1];
+        if (is_numeric($value)) {
+            $value += 0;
+        }
+        
+        if ($pair[0] == 'TITLE') {
+            $precursor->setTitle($pair[1]);
+        } elseif ($pair[0] == 'PEPMASS') {
+            $precursor->setMassCharge((float) $pair[1] + 0);
+        } elseif ($pair[0] == 'CHARGE') {
+            $precursor->setCharge((int) $pair[1]);
+        } elseif ($pair[0] == 'SCANS') {
+            $precursor->setScan((int) $pair[1] + 0);
+        } elseif ($pair[0] == 'RTINSECONDS') {
+            $precursor->setRetentionTime((float) $pair[1] + 0);
+        }
+    }
+
+    /**
+     * Parses the fragment information from the scan and writes it to the precursor entry
+     * 
+     * @param PrecursorIon $precursor
+     *            The precursor to append to
+     */
+    function parseFragments(PrecursorIon $precursor)
+    {
+        $line = trim($this->getLine());
+        
+        if (strlen($line) == 0) {
+            return;
+        }
+        
+        $pair = explode(' ', $line, 3);
+        
+        $ion = new FragmentIon();
+        $ion->setMassCharge((float) $pair[0]);
+        if (count($pair) > 1) {
+            $ion->setIntensity((float) $pair[1]);
+        }
+        
+        if (count($pair) > 2) {
+            $ion->setCharge((int) $pair[2]);
+        }
+        
+        $precursor->addFragmentIon($ion);
     }
 }
