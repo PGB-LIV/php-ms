@@ -41,6 +41,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     const CV_VALUE = 'value';
 
+    const CV_NAME = 'name';
+
     const CV_UNITACCESSION = 'unitAccession';
 
     const PROTOCOL_SPECTRUM = 'spectrum';
@@ -166,7 +168,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $cvParam = $this->getCvParam($xmlCvParam);
             
             if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001088') {
-                $protein->setDescription((string) $cvParam->attributes()->value);
+                $protein->setDescription($cvParam[MzIdentMlReader1r1::CV_VALUE]);
             }
         }
         
@@ -382,7 +384,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $cvParam = $this->getCvParam($xml->cvParam);
         
-        $modification->setName($cvParam['name']);
+        if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001460') {
+            $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+        } else {
+            $modification->setName($cvParam[MzIdentMlReader1r1::CV_NAME]);
+        }
         
         return $modification;
     }
@@ -663,7 +669,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $cvParam = $this->getCvParam($xml->cvParam);
         
-        $modification->setName($cvParam['name']);
+        if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001460') {
+            $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+        } else {
+            $modification->setName($cvParam[MzIdentMlReader1r1::CV_NAME]);
+        }
         
         return $modification;
     }
