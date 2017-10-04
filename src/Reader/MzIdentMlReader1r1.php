@@ -700,7 +700,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $peptide->setPositionStart((int) $peptideEvidence->attributes()->start);
             $peptide->setPositionEnd((int) $peptideEvidence->attributes()->end);
             $peptide->setProtein($proteins[$proteinRef]);
-            $peptide->setIsDecoy((bool) $peptideEvidence->attributes()->isDecoy);
+            $peptide->setIsDecoy((string) $peptideEvidence->attributes()->isDecoy == 'true');
             
             $results[(string) $peptideEvidence->attributes()->id] = $peptide;
         }
