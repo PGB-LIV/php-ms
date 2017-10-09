@@ -176,7 +176,6 @@ class FastaReader implements \Iterator
             $description = '';
         }
         
-        
         if ($this->format == null) {
             if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description, $matches)) {
                 $this->format = new UniprotFastaEntry();
@@ -193,6 +192,11 @@ class FastaReader implements \Iterator
             if (strpos($nextLine, '>') === 0) {
                 break;
             }
+        }
+        
+        // Remove stop codon in IRGSP FASTA
+        if (strrpos($sequence, '*', - 1) !== false) {
+            $sequence = substr($sequence, 0, - 1);
         }
         
         $this->key ++;

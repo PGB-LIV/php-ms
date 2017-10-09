@@ -47,7 +47,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     const PROTOCOL_SPECTRUM = 'spectrum';
 
-    const PROTOCOL_PROTEIN = 'spectrum';
+    const PROTOCOL_PROTEIN = 'protein';
 
     protected $xmlReader;
 
@@ -98,7 +98,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     public function getAnalysisProtocolCollection()
     {
         $protocols = array();
-        $protocols['spectrum'] = array();
+        $protocols[MzIdentMlReader1r1::PROTOCOL_SPECTRUM] = array();
         
         foreach ($this->xmlReader->AnalysisProtocolCollection->SpectrumIdentificationProtocol as $xml) {
             $protocols[MzIdentMlReader1r1::PROTOCOL_SPECTRUM][(string) $xml->attributes()->id] = $this->getSpectrumIdentificationProtocol(
@@ -173,7 +173,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         }
         
         if (isset($xml->Seq)) {
-            $protein->setSequence($this->getSeq($xml->Seq));
+            $sequence = $this->getSeq($xml->Seq);
+            if (strlen($sequence) > 0) {
+                $protein->setSequence($sequence);
+            }
         }
         
         return $protein;
