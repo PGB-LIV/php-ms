@@ -188,7 +188,7 @@ trait ModifiableSequenceTrait
         foreach ($this->getModifications() as $modification) {
             if (! is_null($modification->getLocation())) {
                 $mass += $modification->getMonoisotopicMass();
-            } else {                
+            } else {
                 foreach ($acids as $acid) {
                     if (in_array($acid, $modification->getResidues())) {
                         $mass += $modification->getMonoisotopicMass();
@@ -202,5 +202,22 @@ trait ModifiableSequenceTrait
         }
         
         return $mass;
+    }
+
+    /**
+     * Calculates the theoretical mass/charge value for this sequence.
+     * Note: To get the experimental value, check the PrecursorIon data that this peptide might be a child of.
+     *
+     * @param int $charge
+     *            The charge value to use for the calculation
+     */
+    public function getMonoisotopicMassCharge($charge)
+    {
+        $mz = $this->getMonoisotopicMass();
+        // TODO: Should use same Proton mass constant as IonTrait
+        $mz += 1.007276466812 * $charge;
+        $mz /= $charge;
+        
+        return $mz;
     }
 }

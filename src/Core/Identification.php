@@ -46,6 +46,13 @@ class Identification
     private $ionsMatched;
 
     /**
+     * The rank of this identification in a collection
+     *
+     * @var int rank
+     */
+    private $rank;
+
+    /**
      * Sets the peptide for this identification
      *
      * @param Peptide $peptide
@@ -125,7 +132,8 @@ class Identification
     public function setIonsMatched($ionsMatched)
     {
         if (! is_int($ionsMatched)) {
-            throw new \InvalidArgumentException('Argument 1 must be an int value. Valued passed is of type ' . gettype($ionsMatched));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be an int value. Valued passed is of type ' . gettype($ionsMatched));
         }
         
         $this->ionsMatched = $ionsMatched;
@@ -139,5 +147,26 @@ class Identification
     public function getIonsMatched()
     {
         return $this->ionsMatched;
+    }
+
+    /**
+     * Sets the rank for this instance
+     *
+     * @param int $rank
+     *            Rank value to set too
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    }
+
+    /**
+     * Gets the rank value for this instance
+     *
+     * @return int
+     */
+    public function getRank()
+    {
+        return $this->rank;
     }
 }
