@@ -122,11 +122,19 @@ abstract class AbstractDigest
         return $peptides;
     }
 
+    /**
+     * Performs methionine excision on an array of peptides
+     * 
+     * @param Peptide $peptides            
+     * @return Peptide[]
+     */
     private function performMethionineExcision(array $peptides)
     {
         $nmePeptides = array();
         foreach ($peptides as $peptide) {
-            if ($peptide->getPositionStart() > 0) {
+            $entry = $peptide->getProteins()[0];
+            
+            if ($entry->getStart() > 0) {
                 continue;
             }
             
@@ -137,9 +145,7 @@ abstract class AbstractDigest
             
             $nmePeptide = new Peptide();
             $nmePeptide->setSequence(substr($sequence, 1));
-            $nmePeptide->setProtein($peptide->getProtein());
-            $nmePeptide->setPositionStart(1);
-            $nmePeptide->setPositionEnd($peptide->getPositionEnd());
+            $nmePeptide->addProtein($entry->getProtein(), 1, $entry->getEnd());
             $nmePeptide->setMissedCleavageCount($peptide->getMissedCleavageCount());
             
             $nmePeptides[] = $nmePeptide;

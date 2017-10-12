@@ -96,9 +96,7 @@ class AbstractDigestTest extends \PHPUnit_Framework_TestCase
         
         $peptide = new Peptide();
         $peptide->setSequence('MPEPTIDER');
-        $peptide->setProtein($protein);
-        $peptide->setPositionStart(0);
-        $peptide->setPositionEnd(strlen('MPEPTIDER') - 1);
+        $peptide->addProtein($protein, 0, strlen('MPEPTIDER') - 1);
         $peptide->setMissedCleavageCount(0);
         
         $stub->expects($this->any())
@@ -132,9 +130,7 @@ class AbstractDigestTest extends \PHPUnit_Framework_TestCase
         
         $peptide = new Peptide();
         $peptide->setSequence('MPEPTIDER');
-        $peptide->setProtein($protein);
-        $peptide->setPositionStart(0);
-        $peptide->setPositionEnd(strlen('MPEPTIDER') - 1);
+        $peptide->addProtein($protein, 0, strlen('MPEPTIDER') - 1);
         $peptide->setMissedCleavageCount(0);
         
         $stub->expects($this->any())
