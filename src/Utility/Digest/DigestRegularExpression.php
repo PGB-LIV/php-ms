@@ -65,10 +65,9 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
             
             $peptide = new Peptide();
             $peptide->setSequence($peptideSequence);
-            $peptide->setProtein($protein);
-            $peptide->setPositionStart($position);
+            
             $endPosition = $position + strlen($peptideSequence) - 1;
-            $peptide->setPositionEnd($endPosition);
+            $peptide->addProtein($protein, $position, $endPosition);
             $peptide->setMissedCleavageCount(0);
             
             $peptides[] = $peptide;
@@ -92,9 +91,9 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
                 
                 $peptide = new Peptide($cumulativeSequence);
                 $peptide->setSequence($cumulativeSequence);
-                $peptide->setProtein($basePeptide->getProtein());
-                $peptide->setPositionStart($basePeptide->getPositionStart());
-                $peptide->setPositionEnd($peptide->getPositionStart() + strlen($cumulativeSequence) - 1);
+                $proteinEntry = $basePeptide->getProteins()[0];
+                $peptide->addProtein($proteinEntry->getProtein(), $proteinEntry->getStart(), 
+                    $proteinEntry->getStart() + strlen($cumulativeSequence) - 1);
                 $peptide->setMissedCleavageCount($missedCleave);
                 $missedCleaveges[] = $peptide;
             }

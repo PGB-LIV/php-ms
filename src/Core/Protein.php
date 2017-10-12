@@ -45,6 +45,12 @@ class Protein
 
     private $sequenceVersion;
 
+    /**
+     *
+     * @var Chromosome
+     */
+    private $chromosome;
+
     public function setUniqueIdentifier($identifier)
     {
         $this->uniqueIdentifier = $identifier;
@@ -181,5 +187,19 @@ class Protein
     public function reverseSequence()
     {
         $this->sequence = strrev($this->sequence);
+    }
+
+    public function setChromosome(Chromosome $chromosome)
+    {
+        $this->chromosome = $chromosome;
+    }
+
+    /**
+     *
+     * @return Chromosome
+     */
+    public function getChromosome()
+    {
+        return $this->chromosome;
     }
 }

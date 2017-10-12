@@ -23,7 +23,7 @@ namespace pgb_liv\php_ms\Core;
  */
 class Peptide
 {
-    use ModifiableSequenceTrait;
+    use ModifiableSequenceTrait, ProteinTrait;
 
     const AMINO_ACID_X_MASS = 0;
 
@@ -43,17 +43,6 @@ class Peptide
 
     const C_TERM_MASS = 17.00278;
 
-    /**
-     * The parent protein of this peptide
-     *
-     * @var Protein
-     */
-    private $protein;
-
-    private $positionStart;
-
-    private $positionEnd;
-
     private $missedCleavageCount;
 
     public function __construct($sequence = null)
@@ -63,28 +52,11 @@ class Peptide
         }
     }
 
-    public function setPositionStart($position)
-    {
-        if (! is_int($position)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type integer. Argument type is ' . gettype($position));
-        }
-        
-        $this->positionStart = $position;
-    }
-
-    public function setPositionEnd($position)
-    {
-        if (! is_int($position)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type integer. Argument type is ' . gettype($position));
-        }
-        
-        $this->positionEnd = $position;
-    }
-
     public function setMissedCleavageCount($count)
     {
         if (! is_int($count)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type integer. Argument type is ' . gettype($count));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type integer. Argument type is ' . gettype($count));
         }
         
         $this->missedCleavageCount = $count;
@@ -93,31 +65,6 @@ class Peptide
     public function getMissedCleavageCount()
     {
         return $this->missedCleavageCount;
-    }
-
-    public function setProtein(Protein $protein)
-    {
-        $this->protein = $protein;
-    }
-
-    /**
-     * Gets the parent protein of this peptide
-     *
-     * @return Protein
-     */
-    public function getProtein()
-    {
-        return $this->protein;
-    }
-
-    public function getPositionStart()
-    {
-        return $this->positionStart;
-    }
-
-    public function getPositionEnd()
-    {
-        return $this->positionEnd;
     }
 
     public function __clone()
@@ -152,7 +99,8 @@ class Peptide
             $composition = AminoAcidComposition::getFormula($acid);
             
             $matches = array();
-            preg_match('/([A-Z])([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)/', $composition, $matches);
+            preg_match('/([A-Z])([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)/', 
+                $composition, $matches);
             
             for ($i = 1; $i < count($matches); $i += 2) {
                 if ($matches[$i] == '') {
