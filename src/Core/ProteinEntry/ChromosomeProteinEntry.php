@@ -56,17 +56,6 @@ class ChromosomeProteinEntry extends ProteinEntry
     private $blockSizes;
 
     /**
-     * Creates a new ProteinEntity object with the specified protein
-     *
-     * @param Protein $protein
-     *            The protein object that will be referenced by the user of this instance
-     */
-    public function __construct(Protein $protein)
-    {
-        parent::__construct($protein);
-    }
-
-    /**
      * Gets the end position of the parent object inside the protein
      *
      * @return int
@@ -78,22 +67,22 @@ class ChromosomeProteinEntry extends ProteinEntry
 
     public function getChromosomePositionsStart()
     {
-        return $this->chromosomePositionsStart;
+        return $this->starts;
     }
 
     public function getChromosomePositionEnd()
     {
-        return $this->chromosomePositionEnd;
+        return $this->end;
     }
 
     public function getChromosomeBlockCount()
     {
-        return $this->chromosomeBlockCount;
+        return $this->blockCount;
     }
 
     public function getChromosomeBlockSizes()
     {
-        return $this->chromosomeBlockSizes;
+        return $this->blockSizes;
     }
 
     public function setChromosomePositionsStart(array $positions)
@@ -105,7 +94,7 @@ class ChromosomeProteinEntry extends ProteinEntry
             }
         }
         
-        $this->chromosomePositionsStart = $positions;
+        $this->starts = $positions;
     }
 
     public function setChromosomePositionEnd($position)
@@ -115,7 +104,7 @@ class ChromosomeProteinEntry extends ProteinEntry
                 'Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
         
-        $this->chromosomePositionEnd = $position;
+        $this->end = $position;
     }
 
     public function setChromosomeBlockCount($count)
@@ -125,7 +114,7 @@ class ChromosomeProteinEntry extends ProteinEntry
                 'Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
         
-        $this->chromosomeBlockCount = $count;
+        $this->blockCount = $count;
     }
 
     public function setChromosomeBlockSizes($sizes)
@@ -135,6 +124,6 @@ class ChromosomeProteinEntry extends ProteinEntry
                 'Argument 1 must be of type integer. Argument type is ' . gettype($sizes));
         }
         
-        $this->chromosomeBlockSizes = $sizes;
+        $this->blockSizes = $sizes;
     }
 }

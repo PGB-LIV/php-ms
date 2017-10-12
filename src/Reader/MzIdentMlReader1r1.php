@@ -518,20 +518,20 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      */
     private function getPeptideEvidence(\SimpleXMLElement $xml)
     {
-        $evidence = array();
-        $evidence['peptide'] = (string) $xml->attributes()->peptide_ref;
-        $evidence['protein'] = (string) $xml->attributes()->dBSequence_ref;
-        $evidence['start'] = (int) $xml->attributes()->start;
-        $evidence['end'] = (int) $xml->attributes()->end;
-        $evidence['is_decoy'] = (string) $xml->attributes()->isDecoy == 'true';
-        $evidence['cv'] = array();
+        $peptideEvidence = array();
+        $peptideEvidence['peptide'] = (string) $xml->attributes()->peptide_ref;
+        $peptideEvidence['protein'] = (string) $xml->attributes()->dBSequence_ref;
+        $peptideEvidence['start'] = (int) $xml->attributes()->start;
+        $peptideEvidence['end'] = (int) $xml->attributes()->end;
+        $peptideEvidence['is_decoy'] = (string) $xml->attributes()->isDecoy == 'true';
+        $peptideEvidence['cv'] = array();
         
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
-            $evidence['cv'][] = $cvParam;
+            $peptideEvidence['cv'][] = $cvParam;
         }
         
-        return $evidence;
+        return $peptideEvidence;
     }
 
     /**
@@ -545,9 +545,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      */
     private function getPeptideEvidenceRef(\SimpleXMLElement $xml)
     {
-        $ref = (string) $xml->attributes()->peptideEvidence_ref;
-        
-        return $ref;
+        return (string) $xml->attributes()->peptideEvidence_ref;
     }
 
     /**
@@ -623,9 +621,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $hypothesis['protein'] = $ref;
         }
         
-        $peptides = array();
+        $hypoPeptides = array();
         foreach ($xml->PeptideHypothesis as $peptideHypothesis) {
-            $peptides[] = $this->getPeptideHypothesis($peptideHypothesis);
+            $hypoPeptides[] = $this->getPeptideHypothesis($peptideHypothesis);
         }
         
         $cvParams = array();
@@ -633,7 +631,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $cvParams[] = $this->getCvParam($cvParam);
         }
         
-        $hypothesis['peptides'] = $peptides;
+        $hypothesis['peptides'] = $hypoPeptides;
         $hypothesis['cvParam'] = $cvParams;
         
         return $hypothesis;
@@ -644,8 +642,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      */
     public function getProteinDetectionList()
     {
-        $peptides = $this->getSequenceCollection();
-        $proteins = $this->getSequenceCollectionProteins();
+        $peptideCollection= $this->getSequenceCollection();
+        $proteinCollection = $this->getSequenceCollectionProteins();
         
         $groups = array();
         
@@ -658,10 +656,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $groupId = (string) $proteinAmbiguityGroup->attributes()->id;
             // Reprocess each group to change refs to element
             foreach ($group as $id => $value) {
-                $group[$id]['protein'] = $proteins[$value['protein']];
+                $group[$id]['protein'] = $proteinCollection[$value['protein']];
                 
                 foreach ($value['peptides'] as $pepId => $peptide) {
-                    $group[$id]['peptides'][$pepId] = $peptides[$peptide['peptide']];
+                    $group[$id]['peptides'][$pepId] = $peptideCollection[$peptide['peptide']];
                 }
             }
             
@@ -905,13 +903,13 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         foreach ($xml->PeptideEvidenceRef as $peptideEvidenceRef) {
             $ref = $this->getPeptideEvidenceRef($peptideEvidenceRef);
-            $evidence = $this->evidence[$ref];
-            $protein = $this->proteins[$evidence['protein']];
-            $peptide->setIsDecoy($evidence['is_decoy']);
+            $peptideEvidence = $this->evidence[$ref];
+            $protein = $this->proteins[$peptideEvidence['protein']];
+            $peptide->setIsDecoy($peptideEvidence['is_decoy']);
             
             $entry = null;
             
-            foreach ($evidence['cv'] as $cvParam) {
+            foreach ($peptideEvidence['cv'] as $cvParam) {
                 switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                     case 'MS:1002640':
                     case 'MS:1002641':
@@ -932,10 +930,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                 $entry = new ProteinEntry($protein);
             }
             
-            $entry->setStart($evidence['start']);
-            $entry->setEnd($evidence['end']);
+            $entry->setStart($peptideEvidence['start']);
+            $entry->setEnd($peptideEvidence['end']);
             
-            foreach ($evidence['cv'] as $cvParam) {
+            foreach ($peptideEvidence['cv'] as $cvParam) {
                 switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                     case 'MS:1002640':
                         // peptide end on chromosome

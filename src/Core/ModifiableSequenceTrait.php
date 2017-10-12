@@ -216,8 +216,7 @@ trait ModifiableSequenceTrait
         $mz = $this->getMonoisotopicMass();
         // TODO: Should use same Proton mass constant as IonTrait
         $mz += 1.007276466812 * $charge;
-        $mz /= $charge;
         
-        return $mz;
+        return $mz / $charge;
     }
 }

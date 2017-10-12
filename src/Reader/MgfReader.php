@@ -163,7 +163,7 @@ class MgfReader implements \Iterator
      * @param PrecursorIon $precursor
      *            The precursor to append to
      */
-    function parseMeta(PrecursorIon $precursor)
+    private function parseMeta(PrecursorIon $precursor)
     {
         $line = trim($this->getLine());
         $pair = explode('=', $line, 2);
@@ -188,11 +188,11 @@ class MgfReader implements \Iterator
 
     /**
      * Parses the fragment information from the scan and writes it to the precursor entry
-     * 
+     *
      * @param PrecursorIon $precursor
      *            The precursor to append to
      */
-    function parseFragments(PrecursorIon $precursor)
+    private function parseFragments(PrecursorIon $precursor)
     {
         $line = trim($this->getLine());
         
