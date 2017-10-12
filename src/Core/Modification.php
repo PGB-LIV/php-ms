@@ -53,6 +53,13 @@ class Modification
     private $position = Modification::POSITION_ANY;
 
     /**
+     * Accession (HUPO-PSI format) for this modification
+     *
+     * @var string
+     */
+    private $accession;
+
+    /**
      * Sets the location for this modification
      *
      * @param int $location
@@ -62,7 +69,8 @@ class Modification
     public function setLocation($location)
     {
         if (! is_int($location)) {
-            throw new \InvalidArgumentException('Argument 1 must be an int value. Valued passed is of type ' . gettype($location));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be an int value. Valued passed is of type ' . gettype($location));
         }
         
         $this->location = $location;
@@ -88,7 +96,8 @@ class Modification
     public function setMonoisotopicMass($mass)
     {
         if (! is_float($mass) && ! is_int($mass)) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or integer value. Valued passed is of type ' . gettype($mass));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be a float or integer value. Valued passed is of type ' . gettype($mass));
         }
         
         $this->monoisotopicMass = $mass;
@@ -107,7 +116,8 @@ class Modification
     public function setAverageMass($mass)
     {
         if (! is_float($mass) && ! is_int($mass)) {
-            throw new \InvalidArgumentException('Argument 1 must be a float or integer value. Valued passed is of type ' . gettype($mass));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be a float or integer value. Valued passed is of type ' . gettype($mass));
         }
         
         $this->averageMass = $mass;
@@ -142,7 +152,9 @@ class Modification
         } else {
             foreach ($residues as $residue) {
                 if (strlen($residue) != 1) {
-                    throw new \InvalidArgumentException('Argument 1 must be an array of single char values. Value passed is of length ' . strlen($residue));
+                    throw new \InvalidArgumentException(
+                        'Argument 1 must be an array of single char values. Value passed is of length ' .
+                             strlen($residue));
                 }
             }
         }
@@ -215,5 +227,27 @@ class Modification
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Sets the accession for this modification.
+     * Recommended for use when interacting with HUPO-PSI formats.
+     *
+     * @param string $accession
+     *            The accession value to set
+     */
+    public function setAccession($accession)
+    {
+        $this->accession = $accession;
+    }
+
+    /**
+     * Gets the accession for this modification if present
+     *
+     * @return string
+     */
+    public function getAccession()
+    {
+        return $this->accession;
     }
 }
