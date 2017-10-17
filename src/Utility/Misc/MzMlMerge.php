@@ -262,8 +262,8 @@ class MzMlMerge
         
         $isSpectrumList = false;
         // Local offsets
-        $indexOffset = $this->indexOffset;
-        $idOffset = $this->idOffset;
+        $localIndexOffset = $this->indexOffset;
+        $localIdOffset = $this->idOffset;
         
         while (! feof($reader)) {
             $line = fgets($reader);
@@ -283,14 +283,14 @@ class MzMlMerge
             
             if (preg_match('/<spectrum(?=.*(index="([0-9.]+)"))(?=.*(id=".*(scan=([0-9]+)).*?"))/', $line, $matches)) {
                 $index = $matches[2];
-                $index += $indexOffset;
+                $index += $localIndexOffset;
                 
                 if ($index > $this->indexOffset) {
                     $this->indexOffset = $index;
                 }
                 
                 $scan = $matches[5];
-                $scan += $idOffset;
+                $scan += $localIdOffset;
                 
                 if ($scan > $this->idOffset) {
                     $this->idOffset = $scan;

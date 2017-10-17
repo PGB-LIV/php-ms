@@ -104,12 +104,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     public function getAnalysisData()
     {
-        $results = $this->getSpectrumIdentificationList();
+        // TODO: This should link to getProteinDetectionList();
         
-        // TODO: This should link to:
-        // $results2 = $this->getProteinDetectionList();
-        
-        return $results;
+        return $this->getSpectrumIdentificationList();
     }
 
     private function getAnalysisParams()

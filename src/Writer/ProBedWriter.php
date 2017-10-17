@@ -20,6 +20,7 @@ use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 use pgb_liv\php_ms\Core\Identification;
+use pgb_liv\php_ms\Core\Peptide;
 
 class ProBedWriter
 {
@@ -153,26 +154,8 @@ class ProBedWriter
             // fdr
             fwrite($this->fileHandle, $identification->getScore('MS:1002356') . "\t");
             
-            $mods = array();
-            foreach ($peptide->getModifications() as $modification) {
-                $modStr = $modification->getLocation() . '-';
-                if (is_null($modification->getAccession())) {
-                    // Spec states mass value should be specified?
-                    $modStr = 'MS:1001460';
-                } else {
-                    $modStr .= $modification->getAccession();
-                }
-                
-                $mods[] = $modStr;
-            }
-            
-            $modStr = '.';
-            if (count($mods) > 0) {
-                $modStr = implode(',', $mods);
-            }
-            
             // modifications
-            fwrite($this->fileHandle, $modStr . "\t");
+            fwrite($this->fileHandle, $this->getModificationString() . "\t");
             
             // charge
             fwrite($this->fileHandle, $spectra->getCharge() . "\t");
@@ -196,6 +179,24 @@ class ProBedWriter
         }
     }
 
+    private function getModificationString(Peptide $peptide)
+    {
+        $mods = array();
+        foreach ($peptide->getModifications() as $modification) {
+            $modStr = $modification->getLocation() . '-';
+            if (is_null($modification->getAccession())) {
+                // Spec states mass value should be specified?
+                $modStr = 'MS:1001460';
+            } else {
+                $modStr .= $modification->getAccession();
+            }
+            
+            $mods[] = $modStr;
+        }
+        
+        return count($mods) > 0 ? implode(',', $mods) : '.';
+    }
+
     private function isValid(ProteinEntry $proteinEntry)
     {
         if (! is_a($proteinEntry, '\pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry')) {
@@ -203,13 +204,10 @@ class ProBedWriter
         }
         
         $protein = $proteinEntry->getProtein();
+        $chromosome = $protein->getChromosome();
         
         // Possible unmapped protein
-        if (is_null($protein->getChromosome())) {
-            return false;
-        }
-        
-        if (is_null($protein->getChromosome()->getGenomeReferenceVersion())) {
+        if (is_null($chromosome) || is_null($chromosome->getGenomeReferenceVersion())) {
             return false;
         }
         
