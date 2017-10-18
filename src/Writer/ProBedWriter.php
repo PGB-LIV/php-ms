@@ -37,12 +37,12 @@ class ProBedWriter
      * @param string $path
      *            The path to write data to
      */
-    public function __construct($path, $name)
+    public function __construct($path, $name, array $headers = array())
     {
         $this->fileHandle = fopen($path, 'w');
         $this->name = $name;
         
-        $this->writeHeader();
+        $this->writeHeader($headers);
     }
 
     public function write(PrecursorIon $spectra)
@@ -69,9 +69,14 @@ class ProBedWriter
         $this->close();
     }
 
-    private function writeHeader()
+    private function writeHeader(array $headers)
     {
         fwrite($this->fileHandle, '# proBed-version' . "\t" . '1.0' . PHP_EOL);
+        fwrite($this->fileHandle, '# Created on ' . date('r') . ' by phpMs' . PHP_EOL);
+        
+        foreach ($headers as $header) {
+            fwrite($this->fileHandle, '# '. $header . PHP_EOL);
+        }
     }
 
     private function writeIdentification(PrecursorIon $spectra, Identification $identification)
@@ -155,7 +160,7 @@ class ProBedWriter
             fwrite($this->fileHandle, $identification->getScore('MS:1002356') . "\t");
             
             // modifications
-            fwrite($this->fileHandle, $this->getModificationString() . "\t");
+            fwrite($this->fileHandle, $this->getModificationString($peptide) . "\t");
             
             // charge
             fwrite($this->fileHandle, $spectra->getCharge() . "\t");

@@ -21,49 +21,75 @@ use pgb_liv\php_ms\Reader\PxdInfo;
 class PxdInfoTest extends \PHPUnit_Framework_TestCase
 {
 
+    private $pxOffline = false;
+
     /**
      * @covers pgb_liv\php_ms\Reader\PxdInfo::__construct
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
-     * @group online
+     *       @group online
      */
     public function testObjectCanBeConstructedForValidConstructorArgumentsInt()
     {
-        $id = 100;
-        $info = new PxdInfo($id);
-        $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        if ($this->pxOffline) {
+            $this->markTestSkipped('The ProteomeExchange offline.');
+            return;
+        }
         
-        return $info;
+        $id = 100;
+        try {
+            $info = new PxdInfo($id);
+            $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        } catch (\Exception $e) {
+            $this->pxOffline = true;
+            $this->markTestSkipped('The ProteomeExchange offline.');
+        }
     }
 
     /**
      * @covers pgb_liv\php_ms\Reader\PxdInfo::__construct
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
-     * @group online
+     *       @group online
      */
     public function testObjectCanBeConstructedForValidConstructorArgumentsString()
     {
-        $id = 'PXD000100';
-        $info = new PxdInfo($id);
-        $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        if ($this->pxOffline) {
+            $this->markTestSkipped('The ProteomeExchange offline.');
+            return;
+        }
         
-        return $info;
+        $id = 'PXD000100';
+        try {
+            $info = new PxdInfo($id);
+            $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        } catch (\Exception $e) {
+            $this->pxOffline = true;
+            $this->markTestSkipped('The ProteomeExchange offline.');
+        }
     }
 
     /**
      * @covers pgb_liv\php_ms\Reader\PxdInfo::__construct
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
-     * @group online
+     *       @group online
      */
     public function testObjectCanBeConstructedForValidConstructorArgumentsStringInt()
     {
-        $id = '100';
-        $info = new PxdInfo($id);
-        $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        if ($this->pxOffline) {
+            $this->markTestSkipped('The ProteomeExchange offline.');
+            return;
+        }
         
-        return $info;
+        $id = '100';
+        try {
+            $info = new PxdInfo($id);
+            $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        } catch (\Exception $e) {
+            $this->pxOffline = true;
+            $this->markTestSkipped('The ProteomeExchange offline.');
+        }
     }
 
     /**
@@ -71,14 +97,22 @@ class PxdInfoTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Reader\PxdInfo
-     * @group online
+     *       @group online
      */
     public function testObjectCanBeConstructedForInvalidConstructorArguments()
     {
-        $id = 'fail';
-        $info = new PxdInfo($id);
-        $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        if ($this->pxOffline) {
+            $this->markTestSkipped('The ProteomeExchange offline.');
+            return;
+        }
         
-        return $info;
+        $id = 'fail';
+        try {
+            $info = new PxdInfo($id);
+            $this->assertInstanceOf('pgb_liv\php_ms\Reader\PxdInfo', $info);
+        } catch (\Exception $e) {
+            $this->pxOffline = true;
+            $this->markTestSkipped('The ProteomeExchange offline.');
+        }
     }
 }
