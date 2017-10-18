@@ -7,11 +7,25 @@ Requirements
 - PHP Version 5.4+
   - ext/libxml
 
-Installation
-------------
+Composer Installation
+---------------------
+
+phpMs  can be used with [Composer](https://getcomposer.org/) and is available on [Packagist](https://packagist.org/packages/pgb-liv/php-ms).
+
+    
+	"require" : {
+		  "pgb-liv/php-ms" : "dev-master"
+	},
+
+Git Installation
+----------------
+
+For non-composer users or phpMs developers, phpMs source can be pulled directly.
 
     git clone git://github.com/PGB-LIV/php-ms.git
     composer install
+
+The composer install will add any dependencies required to run tests.
 
 API Documentation
 -----------------
