@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2017 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ abstract class AbstractFragment
         $cTermMass = $this->getCTerminalMass();
         $nTermMass = $this->getNTerminalMass();
         
-        for ($i = 0; $i < $this->getLength(); $i ++) {
+        for ($i = $this->getStart(); $i < $this->getEnd(); $i ++) {
             $aa = $sequence[$i];
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
@@ -80,7 +80,7 @@ abstract class AbstractFragment
             
             // Add modification mass
             // Catch modification on position or residue
-            foreach ($this->peptide->getModifications() as $modification) {                
+            foreach ($this->peptide->getModifications() as $modification) {
                 // Check every position or residue
                 if ($modification->getLocation() === $i + 1 || in_array($aa, $modification->getResidues())) {
                     // Residue is modified
@@ -114,7 +114,7 @@ abstract class AbstractFragment
     protected function getCTerminalMass()
     {
         $mass = 0;
-        foreach ($this->peptide->getModifications() as $modification) {            
+        foreach ($this->peptide->getModifications() as $modification) {
             if ($modification->getLocation() === $this->peptide->getLength() + 1 ||
                  in_array(']', $modification->getResidues())) {
                 $mass += $modification->getMonoisotopicMass();
@@ -125,13 +125,23 @@ abstract class AbstractFragment
     }
 
     /**
-     * Gets the length of the fragment chain
+     * Gets the end position of the detectable fragments
      *
      * @return int
      */
-    protected function getLength()
+    protected function getEnd()
     {
         return $this->peptide->getLength();
+    }
+
+    /**
+     * Gets the start position of the detectable fragments
+     *
+     * @return int
+     */
+    protected function getStart()
+    {
+        return 0;
     }
 
     /**

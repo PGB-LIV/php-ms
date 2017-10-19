@@ -19,11 +19,11 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
- * Generates the C ions from a peptide
+ * Generates the X ions from a peptide
  *
  * @author Andrew Collins
  */
-class CFragment extends AbstractFragment
+class XFragment extends AbstractFragmentReverse
 {
 
     /**
@@ -34,18 +34,18 @@ class CFragment extends AbstractFragment
      */
     protected function getAdditiveMass()
     {
-        return Peptide::N_TERM_MASS + Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS +
-             Peptide::PROTON_MASS;
+        // CTerm + CO-H
+        return (Peptide::C_TERM_MASS + 12 + Peptide::OXYGEN_MASS + Peptide::PROTON_MASS) - Peptide::HYDROGEN_MASS;
     }
 
     /**
      *
      * {@inheritdoc}
      *
-     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getEnd()
+     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart()
      */
-    protected function getEnd()
+    protected function getStart()
     {
-        return parent::getEnd() - 1;
+        return 1;
     }
 }

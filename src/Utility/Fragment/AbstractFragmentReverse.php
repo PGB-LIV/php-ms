@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2017 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,9 @@ abstract class AbstractFragmentReverse extends AbstractFragment
     }
 
     /**
-     * 
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
+     *
      * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons()
      */
     public function getIons()
@@ -48,12 +49,12 @@ abstract class AbstractFragmentReverse extends AbstractFragment
         $cTermMass = $this->getCTerminalMass();
         $nTermMass = $this->getNTerminalMass();
         
-        for ($i = $this->getLength() - 1; $i >= 0; $i --) {
+        for ($i = $this->getEnd() - 1; $i >= $this->getStart(); $i --) {
             $aa = $sequence[$i];
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
             // Add mass
-            if ($i == $this->getLength() - 1) {
+            if ($i == $this->getEnd() - 1) {
                 $mass += $this->getAdditiveMass();
                 $mass += $cTermMass;
             }
@@ -73,7 +74,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment
             }
             
             $sum += $mass;
-            $ions[$this->getLength() - $i] = $sum;
+            $ions[$this->getEnd() - $i] = $sum;
         }
         
         return $ions;
