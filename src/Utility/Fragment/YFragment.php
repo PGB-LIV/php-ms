@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2017 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class YFragment extends AbstractFragmentReverse
+class YFragment extends AbstractFragmentReverse implements FragmentInterface
 {
 
     /**

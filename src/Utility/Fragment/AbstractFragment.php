@@ -24,7 +24,7 @@ use pgb_liv\php_ms\Core\AminoAcidMono;
  *
  * @author Andrew Collins
  */
-abstract class AbstractFragment
+abstract class AbstractFragment implements FragmentInterface
 {
 
     /**
@@ -54,9 +54,10 @@ abstract class AbstractFragment
     }
 
     /**
-     * Gets the fragmentation ions for this instances peptide sequence
      *
-     * @return number[]
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Reader\FragmentInterface::getIons()
      */
     public function getIons()
     {
@@ -157,9 +158,10 @@ abstract class AbstractFragment
     }
 
     /**
-     * Gets the direction ions should be read
      *
-     * @return boolean
+     * {@inheritdoc}
+     *
+     * @see \pgb_liv\php_ms\Reader\FragmentInterface::isReversed()
      */
     public function isReversed()
     {

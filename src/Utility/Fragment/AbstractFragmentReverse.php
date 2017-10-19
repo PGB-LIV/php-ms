@@ -24,7 +24,7 @@ use pgb_liv\php_ms\Core\AminoAcidMono;
  *
  * @author Andrew Collins
  */
-abstract class AbstractFragmentReverse extends AbstractFragment
+abstract class AbstractFragmentReverse extends AbstractFragment implements FragmentInterface
 {
 
     public function __construct(Peptide $peptide)

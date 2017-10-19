@@ -23,7 +23,7 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class AFragment extends AbstractFragment
+class AFragment extends AbstractFragment implements FragmentInterface
 {
 
     /**

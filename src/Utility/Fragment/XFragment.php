@@ -23,7 +23,7 @@ use pgb_liv\php_ms\Core\Peptide;
  *
  * @author Andrew Collins
  */
-class XFragment extends AbstractFragmentReverse
+class XFragment extends AbstractFragmentReverse implements FragmentInterface
 {
 
     /**
