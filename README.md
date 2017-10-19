@@ -5,7 +5,7 @@ PHP Mass Spectrometry utility classes
 Requirements
 ------------
 - PHP Version 5.4+
-  - ext/libxml
+  - ext/xsl
 
 Composer Installation
 ---------------------
