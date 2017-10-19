@@ -92,7 +92,7 @@ class FilterMass extends AbstractFilter
     public function isValidPeptide(Peptide $peptide)
     {
         // Mass is calculated at request so must be cached
-        $mass = $peptide->getMass();
+        $mass = $peptide->getMonoisotopicMass();
         
         if (! is_null($this->minMass) && $mass < $this->minMass) {
             return false;

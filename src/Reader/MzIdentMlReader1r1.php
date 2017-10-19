@@ -105,7 +105,6 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     public function getAnalysisData()
     {
         // TODO: This should link to getProteinDetectionList();
-        
         return $this->getSpectrumIdentificationList();
     }
 
@@ -186,7 +185,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             
             switch ($cvParam[MzIdentMlReader1r1::CV_ACCESSION]) {
                 case 'MS:1001088':
-                    $protein->setDescription($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                    if (isset($cvParam[MzIdentMlReader1r1::CV_VALUE])) {
+                        $protein->setDescription($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+                    }
                     break;
                 case 'MS:1002637':
                     // Chromosome Name
@@ -438,7 +439,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001460') {
             // Unknown modification
-            $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+            if (isset($cvParam[MzIdentMlReader1r1::CV_VALUE])) {
+                $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+            } else {
+                $modification->setName('Unknown Modification');
+            }
         } else {
             // Known modification
             $modification->setAccession($cvParam[MzIdentMlReader1r1::CV_ACCESSION]);
@@ -639,8 +644,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      */
     public function getProteinDetectionList()
     {
-        $peptideCollection= $this->getSequenceCollection();
-        $proteinCollection = $this->getSequenceCollectionProteins();
+        $this->getSequenceCollection();
         
         $groups = array();
         
@@ -653,10 +657,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $groupId = (string) $proteinAmbiguityGroup->attributes()->id;
             // Reprocess each group to change refs to element
             foreach ($group as $id => $value) {
-                $group[$id]['protein'] = $proteinCollection[$value['protein']];
+                $group[$id]['protein'] = $this->proteins[$value['protein']];
                 
                 foreach ($value['peptides'] as $pepId => $peptide) {
-                    $group[$id]['peptides'][$pepId] = $peptideCollection[$peptide['peptide']];
+                    $group[$id]['peptides'][$pepId] = $this->peptides[$this->evidence[$peptide['peptide']]['peptide']];
                 }
             }
             
@@ -758,7 +762,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $cvParam = $this->getCvParam($xml->cvParam);
         
         if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001460') {
-            $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+            // Unknown modification
+            if (isset($cvParam[MzIdentMlReader1r1::CV_VALUE])) {
+                $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
+            } else {
+                $modification->setName('Unknown Modification');
+            }
         } else {
             $modification->setName($cvParam[MzIdentMlReader1r1::CV_NAME]);
         }

@@ -43,6 +43,7 @@ class FilterLength extends AbstractFilter
 
     public function __construct($minLength, $maxLength)
     {
+        // TODO: Add validation
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
     }

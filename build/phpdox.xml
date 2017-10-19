@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE xml>
 <phpdox xmlns="http://xml.phpdox.net/config">
- <project name="php-ms" source="src" workdir="build/phpdox">
-   <collector backend="parser">
-    <exclude mask="**/vendor*" />   
-   </collector>
-    <generator output="build/api">
-      <enrich base="build/logs">
-        <source type="build" />
-        <source type="git">
-          <history enabled="true" limit="15" />
-        </source>
-        <source type="phploc" />
-        <source type="pmd" />
-        <source type="checkstyle" />
-        <source type="phpunit">
-          <coverage path="coverage/xml" />
-        </source>
-      </enrich>
-      <build engine="html" output="html"/>
-    </generator>
- </project>
+	<project name="phpMs" source="src" workdir="build/phpdox">
+		<collector backend="parser">
+			<exclude mask="**/vendor*" />
+		</collector>
+		<generator output="build/api">
+			<enrich base="build/logs">
+				<source type="build" />
+				<source type="git">
+					<history enabled="true" limit="15" />
+				</source>
+				<source type="phploc" />
+				<source type="pmd" />
+				<source type="checkstyle" />
+				<source type="phpunit">
+					<coverage path="coverage/xml" />
+				</source>
+			</enrich>
+			<build engine="html" output="html" />
+		</generator>
+	</project>
 </phpdox>
