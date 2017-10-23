@@ -23,6 +23,7 @@ use pgb_liv\php_ms\Utility\Fragment\CFragment;
 use pgb_liv\php_ms\Utility\Fragment\ZFragment;
 use pgb_liv\php_ms\Utility\Fragment\AFragment;
 use pgb_liv\php_ms\Utility\Fragment\XFragment;
+use pgb_liv\php_ms\Core\Modification;
 
 class FragmentTest extends \PHPUnit_Framework_TestCase
 {
@@ -284,5 +285,107 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertTrue($fragment->isReversed());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getEnd
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
+     * @covers pgb_liv\php_ms\Utility\Fragment\BFragment::getAdditiveMass
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\BFragment
+     *       @group fragment
+     */
+    public function testObjectCanGetModifiedIonsB()
+    {
+        $expected = array();
+        $expected[1] = 114.96009;
+        $expected[2] = 323.97268;
+        $expected[3] = 421.02544;
+        $expected[4] = 522.07312;
+        $expected[5] = 635.15718;
+        $expected[6] = 750.18413;
+        $expected[7] = 1004.29672;
+        
+        $peptide = new Peptide('PEPTIDE');
+        $nterm = new Modification();
+        $nterm->setLocation(0);
+        $nterm->setMonoisotopicMass(16.9);
+        $peptide->addModification($nterm);
+        
+        $cterm = new Modification();
+        $cterm->setLocation($peptide->getLength() + 1);
+        $cterm->setMonoisotopicMass(45.1);
+        $peptide->addModification($cterm);
+        
+        $phospho = new Modification();
+        $phospho->setResidues(array(
+            'E'
+        ));
+        $phospho->setMonoisotopicMass(79.97);
+        $peptide->addModification($phospho);
+        
+        $fragment = new BFragment($peptide);
+        
+        $ions = $fragment->getIons();
+        
+        $this->assertEquals($expected, $ions, null, 0.00001);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getEnd
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
+     * @covers pgb_liv\php_ms\Utility\Fragment\YFragment::getAdditiveMass
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\YFragment
+     *       @group fragment
+     */
+    public function testObjectCanGetModifiedIonsY()
+    {
+        $expected = array();
+        $expected[1] = 1022.30728;
+        $expected[2] = 908.35452;
+        $expected[3] = 699.34193;
+        $expected[4] = 602.28916;
+        $expected[5] = 501.24149;
+        $expected[6] = 388.15742;
+        $expected[7] = 273.13048;
+        
+        $peptide = new Peptide('PEPTIDE');
+        $nterm = new Modification();
+        $nterm->setLocation(0);
+        $nterm->setMonoisotopicMass(16.9);
+        $peptide->addModification($nterm);
+        
+        $cterm = new Modification();
+        $cterm->setLocation($peptide->getLength() + 1);
+        $cterm->setMonoisotopicMass(45.1);
+        $peptide->addModification($cterm);
+        
+        $phospho = new Modification();
+        $phospho->setResidues(array(
+            'E'
+        ));
+        $phospho->setMonoisotopicMass(79.97);
+        $peptide->addModification($phospho);
+        
+        $fragment = new YFragment($peptide);
+        
+        $ions = $fragment->getIons();
+        
+        $this->assertEquals($expected, $ions, null, 0.00001);
     }
 }
