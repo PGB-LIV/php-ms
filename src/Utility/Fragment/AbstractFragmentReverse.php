@@ -49,12 +49,12 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
         $cTermMass = $this->getCTerminalMass();
         $nTermMass = $this->getNTerminalMass();
         
-        for ($i = $this->getEnd() - 1; $i >= $this->getStart(); $i --) {
-            $aa = $sequence[$i];
+        for ($i = $this->getEnd(); $i > $this->getStart(); $i --) {
+            $aa = $sequence[$i - 1];
             $mass = AminoAcidMono::getMonoisotopicMass($aa);
             
             // Add mass
-            if ($i == $this->getEnd() - 1) {
+            if ($i == $this->getEnd()) {
                 $mass += $this->getAdditiveMass();
                 $mass += $cTermMass;
             }
@@ -63,18 +63,18 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
             // Catch modification on position or residue
             foreach ($this->peptide->getModifications() as $modification) {
                 // Check every position or residue
-                if ($modification->getLocation() === $i + 1 || in_array($aa, $modification->getResidues())) {
+                if ($modification->getLocation() === $i || in_array($aa, $modification->getResidues())) {
                     // Residue is modified
                     $mass += $modification->getMonoisotopicMass();
                 }
             }
             
-            if ($i == 0) {
+            if ($i == 1) {
                 $mass += $nTermMass;
             }
             
             $sum += $mass;
-            $ions[$this->getEnd() - $i] = $sum;
+            $ions[$i] = $sum;
         }
         
         return $ions;

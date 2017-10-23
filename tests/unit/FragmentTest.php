@@ -78,13 +78,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsA()
     {
         $expected = array();
-        $expected[1] = 70.06517;
-        $expected[2] = 199.10776;
-        $expected[3] = 296.16053;
-        $expected[4] = 397.20821;
-        $expected[5] = 510.29227;
-        $expected[6] = 625.31921;
-        $expected[7] = 754.36180;
+        $expected[1] = 70.065175;
+        $expected[2] = 199.107768;
+        $expected[3] = 296.160532;
+        $expected[4] = 397.208211;
+        $expected[5] = 510.292275;
+        $expected[6] = 625.319218;
+        $expected[7] = 754.361811;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -228,13 +228,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsY()
     {
         $expected = array();
-        $expected[1] = 148.06048;
-        $expected[2] = 263.08742;
-        $expected[3] = 376.17149;
+        $expected[1] = 800.36728;
+        $expected[2] = 703.31452;
+        $expected[3] = 574.27193;
         $expected[4] = 477.21916;
-        $expected[5] = 574.27193;
-        $expected[6] = 703.31452;
-        $expected[7] = 800.36728;
+        $expected[5] = 376.17149;
+        $expected[6] = 263.08742;
+        $expected[7] = 148.06048;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -268,13 +268,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsZ()
     {
         $expected = array();
-        $expected[1] = 131.03503;
-        $expected[2] = 246.06197;
-        $expected[3] = 359.14603;
+        $expected[1] = 783.34183;
+        $expected[2] = 686.28907;
+        $expected[3] = 557.24648;
         $expected[4] = 460.19371;
-        $expected[5] = 557.24648;
-        $expected[6] = 686.28907;
-        $expected[7] = 783.34183;
+        $expected[5] = 359.14603;
+        $expected[6] = 246.06197;
+        $expected[7] = 131.03503;
         
         $peptide = new Peptide('PEPTIDE');
         
