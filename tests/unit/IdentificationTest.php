@@ -91,7 +91,7 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
         
         $identification->getScore('pValue');
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Core\Identification::setIonsMatched
      * @covers pgb_liv\php_ms\Core\Identification::getIonsMatched
@@ -106,7 +106,7 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($ionsMatched, $identification->getIonsMatched());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Core\Identification::setIonsMatched
      * @expectedException InvalidArgumentException
@@ -118,5 +118,33 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
         $ionsMatched = 'fail';
         $identification = new Identification();
         $identification->setIonsMatched($ionsMatched);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Identification::setRank
+     * @covers pgb_liv\php_ms\Core\Identification::getRank
+     *
+     * @uses pgb_liv\php_ms\Core\Identification
+     */
+    public function testCanGetSetRankValid()
+    {
+        $rank = 1;
+        $identification = new Identification();
+        $identification->setRank($ionsMatched);
+        
+        $this->assertEquals($ionsMatched, $identification->getIonsMatched());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Identification::setRank
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Identification
+     */
+    public function testCanGetSetRankInvalid()
+    {
+        $ionsMatched = 'fail';
+        $identification = new Identification();
+        $identification->setRank($ionsMatched);
     }
 }

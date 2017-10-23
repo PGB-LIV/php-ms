@@ -157,6 +157,11 @@ class Identification
      */
     public function setRank($rank)
     {
+        if (! is_int($rank)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be an int value. Valued passed is of type ' . gettype($rank));
+        }
+        
         $this->rank = $rank;
     }
 

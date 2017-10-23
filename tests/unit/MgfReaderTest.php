@@ -84,6 +84,8 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\MgfReader::parseMeta
+     * @covers pgb_liv\php_ms\Reader\MgfReader::parseFragments
      *
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
@@ -113,6 +115,8 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\MgfReader::peekLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::getLine
      * @covers pgb_liv\php_ms\Reader\MgfReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\MgfReader::parseMeta
+     * @covers pgb_liv\php_ms\Reader\MgfReader::parseFragments
      *
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
