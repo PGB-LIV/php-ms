@@ -27,6 +27,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
      *
+     * @group online
      * @uses pgb_liv\php_ms\Search\MsgfPlusSearch
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -44,6 +45,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::appendArgument
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::executeCommand
      *
+     * @group online
      * @uses pgb_liv\php_ms\Search\MsgfPlusSearch
      */
     public function testCanSubmitValidJob()
@@ -68,6 +70,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::appendArgument
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::executeCommand
      *
+     * @group online
      * @uses pgb_liv\php_ms\Search\MsgfPlusSearch
      */
     public function testCanSubmitValidJobWithMods()

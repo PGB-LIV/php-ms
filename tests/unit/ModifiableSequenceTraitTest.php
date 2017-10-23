@@ -30,7 +30,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
      */
-    public function testCanValidiateGetSetSequence()
+    public function testCanValidiateGetSetVlidSequence()
     {
         $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
         
@@ -41,7 +41,28 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($sequence, $mock->getSequence());
         $this->assertEquals(strlen($sequence), $mock->getLength());
     }
-    
+
+    /**
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getLength
+     *
+     * @expectedException InvalidArgumentException
+     * 
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanValidiateGetSetInvalidSequence()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+        
+        $sequence = 'PEPT134IDE';
+        
+        $mock->setSequence($sequence);
+        
+        $this->assertEquals($sequence, $mock->getSequence());
+        $this->assertEquals(strlen($sequence), $mock->getLength());
+    }
+
     /**
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setIsDecoy
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::isDecoy
@@ -56,7 +77,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         
         $this->assertTrue($mock->isDecoy());
     }
-    
+
     /**
      * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setIsDecoy
      * @expectedException InvalidArgumentException
@@ -110,6 +131,105 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
         $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModification
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanGetModifiedMass1()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+        
+        $sequence = 'PEPTIDE';
+        $mock->setSequence($sequence);
+        $mass = 799.3599;
+        
+        $modificiation = new Modification();
+        $modificiation->setMonoisotopicMass(79.97);
+        $modificiation->setLocation(4);
+        
+        $mock->addModification($modificiation);
+        $mass += $modificiation->getMonoisotopicMass();
+        
+        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
+        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModification
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanGetModifiedMass2()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+        
+        $sequence = 'PEPTIDE';
+        $mock->setSequence($sequence);
+        $mass = 799.3599;
+        
+        $modificiation = new Modification();
+        $modificiation->setMonoisotopicMass(79.97);
+        $modificiation->setResidues(array('E'));
+        
+        $mock->addModification($modificiation);
+        $mass += $modificiation->getMonoisotopicMass() * 2;
+        
+        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
+        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModification
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanGetModifiedMass3()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+        
+        $sequence = 'PEPTIDE';
+        $mock->setSequence($sequence);
+        $mass = 799.3599;
+        
+        $modificiation = new Modification();
+        $modificiation->setMonoisotopicMass(79.97);
+        $modificiation->setResidues(array('['));
+        
+        $mock->addModification($modificiation);
+        $mass += $modificiation->getMonoisotopicMass();
+        
+        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
+        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
+    }
+    
+    /**
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMassCharge
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanGetMassCharge()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+        
+        $sequence = 'PEPTIDE';
+        $mock->setSequence($sequence);
+        $mz = 267.46064;
+        
+        $this->assertEquals($mz, $mock->getMonoisotopicMassCharge(3), '', 0.0001);
     }
 
     /**

@@ -55,7 +55,7 @@ trait ProteinTrait
             $entry->setEnd($end);
         }
         
-        $this->proteins[] = $entry;
+        $this->addProteinEntry($entry);
     }
 
     /**

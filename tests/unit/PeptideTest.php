@@ -85,6 +85,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers pgb_liv\php_ms\Core\Peptide::getProteins
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
+     * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
      *
      * @uses pgb_liv\php_ms\Core\Peptide
      */
@@ -94,6 +95,40 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $peptide = new Peptide($sequence);
         $peptide->addProtein($protein);
+        
+        $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Peptide::getProteins
+     * @covers pgb_liv\php_ms\Core\Peptide::addProtein
+     * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     */
+    public function testCanGetAddProteinStartValid()
+    {
+        $sequence = 'PEPTIDE';
+        $protein = new Protein();
+        $peptide = new Peptide($sequence);
+        $peptide->addProtein($protein, 12);
+        
+        $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Peptide::getProteins
+     * @covers pgb_liv\php_ms\Core\Peptide::addProtein
+     * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     */
+    public function testCanGetAddProteinEndValid()
+    {
+        $sequence = 'PEPTIDE';
+        $protein = new Protein();
+        $peptide = new Peptide($sequence);
+        $peptide->addProtein($protein, 12, 20);
         
         $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
     }
