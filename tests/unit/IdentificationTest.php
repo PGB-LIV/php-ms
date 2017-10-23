@@ -132,7 +132,7 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
         $identification = new Identification();
         $identification->setRank($rank);
         
-        $this->assertEquals($rank, $identification->getIonsMatched());
+        $this->assertEquals($rank, $identification->getRank());
     }
 
     /**
