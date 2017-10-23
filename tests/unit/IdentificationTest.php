@@ -130,9 +130,9 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
     {
         $rank = 1;
         $identification = new Identification();
-        $identification->setRank($ionsMatched);
+        $identification->setRank($rank);
         
-        $this->assertEquals($ionsMatched, $identification->getIonsMatched());
+        $this->assertEquals($rank, $identification->getIonsMatched());
     }
 
     /**
@@ -143,8 +143,8 @@ class IdentificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanGetSetRankInvalid()
     {
-        $ionsMatched = 'fail';
+        $rank = 'fail';
         $identification = new Identification();
-        $identification->setRank($ionsMatched);
+        $identification->setRank($rank);
     }
 }
