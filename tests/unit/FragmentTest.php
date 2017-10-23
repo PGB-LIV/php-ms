@@ -183,10 +183,10 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragment
      * @uses pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse
-     * @uses pgb_liv\php_ms\Utility\Fragment\YFragment
+     * @uses pgb_liv\php_ms\Utility\Fragment\XFragment
      *       @group fragment
      */
-    public function testObjectCanGetIonsY()
+    public function testObjectCanGetIonsX()
     {
         $expected = array();
         $expected[2] = 729.29378;
