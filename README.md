@@ -1,6 +1,15 @@
+
+
 phpMs
 =====
-PHP Mass Spectrometry utility classes
+phpMs is PHP-based free open-source library for proteomics. The library contains a core set of classes for storing common data such as spectra, peptides and proteins. In addition the library contains a number of readers and/or writers for common file formats, including MGF, FASTA, mzIdentML, proBed. The library also contains a number of useful utiltities for performing protein digestion, peptide fragmentation, and search engine intergration.
+
+![Build Status](http://pgb.liv.ac.uk/ci/phpMs/badge/build_status.svg)
+![Quality Gate](http://pgb.liv.ac.uk/ci/phpMs/badge/gate.svg)
+
+![Test Success](http://pgb.liv.ac.uk/ci/phpMs/badge/test_success_density.svg)
+![Unit Test Coverage](http://pgb.liv.ac.uk/ci/phpMs/badge/coverage.svg)
+![SQALE Debt Ratio](http://pgb.liv.ac.uk/ci/phpMs/badge/sqale_debt_ratio.svg)
 
 Requirements
 ------------
