@@ -24,6 +24,7 @@ use pgb_liv\php_ms\Utility\Fragment\ZFragment;
 use pgb_liv\php_ms\Utility\Fragment\AFragment;
 use pgb_liv\php_ms\Utility\Fragment\XFragment;
 use pgb_liv\php_ms\Core\Modification;
+use pgb_liv\php_ms\Utility\Fragment\FragmentFactory;
 
 class FragmentTest extends \PHPUnit_Framework_TestCase
 {
@@ -387,5 +388,173 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $ions = $fragment->getIons();
         
         $this->assertEquals($expected, $ions, null, 0.00001);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getFragmentMethods
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetFragmentMethods()
+    {
+        $methods = FragmentFactory::getFragmentMethods();
+        
+        \PHPUnit_Framework_TestCase::assertAttributeEquals($methods, 'methods', 
+            'pgb_liv\php_ms\Utility\Fragment\FragmentFactory');
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodCID()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('CID', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $types['Y']);
+        $this->assertEquals(2, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodHCD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('HCD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $types['Y']);
+        $this->assertEquals(2, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodECD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('ECD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\CFragment', $types['C']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\ZFragment', $types['Z']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
+        $this->assertEquals(3, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodETD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('ETD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\CFragment', $types['C']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\ZFragment', $types['Z']);
+        $this->assertEquals(2, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodCTD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('CTD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\AFragment', $types['A']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\XFragment', $types['X']);
+        $this->assertEquals(2, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodEDD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('EDD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\AFragment', $types['A']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\XFragment', $types['X']);
+        $this->assertEquals(2, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodNETD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('NETD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\AFragment', $types['A']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\XFragment', $types['X']);
+        $this->assertEquals(2, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodEThcD()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('EThcD', $peptide);
+        
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $types['Y']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\CFragment', $types['C']);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\ZFragment', $types['Z']);
+        $this->assertEquals(4, count($types));
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
+     *
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
+     *       @group fragment
+     */
+    public function testObjectCanGetMethodUnknown()
+    {
+        $peptide = new Peptide('PEPTIDE');
+        
+        $types = FragmentFactory::getMethodFragments('MyUnknownMethod', $peptide);
     }
 }

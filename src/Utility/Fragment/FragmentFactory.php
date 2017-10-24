@@ -26,6 +26,11 @@ use pgb_liv\php_ms\Core\Peptide;
 class FragmentFactory
 {
 
+    /**
+     * List of all methods currently supported
+     *
+     * @var string[]
+     */
     private static $methods = array(
         'CID',
         'HCD',
@@ -82,6 +87,8 @@ class FragmentFactory
                 $fragmentTypes['C'] = new CFragment($peptide);
                 $fragmentTypes['Z'] = new ZFragment($peptide);
                 break;
+            default:
+                throw new \InvalidArgumentException('Unknown fragmentation method type "' . $method . '"');
         }
         
         return $fragmentTypes;

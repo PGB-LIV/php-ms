@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Core\Chromosome;
 
 class ProteinTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,6 +34,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::getName
      * @covers pgb_liv\php_ms\Core\Protein::getProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::getSequenceVersion
+     * @covers pgb_liv\php_ms\Core\Protein::getChromosome
      * @covers pgb_liv\php_ms\Core\Protein::setUniqueIdentifier
      * @covers pgb_liv\php_ms\Core\Protein::setDescription
      * @covers pgb_liv\php_ms\Core\Protein::setSequence
@@ -45,6 +47,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Protein::setProteinExistence
      * @covers pgb_liv\php_ms\Core\Protein::setSequenceVersion
      * @covers pgb_liv\php_ms\Core\Protein::reverseSequence
+     * @covers pgb_liv\php_ms\Core\Protein::setChromosome
      *
      * @uses pgb_liv\php_ms\Core\Protein
      */
@@ -60,6 +63,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $geneName = 'SFN';
         $pe = 1;
         $sv = 1;
+        $chromosome = new Chromosome();
         
         $description = $proteinName . ' OS=' . $organism . ' GN=' . $geneName . ' PE=' . $pe . ' SV=' . $sv;
         $sequence = 'MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWRVLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFYLKMKGDYYRYLAEVATGDDKKRIIDSARSAYQEAMDISKKEMPPTNPIRLGLALNFSVFHYEIANSPEEAISLAKTTFDEAMADLHTLSEDSYKDSTLIMQLLRDNLTLWTADNAGEEGGEAPQEPQS';
@@ -77,6 +81,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $protein->setGeneName($geneName);
         $protein->setProteinExistence($pe);
         $protein->setSequenceVersion($sv);
+        $protein->setChromosome($chromosome);
         
         $this->assertEquals($identifier, $protein->getUniqueIdentifier());
         $this->assertEquals($description, $protein->getDescription());
@@ -91,6 +96,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($geneName, $protein->getGeneName());
         $this->assertEquals($pe, $protein->getProteinExistence());
         $this->assertEquals($sv, $protein->getSequenceVersion());
+        $this->assertEquals($chromosome, $protein->getChromosome());
         
         $protein->reverseSequence();
         $this->assertEquals(strrev($sequence), $protein->getSequence());
