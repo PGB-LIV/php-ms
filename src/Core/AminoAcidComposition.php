@@ -76,15 +76,15 @@ class AminoAcidComposition
     {
         $formula = @constant('pgb_liv\php_ms\Core\AminoAcidComposition::' . $acid);
         
-        if (is_null($formula)) {
-            if (strlen($acid) > 1) {
-                throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
-            } else {
-                throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
-            }
+        if (! is_null($formula)) {
+            return $formula;
         }
         
-        return $formula;
+        if (strlen($acid) > 1) {
+            throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
+        }
+        
+        throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
     }
 
     /**
@@ -99,6 +99,6 @@ class AminoAcidComposition
     {
         $acidUp = strtoupper($acid);
         
-        return AminoAcidComposition::getFormula($acidUp);
+        return self::getFormula($acidUp);
     }
 }

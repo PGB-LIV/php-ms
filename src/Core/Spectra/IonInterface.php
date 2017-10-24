@@ -43,11 +43,11 @@ interface IonInterface
     /**
      * Sets the mass-to-charge ratio for this ion
      *
-     * @param float $mz
+     * @param float $massCharge
      *            The mass-to-charge ratio to set to
      * @throws \InvalidArgumentException If $mz is not a valid floating point value
      */
-    public function setMassCharge($mz);
+    public function setMassCharge($massCharge);
 
     /**
      * Gets the mass-to-charge ratio for this ion

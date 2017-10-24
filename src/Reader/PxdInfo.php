@@ -25,7 +25,7 @@ class PxdInfo
 
     const INFO_PATH = 'http://proteomecentral.proteomexchange.org/cgi/GetDataset?ID=%s&outputMode=XML&test=no';
 
-    private $id;
+    private $identifier;
 
     private $fileList = array();
 
@@ -35,12 +35,12 @@ class PxdInfo
      * @param string $id
      *            Identifier must be specified as either "PXD###" or as an integer
      */
-    public function __construct($id)
+    public function __construct($identifier)
     {
-        if (stripos($id, 'PXD') === 0) {
-            $this->id = (int) substr($id, 3);
-        } elseif (is_numeric($id) && (int) $id == $id) {
-            $this->id = (int) $id;
+        if (stripos($identifier, 'PXD') === 0) {
+            $this->identifier = (int) substr($identifier, 3);
+        } elseif (is_numeric($identifier) && (int) $identifier == $identifier) {
+            $this->identifier= (int) $identifier;
         } else {
             throw new \InvalidArgumentException('Identifier must be either an integer or PXD#### string');
         }
@@ -50,7 +50,7 @@ class PxdInfo
 
     private function parseInfo()
     {
-        $url = sprintf(PxdInfo::INFO_PATH, $this->id);
+        $url = sprintf(PxdInfo::INFO_PATH, $this->identifier);
         
         $schema = new \SimpleXMLElement($url, null, true);
         

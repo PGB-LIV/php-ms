@@ -116,13 +116,12 @@ class FastaReader implements \Iterator
      */
     private function getLine()
     {
-        $ret = null;
-        if ($this->filePeek != null) {
-            $ret = $this->filePeek;
-            $this->filePeek = null;
-        } else {
-            $ret = fgets($this->fileHandle);
+        if ($this->filePeek == null) {
+            return fgets($this->fileHandle);
         }
+        
+        $ret = $this->filePeek;
+        $this->filePeek = null;
         
         return $ret;
     }
@@ -177,7 +176,7 @@ class FastaReader implements \Iterator
         }
         
         if ($this->format == null) {
-            if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description, $matches)) {
+            if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description)) {
                 $this->format = new UniprotFastaEntry();
             } else {
                 $this->format = new DefaultFastaEntry();

@@ -188,16 +188,17 @@ trait ModifiableSequenceTrait
         foreach ($this->getModifications() as $modification) {
             if (! is_null($modification->getLocation())) {
                 $mass += $modification->getMonoisotopicMass();
-            } else {
-                foreach ($acids as $acid) {
-                    if (in_array($acid, $modification->getResidues())) {
-                        $mass += $modification->getMonoisotopicMass();
-                    }
-                }
-                
-                if (in_array('[', $modification->getResidues()) || in_array(']', $modification->getResidues())) {
+                continue;
+            }
+            
+            foreach ($acids as $acid) {
+                if (in_array($acid, $modification->getResidues())) {
                     $mass += $modification->getMonoisotopicMass();
                 }
+            }
+            
+            if (in_array('[', $modification->getResidues()) || in_array(']', $modification->getResidues())) {
+                $mass += $modification->getMonoisotopicMass();
             }
         }
         
@@ -213,10 +214,10 @@ trait ModifiableSequenceTrait
      */
     public function getMonoisotopicMassCharge($charge)
     {
-        $mz = $this->getMonoisotopicMass();
+        $massCharge = $this->getMonoisotopicMass();
         // TODO: Should use same Proton mass constant as IonTrait
-        $mz += 1.007276466812 * $charge;
+        $massCharge += 1.007276466812 * $charge;
         
-        return $mz / $charge;
+        return $massCharge / $charge;
     }
 }

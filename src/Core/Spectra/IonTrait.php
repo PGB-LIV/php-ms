@@ -92,17 +92,17 @@ trait IonTrait
     /**
      * Sets the mass-to-charge ratio for this ion
      *
-     * @param float $mz
+     * @param float $massCharge
      *            The mass-to-charge ratio to set to
      * @throws \InvalidArgumentException If $mz is not a valid floating point value
      */
-    public function setMassCharge($mz)
+    public function setMassCharge($massCharge)
     {
-        if (! is_float($mz)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($mz));
+        if (! is_float($massCharge)) {
+            throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($massCharge));
         }
         
-        $this->massCharge = $mz;
+        $this->massCharge = $massCharge;
     }
 
     /**

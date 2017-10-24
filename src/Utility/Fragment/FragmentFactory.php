@@ -44,7 +44,7 @@ class FragmentFactory
 
     public static function getFragmentMethods()
     {
-        return FragmentFactory::$methods;
+        return self::$methods;
     }
 
     /**

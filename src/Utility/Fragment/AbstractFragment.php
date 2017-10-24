@@ -70,8 +70,8 @@ abstract class AbstractFragment implements FragmentInterface
         $nTermMass = $this->getNTerminalMass();
         
         for ($i = $this->getStart(); $i < $this->getEnd(); $i ++) {
-            $aa = $sequence[$i];
-            $mass = AminoAcidMono::getMonoisotopicMass($aa);
+            $residue = $sequence[$i];
+            $mass = AminoAcidMono::getMonoisotopicMass($residue);
             
             // Add mass
             if ($i == 0) {
@@ -83,7 +83,7 @@ abstract class AbstractFragment implements FragmentInterface
             // Catch modification on position or residue
             foreach ($this->peptide->getModifications() as $modification) {
                 // Check every position or residue
-                if ($modification->getLocation() === $i + 1 || in_array($aa, $modification->getResidues())) {
+                if ($modification->getLocation() === $i + 1 || in_array($residue, $modification->getResidues())) {
                     // Residue is modified
                     $mass += $modification->getMonoisotopicMass();
                 }

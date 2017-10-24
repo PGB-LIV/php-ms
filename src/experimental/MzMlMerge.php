@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Misc;
+namespace pgb_liv\php_ms\experimental;
 
 /**
  * Performs the merging of two or more MzML files into a single MzML file.

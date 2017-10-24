@@ -137,7 +137,7 @@
 			<arg value="text" />
 			<arg path="${basedir}/build/phpmd.xml" />
 			<arg value="--exclude" />
-			<arg path="**/lib/vendor" />
+			<arg path="**/vendor" />
 		</exec>
 
 		<property name="phpmd.done" value="true" />

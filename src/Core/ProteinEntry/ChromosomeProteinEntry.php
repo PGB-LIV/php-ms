@@ -111,7 +111,7 @@ class ChromosomeProteinEntry extends ProteinEntry
     {
         if (! is_int($count)) {
             throw new \InvalidArgumentException(
-                'Argument 1 must be of type integer. Argument type is ' . gettype($position));
+                'Argument 1 must be of type integer. Argument type is ' . gettype($count));
         }
         
         $this->blockCount = $count;

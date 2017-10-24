@@ -33,10 +33,10 @@ class DigestFactory
      */
     public static function getDigest($digestName)
     {
-        $enzymes = DigestFactory::getEnzymes();
+        $enzymes = self::getEnzymes();
         $digestUp = strtoupper($digestName);
         
-        foreach ($enzymes as $key => $value) {
+        foreach (array_keys($enzymes) as $key) {
             if (strtoupper($key) == $digestUp) {
                 $classPath = __NAMESPACE__ . '\\Digest' . $key;
                 return new $classPath();

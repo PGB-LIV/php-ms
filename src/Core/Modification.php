@@ -149,13 +149,12 @@ class Modification
     {
         if (empty($residues)) {
             throw new \InvalidArgumentException('Argument 1 must not be empty.');
-        } else {
-            foreach ($residues as $residue) {
-                if (strlen($residue) != 1) {
-                    throw new \InvalidArgumentException(
-                        'Argument 1 must be an array of single char values. Value passed is of length ' .
-                             strlen($residue));
-                }
+        }
+        
+        foreach ($residues as $residue) {
+            if (strlen($residue) != 1) {
+                throw new \InvalidArgumentException(
+                    'Argument 1 must be an array of single char values. Value passed is of length ' . strlen($residue));
             }
         }
         

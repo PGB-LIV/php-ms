@@ -78,15 +78,15 @@ class AminoAcidMono
     {
         $value = @constant('pgb_liv\php_ms\Core\AminoAcidMono::' . $acid);
         
-        if (is_null($value)) {
-            if (strlen($acid) > 1) {
-                throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
-            } else {
-                throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
-            }
+        if (! is_null($value)) {
+            return $value;
         }
         
-        return $value;
+        if (strlen($acid) > 1) {
+            throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
+        }
+        
+        throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
     }
 
     /**
@@ -101,6 +101,6 @@ class AminoAcidMono
     {
         $acidUp = strtoupper($acid);
         
-        return AminoAcidMono::getMonoisotopicMass($acidUp);
+        return self::getMonoisotopicMass($acidUp);
     }
 }
