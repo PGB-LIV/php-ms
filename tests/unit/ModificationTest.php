@@ -41,9 +41,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanGetSetValidMonoMass()
     {
-        $id = 21;
         $monoMass = 321.4621;
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setMonoisotopicMass($monoMass);
@@ -59,9 +58,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanSetInvalidMonoMass()
     {
-        $id = 21;
         $monoMass = 'fail';
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setMonoisotopicMass($monoMass);
@@ -75,9 +73,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanGetSetValidAvgMass()
     {
-        $id = 21;
         $avgMass = 321.4621;
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setAverageMass($avgMass);
@@ -93,9 +90,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanSetInvalidAvgMass()
     {
-        $id = 21;
         $avgMass = 'fail';
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setAverageMass($avgMass);
@@ -109,9 +105,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanGetSetValidLocation()
     {
-        $id = 21;
         $location = 6;
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setLocation($location);
@@ -127,9 +122,8 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanSetInvalidLocation()
     {
-        $id = 21;
         $location = 'fail';
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setLocation($location);
@@ -143,13 +137,12 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanGetSetValidResidues()
     {
-        $id = 21;
         $residues = array(
             'S',
             'T',
             'Y'
         );
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setResidues($residues);
@@ -165,11 +158,10 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanSetInvalidResidues1()
     {
-        $id = 21;
         $residues = array(
             'STY'
         );
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setResidues($residues);
@@ -183,12 +175,11 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanSetInvalidResidues2()
     {
-        $id = 21;
         $residues = array(
             'ST',
             'Y'
         );
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setResidues($residues);
@@ -202,12 +193,25 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanSetInvalidResidues3()
     {
-        $id = 21;
         $residues = array();
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setResidues($residues);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setResidues
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanSetInvalidResidues3()
+    {
+        $modification = new Modification();
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $this->assertEquals(array(), $modification->getResidues());
     }
 
     /**
@@ -219,7 +223,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetSetName()
     {
         $name = 'Phospho';
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setName($name);
@@ -238,7 +242,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetSetTypeFixed()
     {
         $type = Modification::TYPE_FIXED;
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setType($type);
@@ -259,7 +263,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetSetTypeVariable()
     {
         $type = Modification::TYPE_VARIABLE;
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $modification->setType($type);
@@ -277,7 +281,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanGetSetPositionValid()
     {
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $position = Modification::POSITION_ANY;
@@ -309,10 +313,27 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCanGetSetPositionInvalid()
     {
-        $modification = new Modification($id);
+        $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
         
         $position = 'fail';
         $modification->setPosition($position);
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Modification::setAccession
+     * @covers pgb_liv\php_ms\Core\Modification::getAccession
+     *
+     * @uses pgb_liv\php_ms\Core\Modification
+     */
+    public function testObjectCanGetSetName()
+    {
+        $accession = 'UNIMOD:21';
+        $modification = new Modification();
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
+        
+        $modification->setAccession($accession);
+        
+        $this->assertEquals($accession, $modification->getAccession());
     }
 }
