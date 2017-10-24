@@ -17,7 +17,6 @@
 namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Core\AminoAcidComposition;
-use pgb_liv\php_ms\Core\AminoAcidComposition;
 
 class AminoAcidCompositionTest extends \PHPUnit_Framework_TestCase
 {
