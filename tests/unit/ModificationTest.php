@@ -206,7 +206,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
-    public function testObjectCanSetInvalidResidues3()
+    public function testObjectCanSetInvalidResidues4()
     {
         $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
