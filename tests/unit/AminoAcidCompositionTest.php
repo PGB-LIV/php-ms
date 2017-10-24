@@ -45,7 +45,6 @@ class AminoAcidCompositionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(AminoAcidComposition::R, AminoAcidComposition::getFormula('R'));
         $this->assertEquals(AminoAcidComposition::S, AminoAcidComposition::getFormula('S'));
         $this->assertEquals(AminoAcidComposition::T, AminoAcidComposition::getFormula('T'));
-        $this->assertEquals(AminoAcidComposition::U, AminoAcidComposition::getFormula('U'));
         $this->assertEquals(AminoAcidComposition::V, AminoAcidComposition::getFormula('V'));
         $this->assertEquals(AminoAcidComposition::W, AminoAcidComposition::getFormula('W'));
         $this->assertEquals(AminoAcidComposition::Y, AminoAcidComposition::getFormula('Y'));
@@ -97,7 +96,6 @@ class AminoAcidCompositionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(AminoAcidComposition::R, AminoAcidComposition::getFormulaInsensitive('r'));
         $this->assertEquals(AminoAcidComposition::S, AminoAcidComposition::getFormulaInsensitive('s'));
         $this->assertEquals(AminoAcidComposition::T, AminoAcidComposition::getFormulaInsensitive('t'));
-        $this->assertEquals(AminoAcidComposition::U, AminoAcidComposition::getFormulaInsensitive('u'));
         $this->assertEquals(AminoAcidComposition::V, AminoAcidComposition::getFormulaInsensitive('v'));
         $this->assertEquals(AminoAcidComposition::W, AminoAcidComposition::getFormulaInsensitive('w'));
         $this->assertEquals(AminoAcidComposition::Y, AminoAcidComposition::getFormulaInsensitive('y'));

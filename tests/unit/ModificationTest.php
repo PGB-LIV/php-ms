@@ -202,11 +202,10 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers pgb_liv\php_ms\Core\Modification::setResidues
-     * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
-    public function testObjectCanSetInvalidResidues4()
+    public function testObjectCanGetEmptyResidues()
     {
         $modification = new Modification();
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Modification', $modification);
@@ -326,7 +325,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
-    public function testObjectCanGetSetName()
+    public function testObjectCanGetSetAccession()
     {
         $accession = 'UNIMOD:21';
         $modification = new Modification();
