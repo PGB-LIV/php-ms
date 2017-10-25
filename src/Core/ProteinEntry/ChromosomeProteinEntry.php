@@ -55,16 +55,6 @@ class ChromosomeProteinEntry extends ProteinEntry
      */
     private $blockSizes;
 
-    /**
-     * Gets the end position of the parent object inside the protein
-     *
-     * @return int
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
     public function getChromosomePositionsStart()
     {
         return $this->starts;

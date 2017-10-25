@@ -88,6 +88,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
      * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Core\Peptide
      * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
@@ -127,6 +128,26 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers pgb_liv\php_ms\Core\Peptide::addProtein
+     * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
+     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setStart
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     */
+    public function testCanGetAddProteinStartInvalid()
+    {
+        $sequence = 'PEPTIDE';
+        $protein = new Protein();
+        $start = 'fail';
+        
+        $peptide = new Peptide($sequence);
+        $peptide->addProtein($protein, $start);
+    }
+
+    /**
      * @covers pgb_liv\php_ms\Core\Peptide::getProteins
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
@@ -152,6 +173,28 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
         $this->assertEquals($start, $peptide->getProteins()[0]->getStart());
         $this->assertEquals($end, $peptide->getProteins()[0]->getEnd());
+    }
+
+    /**
+     * @covers pgb_liv\php_ms\Core\Peptide::addProtein
+     * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
+     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setStart
+     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setEnd
+     * @expectedException InvalidArgumentException
+     *
+     * @uses pgb_liv\php_ms\Core\Peptide
+     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     */
+    public function testCanGetAddProteinEndInvalid()
+    {
+        $sequence = 'PEPTIDE';
+        $protein = new Protein();
+        $peptide = new Peptide($sequence);
+        $start = 12;
+        $end = 'fail';
+        
+        $peptide->addProtein($protein, $start, $end);
     }
 
     /**
