@@ -201,7 +201,7 @@ class ModificationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Modification::setResidues
+     * @covers pgb_liv\php_ms\Core\Modification::getResidues
      *
      * @uses pgb_liv\php_ms\Core\Modification
      */
