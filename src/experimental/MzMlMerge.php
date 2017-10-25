@@ -24,7 +24,8 @@ namespace pgb_liv\php_ms\experimental;
  */
 class MzMlMerge
 {
-
+    const CV_MINUTE = 'UO:0000031';
+    
     private $timeOffset;
 
     private $indexOffset;
@@ -167,7 +168,7 @@ class MzMlMerge
             if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
                 $matches)) {
                 $scanTime = $matches[2];
-                if ($matches[3] == 'UO:0000031') {
+                if ($matches[3] == self::CV_MINUTE) {
                     $scanTime *= 60;
                 }
                 
@@ -175,7 +176,7 @@ class MzMlMerge
                     $file['endTime'] = $scanTime;
                 }
                 
-                if ($matches[3] == 'UO:0000031') {
+                if ($matches[3] == self::CV_MINUTE) {
                     $scanTime /= 60;
                 }
             }
@@ -311,13 +312,13 @@ class MzMlMerge
             if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
                 $matches)) {
                 $scanTime = $matches[2];
-                if ($matches[3] == 'UO:0000031') {
+                if ($matches[3] == self::CV_MINUTE) {
                     $scanTime *= 60;
                 }
                 
                 $scanTime += $timeOffset;
                 
-                if ($matches[3] == 'UO:0000031') {
+                if ($matches[3] == self::CV_MINUTE) {
                     $scanTime /= 60;
                 }
                 

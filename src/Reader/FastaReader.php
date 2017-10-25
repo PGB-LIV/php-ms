@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2017 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -183,11 +183,27 @@ class FastaReader implements \Iterator
             }
         }
         
+        $sequence = $this->parseSequence();
+        
+        $this->key ++;
+        
+        return $this->format->getProtein($identifier, $description, $sequence);
+    }
+
+    /**
+     * Parses the sequence block from the FASTA file and returns the sequence without any line ending or formatting
+     *
+     * @return string
+     */
+    private function parseSequence()
+    {
         $sequence = '';
+        
         while ($line = $this->getLine()) {
             $sequence .= trim($line);
             
             $nextLine = trim($this->peekLine());
+            
             if (strpos($nextLine, '>') === 0) {
                 break;
             }
@@ -198,8 +214,6 @@ class FastaReader implements \Iterator
             $sequence = substr($sequence, 0, - 1);
         }
         
-        $this->key ++;
-        
-        return $this->format->getProtein($identifier, $description, $sequence);
+        return $sequence;
     }
 }

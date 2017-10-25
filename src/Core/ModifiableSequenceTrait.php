@@ -220,4 +220,15 @@ trait ModifiableSequenceTrait
         
         return $massCharge / $charge;
     }
+    
+    /**
+     * Reverses the current sequence.
+     * Suitable for creating decoy sequences
+     * 
+     * @todo This method does not yet respect modification absolute location data
+     */
+    public function reverseSequence()
+    {
+        $this->sequence = strrev($this->sequence);
+    }
 }

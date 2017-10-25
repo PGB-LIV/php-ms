@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2017 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -178,15 +178,6 @@ class Protein
     public function getSequenceVersion()
     {
         return $this->sequenceVersion;
-    }
-
-    /**
-     * Reverses the current protein sequence.
-     * For creating decoy proteins.
-     */
-    public function reverseSequence()
-    {
-        $this->sequence = strrev($this->sequence);
     }
 
     public function setChromosome(Chromosome $chromosome)
