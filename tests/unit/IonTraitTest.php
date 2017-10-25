@@ -16,8 +16,6 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Core\Spectra\IonTrait;
-
 class IonTraitTest extends \PHPUnit_Framework_TestCase
 {
 

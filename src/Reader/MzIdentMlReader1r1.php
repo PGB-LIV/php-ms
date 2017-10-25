@@ -23,7 +23,6 @@ use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\Chromosome;
-use pgb_liv\php_ms\Core\ProteinEntity;
 use pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry;
 use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 
@@ -309,10 +308,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     /**
      * The list of enzymes used in experiment
      *
-     * @param unknown $xml            
-     * @return unknown[]|\pgb_liv\php_ms\Reader\string[][]|\pgb_liv\php_ms\Reader\number[][]|\pgb_liv\php_ms\Reader\boolean[][]|\pgb_liv\php_ms\Reader\NULL[][]|array[]
+     * @param \SimpleXMLElement $xml            
+     * @return array
      */
-    protected function getEnzymes($xml)
+    protected function getEnzymes(\SimpleXMLElement $xml)
     {
         $enzymes = array();
         
@@ -515,7 +514,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      * @param \SimpleXMLElement $xml            
      * @param Peptide[] $peptides            
      * @param Protein[] $proteins            
-     * @return ProteinEntity
+     * @return ProteinEntry
      */
     private function getPeptideEvidence(\SimpleXMLElement $xml)
     {
@@ -542,7 +541,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      *
      * @param \SimpleXMLElement $xml
      *            XML to parse
-     * @return ProteinEntity
+     * @return ProteinEntry
      */
     private function getPeptideEvidenceRef(\SimpleXMLElement $xml)
     {

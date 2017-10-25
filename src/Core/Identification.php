@@ -100,7 +100,7 @@ class Identification
     /**
      * Gets the value for a score identified by the key that was set when setScore was called.
      *
-     * @param sring $key
+     * @param string $key
      *            The key to retrieve the value for
      * @throws \OutOfBoundsException If the key was not found on this identification
      * @return mixed

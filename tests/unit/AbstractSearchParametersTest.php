@@ -16,7 +16,6 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Search\Parameters\AbstractSearchParameters;
 use pgb_liv\php_ms\Core\Modification;
 use pgb_liv\php_ms\Core\Tolerance;
 

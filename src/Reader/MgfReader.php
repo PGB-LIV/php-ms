@@ -85,7 +85,7 @@ class MgfReader implements \Iterator
     /**
      * Gets the next line and increments the file iterator
      *
-     * @return The next line in the file
+     * @return string The next line in the file
      */
     private function getLine()
     {
@@ -102,7 +102,7 @@ class MgfReader implements \Iterator
     /**
      * Gets the next line, though does not move the file iterator
      *
-     * @return The next line in the file
+     * @return string The next line in the file
      */
     private function peekLine()
     {

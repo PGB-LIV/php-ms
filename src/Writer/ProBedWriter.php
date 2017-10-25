@@ -16,7 +16,6 @@
  */
 namespace pgb_liv\php_ms\Writer;
 
-use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 use pgb_liv\php_ms\Core\Identification;

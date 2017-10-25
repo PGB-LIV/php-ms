@@ -152,7 +152,7 @@ trait ModifiableSequenceTrait
     /**
      * Gets the theoretical monoisotopic neutral mass for this sequence and it's modifications
      *
-     * @return The neutral mass of the sequence
+     * @return double The neutral mass of the sequence
      * @deprecated Use getMonoisotopicMass() directly
      */
     public function getMass()
@@ -163,7 +163,7 @@ trait ModifiableSequenceTrait
     /**
      * Gets the theoretical monoisotopic neutral mass for this sequence and it's modifications
      *
-     * @return The neutral mass of the sequence
+     * @return double The neutral mass of the sequence
      */
     public function getMonoisotopicMass()
     {

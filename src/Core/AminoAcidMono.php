@@ -69,7 +69,7 @@ class AminoAcidMono
     /**
      * Gets the monoisotopic mass for the provided amino acid.
      *
-     * @param char $acid
+     * @param string $acid
      *            Amino acid
      * @throws \InvalidArgumentException If acid is not a single character or valid amino acid
      * @return float Monoisotopic mass
@@ -92,7 +92,7 @@ class AminoAcidMono
     /**
      * Gets the monoisotopic mass for the provided amino acid.
      *
-     * @param char $acid
+     * @param string $acid
      *            Amino acid
      * @throws \InvalidArgumentException If acid is not a single character or valid amino acid
      * @return float Monoisotopic mass

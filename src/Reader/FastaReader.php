@@ -62,7 +62,7 @@ class FastaReader implements \Iterator
      *
      * {@inheritdoc}
      *
-     * @see Iterator::current()
+     * @see \Iterator::current()
      * @return Protein
      */
     public function current()
@@ -112,7 +112,7 @@ class FastaReader implements \Iterator
     /**
      * Gets the next line and increments the file iterator
      *
-     * @return The next line in the file
+     * @return string The next line in the file
      */
     private function getLine()
     {
@@ -129,7 +129,7 @@ class FastaReader implements \Iterator
     /**
      * Gets the next line, though does not move the file iterator
      *
-     * @return The next line in the file
+     * @return string The next line in the file
      */
     private function peekLine()
     {

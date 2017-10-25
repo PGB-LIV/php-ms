@@ -29,7 +29,7 @@ interface SearchInterface
     /**
      * Perform a search on this objects connected search engine
      *
-     * @param SearchParameters $parameters
+     * @param SearchParametersInterface $parameters
      *            The parameters to search with
      * @return string An identifier that can be passed to getResults for retrieving the search results data
      */

@@ -16,7 +16,6 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Utility\Filter\AbstractFilter;
 use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 

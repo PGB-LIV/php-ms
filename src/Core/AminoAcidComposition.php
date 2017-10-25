@@ -67,7 +67,7 @@ class AminoAcidComposition
     /**
      * Gets the molecular formula for the provided amino acid.
      *
-     * @param char $acid
+     * @param string $acid
      *            Amino acid
      * @throws \InvalidArgumentException If acid is not a single character or valid amino acid
      * @return string Molecular formula
@@ -90,7 +90,7 @@ class AminoAcidComposition
     /**
      * Gets the molecular formula for the provided amino acid.
      *
-     * @param char $acid
+     * @param string $acid
      *            Amino acid
      * @throws \InvalidArgumentException If acid is not a single character or valid amino acid
      * @return string Molecular formula

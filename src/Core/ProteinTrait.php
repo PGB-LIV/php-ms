@@ -29,7 +29,7 @@ trait ProteinTrait
     /**
      * An array of all proteins this object maps to
      *
-     * @var ProteinEntity[]
+     * @var ProteinEntry[]
      */
     private $proteins = array();
 

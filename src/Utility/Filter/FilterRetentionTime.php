@@ -30,23 +30,23 @@ class FilterRetentionTime extends AbstractFilter
     /**
      * Minimum retention time, inclusive
      *
-     * @var numeric
+     * @var double
      */
     private $minRetentionTime;
 
     /**
      * Maximum retention time, inclusive
      *
-     * @var numeric
+     * @var double
      */
     private $maxRetentionTime;
 
     /**
      * Creates a new instance with the specified minimum and maximum retention time values.
      *
-     * @param numeric $minRetentionTime
+     * @param double $minRetentionTime
      *            Minimum retention time, inclusive
-     * @param numeric $maxRetentionTime
+     * @param double $maxRetentionTime
      *            Maximum retention time, inclusive
      */
     public function __construct($minRetentionTime, $maxRetentionTime = null)

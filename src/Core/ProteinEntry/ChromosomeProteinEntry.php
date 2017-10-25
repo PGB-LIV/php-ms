@@ -16,8 +16,6 @@
  */
 namespace pgb_liv\php_ms\Core\ProteinEntry;
 
-use pgb_liv\php_ms\Core\Protein;
-
 /**
  * A protein entity object for adding references to a protein object.
  * Allows items such as peptides to link to specific sections of a protein string

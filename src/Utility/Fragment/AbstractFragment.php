@@ -56,8 +56,7 @@ abstract class AbstractFragment implements FragmentInterface
     /**
      *
      * {@inheritdoc}
-     *
-     * @see \pgb_liv\php_ms\Reader\FragmentInterface::getIons()
+     * @see \pgb_liv\php_ms\Utility\Fragment\FragmentInterface::getIons()
      */
     public function getIons()
     {
@@ -161,7 +160,7 @@ abstract class AbstractFragment implements FragmentInterface
      *
      * {@inheritdoc}
      *
-     * @see \pgb_liv\php_ms\Reader\FragmentInterface::isReversed()
+     * @see \pgb_liv\php_ms\Utility\Fragment\FragmentInterface::getIons()
      */
     public function isReversed()
     {
