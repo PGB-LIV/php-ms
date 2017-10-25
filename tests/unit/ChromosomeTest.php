@@ -43,7 +43,7 @@ class ChromosomeTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Chromosome
      */
-    public function testCanGetSetName()
+    public function testCanGetSetStrand()
     {
         $value = '+';
         $chromosome = new Chromosome();
@@ -59,7 +59,7 @@ class ChromosomeTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\Chromosome
      */
-    public function testCanGetSetName()
+    public function testCanGetSetGenomeReferenceVersion()
     {
         $value = '1.0';
         $chromosome = new Chromosome();
