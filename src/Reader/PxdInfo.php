@@ -40,7 +40,7 @@ class PxdInfo
         if (stripos($identifier, 'PXD') === 0) {
             $this->identifier = (int) substr($identifier, 3);
         } elseif (is_numeric($identifier) && (int) $identifier == $identifier) {
-            $this->identifier= (int) $identifier;
+            $this->identifier = (int) $identifier;
         } else {
             throw new \InvalidArgumentException('Identifier must be either an integer or PXD#### string');
         }

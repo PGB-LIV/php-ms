@@ -464,11 +464,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
             $entry = $modification->getMonoisotopicMass() . ',';
             $entry .= implode('', $modification->getResidues()) . ',';
             
-            if ($modification->isFixed()) {
-                $entry .= 'fix,';
-            } else {
-                $entry .= 'opt,';
-            }
+            $entry .= $modification->isFixed() ? 'fix,' : 'opt,';
             
             $position = '';
             switch ($modification->getPosition()) {

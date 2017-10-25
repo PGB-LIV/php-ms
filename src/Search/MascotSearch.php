@@ -125,8 +125,8 @@ class MascotSearch
                 fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");
                 
                 foreach ($value as $modification) {
-                    fwrite($handle, $modification->getName() . ' (' . implode('', $modification->getResidues()) .
-                         ")\r\n");
+                    fwrite($handle, 
+                        $modification->getName() . ' (' . implode('', $modification->getResidues()) . ")\r\n");
                 }
             } else {
                 fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");

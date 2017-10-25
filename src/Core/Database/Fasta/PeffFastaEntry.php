@@ -149,7 +149,7 @@ class PeffFastaEntry implements FastaInterface
                     $protein->setOrganismName($value);
                     break;
                 case 'modrespsi':
-                    $modifications = PeffFastaEntry::parseModifications($value);
+                    $modifications = self::parseModifications($value);
                     $protein->addModifications($modifications);
                     break;
                 default:

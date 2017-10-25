@@ -321,9 +321,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             
             if (isset($enzyme['id'])) {
                 $enzymes[$enzyme['id']] = $enzyme;
-            } else {
-                $enzymes[] = $enzyme;
+                continue;
             }
+            
+            $enzymes[] = $enzyme;
         }
         
         return $enzymes;
@@ -439,11 +440,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001460') {
             // Unknown modification
-            if (isset($cvParam[MzIdentMlReader1r1::CV_VALUE])) {
-                $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
-            } else {
-                $modification->setName('Unknown Modification');
-            }
+            $name = isset($cvParam[MzIdentMlReader1r1::CV_VALUE]) ? $cvParam[MzIdentMlReader1r1::CV_VALUE] : 'Unknown Modification';
+            
+            $modification->setName($name);
         } else {
             // Known modification
             $modification->setAccession($cvParam[MzIdentMlReader1r1::CV_ACCESSION]);
@@ -763,11 +762,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         if ($cvParam[MzIdentMlReader1r1::CV_ACCESSION] == 'MS:1001460') {
             // Unknown modification
-            if (isset($cvParam[MzIdentMlReader1r1::CV_VALUE])) {
-                $modification->setName($cvParam[MzIdentMlReader1r1::CV_VALUE]);
-            } else {
-                $modification->setName('Unknown Modification');
-            }
+            $name = isset($cvParam[MzIdentMlReader1r1::CV_VALUE]) ? $cvParam[MzIdentMlReader1r1::CV_VALUE] : 'Unknown Modification';
+            
+            $modification->setName($name);
         } else {
             $modification->setName($cvParam[MzIdentMlReader1r1::CV_NAME]);
         }

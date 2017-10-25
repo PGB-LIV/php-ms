@@ -89,13 +89,12 @@ class MgfReader implements \Iterator
      */
     private function getLine()
     {
-        $ret = null;
-        if ($this->filePeek != null) {
-            $ret = $this->filePeek;
-            $this->filePeek = null;
-        } else {
-            $ret = fgets($this->fileHandle);
+        if ($this->filePeek == null) {
+            return fgets($this->fileHandle);
         }
+        
+        $ret = $this->filePeek;
+        $this->filePeek = null;
         
         return $ret;
     }

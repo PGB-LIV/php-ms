@@ -75,7 +75,7 @@ class ProBedWriter
         fwrite($this->fileHandle, '# Created on ' . date('r') . ' by phpMs' . PHP_EOL);
         
         foreach ($headers as $header) {
-            fwrite($this->fileHandle, '# '. $header . PHP_EOL);
+            fwrite($this->fileHandle, '# ' . $header . PHP_EOL);
         }
     }
 
