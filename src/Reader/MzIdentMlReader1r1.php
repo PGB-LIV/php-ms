@@ -25,7 +25,8 @@ use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\Chromosome;
 use pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry;
 use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
-use pgb_liv\php_ms\Core\PsiXmlTrait;
+use pgb_liv\php_ms\Reader\HupoPsi\PsiXmlTrait;
+use src\Reader\HupoPsi\PsiVerb;
 
 /**
  *
@@ -185,10 +186,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     protected function parseDbSequenceParam(array $cvParam, Protein $protein)
     {
-        switch ($cvParam[self::CV_ACCESSION]) {
+        switch ($cvParam[PsiVerb::CV_ACCESSION]) {
             case 'MS:1001088':
-                if (isset($cvParam[self::CV_VALUE])) {
-                    $protein->setDescription($cvParam[self::CV_VALUE]);
+                if (isset($cvParam[PsiVerb::CV_VALUE])) {
+                    $protein->setDescription($cvParam[PsiVerb::CV_VALUE]);
                 }
                 
                 break;
@@ -199,7 +200,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     $protein->setChromosome(new Chromosome());
                 }
                 
-                $protein->getChromosome()->setName($cvParam[self::CV_VALUE]);
+                $protein->getChromosome()->setName($cvParam[PsiVerb::CV_VALUE]);
                 break;
             case 'MS:1002638':
                 // chromosome strand
@@ -208,7 +209,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     $protein->setChromosome(new Chromosome());
                 }
                 
-                $protein->getChromosome()->setStrand($cvParam[self::CV_VALUE]);
+                $protein->getChromosome()->setStrand($cvParam[PsiVerb::CV_VALUE]);
                 break;
             case 'MS:1002644':
                 // genome reference version
@@ -217,7 +218,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     $protein->setChromosome(new Chromosome());
                 }
                 
-                $protein->getChromosome()->setGenomeReferenceVersion($cvParam[self::CV_VALUE]);
+                $protein->getChromosome()->setGenomeReferenceVersion($cvParam[PsiVerb::CV_VALUE]);
                 break;
             default:
                 // Unknown field
@@ -348,10 +349,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
             
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[self::CV_VALUE], $cvParam[self::CV_UNITACCESSION]);
+                    $tolerance = new Tolerance((float) $cvParam[PsiVerb::CV_VALUE], $cvParam[PsiVerb::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -430,15 +431,15 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $cvParam = $this->getCvParam($xml->cvParam);
         
-        if ($cvParam[self::CV_ACCESSION] == 'MS:1001460') {
+        if ($cvParam[PsiVerb::CV_ACCESSION] == 'MS:1001460') {
             // Unknown modification
-            $name = isset($cvParam[self::CV_VALUE]) ? $cvParam[self::CV_VALUE] : 'Unknown Modification';
+            $name = isset($cvParam[PsiVerb::CV_VALUE]) ? $cvParam[PsiVerb::CV_VALUE] : 'Unknown Modification';
             
             $modification->setName($name);
         } else {
             // Known modification
-            $modification->setAccession($cvParam[self::CV_ACCESSION]);
-            $modification->setName($cvParam[self::CV_NAME]);
+            $modification->setAccession($cvParam[PsiVerb::CV_ACCESSION]);
+            $modification->setName($cvParam[PsiVerb::CV_NAME]);
         }
         
         return $modification;
@@ -468,10 +469,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
             
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1001412':
                 case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[self::CV_VALUE], $cvParam[self::CV_UNITACCESSION]);
+                    $tolerance = new Tolerance((float) $cvParam[PsiVerb::CV_VALUE], $cvParam[PsiVerb::CV_UNITACCESSION]);
                     break;
                 default:
                     $tolerance = $cvParam;
@@ -751,13 +752,13 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $cvParam = $this->getCvParam($xml->cvParam);
         
-        if ($cvParam[self::CV_ACCESSION] == 'MS:1001460') {
+        if ($cvParam[PsiVerb::CV_ACCESSION] == 'MS:1001460') {
             // Unknown modification
-            $name = isset($cvParam[self::CV_VALUE]) ? $cvParam[self::CV_VALUE] : 'Unknown Modification';
+            $name = isset($cvParam[PsiVerb::CV_VALUE]) ? $cvParam[PsiVerb::CV_VALUE] : 'Unknown Modification';
             
             $modification->setName($name);
         } else {
-            $modification->setName($cvParam[self::CV_NAME]);
+            $modification->setName($cvParam[PsiVerb::CV_NAME]);
         }
         
         return $modification;
@@ -834,7 +835,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     {
         foreach ($xml->cvParam as $xmlParam) {
             $cvParam = $this->getCvParam($xmlParam);
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1001189':
                     return Modification::POSITION_NTERM;
                 case 'MS:1001190':
@@ -913,7 +914,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         foreach ($xml->cvParam as $cvParam) {
             $cvParam = $this->getCvParam($cvParam);
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1001363':
                 // peptide unique to one protein - not supported
                 case 'MS:1001175':
@@ -926,7 +927,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     // Concensus result - not supported
                     break;
                 default:
-                    $identification->setScore($cvParam[self::CV_ACCESSION], $cvParam[self::CV_VALUE]);
+                    $identification->setScore($cvParam[PsiVerb::CV_ACCESSION], $cvParam[PsiVerb::CV_VALUE]);
                     break;
             }
         }
@@ -937,23 +938,23 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function parsePeptideEvidenceCv(array $cvParams, ProteinEntry $entry)
     {
         foreach ($cvParams as $cvParam) {
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1002640':
                     // peptide end on chromosome
-                    $entry->setChromosomePositionEnd((int) $cvParam[self::CV_VALUE]);
+                    $entry->setChromosomePositionEnd((int) $cvParam[PsiVerb::CV_VALUE]);
                     break;
                 case 'MS:1002641':
                     // peptide exon count
-                    $entry->setChromosomeBlockCount((int) $cvParam[self::CV_VALUE]);
+                    $entry->setChromosomeBlockCount((int) $cvParam[PsiVerb::CV_VALUE]);
                     break;
                 case 'MS:1002642':
                     // peptide exon nucleotide sizes
-                    $entry->setChromosomeBlockSizes((int) $cvParam[self::CV_VALUE]);
+                    $entry->setChromosomeBlockSizes((int) $cvParam[PsiVerb::CV_VALUE]);
                     break;
                 case 'MS:1002643':
                     // peptide start positions on chromosome
                     $positions = array();
-                    $chunks = explode(',', $cvParam[self::CV_VALUE]);
+                    $chunks = explode(',', $cvParam[PsiVerb::CV_VALUE]);
                     foreach ($chunks as $chunk) {
                         $positions[] = (int) $chunk;
                     }
@@ -1047,12 +1048,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         foreach ($xml->cvParam as $cvParam) {
             $cvParam = $this->getCvParam($cvParam);
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1000796':
-                    $spectra->setTitle($cvParam[self::CV_VALUE]);
+                    $spectra->setTitle($cvParam[PsiVerb::CV_VALUE]);
                     break;
                 case 'MS:1001115':
-                    $spectra->setScan((float) $cvParam[self::CV_VALUE]);
+                    $spectra->setScan((float) $cvParam[PsiVerb::CV_VALUE]);
                     break;
                 default:
                     continue;
@@ -1091,7 +1092,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getProteinEntryType(array $peptideEvidence, Protein $protein)
     {
         foreach ($peptideEvidence['cv'] as $cvParam) {
-            switch ($cvParam[self::CV_ACCESSION]) {
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1002640':
                 case 'MS:1002641':
                 case 'MS:1002642':

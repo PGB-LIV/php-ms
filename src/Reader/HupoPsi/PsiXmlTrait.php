@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core;
+namespace pgb_liv\php_ms\Reader\HupoPsi;
+
+use src\Reader\HupoPsi\PsiVerb;
 
 /**
  * Trait for generic methods that are consistent across all HUPO-PSI standards (e.g.
@@ -24,14 +26,6 @@ namespace pgb_liv\php_ms\Core;
  */
 trait PsiXmlTrait
 {
-
-    const CV_ACCESSION = 'accession';
-
-    const CV_VALUE = 'value';
-
-    const CV_NAME = 'name';
-
-    const CV_UNITACCESSION = 'unitAccession';
 
     /**
      * Builds an index of seen CvParams of Accession -> Name
@@ -68,20 +62,20 @@ trait PsiXmlTrait
         // Required fields
         
         $cvParam['cvRef'] = (string) $xml->attributes()->cvRef;
-        $cvParam[self::CV_ACCESSION] = (string) $xml->attributes()->accession;
+        $cvParam[PsiVerb::CV_ACCESSION] = (string) $xml->attributes()->accession;
         $cvParam['name'] = (string) $xml->attributes()->name;
         
-        if (! isset($this->cvParamIndex[$cvParam[self::CV_ACCESSION]])) {
-            $this->cvParamIndex[$cvParam[self::CV_ACCESSION]] = $cvParam['name'];
+        if (! isset($this->cvParamIndex[$cvParam[PsiVerb::CV_ACCESSION]])) {
+            $this->cvParamIndex[$cvParam[PsiVerb::CV_ACCESSION]] = $cvParam['name'];
         }
         
         // Optional fields
         if (isset($xml->attributes()->value)) {
-            $cvParam[self::CV_VALUE] = (string) $xml->attributes()->value;
+            $cvParam[PsiVerb::CV_VALUE] = (string) $xml->attributes()->value;
         }
         
         if (isset($xml->attributes()->unitAccession)) {
-            $cvParam[self::CV_UNITACCESSION] = (string) $xml->attributes()->unitAccession;
+            $cvParam[PsiVerb::CV_UNITACCESSION] = (string) $xml->attributes()->unitAccession;
         }
         
         if (isset($xml->attributes()->unitName)) {
