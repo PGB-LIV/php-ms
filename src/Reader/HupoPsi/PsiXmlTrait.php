@@ -16,8 +16,6 @@
  */
 namespace pgb_liv\php_ms\Reader\HupoPsi;
 
-use src\Reader\HupoPsi\PsiVerb;
-
 /**
  * Trait for generic methods that are consistent across all HUPO-PSI standards (e.g.
  * CvParam)

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace src\Reader\HupoPsi;
+namespace pgb_liv\php_ms\Reader\HupoPsi;
 
 /**
  * Constant class for storing commonly used verbs across HUPO-PSI parsed files

@@ -26,7 +26,7 @@ use pgb_liv\php_ms\Core\Chromosome;
 use pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry;
 use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 use pgb_liv\php_ms\Reader\HupoPsi\PsiXmlTrait;
-use src\Reader\HupoPsi\PsiVerb;
+use pgb_liv\php_ms\Reader\HupoPsi\PsiVerb;
 
 /**
  *
@@ -123,7 +123,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $softwareList = array();
         
         foreach ($this->xmlReader->AnalysisSoftwareList->AnalysisSoftware as $analysisSoftware) {
-            $softwareList[$this->getAttributeId($xml)] = $this->getAnalysisSoftware($analysisSoftware);
+            $softwareList[$this->getAttributeId($analysisSoftware)] = $this->getAnalysisSoftware($analysisSoftware);
         }
         
         return $softwareList;
