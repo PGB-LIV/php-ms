@@ -27,7 +27,7 @@ Or add it to your existing composer.json:
         "pgb-liv/php-ms" : "1.*"
     },
 
-Releases made available by GitHub ande the GitHub source do not include depedency code. It is recommended you always use phpMs via Composer.
+Releases made available by GitHub and the GitHub source do not include depedency code. It is recommended you always use phpMs via Composer.
 
 API Documentation
 -----------------
