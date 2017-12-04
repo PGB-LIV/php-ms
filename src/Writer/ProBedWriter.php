@@ -211,7 +211,9 @@ class ProBedWriter
         $chromosome = $protein->getChromosome();
         
         // Possible unmapped protein
-        if (is_null($chromosome) || is_null($chromosome->getGenomeReferenceVersion())) {
+        // TODO: Correct handling missing version. Required by spec?
+        //if (is_null($chromosome) || is_null($chromosome->getGenomeReferenceVersion())) {
+        if (is_null($chromosome)) {
             return false;
         }
         
