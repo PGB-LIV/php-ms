@@ -51,7 +51,7 @@ class ChromosomeProteinEntry extends ProteinEntry
      *
      * @var array
      */
-    private $blockSizes;
+    private $blockSizes = array();
 
     public function getChromosomePositionsStart()
     {
@@ -105,11 +105,13 @@ class ChromosomeProteinEntry extends ProteinEntry
         $this->blockCount = $count;
     }
 
-    public function setChromosomeBlockSizes($sizes)
+    public function setChromosomeBlockSizes(array $sizes)
     {
-        if (! is_int($sizes)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type integer. Argument type is ' . gettype($sizes));
+        foreach ($sizes as $size) {            
+            if (! is_int($size)) {
+                throw new \InvalidArgumentException(
+                    'Argument 1 must be of type integer[]. Element of argument 1 is ' . gettype($size));
+            }
         }
         
         $this->blockSizes = $sizes;

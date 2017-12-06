@@ -949,7 +949,13 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     break;
                 case 'MS:1002642':
                     // peptide exon nucleotide sizes
-                    $entry->setChromosomeBlockSizes((int) $cvParam[PsiVerb::CV_VALUE]);
+                    $blockSizesStr = explode(',', $cvParam[PsiVerb::CV_VALUE]);
+                    $blockSizes = array();
+                    foreach ($blockSizesStr as $blockSize) {
+                        $blockSizes[] = (int) $blockSize;
+                    }
+                    
+                    $entry->setChromosomeBlockSizes($blockSizes);
                     break;
                 case 'MS:1002643':
                     // peptide start positions on chromosome

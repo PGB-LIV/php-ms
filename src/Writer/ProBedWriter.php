@@ -133,7 +133,7 @@ class ProBedWriter
             fwrite($this->fileHandle, $proteinEntry->getChromosomeBlockCount() . "\t");
             
             // blockSizes
-            fwrite($this->fileHandle, $proteinEntry->getChromosomeBlockSizes() . "\t");
+            fwrite($this->fileHandle, implode(',', $proteinEntry->getChromosomeBlockSizes()) . "\t");
             
             // chromStarts
             fwrite($this->fileHandle, $relPositions . "\t");
