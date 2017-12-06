@@ -75,7 +75,7 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanGetSetBlockSizesValid()
     {
-        $value = 16;
+        $value = array(16);
         $chromosome = new ChromosomeProteinEntry(new Protein());
         $chromosome->setChromosomeBlockSizes($value);
         
@@ -91,7 +91,7 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanGetSetBlockSizesInvalid()
     {
-        $value = 'fail';
+        $value = array('fail');
         $chromosome = new ChromosomeProteinEntry(new Protein());
         $chromosome->setChromosomeBlockSizes($value);
     }
