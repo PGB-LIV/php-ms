@@ -124,4 +124,43 @@ class Tolerance
         
         return $toleranceRatio * 1000000;
     }
+
+    /**
+     * Test if the observed and expected values are within the accepted tolerance
+     *
+     * @param float $observed
+     *            The observed value
+     * @param float $expected
+     *            The expected value
+     * @return boolean
+     */
+    public function isTolerable($observed, $expected)
+    {
+        $diff = 0;
+        if ($this->unit == Tolerance::DA) {
+            $diff = abs($observed - $expected);
+        } else {
+            $diff = abs(Tolerance::getDifferencePpm($observed, $expected));
+        }
+        
+        if ($diff > $this->tolerance) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Gets the ppm difference for the observed and expected value
+     * 
+     * @param float $observed
+     *            The observed value
+     * @param float $expected
+     *            The expected value
+     * @return float
+     */
+    public static function getDifferencePpm($observed, $expected)
+    {
+        return (($observed - $expected) / $expected) * 1000000;
+    }
 }

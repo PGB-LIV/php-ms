@@ -110,7 +110,7 @@ class PrecursorIon implements IonInterface
     /**
      * Sets the scan number for this precursor
      *
-     * @param int $scan
+     * @param int|float $scan
      *            Scan number to set
      * @throws \InvalidArgumentException
      */

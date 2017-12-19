@@ -95,7 +95,7 @@ abstract class AbstractDigest
     }
 
     /**
-     * Tells whether n-terminal methionine excision will be performed or not.
+     * Returns whether n-terminal methionine excision will be performed or not.
      *
      * @return boolean true if NME is enabled, else false
      */

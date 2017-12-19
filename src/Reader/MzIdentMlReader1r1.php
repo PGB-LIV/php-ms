@@ -921,8 +921,6 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                 // Peptide shared in multipe proteins - not supported
                 case 'MS:1000016':
                 // Scan start time - not supported
-                case 'MS:1000796':
-                // Spectrum title - not supported
                 case 'MS:1002315':
                     // Concensus result - not supported
                     break;
