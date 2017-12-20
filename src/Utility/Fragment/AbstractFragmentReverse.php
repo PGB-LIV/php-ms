@@ -74,7 +74,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
             }
             
             $sum += $mass;
-            $ions[$i] = $sum;
+            $ions[($this->getEnd()-$i)+1] = $sum;
         }
         
         return $ions;
