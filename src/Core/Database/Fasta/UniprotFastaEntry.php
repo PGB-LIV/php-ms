@@ -64,9 +64,15 @@ class UniprotFastaEntry extends DefaultFastaEntry implements FastaInterface
         $protein = new Protein();
         $protein->setSequence($sequence);
         $protein->setUniqueIdentifier($identifier);
-        $protein->setDatabasePrefix($identifierParts[0]);
-        $protein->setAccession($identifierParts[1]);
-        $protein->setEntryName($identifierParts[2]);
+        
+        if (count($identifierParts) == 3) {
+            $protein->setDatabasePrefix($identifierParts[0]);
+            $protein->setAccession($identifierParts[1]);
+            $protein->setEntryName($identifierParts[2]);
+        } else {
+            $protein->setAccession($identifierParts[0]);
+            $protein->setEntryName($identifierParts[1]);
+        }
         
         $protein->setDescription($description);
         
