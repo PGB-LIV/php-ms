@@ -191,12 +191,12 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsX()
     {
         $expected = array();
-        $expected[2] = 729.29378;
-        $expected[3] = 600.25119;
+        $expected[6] = 729.29378;
+        $expected[5] = 600.25119;
         $expected[4] = 503.19843;
-        $expected[5] = 402.15075;
-        $expected[6] = 289.06669;
-        $expected[7] = 174.03974;
+        $expected[3] = 402.15075;
+        $expected[2] = 289.06669;
+        $expected[1] = 174.03974;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -230,13 +230,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsY()
     {
         $expected = array();
-        $expected[1] = 800.36728;
-        $expected[2] = 703.31452;
-        $expected[3] = 574.27193;
+        $expected[7] = 800.36728;
+        $expected[6] = 703.31452;
+        $expected[5] = 574.27193;
         $expected[4] = 477.21916;
-        $expected[5] = 376.17149;
-        $expected[6] = 263.08742;
-        $expected[7] = 148.06048;
+        $expected[3] = 376.17149;
+        $expected[2] = 263.08742;
+        $expected[1] = 148.06048;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -270,13 +270,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsZ()
     {
         $expected = array();
-        $expected[1] = 783.34183;
-        $expected[2] = 686.28907;
-        $expected[3] = 557.24648;
+        $expected[7] = 783.34183;
+        $expected[6] = 686.28907;
+        $expected[5] = 557.24648;
         $expected[4] = 460.19371;
-        $expected[5] = 359.14603;
-        $expected[6] = 246.06197;
-        $expected[7] = 131.03503;
+        $expected[3] = 359.14603;
+        $expected[2] = 246.06197;
+        $expected[1] = 131.03503;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -357,13 +357,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetModifiedIonsY()
     {
         $expected = array();
-        $expected[1] = 1022.30728;
-        $expected[2] = 908.35452;
-        $expected[3] = 699.34193;
+        $expected[7] = 1022.30728;
+        $expected[6] = 908.35452;
+        $expected[5] = 699.34193;
         $expected[4] = 602.28916;
-        $expected[5] = 501.24149;
-        $expected[6] = 388.15742;
-        $expected[7] = 273.13048;
+        $expected[3] = 501.24149;
+        $expected[2] = 388.15742;
+        $expected[1] = 273.13048;
         
         $peptide = new Peptide('PEPTIDE');
         $nterm = new Modification();
@@ -400,7 +400,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     {
         $methods = FragmentFactory::getFragmentMethods();
         
-        \PHPUnit_Framework_TestCase::assertAttributeEquals($methods, 'methods', 
+        \PHPUnit_Framework_TestCase::assertAttributeEquals($methods, 'methods',
             'pgb_liv\php_ms\Utility\Fragment\FragmentFactory');
     }
 
