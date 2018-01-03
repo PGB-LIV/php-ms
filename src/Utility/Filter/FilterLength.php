@@ -62,8 +62,8 @@ class FilterLength extends AbstractFilter
                 'Argument 2 must be of type int or null. Value is of type ' . gettype($maxLength));
         }
         
-        $this->minCharge = $minCharge;
-        $this->maxCharge = $maxCharge;
+        $this->minLength = $minLength;
+        $this->maxLength = $maxLength;
     }
 
     /**
