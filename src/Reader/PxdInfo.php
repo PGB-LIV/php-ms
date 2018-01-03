@@ -54,10 +54,9 @@ class PxdInfo
         $data = get_headers($url, 1);
         $status = explode(' ', $data[0], 3);
         
-        if ($status[1] != 200)
-        {
-            throw new \InvalidArgumentException($status[2]);            
-        }        
+        if ($status[1] != 200) {
+            throw new \InvalidArgumentException($status[2]);
+        }
         
         $schema = new \SimpleXMLElement($url, null, true);
         
