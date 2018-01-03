@@ -28,6 +28,13 @@ class PrecursorIon implements IonInterface
     use IonTrait;
 
     /**
+     * The unique identifier for this object
+     *
+     * @var string
+     */
+    private $identifier;
+
+    /**
      * The retention time for this object
      *
      * @var float
@@ -63,6 +70,26 @@ class PrecursorIon implements IonInterface
     private $identifications;
 
     /**
+     * Sets the unique identifier for this object
+     *
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    /**
+     * Gets the unique identifier for this object
+     * 
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
      * Sets the spectra elements retention time.
      *
      * @param float $retentionTime
@@ -71,7 +98,8 @@ class PrecursorIon implements IonInterface
     public function setRetentionTime($retentionTime)
     {
         if (! (is_int($retentionTime) || is_float($retentionTime))) {
-            throw new \InvalidArgumentException('Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
         }
         
         $this->retentionTime = $retentionTime;
@@ -90,7 +118,7 @@ class PrecursorIon implements IonInterface
     /**
      * Sets the title name for this precursor
      *
-     * @param string $title            
+     * @param string $title
      */
     public function setTitle($title)
     {
@@ -117,7 +145,8 @@ class PrecursorIon implements IonInterface
     public function setScan($scan)
     {
         if (! (is_int($scan) || is_float($scan))) {
-            throw new \InvalidArgumentException('Argument 1 must be of type int or float. Value is of type ' . gettype($scan));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int or float. Value is of type ' . gettype($scan));
         }
         
         $this->scan = $scan;

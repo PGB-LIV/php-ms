@@ -330,8 +330,24 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getExternalFormatDocumentation()
     {}
 
-    private function getFileFormat()
-    {}
+    /**
+     * The format of the ExternalData file, for example "tiff" for image files.
+     *
+     * @param \SimpleXMLElement $xml
+     *            XML to parse
+     */
+    private function getFileFormat(\SimpleXMLElement $xml)
+    {
+        $formats = array();
+        
+        foreach ($xml->cvParam as $xmlCvParam) {
+            $cvParam = $this->getCvParam($xmlCvParam);
+            
+            $formats[] = $cvParam[PsiVerb::CV_ACCESSION];
+        }
+        
+        return $formats;
+    }
 
     private function getFilter()
     {}
@@ -864,11 +880,25 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $spectra['name'] = (string) $xml->attributes()->name;
         }
         
+        $spectra['format']['id'] = $this->getSpectrumIdFormat($xml->SpectrumIDFormat);
+        $spectra['format']['file'] = $this->getFileFormat($xml->FileFormat);
+        
         return $spectra;
     }
 
-    private function getSpectrumIdFormat()
-    {}
+    /**
+     * The format of the spectrum identifier within the source file.
+     *
+     * @param \SimpleXMLElement $xml
+     *            XML to parse
+     * @return string
+     */
+    private function getSpectrumIdFormat(\SimpleXMLElement $xml)
+    {
+        $cvParam = $this->getCvParam($xml->cvParam);
+        
+        return $cvParam[PsiVerb::CV_ACCESSION];
+    }
 
     private function getSpectrumIdentification()
     {}
@@ -879,7 +909,6 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
      *
      * @param \SimpleXMLElement $xml
      *            XML to parse
-     * @param array $sequences
      * @return \pgb_liv\php_ms\Core\Spectra\PrecursorIon
      */
     private function getSpectrumIdentificationItem(\SimpleXMLElement $xml)
@@ -1039,6 +1068,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private function getSpectrumIdentificationResult(\SimpleXMLElement $xml, array $sequences)
     {
         $spectra = new PrecursorIon();
+        $spectra->setIdentifier((string) $xml->attributes()->spectrumID);
         
         // We can not currently pull data from the .raw data so take the m/z vlaues from the first identification
         $spectra->setCharge((int) $xml->SpectrumIdentificationItem->attributes()->chargeState);
