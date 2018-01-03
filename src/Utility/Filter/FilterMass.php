@@ -44,6 +44,7 @@ class FilterMass extends AbstractFilter
 
     /**
      * Creates a new instance with the specified minimum and maximum mass values.
+     * Specify null for minimum or maximum for no limit.
      *
      * @param float $minMass
      *            Minimum mass, inclusive
@@ -53,11 +54,13 @@ class FilterMass extends AbstractFilter
     public function __construct($minMass, $maxMass)
     {
         if (! is_float($minMass) && ! is_int($minMass) && ! is_null($minMass)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($minMass));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type float. Value is of type ' . gettype($minMass));
         }
         
         if (! is_float($maxMass) && ! is_int($maxMass) && ! is_null($maxMass)) {
-            throw new \InvalidArgumentException('Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
+            throw new \InvalidArgumentException(
+                'Argument 2 must be of type float. Value is of type ' . gettype($maxMass));
         }
         
         $this->minMass = $minMass;

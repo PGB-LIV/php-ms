@@ -43,6 +43,7 @@ class FilterRetentionTime extends AbstractFilter
 
     /**
      * Creates a new instance with the specified minimum and maximum retention time values.
+     * Specify null for minimum or maximum for no limit.
      *
      * @param double $minRetentionTime
      *            Minimum retention time, inclusive
@@ -52,11 +53,13 @@ class FilterRetentionTime extends AbstractFilter
     public function __construct($minRetentionTime, $maxRetentionTime = null)
     {
         if (! is_float($minRetentionTime) && ! is_int($minRetentionTime) && ! is_null($minRetentionTime)) {
-            throw new \InvalidArgumentException('Argument 1 must be type numeric or null. Value is of type ' . gettype($minRetentionTime));
+            throw new \InvalidArgumentException(
+                'Argument 1 must be type numeric or null. Value is of type ' . gettype($minRetentionTime));
         }
         
         if (! is_float($maxRetentionTime) && ! is_int($maxRetentionTime) && ! is_null($maxRetentionTime)) {
-            throw new \InvalidArgumentException('Argument 2 must be of type numeric or null. Value is of type ' . gettype($maxRetentionTime));
+            throw new \InvalidArgumentException(
+                'Argument 2 must be of type numeric or null. Value is of type ' . gettype($maxRetentionTime));
         }
         
         $this->minRetentionTime = $minRetentionTime;

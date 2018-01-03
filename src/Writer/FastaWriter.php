@@ -20,6 +20,11 @@ use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry;
 use pgb_liv\php_ms\Core\Database\Fasta\FastaInterface;
 
+/**
+ * A file writer class for creating FASTA files.
+ *
+ * @author Andrew Collins
+ */
 class FastaWriter
 {
 

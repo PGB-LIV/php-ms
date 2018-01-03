@@ -32,20 +32,38 @@ class FilterLength extends AbstractFilter
      *
      * @var integer
      */
-    private $minLength = 6;
+    private $minLength;
 
     /**
      * Maximum peptide length, inclusive
      *
      * @var integer
      */
-    private $maxLength = 60;
+    private $maxLength;
 
-    public function __construct($minLength, $maxLength)
+    /**
+     * Creates a new instance with the specified minimum and maximum length values.
+     * Specify null for minimum or maximum for no limit.
+     *
+     * @param int $minCharge
+     *            Minimum spectra charge, inclusive
+     * @param int $maxCharge
+     *            Maximum spectra charge, inclusive
+     */
+    public function __construct($minLength, $maxLength = null)
     {
-        // TODO: Add validation
-        $this->minLength = $minLength;
-        $this->maxLength = $maxLength;
+        if (! is_int($minLength) && ! is_null($minLength)) {
+            throw new \InvalidArgumentException(
+                'Argument 1 must be of type int or null. Value is of type ' . gettype($minLength));
+        }
+        
+        if (! is_int($maxLength) && ! is_null($maxLength)) {
+            throw new \InvalidArgumentException(
+                'Argument 2 must be of type int or null. Value is of type ' . gettype($maxLength));
+        }
+        
+        $this->minCharge = $minCharge;
+        $this->maxCharge = $maxCharge;
     }
 
     /**
@@ -56,11 +74,11 @@ class FilterLength extends AbstractFilter
      */
     public function isValidPeptide(Peptide $peptide)
     {
-        if ($peptide->getLength() < $this->minLength) {
+        if (! is_null($this->minLength) && $peptide->getLength() < $this->minLength) {
             return false;
         }
         
-        if ($peptide->getLength() > $this->maxLength) {
+        if (! is_null($this->maxLength) && $peptide->getLength() > $this->maxLength) {
             return false;
         }
         

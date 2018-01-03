@@ -17,7 +17,7 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * Class for spectra identification object, provides storage for assigning a Peptide and scoring.
+ * Class for chromosome identification object, provides storage for assigning a name, strand and version.
  *
  * @author Andrew Collins
  */

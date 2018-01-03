@@ -21,6 +21,11 @@ use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Core\Peptide;
 
+/**
+ * A file writer class for creating proBed files.
+ *
+ * @author Andrew Collins
+ */
 class ProBedWriter
 {
 
@@ -148,7 +153,7 @@ class ProBedWriter
             fwrite($this->fileHandle, (count($peptide->getProteins()) == 1 ? 'unique' : 'not-unique[unknown]') . "\t");
             
             // genomeReferenceVersion
-            fwrite($this->fileHandle, 
+            fwrite($this->fileHandle,
                 (is_null($protein->getChromosome()->getGenomeReferenceVersion()) ? '.' : $protein->getChromosome()->getGenomeReferenceVersion()) .
                      "\t");
             
@@ -212,7 +217,7 @@ class ProBedWriter
         
         // Possible unmapped protein
         // TODO: Correct handling missing version. Required by spec?
-        //if (is_null($chromosome) || is_null($chromosome->getGenomeReferenceVersion())) {
+        // if (is_null($chromosome) || is_null($chromosome->getGenomeReferenceVersion())) {
         if (is_null($chromosome)) {
             return false;
         }

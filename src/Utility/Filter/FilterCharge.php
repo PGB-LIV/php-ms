@@ -32,17 +32,18 @@ class FilterCharge extends AbstractFilter
      *
      * @var integer
      */
-    private $minCharge = 1;
+    private $minCharge;
 
     /**
      * Maximum spectra charge, inclusive
      *
      * @var integer
      */
-    private $maxCharge = 3;
+    private $maxCharge;
 
     /**
      * Creates a new instance with the specified minimum and maximum charge values.
+     * Specify null for minimum or maximum for no limit.
      *
      * @param int $minCharge
      *            Minimum spectra charge, inclusive
