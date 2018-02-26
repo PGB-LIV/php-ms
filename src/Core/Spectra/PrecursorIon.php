@@ -35,13 +35,6 @@ class PrecursorIon implements IonInterface
     private $identifier;
 
     /**
-     * The retention time for this object
-     *
-     * @var float
-     */
-    private $retentionTime;
-
-    /**
      * The title for this object
      *
      * @var string
@@ -87,32 +80,6 @@ class PrecursorIon implements IonInterface
     public function getIdentifier()
     {
         return $this->identifier;
-    }
-
-    /**
-     * Sets the spectra elements retention time.
-     *
-     * @param float $retentionTime
-     *            Column retention time in seconds.
-     */
-    public function setRetentionTime($retentionTime)
-    {
-        if (! (is_int($retentionTime) || is_float($retentionTime))) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type int or float. Value is of type ' . gettype($retentionTime));
-        }
-        
-        $this->retentionTime = $retentionTime;
-    }
-
-    /**
-     * Gets the retention time in seconds
-     *
-     * @return float
-     */
-    public function getRetentionTime()
-    {
-        return $this->retentionTime;
     }
 
     /**

@@ -69,7 +69,11 @@ class MgfWriter
         }
         
         if (! is_null($precursor->getRetentionTime())) {
-            fwrite($this->fileHandle, 'RTINSECONDS=' . $precursor->getRetentionTime() . PHP_EOL);
+            if ($precursor->hasRetentionTimeWindow()) {
+                fwrite($this->fileHandle, 'RTINSECONDS=' . implode(',', $precursor->getRetentionTimeWindow()) . PHP_EOL);
+            } else {
+                fwrite($this->fileHandle, 'RTINSECONDS=' . $precursor->getRetentionTime() . PHP_EOL);
+            }
         }
         
         foreach ($precursor->getFragmentIons() as $ion) {

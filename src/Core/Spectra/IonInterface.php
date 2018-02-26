@@ -23,6 +23,10 @@ namespace pgb_liv\php_ms\Core\Spectra;
  */
 interface IonInterface
 {
+    
+    const RETENTION_TIME_START = 0;
+    
+    const RETENTION_TIME_END = 1;
 
     /**
      * Sets the neutral mass value for this ion
