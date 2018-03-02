@@ -21,7 +21,7 @@ namespace pgb_liv\php_ms\Core;
  *
  * @author Andrew Collins
  */
-class Peptide
+class Peptide implements ModifiableSequenceInterface
 {
     use ModifiableSequenceTrait, ProteinTrait;
 

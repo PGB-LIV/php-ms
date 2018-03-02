@@ -21,7 +21,7 @@ namespace pgb_liv\php_ms\Core;
  *
  * @author Andrew Collins
  */
-class Protein
+class Protein implements ModifiableSequenceInterface
 {
     use ModifiableSequenceTrait;
 

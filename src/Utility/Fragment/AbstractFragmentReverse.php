@@ -16,8 +16,8 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
-use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\AminoAcidMono;
+use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
 
 /**
  * Abstract class containing generic filtering methods
@@ -27,10 +27,10 @@ use pgb_liv\php_ms\Core\AminoAcidMono;
 abstract class AbstractFragmentReverse extends AbstractFragment implements FragmentInterface
 {
 
-    public function __construct(Peptide $peptide)
+    public function __construct(ModifiableSequenceInterface $sequence)
     {
         $this->setIsReversed(true);
-        parent::__construct($peptide);
+        parent::__construct($sequence);
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
     public function getIons()
     {
         $ions = array();
-        $sequence = $this->peptide->getSequence();
+        $sequence = $this->sequence->getSequence();
         
         $sum = 0;
         
@@ -50,7 +50,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
         $nTermMass = $this->getNTerminalMass();
         
         for ($i = $this->getEnd(); $i > $this->getStart(); $i --) {
-            $residue= $sequence[$i - 1];
+            $residue = $sequence[$i - 1];
             $mass = AminoAcidMono::getMonoisotopicMass($residue);
             
             // Add mass
@@ -61,7 +61,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
             
             // Add modification mass
             // Catch modification on position or residue
-            foreach ($this->peptide->getModifications() as $modification) {
+            foreach ($this->sequence->getModifications() as $modification) {
                 // Check every position or residue
                 if ($modification->getLocation() === $i || in_array($residue, $modification->getResidues())) {
                     // Residue is modified
@@ -74,7 +74,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
             }
             
             $sum += $mass;
-            $ions[($this->getEnd()-$i)+1] = $sum;
+            $ions[($this->getEnd() - $i) + 1] = $sum;
         }
         
         return $ions;

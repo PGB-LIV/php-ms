@@ -105,6 +105,14 @@ trait ModifiableSequenceTrait
     }
 
     /**
+     * Clears the modifications
+     */
+    public function clearModifications()
+    {
+        $this->modifications = array();
+    }
+
+    /**
      * Returns whether this protein contains modifications or not
      *
      * @return boolean True if the object contains modifications
@@ -220,11 +228,11 @@ trait ModifiableSequenceTrait
         
         return $massCharge / $charge;
     }
-    
+
     /**
      * Reverses the current sequence.
      * Suitable for creating decoy sequences
-     * 
+     *
      * @todo This method does not yet respect modification absolute location data
      */
     public function reverseSequence()

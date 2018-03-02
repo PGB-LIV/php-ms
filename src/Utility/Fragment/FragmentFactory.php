@@ -16,7 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
-use pgb_liv\php_ms\Core\Peptide;
+use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
 
 /**
  * Helper methods to get fragmentation types by instrument type
@@ -52,40 +52,40 @@ class FragmentFactory
      *
      * @param string $method
      *            The method to get fragment types for
-     * @param Peptide $peptide
-     *            The peptide to get fragment types for
+     * @param ModifiableSequenceInterface $sequence
+     *            The peptide or protein sequence object to get fragment types for
      * @return FragmentInterface[]
      */
-    public static function getMethodFragments($method, Peptide $peptide)
+    public static function getMethodFragments($method, ModifiableSequenceInterface $sequence)
     {
         $fragmentTypes = array();
         
         switch (strtoupper($method)) {
             case 'CID':
             case 'HCD':
-                $fragmentTypes['B'] = new BFragment($peptide);
-                $fragmentTypes['Y'] = new YFragment($peptide);
+                $fragmentTypes['B'] = new BFragment($sequence);
+                $fragmentTypes['Y'] = new YFragment($sequence);
                 break;
             case 'ECD':
-                $fragmentTypes['C'] = new CFragment($peptide);
-                $fragmentTypes['Z'] = new ZFragment($peptide);
-                $fragmentTypes['B'] = new BFragment($peptide);
+                $fragmentTypes['C'] = new CFragment($sequence);
+                $fragmentTypes['Z'] = new ZFragment($sequence);
+                $fragmentTypes['B'] = new BFragment($sequence);
                 break;
             case 'ETD':
-                $fragmentTypes['C'] = new CFragment($peptide);
-                $fragmentTypes['Z'] = new ZFragment($peptide);
+                $fragmentTypes['C'] = new CFragment($sequence);
+                $fragmentTypes['Z'] = new ZFragment($sequence);
                 break;
             case 'CTD':
             case 'EDD':
             case 'NETD':
-                $fragmentTypes['A'] = new AFragment($peptide);
-                $fragmentTypes['X'] = new XFragment($peptide);
+                $fragmentTypes['A'] = new AFragment($sequence);
+                $fragmentTypes['X'] = new XFragment($sequence);
                 break;
             case 'ETHCD':
-                $fragmentTypes['B'] = new BFragment($peptide);
-                $fragmentTypes['Y'] = new YFragment($peptide);
-                $fragmentTypes['C'] = new CFragment($peptide);
-                $fragmentTypes['Z'] = new ZFragment($peptide);
+                $fragmentTypes['B'] = new BFragment($sequence);
+                $fragmentTypes['Y'] = new YFragment($sequence);
+                $fragmentTypes['C'] = new CFragment($sequence);
+                $fragmentTypes['Z'] = new ZFragment($sequence);
                 break;
             default:
                 throw new \InvalidArgumentException('Unknown fragmentation method type "' . $method . '"');

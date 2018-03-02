@@ -61,7 +61,12 @@ class MgfWriter
         // TODO: Validate mandatory/optional fields
         fwrite($this->fileHandle, 'BEGIN IONS' . PHP_EOL);
         fwrite($this->fileHandle, 'TITLE=' . $precursor->getTitle() . PHP_EOL);
-        fwrite($this->fileHandle, 'PEPMASS=' . $precursor->getMassCharge() . PHP_EOL);
+        fwrite($this->fileHandle, 'PEPMASS=' . $precursor->getMassCharge());
+        if (! is_null($precursor->getIntensity())) {
+            fwrite($this->fileHandle, ' ' . $precursor->getIntensity());
+        }
+        
+        fwrite($this->fileHandle, PHP_EOL);
         fwrite($this->fileHandle, 'CHARGE=' . $precursor->getCharge() . '+' . PHP_EOL);
         
         if (! is_null($precursor->getScan())) {

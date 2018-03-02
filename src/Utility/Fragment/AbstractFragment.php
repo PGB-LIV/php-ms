@@ -16,8 +16,8 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
-use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\AminoAcidMono;
+use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
 
 /**
  * Abstract class containing generic filtering methods
@@ -34,23 +34,23 @@ abstract class AbstractFragment implements FragmentInterface
      */
     private $isReversed = false;
 
-    protected $peptide;
+    protected $sequence;
 
     /**
      * Creates a new instance of this fragmenter using the specified peptide
      *
-     * @param Peptide $peptide
+     * @param ModifiableSequenceInterface $sequence
      *            Peptide object which must contain a sequence
      *            
      * @throws \InvalidArgumentException If the peptide object does not contain a sequence
      */
-    public function __construct(Peptide $peptide)
+    public function __construct(ModifiableSequenceInterface $sequence)
     {
-        if (is_null($peptide->getSequence()) || strlen($peptide->getSequence()) == 0) {
+        if (is_null($sequence->getSequence()) || strlen($sequence->getSequence()) == 0) {
             throw new \InvalidArgumentException('Null or empty sequence received.');
         }
         
-        $this->peptide = $peptide;
+        $this->sequence = $sequence;
     }
 
     /**
@@ -61,7 +61,7 @@ abstract class AbstractFragment implements FragmentInterface
     public function getIons()
     {
         $ions = array();
-        $sequence = $this->peptide->getSequence();
+        $sequence = $this->sequence->getSequence();
         
         $sum = 0;
         
@@ -80,7 +80,7 @@ abstract class AbstractFragment implements FragmentInterface
             
             // Add modification mass
             // Catch modification on position or residue
-            foreach ($this->peptide->getModifications() as $modification) {
+            foreach ($this->sequence->getModifications() as $modification) {
                 // Check every position or residue
                 if ($modification->getLocation() === $i + 1 || in_array($residue, $modification->getResidues())) {
                     // Residue is modified
@@ -88,7 +88,7 @@ abstract class AbstractFragment implements FragmentInterface
                 }
             }
             
-            if ($i + 1 == $this->peptide->getLength()) {
+            if ($i + 1 == $this->sequence->getLength()) {
                 $mass += $cTermMass;
             }
             
@@ -102,7 +102,7 @@ abstract class AbstractFragment implements FragmentInterface
     protected function getNTerminalMass()
     {
         $mass = 0;
-        foreach ($this->peptide->getModifications() as $modification) {
+        foreach ($this->sequence->getModifications() as $modification) {
             if ($modification->getLocation() === 0 || in_array('[', $modification->getResidues())) {
                 $mass += $modification->getMonoisotopicMass();
             }
@@ -114,8 +114,8 @@ abstract class AbstractFragment implements FragmentInterface
     protected function getCTerminalMass()
     {
         $mass = 0;
-        foreach ($this->peptide->getModifications() as $modification) {
-            if ($modification->getLocation() === $this->peptide->getLength() + 1 ||
+        foreach ($this->sequence->getModifications() as $modification) {
+            if ($modification->getLocation() === $this->sequence->getLength() + 1 ||
                  in_array(']', $modification->getResidues())) {
                 $mass += $modification->getMonoisotopicMass();
             }
@@ -131,7 +131,7 @@ abstract class AbstractFragment implements FragmentInterface
      */
     protected function getEnd()
     {
-        return $this->peptide->getLength();
+        return $this->sequence->getLength();
     }
 
     /**
