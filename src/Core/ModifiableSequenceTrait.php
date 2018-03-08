@@ -113,6 +113,20 @@ trait ModifiableSequenceTrait
     }
 
     /**
+     * Remove a modification
+     */
+    public function removeModification(Modification $searchModification)
+    {
+        foreach ($this->modifications as $key => $modification) {
+            if ($modification !== $searchModification) {
+                continue;
+            }
+            
+            unset($this->modifications[$key]);
+        }
+    }
+
+    /**
      * Returns whether this protein contains modifications or not
      *
      * @return boolean True if the object contains modifications
