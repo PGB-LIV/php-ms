@@ -149,6 +149,7 @@ class PeffFastaEntry implements FastaInterface
                     $protein->setOrganismName($value);
                     break;
                 case 'modrespsi':
+                case 'modresunimod':
                     $modifications = self::parseModifications($value);
                     $protein->addModifications($modifications);
                     break;
@@ -160,7 +161,7 @@ class PeffFastaEntry implements FastaInterface
     }
 
     /**
-     * Parses ModResPsi element and returns the parsed modifications
+     * Parses ModResPsi/ModResUnimod element and returns the parsed modifications
      *
      * @param string $value
      *            The ModResXXX value
@@ -168,15 +169,19 @@ class PeffFastaEntry implements FastaInterface
      */
     private static function parseModifications($value)
     {
-        preg_match_all('/\(([0-9]+)\|(MOD:[0-9]+)\)/', $value, $matches);
+        preg_match_all('/\(([0-9,]+)\|((?>UNIMOD|MOD):[0-9]+)\|(.+?)(?>\)|\|(.+?)\))/', $value, $matches, PREG_SET_ORDER);
         
         $modifications = array();
-        foreach ($matches[1] as $key => $location) {
-            $modification = new Modification();
-            $modification->setLocation((int) $location);
-            $modification->setName($matches[2][$key]);
-            
-            $modifications[] = $modification;
+        foreach ($matches as $match) {
+            $locations = explode(',', $match[1]);
+            foreach ($locations as $location) {
+                $modification = new Modification();
+                $modification->setLocation((int) $location);
+                $modification->setName($match[3]);
+                $modification->setAccession($match[2]);
+                
+                $modifications[] = $modification;
+            }
         }
         
         return $modifications;
