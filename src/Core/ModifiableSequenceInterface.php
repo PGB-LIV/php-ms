@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * Interface to ion properties of an object
+ * Interface to common properties for a modifiable sequence object, such as peptide or protein sequence
  *
  * @author Andrew Collins
  */
@@ -61,6 +61,11 @@ interface ModifiableSequenceInterface
      * @return Modification[]
      */
     public function getModifications();
+
+    /**
+     * Clears the modifications
+     */
+    public function clearModifications();
 
     /**
      * Returns whether this protein contains modifications or not

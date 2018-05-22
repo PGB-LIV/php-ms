@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ namespace pgb_liv\php_ms\Core\Spectra;
  */
 interface IonInterface
 {
-    
+
     const RETENTION_TIME_START = 0;
-    
+
     const RETENTION_TIME_END = 1;
 
     /**
@@ -91,4 +91,43 @@ interface IonInterface
      * @return float
      */
     public function getIntensity();
+
+    /**
+     * Sets the spectra elements retention time
+     *
+     * @param float $retentionTime
+     *            Retention time of fragment
+     */
+    public function setRetentionTime($retentionTime);
+
+    /**
+     * Sets the spectra elements retention time or retention time window
+     *
+     * @param float $retentionTimeStart
+     *            Retention time of fragment or start of retention time window
+     * @param float $retentionTimeEnd
+     *            End of retention time window, or null if equal to start
+     */
+    public function setRetentionTimeWindow($retentionTimeStart, $retentionTimeEnd);
+
+    /**
+     * Gets the retention time in seconds, or the average if a window has been set
+     *
+     * @return float
+     */
+    public function getRetentionTime();
+
+    /**
+     * Gets the retention time window in seconds
+     *
+     * @return array
+     */
+    public function getRetentionTimeWindow();
+
+    /**
+     * Returns true if the retention time is a window
+     *
+     * @return boolean
+     */
+    public function hasRetentionTimeWindow();
 }
