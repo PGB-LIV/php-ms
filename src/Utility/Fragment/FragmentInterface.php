@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,10 @@ interface FragmentInterface
     /**
      * Gets the fragmentation ions for this instances peptide sequence
      *
+     * @param int $charge The charge to generate ions at
      * @return double[]
      */
-    public function getIons();
+    public function getIons($charge = 1);
 
     /**
      * Gets the direction ions should be read

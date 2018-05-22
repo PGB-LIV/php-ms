@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Core\AminoAcidMono;
 use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
+use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Abstract class containing generic filtering methods
@@ -56,9 +57,8 @@ abstract class AbstractFragment implements FragmentInterface
     /**
      *
      * {@inheritdoc}
-     * @see \pgb_liv\php_ms\Utility\Fragment\FragmentInterface::getIons()
      */
-    public function getIons()
+    public function getIons($charge = 1)
     {
         $ions = array();
         $sequence = $this->sequence->getSequence();
@@ -82,7 +82,8 @@ abstract class AbstractFragment implements FragmentInterface
             // Catch modification on position or residue
             foreach ($this->sequence->getModifications() as $modification) {
                 // Check every position or residue
-                if ($modification->getLocation() === $i + 1 || in_array($residue, $modification->getResidues())) {
+                if ($modification->getLocation() === $i + 1 ||
+                    (is_null($modification->getLocation()) && in_array($residue, $modification->getResidues()))) {
                     // Residue is modified
                     $mass += $modification->getMonoisotopicMass();
                 }
@@ -93,7 +94,7 @@ abstract class AbstractFragment implements FragmentInterface
             }
             
             $sum += $mass;
-            $ions[$i + 1] = $sum;
+            $ions[$i + 1] = $this->getChargedIon($sum, $charge);
         }
         
         return $ions;
@@ -116,7 +117,7 @@ abstract class AbstractFragment implements FragmentInterface
         $mass = 0;
         foreach ($this->sequence->getModifications() as $modification) {
             if ($modification->getLocation() === $this->sequence->getLength() + 1 ||
-                 in_array(']', $modification->getResidues())) {
+                in_array(']', $modification->getResidues())) {
                 $mass += $modification->getMonoisotopicMass();
             }
         }
@@ -159,11 +160,26 @@ abstract class AbstractFragment implements FragmentInterface
     /**
      *
      * {@inheritdoc}
-     *
-     * @see \pgb_liv\php_ms\Utility\Fragment\FragmentInterface::getIons()
      */
     public function isReversed()
     {
         return $this->isReversed;
+    }
+
+    /**
+     * Charges the mass to the specified charge
+     *
+     * @param double $mass
+     *            The neutral mass to charge
+     * @param int $charge
+     *            The integer charge value to charge too
+     * @return double
+     */
+    protected function getChargedIon($mass, $charge)
+    {
+        $chargedMass = $mass + (Peptide::PROTON_MASS * $charge);
+        $chargedMass /= $charge;
+        
+        return $chargedMass;
     }
 }

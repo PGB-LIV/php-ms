@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,9 @@ class YFragment extends AbstractFragmentReverse implements FragmentInterface
     /**
      *
      * {@inheritdoc}
-     *
-     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getAdditiveMass()
      */
     protected function getAdditiveMass()
     {
-        return Peptide::C_TERM_MASS + Peptide::HYDROGEN_MASS + Peptide::PROTON_MASS;
+        return Peptide::C_TERM_MASS + Peptide::HYDROGEN_MASS;
     }
 }

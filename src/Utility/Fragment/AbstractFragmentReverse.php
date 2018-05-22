@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Core\AminoAcidMono;
 use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
+use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Abstract class containing generic filtering methods
@@ -36,10 +37,8 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
     /**
      *
      * {@inheritdoc}
-     *
-     * @see \pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons()
      */
-    public function getIons()
+    public function getIons($charge = 1)
     {
         $ions = array();
         $sequence = $this->sequence->getSequence();
@@ -63,7 +62,8 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
             // Catch modification on position or residue
             foreach ($this->sequence->getModifications() as $modification) {
                 // Check every position or residue
-                if ($modification->getLocation() === $i || in_array($residue, $modification->getResidues())) {
+                if ($modification->getLocation() === $i ||
+                    (is_null($modification->getLocation()) && in_array($residue, $modification->getResidues()))) {
                     // Residue is modified
                     $mass += $modification->getMonoisotopicMass();
                 }
@@ -74,7 +74,7 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
             }
             
             $sum += $mass;
-            $ions[($this->getEnd() - $i) + 1] = $sum;
+            $ions[($this->getEnd() - $i) + 1] = $this->getChargedIon($sum, $charge);
         }
         
         return $ions;
