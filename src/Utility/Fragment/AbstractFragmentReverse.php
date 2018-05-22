@@ -18,7 +18,6 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Core\AminoAcidMono;
 use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
-use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Abstract class containing generic filtering methods

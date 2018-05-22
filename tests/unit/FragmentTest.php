@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
      *
@@ -49,6 +50,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
      *
@@ -64,6 +66,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -99,6 +102,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -129,11 +133,16 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         
         $ions = $fragment->getIons();
         
-        $this->assertEquals($expected, $ions, null, 0.00001);
+        $this->assertEquals(count($expected), count($ions));
+        foreach ($ions as $key => $value) {
+            $this->assertEquals($expected[$key], $value, null, 0.000015);
+        }
+        
         $this->assertFalse($fragment->isReversed());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -169,6 +178,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -209,6 +219,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -249,6 +260,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -289,6 +301,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -335,10 +348,14 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         
         $ions = $fragment->getIons();
         
-        $this->assertEquals($expected, $ions, null, 0.00001);
+        $this->assertEquals(count($expected), count($ions));
+        foreach ($ions as $key => $value) {
+            $this->assertEquals($expected[$key], $value, null, 0.000015);
+        }
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
@@ -391,6 +408,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getFragmentMethods
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -405,6 +423,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -422,6 +441,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -439,6 +459,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -457,6 +478,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -474,6 +496,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -491,6 +514,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -508,6 +532,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -525,6 +550,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @uses pgb_liv\php_ms\Utility\Fragment\FragmentFactory
@@ -544,6 +570,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Utility\Fragment\FragmentFactory::getMethodFragments
      *
      * @expectedException InvalidArgumentException
