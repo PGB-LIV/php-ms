@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 namespace pgb_liv\php_ms\Core;
+
+use pgb_liv\php_ms\Constant\PhysicalConstants;
 
 /**
  * Trait for providing access to a sequence and set of modifications
@@ -237,8 +239,7 @@ trait ModifiableSequenceTrait
     public function getMonoisotopicMassCharge($charge)
     {
         $massCharge = $this->getMonoisotopicMass();
-        // TODO: Should use same Proton mass constant as IonTrait
-        $massCharge += 1.007276466812 * $charge;
+        $massCharge += PhysicalConstants::PROTON_MASS * $charge;
         
         return $massCharge / $charge;
     }

@@ -16,6 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
+use pgb_liv\php_ms\Constant\ChemicalConstants;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
@@ -32,6 +33,6 @@ class YFragment extends AbstractFragmentReverse implements FragmentInterface
      */
     protected function getAdditiveMass()
     {
-        return Peptide::C_TERM_MASS + Peptide::HYDROGEN_MASS;
+        return Peptide::C_TERM_MASS + ChemicalConstants::HYDROGEN_MASS;
     }
 }

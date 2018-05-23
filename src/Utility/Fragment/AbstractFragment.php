@@ -18,7 +18,7 @@ namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Core\AminoAcidMono;
 use pgb_liv\php_ms\Core\ModifiableSequenceInterface;
-use pgb_liv\php_ms\Core\Peptide;
+use pgb_liv\php_ms\Constant\PhysicalConstants;
 
 /**
  * Abstract class containing generic filtering methods
@@ -177,9 +177,7 @@ abstract class AbstractFragment implements FragmentInterface
      */
     protected function getChargedIon($mass, $charge)
     {
-        $chargedMass = $mass + (Peptide::PROTON_MASS * $charge);
-        $chargedMass /= $charge;
-        
-        return $chargedMass;
+        $chargedMass = $mass + (PhysicalConstants::PROTON_MASS * $charge);
+        return $chargedMass / $charge;
     }
 }

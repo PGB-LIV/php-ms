@@ -14,25 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Utility\Fragment;
-
-use pgb_liv\php_ms\Constant\ChemicalConstants;
-use pgb_liv\php_ms\Core\Peptide;
+namespace pgb_liv\php_ms\Constant;
 
 /**
- * Generates the B ions from a peptide
+ * Static class containing chemical constant values in daltons.
  *
+ * @see https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all
  * @author Andrew Collins
  */
-class BFragment extends AbstractFragment implements FragmentInterface
+class ChemicalConstants
 {
 
     /**
+     * Mass of hydrogen
      *
-     * {@inheritdoc}
+     * @var double
      */
-    protected function getAdditiveMass()
-    {
-        return (Peptide::N_TERM_MASS - ChemicalConstants::HYDROGEN_MASS);
-    }
+    const HYDROGEN_MASS = 1.00782503223;
+
+    /**
+     * Mass of carbon
+     *
+     * @var double
+     */
+    const CARBON_MASS = 12.0;
+
+    /**
+     * Mass of oxygen
+     *
+     * @var double
+     */
+    const OXYGEN_MASS = 15.99491461957;
+
+    /**
+     * Mass of nitrogen
+     *
+     * @var double
+     */
+    const NITROGEN_MASS = 14.00307400443;
 }

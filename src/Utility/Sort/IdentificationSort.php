@@ -34,12 +34,12 @@ class IdentificationSort extends AbstractSort implements SortInterface
 
     private $scoreKey = null;
 
-    public function SetScoreKey($scoreKey)
+    public function setScoreKey($scoreKey)
     {
         $this->scoreKey = $scoreKey;
     }
 
-    protected function SortByScore(Identification $a, Identification $b)
+    protected function sortByScore(Identification $a, Identification $b)
     {
         if (is_null($this->scoreKey)) {
             throw new \BadMethodCallException('The key to sort on must be defined using SetScoreKey() prior to sorting.');

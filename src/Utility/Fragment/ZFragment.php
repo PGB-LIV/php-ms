@@ -17,6 +17,8 @@
 namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Core\Peptide;
+use pgb_liv\php_ms\Constant\PhysicalConstants;
+use pgb_liv\php_ms\Constant\ChemicalConstants;
 
 /**
  * Generates the Z ions from a peptide
@@ -33,7 +35,7 @@ class ZFragment extends AbstractFragmentReverse implements FragmentInterface
     protected function getAdditiveMass()
     {
         // Z has electrons added??
-        return Peptide::C_TERM_MASS - (Peptide::NITROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS) +
-            (0.00054858 * 2);
+        return Peptide::C_TERM_MASS - (ChemicalConstants::NITROGEN_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::HYDROGEN_MASS) +
+            (PhysicalConstants::ELECTRON_MASS * 2);
     }
 }

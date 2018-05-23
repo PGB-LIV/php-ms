@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 namespace pgb_liv\php_ms\Core;
+
+use pgb_liv\php_ms\Constant\ChemicalConstants;
+use pgb_liv\php_ms\Constant\PhysicalConstants;
 
 /**
  * A peptide object that encapsulates a modifiable sequence and provides additional properties
@@ -31,13 +34,33 @@ class Peptide implements ModifiableSequenceInterface
 
     const AMINO_ACID_Z_MASS = 0;
 
-    const HYDROGEN_MASS = 1.007825;
+    /**
+     *
+     * @deprecated Use ChemicalConstants
+     * @var double
+     */
+    const HYDROGEN_MASS = ChemicalConstants::HYDROGEN_MASS;
 
-    const OXYGEN_MASS = 15.994915;
+    /**
+     *
+     * @deprecated Use ChemicalConstants
+     * @var double
+     */
+    const OXYGEN_MASS = ChemicalConstants::OXYGEN_MASS;
 
-    const NITROGEN_MASS = 14.00307;
+    /**
+     *
+     * @deprecated Use ChemicalConstants
+     * @var double
+     */
+    const NITROGEN_MASS = ChemicalConstants::NITROGEN_MASS;
 
-    const PROTON_MASS = 1.007276;
+    /**
+     *
+     * @deprecated Use PhysicalConstants
+     * @var double
+     */
+    const PROTON_MASS = PhysicalConstants::PROTON_MASS;
 
     const N_TERM_MASS = 1.007875;
 
@@ -99,8 +122,8 @@ class Peptide implements ModifiableSequenceInterface
             $composition = AminoAcidComposition::getFormula($acid);
             
             $matches = array();
-            preg_match('/([A-Z])([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)/', 
-                $composition, $matches);
+            preg_match('/([A-Z])([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)/', $composition,
+                $matches);
             
             for ($i = 1; $i < count($matches); $i += 2) {
                 if ($matches[$i] == '') {

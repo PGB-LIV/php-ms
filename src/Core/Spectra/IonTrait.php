@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
  */
 namespace pgb_liv\php_ms\Core\Spectra;
 
+use pgb_liv\php_ms\Constant\PhysicalConstants;
+
 /**
  * Generic trait for providing ion properties such as mass, charge and intensity
  *
@@ -24,13 +26,6 @@ namespace pgb_liv\php_ms\Core\Spectra;
  */
 trait IonTrait
 {
-
-    /**
-     * The Proton neutral mass value
-     *
-     * @var float
-     */
-    private static $protonMass = 1.007276466879;
 
     /**
      * The neutral mass value of this ion
@@ -182,7 +177,7 @@ trait IonTrait
      */
     private function calculateNeutralMass()
     {
-        return ($this->massCharge * $this->charge) - ($this->charge * self::$protonMass);
+        return ($this->massCharge * $this->charge) - ($this->charge * PhysicalConstants::PROTON_MASS);
     }
 
     /**
@@ -235,7 +230,7 @@ trait IonTrait
     {
         if (is_array($this->retentionTimeWindow)) {
             return ($this->retentionTimeWindow[static::RETENTION_TIME_START] +
-                 $this->retentionTimeWindow[static::RETENTION_TIME_END]) / 2;
+                $this->retentionTimeWindow[static::RETENTION_TIME_END]) / 2;
         }
         
         return $this->retentionTimeWindow;

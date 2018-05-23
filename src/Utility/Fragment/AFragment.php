@@ -16,6 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
+use pgb_liv\php_ms\Constant\ChemicalConstants;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
@@ -33,6 +34,6 @@ class AFragment extends AbstractFragment implements FragmentInterface
     protected function getAdditiveMass()
     {
         // N - CHO
-        return Peptide::N_TERM_MASS - (12 + Peptide::HYDROGEN_MASS + Peptide::OXYGEN_MASS);
+        return Peptide::N_TERM_MASS - (ChemicalConstants::CARBON_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::OXYGEN_MASS);
     }
 }

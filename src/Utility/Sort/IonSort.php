@@ -28,16 +28,16 @@ class IonSort extends AbstractSort implements SortInterface
 {
 
     const DATA_TYPE = '\pgb_liv\php_ms\Core\Spectra\IonInterface';
-    
+
     const SORT_INTENSITY = 'SortByIntensity';
-    
+
     const SORT_MZ = 'SortByMassCharge';
 
     const SORT_MASS = 'SortByMass';
 
     const SORT_CHARGE = 'SortByCharge';
 
-    protected function SortByIntensity(IonInterface $a, IonInterface $b)
+    protected function sortByIntensity(IonInterface $a, IonInterface $b)
     {
         if ($a->getIntensity() == $b->getIntensity()) {
             return 0;
@@ -45,8 +45,8 @@ class IonSort extends AbstractSort implements SortInterface
         
         return $a->getIntensity() > $b->getIntensity() ? $this->returnTrue : $this->returnFalse;
     }
-    
-    protected function SortByMass(IonInterface $a, IonInterface $b)
+
+    protected function sortByMass(IonInterface $a, IonInterface $b)
     {
         if ($a->getMass() == $b->getMass()) {
             return 0;
@@ -54,8 +54,8 @@ class IonSort extends AbstractSort implements SortInterface
         
         return $a->getMass() > $b->getMass() ? $this->returnTrue : $this->returnFalse;
     }
-    
-    protected function SortByMassCharge(IonInterface $a, IonInterface $b)
+
+    protected function sortByMassCharge(IonInterface $a, IonInterface $b)
     {
         if ($a->getMassCharge() == $b->getMassCharge()) {
             return 0;
@@ -64,7 +64,7 @@ class IonSort extends AbstractSort implements SortInterface
         return $a->getMassCharge() > $b->getMassCharge() ? $this->returnTrue : $this->returnFalse;
     }
 
-    protected function SortByCharge(IonInterface $a, IonInterface $b)
+    protected function sortByCharge(IonInterface $a, IonInterface $b)
     {
         if ($a->getCharge() == $b->getCharge()) {
             return 0;

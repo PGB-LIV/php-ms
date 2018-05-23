@@ -16,6 +16,7 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
+use pgb_liv\php_ms\Constant\ChemicalConstants;
 use pgb_liv\php_ms\Core\Peptide;
 
 /**
@@ -35,7 +36,8 @@ class XFragment extends AbstractFragmentReverse implements FragmentInterface
     protected function getAdditiveMass()
     {
         // CTerm + CO-H
-        return (Peptide::C_TERM_MASS + 12 + Peptide::OXYGEN_MASS) - Peptide::HYDROGEN_MASS;
+        return (Peptide::C_TERM_MASS + ChemicalConstants::CARBON_MASS + ChemicalConstants::OXYGEN_MASS) -
+            ChemicalConstants::HYDROGEN_MASS;
     }
 
     /**
