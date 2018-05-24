@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Core;
 
 use pgb_liv\php_ms\Constant\PhysicalConstants;
+use pgb_liv\php_ms\Constant\ChemicalConstants;
 
 /**
  * Trait for providing access to a sequence and set of modifications
@@ -176,7 +177,7 @@ trait ModifiableSequenceTrait
     /**
      * Gets the theoretical monoisotopic neutral mass for this sequence and it's modifications
      *
-     * @return double The neutral mass of the sequence
+     * @return float The neutral mass of the sequence
      * @deprecated Use getMonoisotopicMass() directly
      */
     public function getMass()
@@ -187,13 +188,13 @@ trait ModifiableSequenceTrait
     /**
      * Gets the theoretical monoisotopic neutral mass for this sequence and it's modifications
      *
-     * @return double The neutral mass of the sequence
+     * @return float The neutral mass of the sequence
      */
     public function getMonoisotopicMass()
     {
         $acids = str_split($this->getSequence(), 1);
         
-        $mass = Peptide::HYDROGEN_MASS + Peptide::HYDROGEN_MASS + Peptide::OXYGEN_MASS;
+        $mass = ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::OXYGEN_MASS;
         
         foreach ($acids as $acid) {
             switch ($acid) {

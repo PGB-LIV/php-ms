@@ -61,7 +61,7 @@ abstract class AbstractFragment implements FragmentInterface
     public function getIons($charge = 1)
     {
         $ions = array();
-        $sequence = $this->sequence->getSequence();
+        $sequenceString = $this->sequence->getSequence();
         
         $sum = 0;
         
@@ -69,7 +69,7 @@ abstract class AbstractFragment implements FragmentInterface
         $nTermMass = $this->getNTerminalMass();
         
         for ($i = $this->getStart(); $i < $this->getEnd(); $i ++) {
-            $residue = $sequence[$i];
+            $residue = $sequenceString[$i];
             $mass = AminoAcidMono::getMonoisotopicMass($residue);
             
             // Add mass

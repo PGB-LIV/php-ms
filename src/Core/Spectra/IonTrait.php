@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Core\Spectra;
 
 use pgb_liv\php_ms\Constant\PhysicalConstants;
+use pgb_liv\php_ms\Core\MassTrait;
 
 /**
  * Generic trait for providing ion properties such as mass, charge and intensity
@@ -26,13 +27,7 @@ use pgb_liv\php_ms\Constant\PhysicalConstants;
  */
 trait IonTrait
 {
-
-    /**
-     * The neutral mass value of this ion
-     *
-     * @var float
-     */
-    private $mass;
+    use MassTrait;
 
     /**
      * The mass-over-charge ratio of this ion
@@ -63,33 +58,27 @@ trait IonTrait
     private $retentionTimeWindow;
 
     /**
-     * Sets the neutral mass value for this ion
+     * Sets the monoisotopic neutral mass value for this ion
      *
      * @param float $mass
      *            Mass value expressed as a floating point value
      * @throws \InvalidArgumentException If mass is not a floating point value
+     * @deprecated Use setMonoisotpicMass()
      */
     public function setMass($mass)
     {
-        if (! is_float($mass)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type float. Received ' . gettype($mass));
-        }
-        
-        $this->mass = $mass;
+        $this->setMonoisotopicMass($mass);
     }
 
     /**
-     * Gets the neutral mass value for this ion
+     * Gets the monoisotopic neutral mass value for this ion
      *
      * @return float The mass value
+     * @deprecated Use getMonoisotpicMass()
      */
     public function getMass()
     {
-        if (is_null($this->mass)) {
-            $this->mass = $this->calculateNeutralMass();
-        }
-        
-        return $this->mass;
+        return $this->getMonoisotopicMass();
     }
 
     /**

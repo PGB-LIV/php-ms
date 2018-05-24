@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 namespace pgb_liv\php_ms\Core;
 
 /**
- * Class for spectra identification object, provides storage for assigning a Peptide and scoring.
+ * Class for spectra identification object, provides storage for assigning a modifiable sequence and scoring.
  *
  * @author Andrew Collins
  */
@@ -25,11 +25,11 @@ class Identification
 {
 
     /**
-     * Peptide assigned to this identification
+     * Sequence assigned to this identification
      *
-     * @var Peptide
+     * @var ModifiableSequenceInterface
      */
-    private $peptide;
+    private $sequence;
 
     /**
      * Map of identification scores
@@ -57,20 +57,43 @@ class Identification
      *
      * @param Peptide $peptide
      *            The peptide to assign this identification object
+     * @deprecated Use setSequence()
      */
     public function setPeptide(Peptide $peptide)
     {
-        $this->peptide = $peptide;
+        $this->setSequence($peptide);
     }
 
     /**
      * Gets the peptide associated with this identification
      *
-     * @return Peptide
+     * @return ModifiableSequenceInterface
+     * @deprecated Use getSequence()
      */
     public function getPeptide()
     {
-        return $this->peptide;
+        return $this->getSequence();
+    }
+
+    /**
+     * Sets the sequence for this identification
+     *
+     * @param ModifiableSequenceInterface $sequence
+     *            The sequence to assign this identification object
+     */
+    public function setSequence(ModifiableSequenceInterface $sequence)
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * Gets the sequence associated with this identification
+     *
+     * @return ModifiableSequenceInterface
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
     }
 
     /**

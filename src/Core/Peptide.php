@@ -37,28 +37,28 @@ class Peptide implements ModifiableSequenceInterface
     /**
      *
      * @deprecated Use ChemicalConstants
-     * @var double
+     * @var float
      */
     const HYDROGEN_MASS = ChemicalConstants::HYDROGEN_MASS;
 
     /**
      *
      * @deprecated Use ChemicalConstants
-     * @var double
+     * @var float
      */
     const OXYGEN_MASS = ChemicalConstants::OXYGEN_MASS;
 
     /**
      *
      * @deprecated Use ChemicalConstants
-     * @var double
+     * @var float
      */
     const NITROGEN_MASS = ChemicalConstants::NITROGEN_MASS;
 
     /**
      *
      * @deprecated Use PhysicalConstants
-     * @var double
+     * @var float
      */
     const PROTON_MASS = PhysicalConstants::PROTON_MASS;
 
