@@ -27,7 +27,9 @@ use pgb_liv\php_ms\Core\MassTrait;
  */
 trait IonTrait
 {
-    use MassTrait;
+    use MassTrait {
+        getMonoisotopicMass as protected massTraitGetMonoisotopicMass;
+    }
 
     /**
      * The mass-over-charge ratio of this ion
@@ -79,6 +81,22 @@ trait IonTrait
     public function getMass()
     {
         return $this->getMonoisotopicMass();
+    }
+    
+    /**
+     * Gets the monoisotopic mass of this object
+     *
+     * @return float
+     */
+    public function getMonoisotopicMass()
+    {
+        $mass = $this->massTraitGetMonoisotopicMass();
+        
+        if (is_null($mass)) {
+            $mass = $this->calculateNeutralMass();
+        }
+        
+        return $mass;
     }
 
     /**
