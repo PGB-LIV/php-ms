@@ -82,7 +82,7 @@ trait IonTrait
     {
         return $this->getMonoisotopicMass();
     }
-    
+
     /**
      * Gets the monoisotopic mass of this object
      *
