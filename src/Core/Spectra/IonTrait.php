@@ -35,6 +35,7 @@ trait IonTrait
      * The mass-over-charge ratio of this ion
      *
      * @var float
+     * @TODO: Remove this, it should be calculated on demand
      */
     private $massCharge;
 
@@ -105,6 +106,7 @@ trait IonTrait
      * @param float $massCharge
      *            The mass-to-charge ratio to set to
      * @throws \InvalidArgumentException If $mz is not a valid floating point value
+     * @TODO: This behaviour is not safe. It should always request charge and then store neutral+charge
      */
     public function setMassCharge($massCharge)
     {
@@ -120,6 +122,7 @@ trait IonTrait
      * Gets the mass-to-charge ratio for this ion
      *
      * @return float
+     * @TODO: Show compute on demand using neutral+charge
      */
     public function getMassCharge()
     {
