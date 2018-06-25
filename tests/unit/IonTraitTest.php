@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMass
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getMass
+     *
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getMonoisotopicMass
      *
      * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
      */
@@ -30,13 +31,14 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
         $value = 370.217742939639;
         
         $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setMass($value);
+        $spectra->setMonoisotopicMass($value);
         
-        $this->assertEquals($value, $spectra->getMass());
+        $this->assertEquals($value, $spectra->getMonoisotopicMass());
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMass
+     *
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMonoisotopicMass
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
@@ -46,27 +48,30 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
         $value = 'fail';
         
         $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setMass($value);
+        $spectra->setMonoisotopicMass($value);
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMassCharge
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getMassCharge
+     *
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMonoisotopicMassCharge
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getMonoisotopicMassCharge
      *
      * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
      */
     public function testCanSetMassChargeValid()
     {
-        $value = 370.217742939639;
+        $mz = 370.217742939639;
+        $charge = 2;
         
         $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setMassCharge($value);
+        $spectra->setMonoisotopicMassCharge($mz, 2);
         
-        $this->assertEquals($value, $spectra->getMassCharge());
+        $this->assertEquals($mz, $spectra->getMonoisotopicMassCharge(), '', 0.0001);
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMassCharge
+     *
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMonoisotopicMassCharge
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
@@ -76,40 +81,11 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
         $value = 'fail';
         
         $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setMassCharge($value);
+        $spectra->setMonoisotopicMassCharge($value, 10);
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setCharge
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getCharge
      *
-     * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
-     */
-    public function testCanSetChargeValid()
-    {
-        $value = 5;
-        
-        $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setCharge($value);
-        
-        $this->assertEquals($value, $spectra->getCharge());
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setCharge
-     * @expectedException InvalidArgumentException
-     *
-     * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
-     */
-    public function testCanSetChargeInvalid()
-    {
-        $value = 'fail';
-        
-        $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setCharge($value);
-    }
-
-    /**
      * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setIntensity
      * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getIntensity
      *
@@ -126,6 +102,7 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setIntensity
      * @expectedException InvalidArgumentException
      *
@@ -140,9 +117,9 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMass
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getMass
-     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::calculateNeutralMass
+     *
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::setMonoisotopicMassCharge
+     * @covers pgb_liv\php_ms\Core\Spectra\IonTrait::getMonoisotopicMass
      *
      * @uses pgb_liv\php_ms\Core\Spectra\IonTrait
      */
@@ -153,9 +130,8 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
         $charge = 2;
         
         $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setMassCharge($mz);
-        $spectra->setCharge($charge);
+        $spectra->setMonoisotopicMassCharge($mz, $charge);
         
-        $this->assertEquals($mass, round($spectra->getMass(), 5));
+        $this->assertEquals($mass, $spectra->getMonoisotopicMass(), '', 0.0001);
     }
 }

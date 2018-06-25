@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,11 +53,10 @@ class MgfWriterTest extends \PHPUnit_Framework_TestCase
         $filePath = tempnam(sys_get_temp_dir(), 'MgfWriterTest');
         
         $precursor = new PrecursorIon();
-        $precursor->setMassCharge(mt_rand(1000000, 3000000) / 1000);
-        $precursor->setCharge(2);
+        $precursor->setMonoisotopicMassCharge(mt_rand(1000000, 3000000) / 1000, 2);
         
         $frag = new FragmentIon();
-        $frag->setMassCharge(mt_rand(100000, 200000) / 1000);
+        $frag->setMonoisotopicMassCharge(mt_rand(100000, 200000) / 1000, 2);
         $frag->setIntensity(mt_rand(100000, 200000));
         
         $precursor->addFragmentIon($frag);
@@ -88,16 +87,14 @@ class MgfWriterTest extends \PHPUnit_Framework_TestCase
         $filePath = tempnam(sys_get_temp_dir(), 'MgfWriterTest');
         
         $precursor = new PrecursorIon();
-        $precursor->setMassCharge(mt_rand(1000000, 3000000) / 1000);
-        $precursor->setCharge(2);
+        $precursor->setMonoisotopicMassCharge(mt_rand(1000000, 3000000) / 1000, 2);
         $precursor->setRetentionTime(mt_rand(1000, 90000) / 1000);
         $precursor->setScan(mt_rand(1, 3000));
         $precursor->setTitle('Mgf scan entry');
         
         $frag = new FragmentIon();
-        $frag->setMassCharge(mt_rand(100000, 200000) / 1000);
+        $frag->setMonoisotopicMassCharge(mt_rand(100000, 200000) / 1000, 2);
         $frag->setIntensity(mt_rand(100000, 200000));
-        $frag->setCharge(2);
         
         $precursor->addFragmentIon($frag);
         

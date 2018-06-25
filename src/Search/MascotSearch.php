@@ -108,9 +108,9 @@ class MascotSearch
             fwrite($handle, '--' . $boundary . "\r\n");
             
             if (is_array($value) && $key == 'FILE') {
-                fwrite($handle, 
+                fwrite($handle,
                     'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] .
-                         '"' . "\r\n");
+                    '"' . "\r\n");
                 fwrite($handle, $value[MascotSearch::MIME_TYPE] . "\r\n\r\n");
                 
                 $fileHandle = fopen($value[MascotSearch::FILE_DATA], 'r');
@@ -125,7 +125,7 @@ class MascotSearch
                 fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");
                 
                 foreach ($value as $modification) {
-                    fwrite($handle, 
+                    fwrite($handle,
                         $modification->getName() . ' (' . implode('', $modification->getResidues()) . ")\r\n");
                 }
             } else {
@@ -171,14 +171,42 @@ class MascotSearch
         $hasAttachment = false;
         $attachmentName = null;
         $tmpFile = null;
+        $isChunked = false;
+        $chunkSizeExpected = - 1;
+        $chunkSize = 0;
         
         while (! feof($socket)) {
             $line = fgets($socket);
             
+            if ($isChunked) {
+                if ($chunkSize + strlen($line) - 2 == $chunkSizeExpected) {
+                    $line = substr($line, 0, - 2);
+                }
+                
+                if ($chunkSize == $chunkSizeExpected) {
+                    $chunkSizeExpected = hexdec(trim($line));
+                    $chunkSize = 0;
+                    continue;
+                }
+                
+                $chunkSize += strlen($line);
+            }
+            
             if ($isHeader) {
                 if ($line == "\r\n") {
                     $isHeader = false;
+                    
+                    if ($isChunked) {
+                        // Reset for first chunk
+                        $chunkSizeExpected = 0;
+                        $chunkSize = 0;
+                    }
+                    
                     continue;
+                }
+                
+                if (stripos($line, 'Transfer-Encoding: chunked') === 0) {
+                    $isChunked = true;
                 }
                 
                 if (stripos($line, 'Content-Disposition: attachment;') === 0) {
