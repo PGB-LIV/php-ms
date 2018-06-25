@@ -16,8 +16,7 @@
  */
 namespace pgb_liv\php_ms\Core\Spectra;
 
-use pgb_liv\php_ms\Constant\PhysicalConstants;
-use pgb_liv\php_ms\Core\MassTrait;
+use pgb_liv\php_ms\Core\ChargedMassTrait;
 
 /**
  * Generic trait for providing ion properties such as mass, charge and intensity
@@ -27,24 +26,7 @@ use pgb_liv\php_ms\Core\MassTrait;
  */
 trait IonTrait
 {
-    use MassTrait {
-        getMonoisotopicMass as protected massTraitGetMonoisotopicMass;
-    }
-
-    /**
-     * The mass-over-charge ratio of this ion
-     *
-     * @var float
-     * @TODO: Remove this, it should be calculated on demand
-     */
-    private $massCharge;
-
-    /**
-     * The charge value of this ion
-     *
-     * @var int
-     */
-    private $charge;
+    use ChargedMassTrait;
 
     /**
      * The intensity value of this ion
@@ -85,77 +67,6 @@ trait IonTrait
     }
 
     /**
-     * Gets the monoisotopic mass of this object
-     *
-     * @return float
-     */
-    public function getMonoisotopicMass()
-    {
-        $mass = $this->massTraitGetMonoisotopicMass();
-        
-        if (is_null($mass)) {
-            $mass = $this->calculateNeutralMass();
-        }
-        
-        return $mass;
-    }
-
-    /**
-     * Sets the mass-to-charge ratio for this ion
-     *
-     * @param float $massCharge
-     *            The mass-to-charge ratio to set to
-     * @throws \InvalidArgumentException If $mz is not a valid floating point value
-     * @TODO: This behaviour is not safe. It should always request charge and then store neutral+charge
-     */
-    public function setMassCharge($massCharge)
-    {
-        if (! is_float($massCharge)) {
-            throw new \InvalidArgumentException(
-                'Argument 1 must be of type float. Value is of type ' . gettype($massCharge));
-        }
-        
-        $this->massCharge = $massCharge;
-    }
-
-    /**
-     * Gets the mass-to-charge ratio for this ion
-     *
-     * @return float
-     * @TODO: Show compute on demand using neutral+charge
-     */
-    public function getMassCharge()
-    {
-        return $this->massCharge;
-    }
-
-    /**
-     * Sets the charge of this object
-     *
-     * @param int $charge
-     *            The positive or negative charge to set
-     * @throws \InvalidArgumentException If a non-integer value is passed
-     */
-    public function setCharge($charge)
-    {
-        if (! is_int($charge)) {
-            throw new \InvalidArgumentException('Argument 1 must be of type int. Value is of type ' . gettype($charge));
-        }
-        
-        $this->charge = $charge;
-    }
-
-    /**
-     * Gets the charge value associated with this spectra
-     *
-     * @return int charge value
-     */
-    public function getCharge()
-    {
-        return $this->charge;
-    }
-
-    /**
      * Sets the intensity value for this ion
      *
      * @param float $intensity
@@ -180,14 +91,6 @@ trait IonTrait
     public function getIntensity()
     {
         return $this->intensity;
-    }
-
-    /**
-     * Calculates the neutral mass value from the mass and charge values
-     */
-    private function calculateNeutralMass()
-    {
-        return ($this->massCharge * $this->charge) - ($this->charge * PhysicalConstants::PROTON_MASS);
     }
 
     /**

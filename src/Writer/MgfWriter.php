@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ class MgfWriter
         // TODO: Validate mandatory/optional fields
         fwrite($this->fileHandle, 'BEGIN IONS' . PHP_EOL);
         fwrite($this->fileHandle, 'TITLE=' . $precursor->getTitle() . PHP_EOL);
-        fwrite($this->fileHandle, 'PEPMASS=' . $precursor->getMassCharge());
+        fwrite($this->fileHandle, 'PEPMASS=' . $precursor->getMonoisotopicMassCharge());
         if (! is_null($precursor->getIntensity())) {
             fwrite($this->fileHandle, ' ' . $precursor->getIntensity());
         }
@@ -82,10 +82,10 @@ class MgfWriter
         }
         
         foreach ($precursor->getFragmentIons() as $ion) {
-            fwrite($this->fileHandle, $ion->getMassCharge() . ' ');
+            fwrite($this->fileHandle, $ion->getMonoisotopicMassCharge() . ' ');
             fwrite($this->fileHandle, $ion->getIntensity());
             
-            if (! is_null($ion->getCharge())) {
+            if (! is_null($ion->getCharge()) && $ion->getCharge() != $precursor->getCharge()) {
                 fwrite($this->fileHandle, ' ' . $ion->getCharge());
             }
             

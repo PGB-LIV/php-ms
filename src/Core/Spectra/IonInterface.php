@@ -27,7 +27,7 @@ interface IonInterface
     const RETENTION_TIME_START = 0;
 
     const RETENTION_TIME_END = 1;
-
+    
     /**
      * Sets the neutral mass value for this ion
      *
@@ -35,15 +35,15 @@ interface IonInterface
      *            Mass value expressed as a floating point value
      * @throws \InvalidArgumentException If mass is not a floating point value
      */
-    public function setMass($mass);
-
+    public function setMonoisotopicMass($mass);
+    
     /**
      * Gets the neutral mass value for this ion
      *
      * @return float The mass value
      */
-    public function getMass();
-
+    public function getMonoisotopicMass();
+    
     /**
      * Sets the mass-to-charge ratio for this ion
      *
@@ -51,23 +51,46 @@ interface IonInterface
      *            The mass-to-charge ratio to set to
      * @throws \InvalidArgumentException If $mz is not a valid floating point value
      */
-    public function setMassCharge($massCharge);
-
+    public function setMonoisotopicMassCharge($massCharge, $charge);
+    
     /**
      * Gets the mass-to-charge ratio for this ion
      *
      * @return float
      */
-    public function getMassCharge();
-
+    public function getAverageMassCharge();
+    
     /**
-     * Sets the charge of this object
+     * Sets the neutral mass value for this ion
      *
-     * @param int $charge
-     *            The positive or negative charge to set
-     * @throws \InvalidArgumentException If a non-integer value is passed
+     * @param float $mass
+     *            Mass value expressed as a floating point value
+     * @throws \InvalidArgumentException If mass is not a floating point value
      */
-    public function setCharge($charge);
+    public function setAverageMass($mass);
+    
+    /**
+     * Gets the neutral mass value for this ion
+     *
+     * @return float The mass value
+     */
+    public function getAverageMass();
+    
+    /**
+     * Sets the mass-to-charge ratio for this ion
+     *
+     * @param float $massCharge
+     *            The mass-to-charge ratio to set to
+     * @throws \InvalidArgumentException If $mz is not a valid floating point value
+     */
+    public function setAverageMassCharge($massCharge, $charge);
+    
+    /**
+     * Gets the mass-to-charge ratio for this ion
+     *
+     * @return float
+     */
+    public function getMonoisotopicMassCharge();
 
     /**
      * Gets the charge value associated with this spectra

@@ -38,6 +38,10 @@ class MgfReader implements \Iterator
 
     private $key = 0;
 
+    private $mz;
+
+    private $charge;
+
     public function __construct($filePath)
     {
         $this->filePath = $filePath;
@@ -133,6 +137,9 @@ class MgfReader implements \Iterator
             return null;
         }
         
+        $this->mz = null;
+        $this->charge = null;
+        
         // Scan for key=value pairs
         while ($line = $this->peekLine()) {
             if (strpos($line, '=') === false) {
@@ -141,6 +148,8 @@ class MgfReader implements \Iterator
             
             $this->parseMeta($entry);
         }
+        
+        $entry->setMonoisotopicMassCharge($this->mz, $this->charge);
         
         // Scan for [m/z] [intensity] [charge]
         while ($line = $this->peekLine()) {
@@ -178,11 +187,11 @@ class MgfReader implements \Iterator
             $chunks = explode(' ', $pair[1]);
             if (count($chunks) > 1) {
                 $precursor->setIntensity((float) $chunks[1] + 0);
-            }            
+            }
             
-            $precursor->setMassCharge((float) $chunks[0] + 0);
+            $this->mz = (float) $chunks[0] + 0;
         } elseif ($pair[0] == 'CHARGE') {
-            $precursor->setCharge((int) $pair[1]);
+            $this->charge = (int) $pair[1];
         } elseif ($pair[0] == 'SCANS') {
             $precursor->setScan((int) $pair[1] + 0);
         } elseif ($pair[0] == 'RTINSECONDS') {
@@ -212,14 +221,17 @@ class MgfReader implements \Iterator
         $pair = preg_split('/\\s/', $line, 3);
         
         $ion = new FragmentIon();
-        $ion->setMassCharge((float) $pair[0]);
+        $fragmentMz = (float) $pair[0];
+        $fragmentCharge = $this->charge;
         if (count($pair) > 1) {
             $ion->setIntensity((float) $pair[1]);
         }
         
         if (count($pair) > 2) {
-            $ion->setCharge((int) $pair[2]);
+            $fragmentCharge = (int) $pair[2];
         }
+        
+        $ion->setMonoisotopicMassCharge($fragmentMz, $fragmentCharge);
         
         $precursor->addFragmentIon($ion);
     }

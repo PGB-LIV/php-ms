@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2018 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1071,8 +1071,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         $spectra->setIdentifier((string) $xml->attributes()->spectrumID);
         
         // We can not currently pull data from the .raw data so take the m/z vlaues from the first identification
-        $spectra->setCharge((int) $xml->SpectrumIdentificationItem->attributes()->chargeState);
-        $spectra->setMassCharge((float) $xml->SpectrumIdentificationItem->attributes()->experimentalMassToCharge);
+        $charge = (int) $xml->SpectrumIdentificationItem->attributes()->chargeState;
+        $mz = (float) $xml->SpectrumIdentificationItem->attributes()->experimentalMassToCharge;
+        
+        $spectra->setMonoisotopicMassCharge($mz, $charge);
         
         foreach ($xml->SpectrumIdentificationItem as $spectrumItem) {
             $identification = $this->getSpectrumIdentificationItem($spectrumItem, $sequences);
