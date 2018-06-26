@@ -32,13 +32,28 @@ class IdentificationSort extends AbstractSort implements SortInterface
 
     const SORT_SCORE = 'SortByScore';
 
+    const SORT_RANK = 'SortByRank';
+
     private $scoreKey = null;
 
+    /**
+     * Set the key that will be used when sorting by score.
+     *
+     * @param string $scoreKey
+     */
     public function setScoreKey($scoreKey)
     {
         $this->scoreKey = $scoreKey;
     }
 
+    /**
+     * Sort the identifications by score using the sort order and key provided
+     *
+     * @param Identification $a
+     * @param Identification $b
+     * @throws \BadMethodCallException Thrown if the key has not been specified
+     * @return int
+     */
     protected function sortByScore(Identification $a, Identification $b)
     {
         if (is_null($this->scoreKey)) {
@@ -50,5 +65,21 @@ class IdentificationSort extends AbstractSort implements SortInterface
         }
         
         return $a->getScore($this->scoreKey) > $b->getScore($this->scoreKey) ? $this->returnTrue : $this->returnFalse;
+    }
+
+    /**
+     * Sort the identifications by rank using the sort order provided
+     *
+     * @param Identification $a
+     * @param Identification $b
+     * @return int
+     */
+    protected function sortByRank(Identification $a, Identification $b)
+    {
+        if ($a->getRank() == $b->getRank()) {
+            return 0;
+        }
+        
+        return $a->getRank() > $b->getRank() ? $this->returnTrue : $this->returnFalse;
     }
 }
