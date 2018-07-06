@@ -58,7 +58,7 @@ class AminoAcidComposition
 
     const T = 'C4H9NO3';
 
-    const U = 'C3H5NOSe';
+    const U = 'C3H7NO2Se';
 
     const V = 'C5H11NO2';
 
