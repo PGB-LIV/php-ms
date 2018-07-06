@@ -77,15 +77,15 @@ class AminoAcidMono
     public static function getMonoisotopicMass($acid)
     {
         $value = @constant('pgb_liv\php_ms\Core\AminoAcidMono::' . $acid);
-        
+
         if (! is_null($value)) {
             return $value;
         }
-        
+
         if (strlen($acid) > 1) {
             throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
         }
-        
+
         throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
     }
 
@@ -100,7 +100,7 @@ class AminoAcidMono
     public static function getMonoisotopicInsensitive($acid)
     {
         $acidUp = strtoupper($acid);
-        
+
         return self::getMonoisotopicMass($acidUp);
     }
 }

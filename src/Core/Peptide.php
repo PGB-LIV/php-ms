@@ -81,7 +81,7 @@ class Peptide implements ModifiableSequenceInterface
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type integer. Argument type is ' . gettype($count));
         }
-        
+
         $this->missedCleavageCount = $count;
     }
 
@@ -95,7 +95,7 @@ class Peptide implements ModifiableSequenceInterface
         // Create new instances of objects
         $oldMods = $this->modifications;
         $this->modifications = array();
-        
+
         foreach ($oldMods as $modification) {
             $this->modifications[] = clone $modification;
         }
@@ -109,7 +109,7 @@ class Peptide implements ModifiableSequenceInterface
     public function getMolecularFormula()
     {
         $acids = str_split($this->getSequence(), 1);
-        
+
         $frequency = array(
             'C' => 0,
             'H' => 0,
@@ -117,46 +117,45 @@ class Peptide implements ModifiableSequenceInterface
             'O' => 0,
             'S' => 0
         );
-        
+
         foreach ($acids as $acid) {
             $composition = AminoAcidComposition::getFormula($acid);
-            
+
             $matches = array();
-            preg_match('/([A-Z])([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)([A-Z]?)([0-9]*)/', $composition,
-                $matches);
-            
-            for ($i = 1; $i < count($matches); $i += 2) {
-                if ($matches[$i] == '') {
-                    continue;
+            preg_match_all('/([A-Z][a-z]?)([0-9]*)/', $composition, $matches, PREG_SET_ORDER);
+
+            foreach ($matches as $match) {
+                $chemical = $match[1];
+                $count = $match[2];
+
+                if (! isset($frequency[$chemical])) {
+                    $frequency[$chemical] = 0;
                 }
-                
-                $chemical = $matches[$i];
-                $count = $matches[$i + 1];
-                
+
                 $frequency[$chemical] += $count == '' ? 1 : $count;
             }
         }
-        
+
         // Remove hydrogen and oxygen from C-TERM
         $frequency['H'] -= count($acids) - 1;
         $frequency['O'] -= count($acids) - 1;
-        
+
         // Remove hydrogen from N-TERM.
         $frequency['H'] -= count($acids) - 1;
-        
+
         $formula = '';
         foreach ($frequency as $chemical => $count) {
             if ($count == 0) {
                 continue;
             }
-            
+
             $formula .= $chemical;
-            
+
             if ($count > 1) {
                 $formula .= $count;
             }
         }
-        
+
         return $formula;
     }
 }

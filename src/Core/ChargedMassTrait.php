@@ -118,11 +118,11 @@ trait ChargedMassTrait
         if (! is_float($mass)) {
             throw new \InvalidArgumentException('Argument 1 must be of type float. Value is of type ' . gettype($mass));
         }
-        
+
         if (! is_int($charge)) {
             throw new \InvalidArgumentException('Argument 2 must be of type int. Value is of type ' . gettype($charge));
         }
-        
+
         return ($mass + ($charge * PhysicalConstants::PROTON_MASS)) / $charge;
     }
 
@@ -140,11 +140,11 @@ trait ChargedMassTrait
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type float. Value is of type ' . gettype($massCharge));
         }
-        
+
         if (! is_int($charge)) {
             throw new \InvalidArgumentException('Argument 2 must be of type int. Value is of type ' . gettype($charge));
         }
-        
+
         return ($massCharge * $charge) - (PhysicalConstants::PROTON_MASS * $charge);
     }
 }

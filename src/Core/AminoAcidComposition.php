@@ -26,17 +26,13 @@ class AminoAcidComposition
 
     const A = 'C3H7NO2';
 
-    const R = 'C6H14N4O2';
-
-    const N = 'C4H8N2O3';
+    const C = 'C3H7NO2S';
 
     const D = 'C4H7NO4';
 
-    const C = 'C3H7NO2S';
-
-    const Q = 'C5H10N2O3';
-
     const E = 'C5H9NO4';
+
+    const F = 'C9H11NO2';
 
     const G = 'C2H5NO2';
 
@@ -44,25 +40,31 @@ class AminoAcidComposition
 
     const I = 'C6H13NO2';
 
-    const L = 'C6H13NO2';
-
     const K = 'C6H14N2O2';
+
+    const L = 'C6H13NO2';
 
     const M = 'C5H11NO2S';
 
-    const F = 'C9H11NO2';
+    const N = 'C4H8N2O3';
 
     const P = 'C5H9NO2';
+
+    const Q = 'C5H10N2O3';
+
+    const R = 'C6H14N4O2';
 
     const S = 'C3H7NO3';
 
     const T = 'C4H9NO3';
 
+    const U = 'C3H5NOSe';
+
+    const V = 'C5H11NO2';
+
     const W = 'C11H12N2O2';
 
     const Y = 'C9H11NO3';
-
-    const V = 'C5H11NO2';
 
     /**
      * Gets the molecular formula for the provided amino acid.
@@ -75,15 +77,15 @@ class AminoAcidComposition
     public static function getFormula($acid)
     {
         $formula = @constant('pgb_liv\php_ms\Core\AminoAcidComposition::' . $acid);
-        
+
         if (! is_null($formula)) {
             return $formula;
         }
-        
+
         if (strlen($acid) > 1) {
             throw new \InvalidArgumentException('Value must be a single amino acid. Input was ' . $acid);
         }
-        
+
         throw new \InvalidArgumentException('Value must be a valid amino acid. Input was ' . $acid);
     }
 
@@ -98,7 +100,7 @@ class AminoAcidComposition
     public static function getFormulaInsensitive($acid)
     {
         $acidUp = strtoupper($acid);
-        
+
         return self::getFormula($acidUp);
     }
 }
