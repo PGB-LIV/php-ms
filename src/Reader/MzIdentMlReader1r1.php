@@ -1043,7 +1043,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $protocol['modifications'] = $this->getModificationParams($xml->ModificationParams);
         }
 
-        $protocol['additions'] = $this->getAdditionalSearchParams($xml->AdditionalSearchParams);
+        if (isset($xml->AdditionalSearchParams)) {
+            $protocol['additions'] = $this->getAdditionalSearchParams($xml->AdditionalSearchParams);
+        }
 
         if (isset($xml->Enzymes)) {
             $protocol['enzymes'] = $this->getEnzymes($xml->Enzymes);
