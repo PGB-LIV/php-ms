@@ -61,7 +61,7 @@ trait PsiXmlTrait
         
         $cvParam['cvRef'] = (string) $xml->attributes()->cvRef;
         $cvParam[PsiVerb::CV_ACCESSION] = (string) $xml->attributes()->accession;
-        $cvParam['name'] = (string) $xml->attributes()->name;
+        $cvParam[PsiVerb::CV_NAME] = (string) $xml->attributes()->name;
         
         if (! isset($this->cvParamIndex[$cvParam[PsiVerb::CV_ACCESSION]])) {
             $this->cvParamIndex[$cvParam[PsiVerb::CV_ACCESSION]] = $cvParam['name'];

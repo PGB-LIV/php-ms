@@ -52,4 +52,11 @@ class ChemicalConstants
      * @var double
      */
     const NITROGEN_MASS = 14.00307400443;
+
+    /**
+     * Mass of selenium
+     *
+     * @var double
+     */
+    const SELENIUM_MASS = 73.922475934;
 }
