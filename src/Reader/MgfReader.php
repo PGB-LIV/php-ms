@@ -71,7 +71,7 @@ class MgfReader implements \Iterator
         if ($this->fileHandle != null) {
             fclose($this->fileHandle);
         }
-        
+
         $this->fileHandle = fopen($this->filePath, 'r');
         $this->key = 0;
         $this->current = $this->parseEntry();
@@ -82,7 +82,7 @@ class MgfReader implements \Iterator
         if ($this->current instanceof PrecursorIon) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -96,10 +96,10 @@ class MgfReader implements \Iterator
         if ($this->filePeek == null) {
             return fgets($this->fileHandle);
         }
-        
+
         $ret = $this->filePeek;
         $this->filePeek = null;
-        
+
         return $ret;
     }
 
@@ -113,14 +113,14 @@ class MgfReader implements \Iterator
         if ($this->filePeek == null) {
             $this->filePeek = fgets($this->fileHandle);
         }
-        
+
         return $this->filePeek;
     }
 
     private function parseEntry()
     {
         $entry = new PrecursorIon();
-        
+
         // Scan to BEGIN IONS
         $isFound = false;
         while ($line = $this->getLine()) {
@@ -128,40 +128,45 @@ class MgfReader implements \Iterator
             if (strpos($line, 'BEGIN IONS') !== 0) {
                 continue;
             }
-            
+
             $isFound = true;
             break;
         }
-        
+
         if (! $isFound) {
             return null;
         }
-        
+
         $this->mz = null;
-        $this->charge = null;
-        
+        $this->charge = 1;
+
         // Scan for key=value pairs
         while ($line = $this->peekLine()) {
             if (strpos($line, '=') === false) {
                 break;
             }
-            
+
             $this->parseMeta($entry);
         }
-        
-        $entry->setMonoisotopicMassCharge($this->mz, $this->charge);
-        
+
+        // TODO: Better support required for charge-less data
+        if (! is_null($this->mz)) {
+            $entry->setMonoisotopicMassCharge($this->mz, $this->charge);
+        } else {
+            $entry->setCharge($this->charge);
+        }
+
         // Scan for [m/z] [intensity] [charge]
         while ($line = $this->peekLine()) {
             if (strpos($line, 'END IONS') !== false) {
                 break;
             }
-            
+
             $this->parseFragments($entry);
         }
-        
+
         $this->key ++;
-        
+
         return $entry;
     }
 
@@ -175,12 +180,12 @@ class MgfReader implements \Iterator
     {
         $line = trim($this->getLine());
         $pair = explode('=', $line, 2);
-        
+
         $value = $pair[1];
         if (is_numeric($value)) {
             $value += 0;
         }
-        
+
         if ($pair[0] == 'TITLE') {
             $precursor->setTitle($pair[1]);
         } elseif ($pair[0] == 'PEPMASS') {
@@ -188,7 +193,7 @@ class MgfReader implements \Iterator
             if (count($chunks) > 1) {
                 $precursor->setIntensity((float) $chunks[1] + 0);
             }
-            
+
             $this->mz = (float) $chunks[0] + 0;
         } elseif ($pair[0] == 'CHARGE') {
             $this->charge = (int) $pair[1];
@@ -213,26 +218,26 @@ class MgfReader implements \Iterator
     private function parseFragments(PrecursorIon $precursor)
     {
         $line = trim($this->getLine());
-        
+
         if (strlen($line) == 0) {
             return;
         }
-        
+
         $pair = preg_split('/\\s/', $line, 3);
-        
+
         $ion = new FragmentIon();
         $fragmentMz = (float) $pair[0];
         $fragmentCharge = $this->charge;
         if (count($pair) > 1) {
             $ion->setIntensity((float) $pair[1]);
         }
-        
+
         if (count($pair) > 2) {
             $fragmentCharge = (int) $pair[2];
         }
-        
+
         $ion->setMonoisotopicMassCharge($fragmentMz, $fragmentCharge);
-        
+
         $precursor->addFragmentIon($ion);
     }
 }
