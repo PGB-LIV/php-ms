@@ -52,6 +52,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     private $evidence = array();
 
+    private $inputs;
+
     const PROTOCOL_SPECTRUM = 'spectrum';
 
     const PROTOCOL_PROTEIN = 'protein';
@@ -169,21 +171,29 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     {
         $protein = new Protein();
         $protein->setAccession((string) $xml->attributes()->accession);
-
+        
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
-
+            
             $this->parseDbSequenceParam($cvParam, $protein);
         }
-
+        
         if (isset($xml->Seq)) {
             $sequence = $this->getSeq($xml->Seq);
-
+            
             if (strlen($sequence) > 0) {
                 $protein->setSequence($sequence);
             }
         }
-
+        
+        $databaseRef = (string) $xml->attributes()->searchDatabase_ref;
+        
+        $databases = $this->getInputs()['SearchDatabase'];
+        
+        if ($databases[$databaseRef]['isDecoy']) {
+            $protein->setIsDecoy(true);
+        }
+        
         return $protein;
     }
 
@@ -401,18 +411,20 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     public function getInputs()
     {
-        $inputs = array();
-        $inputs['SearchDatabase'] = array();
-        foreach ($this->xmlReader->DataCollection->Inputs->SearchDatabase as $xml) {
-            $inputs['SearchDatabase'][$this->getAttributeId($xml)] = $this->getSearchDatabase($xml);
+        if (is_null($this->inputs)) {
+            $this->inputs = array();
+            $this->inputs['SearchDatabase'] = array();
+            foreach ($this->xmlReader->DataCollection->Inputs->SearchDatabase as $xml) {
+                $this->inputs['SearchDatabase'][$this->getAttributeId($xml)] = $this->getSearchDatabase($xml);
+            }
+            
+            $this->inputs['SpectraData'] = array();
+            foreach ($this->xmlReader->DataCollection->Inputs->SpectraData as $xml) {
+                $this->inputs['SpectraData'][$this->getAttributeId($xml)] = $this->getSpectraData($xml);
+            }
         }
-
-        $inputs['SpectraData'] = array();
-        foreach ($this->xmlReader->DataCollection->Inputs->SpectraData as $xml) {
-            $inputs['SpectraData'][$this->getAttributeId($xml)] = $this->getSpectraData($xml);
-        }
-
-        return $inputs;
+        
+        return $this->inputs;
     }
 
     private function getIonType()
@@ -711,31 +723,44 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     protected function getSearchDatabase(\SimpleXMLElement $xml)
     {
         $database = array();
-
+        
         // Required
         $database['location'] = (string) $xml->attributes()->location;
-
+        
         // Optional
         if (isset($xml->attributes()->name)) {
             $database['name'] = (string) $xml->attributes()->name;
         }
-
+        
         if (isset($xml->attributes()->numDatabaseSequences)) {
             $database['numDatabaseSequences'] = (int) $xml->attributes()->numDatabaseSequences;
         }
-
+        
         if (isset($xml->attributes()->numResidues)) {
             $database['numResidues'] = (int) $xml->attributes()->numResidues;
         }
-
+        
         if (isset($xml->attributes()->releaseDate)) {
             $database['releaseDate'] = (string) $xml->attributes()->releaseDate;
         }
-
+        
         if (isset($xml->attributes()->version)) {
             $database['version'] = (string) $xml->attributes()->version;
         }
-
+        
+        $database['isDecoy'] = false;
+        foreach ($xml->cvParam as $xmlCvParam) {
+            $cvParam = $this->getCvParam($xmlCvParam);
+            
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
+                case 'MS:1001195':
+                    $database['isDecoy'] = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
         return $database;
     }
 

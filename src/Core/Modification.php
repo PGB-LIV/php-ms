@@ -152,9 +152,8 @@ class Modification
         }
         
         foreach ($residues as $residue) {
-            if (strlen($residue) != 1) {
-                throw new \InvalidArgumentException(
-                    'Argument 1 must be an array of single char values. Value passed is of length ' . strlen($residue));
+            if (!preg_match('/^[A-Z]$/', $residue)) {
+                throw new \InvalidArgumentException('Argument 1 must be an array of single char values (A-Z). Value passed is ' . $residue);
             }
         }
         
