@@ -784,10 +784,13 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $residues = '.';
         }
 
-        $residues = explode(' ', $residues);
-
-        $modification->setResidues($residues);
-
+        if ($residues != '.')
+        {
+            $residues = explode(' ', $residues);
+    
+            $modification->setResidues($residues);
+        }
+        
         if ((string) $xml->attributes()->fixedMod == 'true') {
             $modification->setType(Modification::TYPE_FIXED);
         } else {
