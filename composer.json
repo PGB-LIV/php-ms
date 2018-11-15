@@ -16,7 +16,8 @@
 	],
 	"require" : {
 		"php" : ">=5.4.0",		
-		"ext-xsl" : "*"
+		"ext-xsl" : "*",
+		"phpobo/phpobo" : "dev-master"
 	},
 	"require-dev" : {
 		"theseer/phpdox" : "0.8.*",
