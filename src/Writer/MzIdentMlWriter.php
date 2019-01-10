@@ -52,6 +52,10 @@ class MzIdentMlWriter
 
     private $path;
 
+    /**
+     * 
+     * @var \XMLWriter
+     */
     private $stream;
 
     private $cvList = array();
@@ -104,6 +108,9 @@ class MzIdentMlWriter
         $this->addCv('Unit Ontology', null,
             'https://raw.githubusercontent.com/bio-ontology-research-group/unit-ontology/master/unit.obo', $this->uoRef);
 
+        // Create empty file we can append to
+        file_put_contents($this->path, '');
+        
         $this->stream = new \XMLWriter();
         $this->stream->openMemory();
         $this->stream->setIndent(true);
@@ -112,14 +119,19 @@ class MzIdentMlWriter
         $this->writeMzIdentMl();
         $this->writeCvList();
         $this->writeAnalysisSoftwareList();
+        $this->flush();
     }
 
     public function close()
     {
         // finalise
         $this->stream->endElement();
-
-        file_put_contents($this->path, $this->stream->outputMemory());
+        $this->flush();
+    }
+    
+    private function flush()
+    {
+        file_put_contents($this->path, $this->stream->flush(true), FILE_APPEND);
     }
 
     /**
@@ -246,12 +258,19 @@ class MzIdentMlWriter
      */
     public function addIdentifiedPrecursors(array $precursors)
     {
+        echo '[' . date('r') . '] Writing sequences.' . PHP_EOL;
         $this->writeSequenceCollection($precursors);
-
+        $this->flush();
+        
         $this->writeAnalysisCollection();
+        $this->flush();
+        
+        
         $this->writeAnalysisProtocolCollection();
-
+        $this->flush();
+        
         $this->writeDataCollection($precursors);
+        $this->flush();
     }
 
     private function writeMzIdentMl()
@@ -832,6 +851,7 @@ class MzIdentMlWriter
                 }
             }
         }
+        $this->flush();
 
         $objectsWritten = array();
         foreach ($precursors as $precursor) {
@@ -847,6 +867,7 @@ class MzIdentMlWriter
                 $objectsWritten[$this->getId($peptide)] = true;
             }
         }
+        $this->flush();
 
         $objectsWritten = array();
         foreach ($precursors as $precursor) {
