@@ -53,6 +53,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private $evidence = array();
 
     private $inputs;
+    
+    /**
+     * Filters to apply
+     * @var array
+     */
+    private $filter = array();
 
     const PROTOCOL_SPECTRUM = 'spectrum';
 
@@ -1112,6 +1118,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         foreach ($xml->SpectrumIdentificationItem as $spectrumItem) {
             $identification = $this->getSpectrumIdentificationItem($spectrumItem, $sequences);
 
+            if (!$this->isFilterMatch($identification))
+            {
+                continue;
+            }
+            
             $spectra->addIdentification($identification);
         }
 
@@ -1173,5 +1184,25 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         }
 
         return new ProteinEntry($protein);
+    }
+    
+    private function isFilterMatch(Identification $identification)
+    {        
+        // Remove idents > rank filter
+        if (isset($this->filter['rank']) && $identification->getRank() > $this->filter['rank'])
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Sets the rank limit for retrieved identifications. All returned indentifications will be <= $rank
+     * @param int $rank
+     */
+    public function setRankFilter($rank)
+    {
+        $this->filter['rank'] = $rank;
     }
 }
