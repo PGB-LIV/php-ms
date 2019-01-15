@@ -196,8 +196,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         
         $databases = $this->getInputs()['SearchDatabase'];
         
-        if ($databases[$databaseRef]['isDecoy']) {
+        if ($databases[$databaseRef]['isDecoy'] == 1) {
             $protein->setIsDecoy(true);
+        } else if ($databases[$databaseRef]['isDecoy'] == 2)
+        {
+            $isDecoy = preg_match('/' . $databases[$databaseRef]['decoyRules']['regExp'] .'/', $protein->getAccession());            
+            $protein->setIsDecoy($isDecoy > 0);
         }
         
         return $protein;
@@ -754,17 +758,33 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $database['version'] = (string) $xml->attributes()->version;
         }
         
-        $database['isDecoy'] = false;
+        $database['isDecoy'] = 0;
+        
+        $database['decoyRules'] = array('isReversed' => false, 'isMixed' => false, 'regExp' => null);
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
             
             switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1001195':
-                    $database['isDecoy'] = true;
+                    $database['decoyRules']['isReversed'] = true;
+                    break;
+                case 'MS:1001197':
+                    $database['decoyRules']['isMixed'] = true;
+                    break;
+                case 'MS:1001283':
+                    $database['decoyRules']['regExp'] = $cvParam[PsiVerb::CV_VALUE];
                     break;
                 default:
                     break;
             }
+        }
+        
+        
+        if ($database['decoyRules']['isMixed']) {
+            $database['isDecoy'] = 2;
+        }
+        else if ($database['decoyRules']['isReversed']) {
+            $database['isDecoy'] = 1;            
         }
         
         return $database;
@@ -960,7 +980,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $peptide = clone $this->peptides[$this->evidence[(string) $xml->PeptideEvidenceRef->attributes->peptideEvidence_ref]['peptide']];
         }
 
-        $identification->setPeptide($peptide);
+        $identification->setSequence($peptide);
 
         foreach ($xml->PeptideEvidenceRef as $peptideEvidenceRef) {
             $ref = $this->getPeptideEvidenceRef($peptideEvidenceRef);
