@@ -344,6 +344,10 @@ class MzIdentMlWriter
         foreach ($precursors as $precursor) {
             $this->writeSpectrumIdentificationResult($sirId, $precursor);
             $sirId ++;
+            
+            if ($sirId % 100 == 0) {
+                $this->flush();
+            }
         }
 
         $this->stream->endElement();
@@ -851,6 +855,7 @@ class MzIdentMlWriter
                 }
             }
         }
+        
         $this->flush();
 
         $objectsWritten = array();
