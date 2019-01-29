@@ -61,11 +61,21 @@ class Peptide implements ModifiableSequenceInterface
      * @var float
      */
     const PROTON_MASS = PhysicalConstants::PROTON_MASS;
-
+    
+    /**
+     *
+     * @deprecated Use ChemicalConstants::HYDROGEN_MASS
+     * @var float
+     */
     const N_TERM_MASS = 1.007875;
-
+    
+    /**
+     *
+     * @deprecated Use ChemicalConstants::HYDROGEN_MASS+ChemicalConstants::OXYGEN_MASS
+     * @var float
+     */
     const C_TERM_MASS = 17.00278;
-
+    
     private $missedCleavageCount;
 
     public function __construct($sequence = null)

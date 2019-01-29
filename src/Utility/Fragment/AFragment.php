@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Constant\ChemicalConstants;
-use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Generates the A ions from a peptide
@@ -33,7 +32,7 @@ class AFragment extends AbstractFragment implements FragmentInterface
      */
     protected function getAdditiveMass()
     {
-        // N - CHO
-        return Peptide::N_TERM_MASS - (ChemicalConstants::CARBON_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::OXYGEN_MASS);
+        // H - CHO
+        return ChemicalConstants::HYDROGEN_MASS - (ChemicalConstants::CARBON_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::OXYGEN_MASS);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
-use pgb_liv\php_ms\Core\Peptide;
-use pgb_liv\php_ms\Constant\PhysicalConstants;
 use pgb_liv\php_ms\Constant\ChemicalConstants;
 
 /**
@@ -34,8 +32,6 @@ class ZFragment extends AbstractFragmentReverse implements FragmentInterface
      */
     protected function getAdditiveMass()
     {
-        // Z has electrons added??
-        return Peptide::C_TERM_MASS - (ChemicalConstants::NITROGEN_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::HYDROGEN_MASS) +
-            (PhysicalConstants::ELECTRON_MASS * 2);
+        return ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::OXYGEN_MASS - (ChemicalConstants::NITROGEN_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::HYDROGEN_MASS);
     }
 }

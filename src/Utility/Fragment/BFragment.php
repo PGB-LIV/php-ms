@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
  */
 namespace pgb_liv\php_ms\Utility\Fragment;
 
-use pgb_liv\php_ms\Constant\ChemicalConstants;
-use pgb_liv\php_ms\Core\Peptide;
-
 /**
  * Generates the B ions from a peptide
  *
@@ -33,6 +30,6 @@ class BFragment extends AbstractFragment implements FragmentInterface
      */
     protected function getAdditiveMass()
     {
-        return (Peptide::N_TERM_MASS - ChemicalConstants::HYDROGEN_MASS);
+        return 0;
     }
 }

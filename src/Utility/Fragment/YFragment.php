@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 namespace pgb_liv\php_ms\Utility\Fragment;
 
 use pgb_liv\php_ms\Constant\ChemicalConstants;
-use pgb_liv\php_ms\Core\Peptide;
 
 /**
  * Generates the Y ions from a peptide
@@ -33,6 +32,6 @@ class YFragment extends AbstractFragmentReverse implements FragmentInterface
      */
     protected function getAdditiveMass()
     {
-        return Peptide::C_TERM_MASS + ChemicalConstants::HYDROGEN_MASS;
+        return ChemicalConstants::OXYGEN_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::HYDROGEN_MASS;
     }
 }
