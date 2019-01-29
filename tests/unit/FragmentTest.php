@@ -319,12 +319,12 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     {
         $expected = array();
         $expected[1] = 114.96004;
-        $expected[2] = 323.97268;
-        $expected[3] = 421.02544;
-        $expected[4] = 522.07312;
-        $expected[5] = 635.15718;
-        $expected[6] = 750.18413;
-        $expected[7] = 1004.29672;
+        $expected[2] = 323.97263;
+        $expected[3] = 421.02539;
+        $expected[4] = 522.07307;
+        $expected[5] = 635.15714;
+        $expected[6] = 750.18408;
+        $expected[7] = 1004.29667;
         
         $peptide = new Peptide('PEPTIDE');
         $nterm = new Modification();
@@ -371,7 +371,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetModifiedIonsY()
     {
         $expected = array();
-        $expected[7] = 1022.3072;
+        $expected[7] = 1022.30724;
         $expected[6] = 908.35447;
         $expected[5] = 699.34188;
         $expected[4] = 602.28912;
