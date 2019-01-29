@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -181,33 +181,6 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         
         $mock->addModification($modificiation);
         $mass += $modificiation->getMonoisotopicMass() * 2;
-        
-        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
-        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
-    }
-
-    /**
-     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
-     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
-     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
-     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModification
-     *
-     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
-     */
-    public function testCanGetModifiedMass3()
-    {
-        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
-        
-        $sequence = 'PEPTIDE';
-        $mock->setSequence($sequence);
-        $mass = 799.3599;
-        
-        $modificiation = new Modification();
-        $modificiation->setMonoisotopicMass(79.97);
-        $modificiation->setResidues(array('['));
-        
-        $mock->addModification($modificiation);
-        $mass += $modificiation->getMonoisotopicMass();
         
         $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
         $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);

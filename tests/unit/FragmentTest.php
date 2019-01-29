@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,13 +83,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsA()
     {
         $expected = array();
-        $expected[1] = 70.065175;
-        $expected[2] = 199.107768;
-        $expected[3] = 296.160532;
-        $expected[4] = 397.208211;
-        $expected[5] = 510.292275;
-        $expected[6] = 625.319218;
-        $expected[7] = 754.361811;
+        $expected[1] = 70.0651258;
+        $expected[2] = 199.107718;
+        $expected[3] = 296.160482;
+        $expected[4] = 397.208161;
+        $expected[5] = 510.292225;
+        $expected[6] = 625.319168;
+        $expected[7] = 754.361761;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -160,12 +160,12 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsC()
     {
         $expected = array();
-        $expected[1] = 115.08663;
-        $expected[2] = 244.12923;
-        $expected[3] = 341.18199;
-        $expected[4] = 442.22967;
-        $expected[5] = 555.31373;
-        $expected[6] = 670.34068;
+        $expected[1] = 115.08658;
+        $expected[2] = 244.12918;
+        $expected[3] = 341.18194;
+        $expected[4] = 442.22962;
+        $expected[5] = 555.31368;
+        $expected[6] = 670.34063;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -201,12 +201,12 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsX()
     {
         $expected = array();
-        $expected[6] = 729.29378;
-        $expected[5] = 600.25119;
-        $expected[4] = 503.19843;
-        $expected[3] = 402.15075;
-        $expected[2] = 289.06669;
-        $expected[1] = 174.03974;
+        $expected[6] = 729.29374;
+        $expected[5] = 600.25114;
+        $expected[4] = 503.19838;
+        $expected[3] = 402.15070;
+        $expected[2] = 289.06664;
+        $expected[1] = 174.03969;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -241,13 +241,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsY()
     {
         $expected = array();
-        $expected[7] = 800.36728;
-        $expected[6] = 703.31452;
-        $expected[5] = 574.27193;
-        $expected[4] = 477.21916;
-        $expected[3] = 376.17149;
-        $expected[2] = 263.08742;
-        $expected[1] = 148.06048;
+        $expected[7] = 800.36724;
+        $expected[6] = 703.31447;
+        $expected[5] = 574.27188;
+        $expected[4] = 477.21912;
+        $expected[3] = 376.17144;
+        $expected[2] = 263.08737;
+        $expected[1] = 148.06043;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -282,13 +282,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsZ()
     {
         $expected = array();
-        $expected[7] = 783.34183;
-        $expected[6] = 686.28907;
-        $expected[5] = 557.24648;
-        $expected[4] = 460.19371;
-        $expected[3] = 359.14603;
-        $expected[2] = 246.06197;
-        $expected[1] = 131.03503;
+        $expected[7] = 783.34069;
+        $expected[6] = 686.28792;
+        $expected[5] = 557.24533;
+        $expected[4] = 460.19257;
+        $expected[3] = 359.14489;
+        $expected[2] = 246.06082;
+        $expected[1] = 131.03388;
         
         $peptide = new Peptide('PEPTIDE');
         
@@ -318,7 +318,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetModifiedIonsB()
     {
         $expected = array();
-        $expected[1] = 114.96009;
+        $expected[1] = 114.96004;
         $expected[2] = 323.97268;
         $expected[3] = 421.02544;
         $expected[4] = 522.07312;
@@ -348,10 +348,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         
         $ions = $fragment->getIons();
         
-        $this->assertEquals(count($expected), count($ions));
-        foreach ($ions as $key => $value) {
-            $this->assertEquals($expected[$key], $value, null, 0.000015);
-        }
+        $this->assertEquals($expected, $ions, null, 0.00001);
     }
 
     /**
@@ -374,13 +371,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetModifiedIonsY()
     {
         $expected = array();
-        $expected[7] = 1022.30728;
-        $expected[6] = 908.35452;
-        $expected[5] = 699.34193;
-        $expected[4] = 602.28916;
-        $expected[3] = 501.24149;
-        $expected[2] = 388.15742;
-        $expected[1] = 273.13048;
+        $expected[7] = 1022.3072;
+        $expected[6] = 908.35447;
+        $expected[5] = 699.34188;
+        $expected[4] = 602.28912;
+        $expected[3] = 501.24144;
+        $expected[2] = 388.15737;
+        $expected[1] = 273.13043;
         
         $peptide = new Peptide('PEPTIDE');
         $nterm = new Modification();
