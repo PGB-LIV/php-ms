@@ -119,25 +119,21 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetIonsB()
     {
         $expected = array();
-        $expected[1] = 98.06009;
-        $expected[2] = 227.10268;
-        $expected[3] = 324.15544;
-        $expected[4] = 425.20312;
-        $expected[5] = 538.28718;
-        $expected[6] = 653.31413;
-        $expected[7] = 782.35672;
+        $expected[1] = 98.06004;
+        $expected[2] = 227.10263;
+        $expected[3] = 324.15539;
+        $expected[4] = 425.20307;
+        $expected[5] = 538.28714;
+        $expected[6] = 653.31408;
+        $expected[7] = 782.35667;
         
         $peptide = new Peptide('PEPTIDE');
         
         $fragment = new BFragment($peptide);
         
         $ions = $fragment->getIons();
-        
-        $this->assertEquals(count($expected), count($ions));
-        foreach ($ions as $key => $value) {
-            $this->assertEquals($expected[$key], $value, null, 0.000015);
-        }
-        
+                
+        $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertFalse($fragment->isReversed());
     }
 
