@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,5 +58,5 @@ class ChemicalConstants
      *
      * @var double
      */
-    const SELENIUM_MASS = 73.922475934;
+    const SELENIUM_MASS = 79.9165218;
 }

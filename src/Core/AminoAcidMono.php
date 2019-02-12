@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,47 +24,47 @@ namespace pgb_liv\php_ms\Core;
 class AminoAcidMono
 {
 
-    const A = 71.037114;
+    const A = 71.0371137852;
 
-    const C = 103.009185;
+    const R = 156.1011110241;
 
-    const D = 115.026943;
+    const N = 114.0429274414;
 
-    const E = 129.042593;
+    const D = 115.0269430243;
 
-    const F = 147.068414;
+    const C = 103.0091849596;
 
-    const G = 57.021464;
+    const E = 129.0425930888;
 
-    const H = 137.058912;
+    const Q = 128.0585775058;
 
-    const I = 113.084064;
+    const G = 57.0214637207;
 
-    const K = 128.094963;
+    const H = 137.0589118585;
 
-    const L = 113.084064;
+    const I = 113.0840639785;
 
-    const M = 131.040485;
+    const L = 113.0840639785;
 
-    const N = 114.042927;
+    const K = 128.0949630152;
 
-    const P = 97.052764;
+    const M = 131.0404850885;
 
-    const Q = 128.058578;
+    const F = 147.0684139141;
 
-    const R = 156.101111;
+    const P = 97.0527638496;
 
-    const S = 87.032028;
+    const S = 87.0320284047;
 
-    const T = 101.047679;
+    const T = 101.0476784692;
 
-    const U = 150.95363;
+    const W = 186.0793129507;
 
-    const V = 99.068414;
+    const Y = 163.0633285336;
 
-    const W = 186.079313;
+    const V = 99.0684139141;
 
-    const Y = 163.06332;
+    const U = 150.9536355852;
 
     /**
      * Gets the monoisotopic mass for the provided amino acid.
