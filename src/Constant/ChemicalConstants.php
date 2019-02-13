@@ -40,6 +40,13 @@ class ChemicalConstants
     const CARBON_MASS = 12.0;
 
     /**
+     * Mass of nitrogen
+     *
+     * @var double
+     */
+    const NITROGEN_MASS = 14.00307400443;
+
+    /**
      * Mass of oxygen
      *
      * @var double
@@ -47,11 +54,11 @@ class ChemicalConstants
     const OXYGEN_MASS = 15.99491461957;
 
     /**
-     * Mass of nitrogen
+     * Mass of phosphorus
      *
      * @var double
      */
-    const NITROGEN_MASS = 14.00307400443;
+    const PHOSPHORUS_MASS = 30.97376199842;
 
     /**
      * Mass of selenium
