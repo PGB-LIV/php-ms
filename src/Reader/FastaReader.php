@@ -79,7 +79,13 @@ class FastaReader implements \Iterator
     {
         $this->current = null;
         if (! feof($this->fileHandle)) {
+            try {
             $this->current = $this->parseEntry();
+            }
+            catch (\InvalidArgumentException $ex)
+            {
+                $this->next();
+            }
         }
     }
 
@@ -97,7 +103,7 @@ class FastaReader implements \Iterator
         }
         
         $this->key = 0;
-        $this->current = $this->parseEntry();
+        $this->next();
     }
 
     public function valid()
