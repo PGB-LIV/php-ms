@@ -23,25 +23,25 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanConstructValid()
     {
         $protein = new Protein();
         $chromosome = new ChromosomeProteinEntry($protein);
         
-        $this->assertInstanceOf('\pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry', $chromosome);
+        $this->assertInstanceOf('\pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry', $chromosome);
         $this->assertEquals($protein, $chromosome->getProtein());
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomeBlockCount
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::getChromosomeBlockCount
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomeBlockCount
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::getChromosomeBlockCount
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetBlockCountValid()
     {
@@ -53,11 +53,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomeBlockCount
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomeBlockCount
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetBlockCountInvalid()
     {
@@ -67,11 +67,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomeBlockSizes
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::getChromosomeBlockSizes
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomeBlockSizes
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::getChromosomeBlockSizes
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetBlockSizesValid()
     {
@@ -83,11 +83,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomeBlockSizes
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomeBlockSizes
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetBlockSizesInvalid()
     {
@@ -97,11 +97,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomePositionEnd
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::getChromosomePositionEnd
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomePositionEnd
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::getChromosomePositionEnd
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetPositionEndValid()
     {
@@ -113,11 +113,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomePositionEnd
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomePositionEnd
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetPositionEndInvalid()
     {
@@ -127,11 +127,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomePositionsStart
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::getChromosomePositionsStart
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomePositionsStart
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::getChromosomePositionsStart
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetPositionsStartValid()
     {
@@ -147,11 +147,11 @@ class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry::setChromosomePositionsStart
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry::setChromosomePositionsStart
      * @expectedException InvalidArgumentException
      *
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry
      */
     public function testCanGetSetPositionsStartInvalid1()
     {
