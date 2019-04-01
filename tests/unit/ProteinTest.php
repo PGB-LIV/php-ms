@@ -24,7 +24,7 @@ class ProteinTest extends \PHPUnit_Framework_TestCase
 
     /**
      *
-     * @covers pgb_liv\php_ms\Core\Protein::geIdentifier
+     * @covers pgb_liv\php_ms\Core\Protein::getIdentifier
      * @covers pgb_liv\php_ms\Core\Protein::getDescription
      * @covers pgb_liv\php_ms\Core\Protein::getSequence
      * @covers pgb_liv\php_ms\Core\Protein::getChromosome
