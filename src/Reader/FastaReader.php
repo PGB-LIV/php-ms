@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  */
 namespace pgb_liv\php_ms\Reader;
 
+use Exception;
 use pgb_liv\php_ms\Core\Protein;
-use pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry;
-use pgb_liv\php_ms\Core\Database\Fasta\UniprotFastaEntry;
-use pgb_liv\php_ms\Core\Database\Fasta\DefaultFastaEntry;
-use pgb_liv\php_ms\Core\Database\Fasta\FastaInterface;
+use pgb_liv\php_ms\Reader\FastaEntry\FastaInterface;
+use pgb_liv\php_ms\Reader\FastaEntry\PeffFastaEntry;
+use pgb_liv\php_ms\Reader\FastaEntry\DefaultFastaEntry;
+use pgb_liv\php_ms\Reader\FastaEntry\FastaEntryFactory;
 
 /**
  * A FASTA parser that creates a new iterable object that will return a database
@@ -80,10 +81,8 @@ class FastaReader implements \Iterator
         $this->current = null;
         if (! feof($this->fileHandle)) {
             try {
-            $this->current = $this->parseEntry();
-            }
-            catch (\InvalidArgumentException $ex)
-            {
+                $this->current = $this->parseEntry();
+            } catch (\InvalidArgumentException $ex) {
                 $this->next();
             }
         }
@@ -95,13 +94,13 @@ class FastaReader implements \Iterator
         if ($this->fileHandle != null) {
             fclose($this->fileHandle);
         }
-        
+
         $this->fileHandle = fopen($this->filePath, 'r');
-        
+
         if (stripos($this->peekLine(), '# PEFF') === 0) {
             $this->format = new PeffFastaEntry();
         }
-        
+
         $this->key = 0;
         $this->next();
     }
@@ -111,7 +110,7 @@ class FastaReader implements \Iterator
         if ($this->current instanceof Protein) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -125,10 +124,10 @@ class FastaReader implements \Iterator
         if ($this->filePeek == null) {
             return fgets($this->fileHandle);
         }
-        
+
         $ret = $this->filePeek;
         $this->filePeek = null;
-        
+
         return $ret;
     }
 
@@ -142,7 +141,7 @@ class FastaReader implements \Iterator
         if ($this->filePeek == null) {
             $this->filePeek = fgets($this->fileHandle);
         }
-        
+
         return $this->filePeek;
     }
 
@@ -156,23 +155,23 @@ class FastaReader implements \Iterator
         // Scan to first entry
         do {
             $line = trim($this->peekLine());
-            
+
             if (strpos($line, '>') === 0) {
                 break;
             }
-        } while ($line = $this->getLine());
-        
+        } while ($this->getLine());
+
         $description = '';
         while ($line = $this->getLine()) {
             $line = trim($line);
             $description .= substr($line, 1);
-            
+
             $nextLine = trim($this->peekLine());
             if (strpos($nextLine, '>') !== 0) {
                 break;
             }
         }
-        
+
         if (strpos($description, ' ') !== false) {
             $identifier = substr($description, 0, strpos($description, ' '));
             $description = substr($description, strpos($description, ' ') + 1);
@@ -180,20 +179,24 @@ class FastaReader implements \Iterator
             $identifier = $description;
             $description = '';
         }
-        
-        if ($this->format == null) {
-            if (preg_match('/OS=(.*)(GN=(.*)?)? PE=(.*) SV=(.*)/', $description)) {
-                $this->format = new UniprotFastaEntry();
-            } else {
-                $this->format = new DefaultFastaEntry();
+
+        try {
+            if ($this->format == null || $this->format instanceof DefaultFastaEntry) {
+                $this->format = FastaEntryFactory::getParser($identifier);
             }
+
+            $protein = $this->format->getProtein($identifier, $description);
+        } catch (Exception $e) {
+            $this->format = FastaEntryFactory::getParser($identifier);
+            $protein = $this->format->getProtein($identifier, $description);
         }
         
-        $sequence = $this->parseSequence();
-        
+        $protein->setIdentifier($identifier);
+        $protein->setSequence($this->parseSequence());
+
         $this->key ++;
-        
-        return $this->format->getProtein($identifier, $description, $sequence);
+
+        return $protein;
     }
 
     /**
@@ -204,22 +207,22 @@ class FastaReader implements \Iterator
     private function parseSequence()
     {
         $sequence = '';
-        
+
         while ($line = $this->getLine()) {
             $sequence .= trim($line);
-            
+
             $nextLine = trim($this->peekLine());
-            
+
             if (strpos($nextLine, '>') === 0) {
                 break;
             }
         }
-        
+
         // Remove stop codon in IRGSP FASTA
         if (strrpos($sequence, '*', - 1) !== false) {
             $sequence = substr($sequence, 0, - 1);
         }
-        
+
         return $sequence;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core\Database\Fasta;
+namespace pgb_liv\php_ms\Reader\FastaEntry;
 
 use pgb_liv\php_ms\Core\Protein;
 
@@ -27,31 +27,15 @@ interface FastaInterface
 {
 
     /**
-     * Gets the header text should be written at the start of the file output
-     *
-     * @return string
-     */
-    public function getHeader();
-
-    /**
-     * Gets the description text line that should be written for the protein entry
-     *
-     * @param Protein $protein
-     *            The protein to get the plain text format for
-     * @return string
-     */
-    public function getDescription(Protein $protein);
-
-    /**
      * Gets a protein object from the FASTA fields
      *
      * @param string $identifier
      *            The identifier string
      * @param string $description
      *            The description string without identifier
-     * @param string $sequence
-     *            The full sequence block
      * @return Protein
      */
-    public function getProtein($identifier, $description, $sequence);
+    public function getProtein($identifier, $description);
+
+    public static function parseIdentifier($identifier);
 }

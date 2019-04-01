@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 namespace pgb_liv\php_ms\Core;
 
-use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
+use pgb_liv\php_ms\Core\Entry\ProteinEntry;
 
 /**
  * Trait for methods associated with attaching a protein to another object
@@ -50,18 +50,18 @@ trait ProteinTrait
         if (! is_null($start)) {
             $entry->setStart($start);
         }
-        
+
         if (! is_null($end)) {
             $entry->setEnd($end);
         }
-        
+
         $this->addProteinEntry($entry);
     }
 
     /**
      * This provides direct access to add new entity records and should be used when subclasses are expected
      *
-     * @param ProteinEntry $entity            
+     * @param ProteinEntry $entity
      */
     public function addProteinEntry(ProteinEntry $entry)
     {

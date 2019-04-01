@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
  */
 namespace pgb_liv\php_ms\Writer;
 
+use pgb_liv\php_ms\Core\Entry\ProteinEntry;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
-use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Core\Peptide;
 
@@ -45,7 +45,7 @@ class ProBedWriter
     {
         $this->fileHandle = fopen($path, 'w');
         $this->name = $name;
-        
+
         $this->writeHeader($headers);
     }
 
@@ -54,7 +54,7 @@ class ProBedWriter
         if (is_null($this->fileHandle)) {
             throw new \BadMethodCallException('File handle is not open, write cannot be called after close');
         }
-        
+
         foreach ($spectra->getIdentifications() as $identification) {
             $this->writeIdentification($spectra, $identification);
         }
@@ -77,7 +77,7 @@ class ProBedWriter
     {
         fwrite($this->fileHandle, '# proBed-version' . "\t" . '1.0' . PHP_EOL);
         fwrite($this->fileHandle, '# Created on ' . date('r') . ' by phpMs' . PHP_EOL);
-        
+
         foreach ($headers as $header) {
             fwrite($this->fileHandle, '# ' . $header . PHP_EOL);
         }
@@ -86,104 +86,104 @@ class ProBedWriter
     private function writeIdentification(PrecursorIon $spectra, Identification $identification)
     {
         $peptide = $identification->getPeptide();
-        
+
         if ($peptide->isDecoy()) {
             return;
         }
-        
+
         foreach ($peptide->getProteins() as $proteinEntry) {
             // Verify suitable for output
             if (! $this->isValid($proteinEntry)) {
                 continue;
             }
-            
+
             $protein = $proteinEntry->getProtein();
-            
+
             $minStart = min($proteinEntry->getChromosomePositionsStart());
             $relPositions = array();
             foreach ($proteinEntry->getChromosomePositionsStart() as $position) {
                 $relPositions[] = $position - $minStart;
             }
-            
+
             $relPositions = implode(',', $relPositions);
-            
+
             // chrom
             fwrite($this->fileHandle, $protein->getChromosome()->getName() . "\t");
-            
+
             // chromStart
             fwrite($this->fileHandle, ($minStart - 1) . "\t");
-            
+
             // chromEnd
             fwrite($this->fileHandle, ($proteinEntry->getChromosomePositionEnd() + 1) . "\t");
-            
+
             // name
             fwrite($this->fileHandle, ($protein->getAccession() . '_' . $this->uniqueId) . "\t");
-            
+
             // score
             fwrite($this->fileHandle, '1000' . "\t");
-            
+
             // strand
             fwrite($this->fileHandle, $protein->getChromosome()->getStrand() . "\t");
-            
+
             // thickStart
             fwrite($this->fileHandle, ($minStart - 1) . "\t");
-            
+
             // thickEnd
             fwrite($this->fileHandle, ($proteinEntry->getChromosomePositionEnd() + 1) . "\t");
-            
+
             // reserved
             fwrite($this->fileHandle, '0' . "\t");
-            
+
             // blockCount
             fwrite($this->fileHandle, $proteinEntry->getChromosomeBlockCount() . "\t");
-            
+
             // blockSizes
             fwrite($this->fileHandle, implode(',', $proteinEntry->getChromosomeBlockSizes()) . "\t");
-            
+
             // chromStarts
             fwrite($this->fileHandle, $relPositions . "\t");
-            
+
             // proteinAccession
             fwrite($this->fileHandle, $protein->getAccession() . "\t");
-            
+
             // peptideSequence
             fwrite($this->fileHandle, $peptide->getSequence() . "\t");
-            
+
             // uniqueness
             fwrite($this->fileHandle, (count($peptide->getProteins()) == 1 ? 'unique' : 'not-unique[unknown]') . "\t");
-            
+
             // genomeReferenceVersion
             fwrite($this->fileHandle,
                 (is_null($protein->getChromosome()->getGenomeReferenceVersion()) ? '.' : $protein->getChromosome()->getGenomeReferenceVersion()) .
-                     "\t");
-            
+                "\t");
+
             // TODO: psmScore
             fwrite($this->fileHandle, '.' . "\t");
-            
+
             // fdr
             fwrite($this->fileHandle, $identification->getScore('MS:1002356') . "\t");
-            
+
             // modifications
             fwrite($this->fileHandle, $this->getModificationString($peptide) . "\t");
-            
+
             // charge
             fwrite($this->fileHandle, $spectra->getCharge() . "\t");
-            
+
             // expMassToCharge
             fwrite($this->fileHandle, $spectra->getMassCharge() . "\t");
-            
+
             // calcMassToCharge
             fwrite($this->fileHandle, $peptide->getMonoisotopicMassCharge($spectra->getCharge()) . "\t");
-            
+
             // psmRank
             fwrite($this->fileHandle, $identification->getRank() . "\t");
-            
+
             // datasetID
             fwrite($this->fileHandle, $this->name . "\t");
-            
+
             // uri - not implementable?
             fwrite($this->fileHandle, '.' . "\n");
-            
+
             $this->uniqueId ++;
         }
     }
@@ -199,10 +199,10 @@ class ProBedWriter
             } else {
                 $modStr .= $modification->getAccession();
             }
-            
+
             $mods[] = $modStr;
         }
-        
+
         return count($mods) > 0 ? implode(',', $mods) : '.';
     }
 
@@ -211,17 +211,17 @@ class ProBedWriter
         if (! is_a($proteinEntry, '\pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry')) {
             return false;
         }
-        
+
         $protein = $proteinEntry->getProtein();
         $chromosome = $protein->getChromosome();
-        
+
         // Possible unmapped protein
         // TODO: Correct handling missing version. Required by spec?
         // if (is_null($chromosome) || is_null($chromosome->getGenomeReferenceVersion())) {
         if (is_null($chromosome)) {
             return false;
         }
-        
+
         return true;
     }
 }

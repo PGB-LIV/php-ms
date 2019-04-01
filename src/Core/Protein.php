@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,42 +24,45 @@ namespace pgb_liv\php_ms\Core;
 class Protein implements ModifiableSequenceInterface
 {
     use ModifiableSequenceTrait;
+    use DatabaseEntryTrait;
 
+    /**
+     * The unique identifier for this sequence.
+     *
+     * @var string
+     */
+    private $identifier;
+
+    /**
+     * The description or name of this sequence.
+     *
+     * @var string
+     */
     private $description;
 
-    private $uniqueIdentifier;
+    /**
+     *
+     * @var Gene
+     */
+    private $gene;
 
-    private $databasePrefix;
+    /**
+     *
+     * @var Transcript
+     */
+    private $transcript;
 
-    private $accession;
-
-    private $entryName;
-
-    private $name;
-
-    private $organismName;
-
-    private $geneName;
-
-    private $proteinExistence;
-
-    private $sequenceVersion;
+    /**
+     *
+     * @var Organism
+     */
+    private $organism;
 
     /**
      *
      * @var Chromosome
      */
     private $chromosome;
-
-    public function setUniqueIdentifier($identifier)
-    {
-        $this->uniqueIdentifier = $identifier;
-    }
-
-    public function getUniqueIdentifier()
-    {
-        return $this->uniqueIdentifier;
-    }
 
     public function setDescription($description)
     {
@@ -71,113 +74,58 @@ class Protein implements ModifiableSequenceInterface
         return $this->description;
     }
 
-    public function setDatabasePrefix($database)
-    {
-        $this->databasePrefix = $database;
-    }
-
-    public function getDatabasePrefix()
-    {
-        return $this->databasePrefix;
-    }
-
     /**
-     * Attempts to map the database prefix to the full database name.
+     * Sets the parent gene of this protein
      *
-     * @return string|null The full database name or null
+     * @param Gene $gene
      */
-    public function getDatabaseName()
+    public function setGene($gene)
     {
-        $databaseName = null;
-        
-        if ($this->databasePrefix == 'sp') {
-            $databaseName = 'UniProtKB/Swiss-Prot';
-        } elseif ($this->databasePrefix == 'tr') {
-            $databaseName = 'UniProtKB/TrEMBL';
-        } elseif ($this->databasePrefix == 'nxp') {
-            $databaseName = 'NeXtProt';
-        }
-        
-        return $databaseName;
-    }
-
-    public function setAccession($accession)
-    {
-        $this->accession = $accession;
-    }
-
-    public function getAccession()
-    {
-        return $this->accession;
-    }
-
-    public function setEntryName($entryName)
-    {
-        $this->entryName = $entryName;
-    }
-
-    public function getEntryName()
-    {
-        return $this->entryName;
+        $this->gene = $gene;
     }
 
     /**
-     * Sets the protein name.
+     * Gets the parent gene of this protein
      *
-     * @param string $name
-     *            name of the protein
+     * @return Gene
      */
-    public function setName($name)
+    public function getGene()
     {
-        $this->name = $name;
+        return $this->gene;
     }
 
     /**
-     * Gets the protein name.
+     * Sets the parent transcript of this protein
+     *
+     * @param Gene $gene
      */
-    public function getName()
+    public function setTranscript($transcript)
     {
-        return $this->name;
+        $this->transcript = $transcript;
     }
 
-    public function setOrganismName($organismName)
+    /**
+     * Gets the parent transcript of this protein
+     *
+     * @return Transcript
+     */
+    public function getTranscript()
     {
-        $this->organismName = $organismName;
+        return $this->transcript;
     }
 
-    public function getOrganismName()
+    public function setOrganism(Organism $organism)
     {
-        return $this->organismName;
+        $this->organism = $organism;
     }
 
-    public function setGeneName($geneName)
+    /**
+     *
+     * @return Organism
+     */
+    public function getOrganism()
     {
-        $this->geneName = $geneName;
-    }
-
-    public function getGeneName()
-    {
-        return $this->geneName;
-    }
-
-    public function setProteinExistence($proteinExistence)
-    {
-        $this->proteinExistence = $proteinExistence;
-    }
-
-    public function getProteinExistence()
-    {
-        return $this->proteinExistence;
-    }
-
-    public function setSequenceVersion($version)
-    {
-        $this->sequenceVersion = $version;
-    }
-
-    public function getSequenceVersion()
-    {
-        return $this->sequenceVersion;
+        return $this->organism;
     }
 
     public function setChromosome(Chromosome $chromosome)
@@ -192,5 +140,27 @@ class Protein implements ModifiableSequenceInterface
     public function getChromosome()
     {
         return $this->chromosome;
+    }
+
+    /**
+     * This will get the unique identifier for this sequence.
+     * This field should match the complete FASTA identifier.
+     *
+     * @return string
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    /**
+     * This will get the unique identifier for this sequence.
+     * This field should match the complete FASTA identifier.
+     *
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 }

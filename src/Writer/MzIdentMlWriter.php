@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  */
 namespace pgb_liv\php_ms\Writer;
 
+use pgb_liv\php_ms\Core\Entry\ProteinEntry;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\Modification;
 use pgb_liv\php_ms\Core\Protein;
@@ -24,7 +25,6 @@ use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Core\Tolerance;
 use PhpObo\LineReader;
 use PhpObo\Parser;
-use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
 
 /**
  * Class for generating mzIdentML files from a protein/peptide object hierarchy
@@ -53,7 +53,7 @@ class MzIdentMlWriter
     private $path;
 
     /**
-     * 
+     *
      * @var \XMLWriter
      */
     private $stream;
@@ -110,7 +110,7 @@ class MzIdentMlWriter
 
         // Create empty file we can append to
         file_put_contents($this->path, '');
-        
+
         $this->stream = new \XMLWriter();
         $this->stream->openMemory();
         $this->stream->setIndent(true);
@@ -128,7 +128,7 @@ class MzIdentMlWriter
         $this->stream->endElement();
         $this->flush();
     }
-    
+
     private function flush()
     {
         file_put_contents($this->path, $this->stream->flush(true), FILE_APPEND);
@@ -261,14 +261,13 @@ class MzIdentMlWriter
         echo '[' . date('r') . '] Writing sequences.' . PHP_EOL;
         $this->writeSequenceCollection($precursors);
         $this->flush();
-        
+
         $this->writeAnalysisCollection();
         $this->flush();
-        
-        
+
         $this->writeAnalysisProtocolCollection();
         $this->flush();
-        
+
         $this->writeDataCollection($precursors);
         $this->flush();
     }
@@ -344,7 +343,7 @@ class MzIdentMlWriter
         foreach ($precursors as $precursor) {
             $this->writeSpectrumIdentificationResult($sirId, $precursor);
             $sirId ++;
-            
+
             if ($sirId % 100 == 0) {
                 $this->flush();
             }
@@ -855,7 +854,7 @@ class MzIdentMlWriter
                 }
             }
         }
-        
+
         $this->flush();
 
         $objectsWritten = array();

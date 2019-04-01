@@ -133,6 +133,11 @@ class Modification
         $this->name = $name;
     }
 
+    /**
+     * Gets this name of this instance
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;

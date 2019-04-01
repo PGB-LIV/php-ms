@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ abstract class AbstractDigest
             throw new \InvalidArgumentException(
                 'Invalid argument type, integer expected. Received ' . gettype($maxMissedCleavage));
         }
-        
+
         $this->maxMissedCleavage = $maxMissedCleavage;
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractDigest
             throw new \InvalidArgumentException(
                 'Invalid argument type, bool expected. Received ' . gettype($isNmeEnabled));
         }
-        
+
         $this->isNmeEnabled = $isNmeEnabled;
     }
 
@@ -114,18 +114,18 @@ abstract class AbstractDigest
     public function digest(Protein $protein)
     {
         $peptides = $this->performDigestion($protein);
-        
+
         if ($this->isNmeEnabled) {
             $peptides = $this->performMethionineExcision($peptides);
         }
-        
+
         return $peptides;
     }
 
     /**
      * Performs methionine excision on an array of peptides
-     * 
-     * @param Peptide $peptides            
+     *
+     * @param Peptide $peptides
      * @return Peptide[]
      */
     private function performMethionineExcision(array $peptides)
@@ -133,24 +133,29 @@ abstract class AbstractDigest
         $nmePeptides = array();
         foreach ($peptides as $peptide) {
             $entry = $peptide->getProteins()[0];
-            
+
             if ($entry->getStart() > 0) {
                 continue;
             }
-            
+
             $sequence = $peptide->getSequence();
+
+            if (strlen($sequence) <= 1) {
+                continue;
+            }
+
             if ($sequence[0] != 'M') {
                 continue;
             }
-            
+
             $nmePeptide = new Peptide();
             $nmePeptide->setSequence(substr($sequence, 1));
             $nmePeptide->addProtein($entry->getProtein(), 1, $entry->getEnd());
             $nmePeptide->setMissedCleavageCount($peptide->getMissedCleavageCount());
-            
+
             $nmePeptides[] = $nmePeptide;
         }
-        
+
         return array_merge($peptides, $nmePeptides);
     }
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Core\ProteinEntry;
+namespace pgb_liv\php_ms\Core\Entry;
 
 use pgb_liv\php_ms\Core\Protein;
 

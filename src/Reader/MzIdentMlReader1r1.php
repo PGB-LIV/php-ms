@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Core\Spectra\PrecursorIon;
 use pgb_liv\php_ms\Core\Chromosome;
-use pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry;
-use pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry;
+use pgb_liv\php_ms\Core\Entry\ProteinEntry;
+use pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry;
 use pgb_liv\php_ms\Reader\HupoPsi\PsiXmlTrait;
 use pgb_liv\php_ms\Reader\HupoPsi\PsiVerb;
 
@@ -53,9 +53,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     private $evidence = array();
 
     private $inputs;
-    
+
     /**
      * Filters to apply
+     *
      * @var array
      */
     private $filter = array();
@@ -176,34 +177,36 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     protected function getDbSequence(\SimpleXMLElement $xml)
     {
         $protein = new Protein();
-        $protein->setAccession((string) $xml->attributes()->accession);
-        
+
+        $protein->setIdentifier((string) $xml->attributes()->accession);
+
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
-            
+
             $this->parseDbSequenceParam($cvParam, $protein);
         }
-        
+
         if (isset($xml->Seq)) {
             $sequence = $this->getSeq($xml->Seq);
-            
+
             if (strlen($sequence) > 0) {
                 $protein->setSequence($sequence);
             }
         }
-        
+
         $databaseRef = (string) $xml->attributes()->searchDatabase_ref;
-        
+
         $databases = $this->getInputs()['SearchDatabase'];
-        
+
         if ($databases[$databaseRef]['isDecoy'] == 1) {
             $protein->setIsDecoy(true);
-        } else if ($databases[$databaseRef]['isDecoy'] == 2)
-        {
-            $isDecoy = preg_match('/' . $databases[$databaseRef]['decoyRules']['regExp'] .'/', $protein->getAccession());            
-            $protein->setIsDecoy($isDecoy > 0);
-        }
-        
+        } else 
+            if ($databases[$databaseRef]['isDecoy'] == 2) {
+                $isDecoy = preg_match('/' . $databases[$databaseRef]['decoyRules']['regExp'] . '/',
+                    $protein->getIdentifier());
+                $protein->setIsDecoy($isDecoy > 0);
+            }
+
         return $protein;
     }
 
@@ -427,13 +430,13 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             foreach ($this->xmlReader->DataCollection->Inputs->SearchDatabase as $xml) {
                 $this->inputs['SearchDatabase'][$this->getAttributeId($xml)] = $this->getSearchDatabase($xml);
             }
-            
+
             $this->inputs['SpectraData'] = array();
             foreach ($this->xmlReader->DataCollection->Inputs->SpectraData as $xml) {
                 $this->inputs['SpectraData'][$this->getAttributeId($xml)] = $this->getSpectraData($xml);
             }
         }
-        
+
         return $this->inputs;
     }
 
@@ -733,37 +736,41 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     protected function getSearchDatabase(\SimpleXMLElement $xml)
     {
         $database = array();
-        
+
         // Required
         $database['location'] = (string) $xml->attributes()->location;
-        
+
         // Optional
         if (isset($xml->attributes()->name)) {
             $database['name'] = (string) $xml->attributes()->name;
         }
-        
+
         if (isset($xml->attributes()->numDatabaseSequences)) {
             $database['numDatabaseSequences'] = (int) $xml->attributes()->numDatabaseSequences;
         }
-        
+
         if (isset($xml->attributes()->numResidues)) {
             $database['numResidues'] = (int) $xml->attributes()->numResidues;
         }
-        
+
         if (isset($xml->attributes()->releaseDate)) {
             $database['releaseDate'] = (string) $xml->attributes()->releaseDate;
         }
-        
+
         if (isset($xml->attributes()->version)) {
             $database['version'] = (string) $xml->attributes()->version;
         }
-        
+
         $database['isDecoy'] = 0;
-        
-        $database['decoyRules'] = array('isReversed' => false, 'isMixed' => false, 'regExp' => null);
+
+        $database['decoyRules'] = array(
+            'isReversed' => false,
+            'isMixed' => false,
+            'regExp' => null
+        );
         foreach ($xml->cvParam as $xmlCvParam) {
             $cvParam = $this->getCvParam($xmlCvParam);
-            
+
             switch ($cvParam[PsiVerb::CV_ACCESSION]) {
                 case 'MS:1001195':
                     $database['decoyRules']['isReversed'] = true;
@@ -778,15 +785,14 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     break;
             }
         }
-        
-        
+
         if ($database['decoyRules']['isMixed']) {
             $database['isDecoy'] = 2;
-        }
-        else if ($database['decoyRules']['isReversed']) {
-            $database['isDecoy'] = 1;            
-        }
-        
+        } else 
+            if ($database['decoyRules']['isReversed']) {
+                $database['isDecoy'] = 1;
+            }
+
         return $database;
     }
 
@@ -810,13 +816,12 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $residues = '.';
         }
 
-        if ($residues != '.')
-        {
+        if ($residues != '.') {
             $residues = explode(' ', $residues);
-    
+
             $modification->setResidues($residues);
         }
-        
+
         if ((string) $xml->attributes()->fixedMod == 'true') {
             $modification->setType(Modification::TYPE_FIXED);
         } else {
@@ -1138,11 +1143,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         foreach ($xml->SpectrumIdentificationItem as $spectrumItem) {
             $identification = $this->getSpectrumIdentificationItem($spectrumItem, $sequences);
 
-            if (!$this->isFilterMatch($identification))
-            {
+            if (! $this->isFilterMatch($identification)) {
                 continue;
             }
-            
+
             $spectra->addIdentification($identification);
         }
 
@@ -1205,20 +1209,21 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
         return new ProteinEntry($protein);
     }
-    
+
     private function isFilterMatch(Identification $identification)
-    {        
+    {
         // Remove idents > rank filter
-        if (isset($this->filter['rank']) && $identification->getRank() > $this->filter['rank'])
-        {
+        if (isset($this->filter['rank']) && $identification->getRank() > $this->filter['rank']) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
-     * Sets the rank limit for retrieved identifications. All returned indentifications will be <= $rank
+     * Sets the rank limit for retrieved identifications.
+     * All returned indentifications will be <= $rank
+     *
      * @param int $rank
      */
     public function setRankFilter($rank)
