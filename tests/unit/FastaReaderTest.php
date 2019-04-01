@@ -122,10 +122,10 @@ TACKV
      * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
-     * @covers pgb_liv\php_ms\Core\Database\Fasta\UniprotFastaEntry::getProtein
+     * @covers pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
-     * @uses pgb_liv\php_ms\Core\Database\Fasta\UniProtFastaEntry
+     * @uses pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry
      */
     public function testCanRetrieveEntry()
     {
@@ -154,10 +154,10 @@ TACKV
      * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
-     * @covers pgb_liv\php_ms\Core\Database\Fasta\UniProtFastaEntry::getProtein
+     * @covers pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
-     * @uses pgb_liv\php_ms\Core\Database\Fasta\UniProtFastaEntry
+     * @uses pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry
      */
     public function testCanRewind()
     {
@@ -194,10 +194,10 @@ TACKV
      * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
-     * @covers pgb_liv\php_ms\Core\Database\Fasta\UniProtFastaEntry::getProtein
+     * @covers pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
-     * @uses pgb_liv\php_ms\Core\Database\Fasta\UniProtFastaEntry
+     * @uses pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry
      */
     public function testCanSkipWhitespace()
     {
