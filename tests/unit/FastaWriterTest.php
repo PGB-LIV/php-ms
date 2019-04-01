@@ -50,11 +50,7 @@ class FastaWriterTest extends \PHPUnit_Framework_TestCase
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      * @covers pgb_liv\php_ms\Reader\FastaReader::rewind
      * @covers pgb_liv\php_ms\Reader\FastaReader::current
-     * @covers pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry::getProtein
-     * @covers pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry::getDescription
-     * @covers pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry::getHeader
-     *
-     * @uses pgb_liv\php_ms\Core\Database\Fasta\PeffFastaEntry
+     * 
      * @uses pgb_liv\php_ms\Reader\FastaReader
      * @uses pgb_liv\php_ms\Writer\FastaWriter
      *       @group peff
