@@ -32,9 +32,9 @@ trait DatabaseEntryTrait
      */
     private $database = array();
 
-    public function addDatabaseEntry(DatabaseEntry $database)
+    public function addDatabaseEntry(DatabaseEntry $dbEntry)
     {
-        $this->database[] = $database;
+        $this->database[] = $dbEntry;
     }
 
     /**
@@ -45,8 +45,7 @@ trait DatabaseEntryTrait
     {
         return $this->database;
     }
-    
-    
+
     public function clearDatabaseEntries()
     {
         $this->database = array();

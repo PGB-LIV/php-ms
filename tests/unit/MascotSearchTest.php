@@ -94,7 +94,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $searchLimit = 15;
         
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
-        $isAuthed = $search->authenticate(MASCOT_USER, MASCOT_PASS);
+        $search->authenticate(MASCOT_USER, MASCOT_PASS);
         $lastSearches = $search->getSearches($searchLimit);
         
         $this->assertEquals($searchLimit, count($lastSearches));
@@ -118,7 +118,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         // Attempts to get smallest result of last 50 to improve test speed
         $searchLimit = 50;
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
-        $isAuthed = $search->authenticate(MASCOT_USER, MASCOT_PASS);
+        $search->authenticate(MASCOT_USER, MASCOT_PASS);
         $lastSearches = $search->getSearches($searchLimit);
         
         $duration = 100000;
@@ -136,6 +136,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         
         $result = $search->getXml($filePath);
         
+        $matches = null;
         preg_match('/F[0-9]+/', $filePath, $matches);
         
         $this->assertEquals($matches[0] . '.xml', $result['name']);
@@ -160,7 +161,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $filePath = $this->createMgf();
         
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
-        $isAuthed = $search->authenticate(MASCOT_USER, MASCOT_PASS);
+        $search->authenticate(MASCOT_USER, MASCOT_PASS);
         
         $params = new MascotSearchParameters();
         $params->setUserName('php-ms Unit Test');
@@ -189,6 +190,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $datPath = $search->search($params);
         $result = $search->getXml($datPath);
         
+        $matches = null;
         preg_match('/F[0-9]+/', $datPath, $matches);
         $this->assertEquals($matches[0] . '.xml', $result['name']);
     }

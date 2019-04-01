@@ -67,7 +67,7 @@ class DigestFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $enzymes = DigestFactory::getEnzymes();
         
-        foreach ($enzymes as $key => $value) {
+        foreach (array_keys($enzymes) as $key) {
             $enzyme = DigestFactory::getDigest($key);
             
             $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Digest\Digest' . $key, $enzyme);
@@ -84,7 +84,7 @@ class DigestFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanConstructInvalid()
     {
-        $trypsin = DigestFactory::getDigest('fail');
+        DigestFactory::getDigest('fail');
     }
 
     /**

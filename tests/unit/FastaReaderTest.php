@@ -24,16 +24,39 @@ class FastaReaderTest extends \PHPUnit_Framework_TestCase
 
     private function createTestFile(&$fastaEntries, $whitespace = false)
     {
-        $fastaEntries[] = UniProtFastaEntry::getProtein('sp|P31947|1433S_HUMAN', '14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1', 'MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWRVLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFYLKMKGDYYRYLAEVATGDDKKRIIDSARSAYQEAMDISKKEMPPTNPIRLGLALNFSVFHYEIANSPEEAISLAKTTFDEAMADLHTLSEDSYKDSTLIMQLLRDNLTLWTADNAGEEGGEAPQEPQS');
-        $fastaEntries[] = UniProtFastaEntry::getProtein('sp|P63104|1433Z_HUMAN', '14-3-3 protein zeta/delta OS=Homo sapiens GN=YWHAZ PE=1 SV=1', 'MDKNELVQKAKLAEQAERYDDMAACMKSVTEQGAELSNEERNLLSVAYKNVVGARRSSWRVVSSIEQKTEGAEKKQQMAREYREKIETELRDICNDVLSLLEKFLIPNASQAESKVFYLKMKGDYYRYLAEVAAGDDKKGIVDQSQQAYQEAFEISKKEMQPTHPIRLGLALNFSVFYYEILNSPEKACSLAKTAFDEAIAELDTLSEESYKDSTLIMQLLRDNLTLWTSDTQGDEAEAGEGGEN');
-        $fastaEntries[] = UniProtFastaEntry::getProtein('sp|P18462|1A25_HUMAN', 'HLA class I histocompatibility antigen, A-25 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=1', 'MAVMAPRTLVLLLSGALALTQTWAGSHSMRYFYTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDRNTRNVKAHSQTDRESLRIALRYYNQSEDGSHTIQRMYGCDVGPDGRFLRGYQQDAYDGKDYIALNEDLRSWTAADMAAQITQRKWETAHEAEQWRAYLEGRCVEWLRRYLENGKETLQRTDAPKTHMTHHAVSDHEATLRCWALSFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWASVVVPSGQEQRYTCHVQHEGLPKPLTLRWEPSSQPTIPIVGIIAGLVLFGAVIAGAVVAAVMWRRKSSDRKGGSYSQAASSDSAQGSDMSLTACKV');
-        $fastaEntries[] = UniProtFastaEntry::getProtein('sp|P30512|1A29_HUMAN', 'HLA class I histocompatibility antigen, A-29 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=2', 'MAVMAPRTLLLLLLGALALTQTWAGSHSMRYFTTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDLQTRNVKAQSQTDRANLGTLRGYYNQSEAGSHTIQMMYGCHVGSDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITQRKWEAARVAEQLRAYLEGTCVEWLRRYLENGKETLQRTDAPKTHMTHHAVSDHEATLRCWALSFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWASVVVPSGQEQRYTCHVQHEGLPKPLTLRWEPSSQPTIPIVGIIAGLVLFGAVFAGAVVAAVRWRRKSSDRKGGSYSQAASSDSAQGSDMSLTACKV');
-        
+        $entry = UniProtFastaEntry::getProtein('sp|P31947|1433S_HUMAN',
+            '14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1');
+        $entry->setSequence(
+            'MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWRVLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFYLKMKGDYYRYLAEVATGDDKKRIIDSARSAYQEAMDISKKEMPPTNPIRLGLALNFSVFHYEIANSPEEAISLAKTTFDEAMADLHTLSEDSYKDSTLIMQLLRDNLTLWTADNAGEEGGEAPQEPQS');
+        $entry->setIdentifier('sp|P31947|1433S_HUMAN');
+        $fastaEntries[] = $entry;
+
+        $entry = UniProtFastaEntry::getProtein('sp|P63104|1433Z_HUMAN',
+            '14-3-3 protein zeta/delta OS=Homo sapiens GN=YWHAZ PE=1 SV=1');
+        $entry->setSequence(
+            'MDKNELVQKAKLAEQAERYDDMAACMKSVTEQGAELSNEERNLLSVAYKNVVGARRSSWRVVSSIEQKTEGAEKKQQMAREYREKIETELRDICNDVLSLLEKFLIPNASQAESKVFYLKMKGDYYRYLAEVAAGDDKKGIVDQSQQAYQEAFEISKKEMQPTHPIRLGLALNFSVFYYEILNSPEKACSLAKTAFDEAIAELDTLSEESYKDSTLIMQLLRDNLTLWTSDTQGDEAEAGEGGEN');
+        $entry->setIdentifier('sp|P63104|1433Z_HUMAN');
+        $fastaEntries[] = $entry;
+
+        $entry = UniProtFastaEntry::getProtein('sp|P18462|1A25_HUMAN',
+            'HLA class I histocompatibility antigen, A-25 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=1');
+        $entry->setSequence(
+            'MAVMAPRTLVLLLSGALALTQTWAGSHSMRYFYTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDRNTRNVKAHSQTDRESLRIALRYYNQSEDGSHTIQRMYGCDVGPDGRFLRGYQQDAYDGKDYIALNEDLRSWTAADMAAQITQRKWETAHEAEQWRAYLEGRCVEWLRRYLENGKETLQRTDAPKTHMTHHAVSDHEATLRCWALSFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWASVVVPSGQEQRYTCHVQHEGLPKPLTLRWEPSSQPTIPIVGIIAGLVLFGAVIAGAVVAAVMWRRKSSDRKGGSYSQAASSDSAQGSDMSLTACKV');
+        $entry->setIdentifier('sp|P18462|1A25_HUMAN');
+        $fastaEntries[] = $entry;
+
+        $entry = UniProtFastaEntry::getProtein('sp|P30512|1A29_HUMAN',
+            'HLA class I histocompatibility antigen, A-29 alpha chain OS=Homo sapiens GN=HLA-A PE=1 SV=2');
+        $entry->setSequence(
+            'MAVMAPRTLLLLLLGALALTQTWAGSHSMRYFTTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDLQTRNVKAQSQTDRANLGTLRGYYNQSEAGSHTIQMMYGCHVGSDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITQRKWEAARVAEQLRAYLEGTCVEWLRRYLENGKETLQRTDAPKTHMTHHAVSDHEATLRCWALSFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWASVVVPSGQEQRYTCHVQHEGLPKPLTLRWEPSSQPTIPIVGIIAGLVLFGAVFAGAVVAAVRWRRKSSDRKGGSYSQAASSDSAQGSDMSLTACKV');
+        $entry->setIdentifier('sp|P30512|1A29_HUMAN');
+        $fastaEntries[] = $entry;
+
         $fasta = '';
         if ($whitespace) {
             $fasta .= "\n";
         }
-        
+
         $fasta .= '>sp|P31947|1433S_HUMAN 14-3-3 protein sigma OS=Homo sapiens GN=SFN PE=1 SV=1
 MERASLIQKAKLAEQAERYEDMAAFMKGAVEKGEELSCEERNLLSVAYKNVVGGQRAAWR
 VLSSIEQKSNEEGSEEKGPEVREYREKVETELQGVCDTVLGLLDSHLIKEAGDAESRVFY
@@ -64,15 +87,16 @@ WQRDGEDQTQDTELVETRPAGDGTFQKWASVVVPSGQEQRYTCHVQHEGLPKPLTLRWEP
 SSQPTIPIVGIIAGLVLFGAVFAGAVVAAVRWRRKSSDRKGGSYSQAASSDSAQGSDMSL
 TACKV
 ';
-        
+
         $tempFile = tempnam(sys_get_temp_dir(), 'FastaParserTest');
-        
+
         file_put_contents($tempFile, $fasta);
-        
+
         return $tempFile;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
@@ -83,11 +107,12 @@ TACKV
         $fastaPath = $this->createTestFile($fastaEntries);
         $fasta = new FastaReader($fastaPath);
         $this->assertInstanceOf('\pgb_liv\php_ms\Reader\FastaReader', $fasta);
-        
+
         return $fasta;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      * @covers pgb_liv\php_ms\Reader\FastaReader::current
      * @covers pgb_liv\php_ms\Reader\FastaReader::next
@@ -106,19 +131,20 @@ TACKV
     {
         $fastaEntries = array();
         $fastaPath = $this->createTestFile($fastaEntries);
-        
+
         $fasta = new FastaReader($fastaPath);
-        
+
         $i = 0;
         foreach ($fasta as $key => $entry) {
             $this->assertEquals($fastaEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($fastaEntries));
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      * @covers pgb_liv\php_ms\Reader\FastaReader::current
      * @covers pgb_liv\php_ms\Reader\FastaReader::next
@@ -137,27 +163,28 @@ TACKV
     {
         $fastaEntries = array();
         $fastaPath = $this->createTestFile($fastaEntries);
-        
+
         $fasta = new FastaReader($fastaPath);
-        
+
         $i = 0;
         foreach ($fasta as $key => $entry) {
             $this->assertEquals($fastaEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($fastaEntries));
-        
+
         $i = 0;
         foreach ($fasta as $key => $entry) {
             $this->assertEquals($fastaEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($fastaEntries));
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\FastaReader::__construct
      * @covers pgb_liv\php_ms\Reader\FastaReader::current
      * @covers pgb_liv\php_ms\Reader\FastaReader::next
@@ -176,15 +203,15 @@ TACKV
     {
         $fastaEntries = array();
         $fastaPath = $this->createTestFile($fastaEntries, true);
-        
+
         $fasta = new FastaReader($fastaPath);
-        
+
         $i = 0;
         foreach ($fasta as $key => $entry) {
             $this->assertEquals($fastaEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($fastaEntries));
     }
 }

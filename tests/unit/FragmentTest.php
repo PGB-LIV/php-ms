@@ -575,6 +575,6 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     {
         $peptide = new Peptide('PEPTIDE');
         
-        $types = FragmentFactory::getMethodFragments('MyUnknownMethod', $peptide);
+        FragmentFactory::getMethodFragments('MyUnknownMethod', $peptide);
     }
 }

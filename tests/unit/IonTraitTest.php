@@ -64,7 +64,7 @@ class IonTraitTest extends \PHPUnit_Framework_TestCase
         $charge = 2;
         
         $spectra = $this->getMockForTrait('pgb_liv\php_ms\Core\Spectra\IonTrait');
-        $spectra->setMonoisotopicMassCharge($mz, 2);
+        $spectra->setMonoisotopicMassCharge($mz, $charge);
         
         $this->assertEquals($mz, $spectra->getMonoisotopicMassCharge(), '', 0.0001);
     }

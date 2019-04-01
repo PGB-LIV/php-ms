@@ -52,7 +52,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
     {
         $filePath = $this->createMgf();
         
-        $search = new MsgfPlusSearch(MSGFPLUS_PATH);
+        new MsgfPlusSearch(MSGFPLUS_PATH);
         
         $params = new MsgfPlusSearchParameters();
         $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
@@ -78,7 +78,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
     {
         $filePath = $this->createMgf();
         
-        $search = new MsgfPlusSearch(MSGFPLUS_PATH);
+        new MsgfPlusSearch(MSGFPLUS_PATH);
         
         $params = new MsgfPlusSearchParameters();
         $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');

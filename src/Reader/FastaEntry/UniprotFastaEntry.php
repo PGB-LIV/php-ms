@@ -54,7 +54,7 @@ class UniProtFastaEntry implements FastaInterface
     public function getProtein($identifier, $description)
     {
         // Parse identifier
-        $identifierParts = $this->parseIdentifier($identifier);
+        $identifierParts = self::parseIdentifier($identifier);
 
         $protein = new Protein();
 
