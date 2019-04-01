@@ -16,7 +16,7 @@
  */
 namespace pgb_liv\php_ms\Test\Unit;
 
-use pgb_liv\php_ms\Core\ProteinEntry\ChromosomeProteinEntry;
+use pgb_liv\php_ms\Core\Entry\ChromosomeProteinEntry;
 use pgb_liv\php_ms\Core\Protein;
 
 class ChromosomeProteinEntryTest extends \PHPUnit_Framework_TestCase
