@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::__construct
      *
      * @uses pgb_liv\php_ms\Core\Peptide
@@ -31,13 +32,14 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     public function testCanConstructValid()
     {
         $peptide = new Peptide();
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Core\Peptide', $peptide);
-        
+
         return $peptide;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::__construct
      * @covers pgb_liv\php_ms\Core\Peptide::getSequence
      * @covers pgb_liv\php_ms\Core\Peptide::getLength
@@ -48,12 +50,13 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     {
         $sequence = 'PEPTIDE';
         $peptide = new Peptide($sequence);
-        
+
         $this->assertEquals($sequence, $peptide->getSequence());
         $this->assertEquals(strlen($sequence), $peptide->getLength());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::getMissedCleavageCount
      * @covers pgb_liv\php_ms\Core\Peptide::setMissedCleavageCount
      *
@@ -65,11 +68,12 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $cleavages = 1;
         $peptide = new Peptide($sequence);
         $peptide->setMissedCleavageCount($cleavages);
-        
+
         $this->assertEquals($cleavages, $peptide->getMissedCleavageCount());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::setMissedCleavageCount
      * @expectedException InvalidArgumentException
      *
@@ -84,14 +88,15 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::getProteins
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::getProtein
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ProteinEntry
      */
     public function testCanGetAddProteinValid()
     {
@@ -99,66 +104,69 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $protein = new Protein();
         $peptide = new Peptide($sequence);
         $peptide->addProtein($protein);
-        
+
         $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::getProteins
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setStart
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::getStart
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::setStart
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::getStart
      *
      * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ProteinEntry
      */
     public function testCanGetAddProteinStartValid()
     {
         $sequence = 'PEPTIDE';
         $protein = new Protein();
         $start = 12;
-        
+
         $peptide = new Peptide($sequence);
         $peptide->addProtein($protein, $start);
-        
+
         $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
         $this->assertEquals($start, $peptide->getProteins()[0]->getStart());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setStart
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::setStart
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ProteinEntry
      */
     public function testCanGetAddProteinStartInvalid()
     {
         $sequence = 'PEPTIDE';
         $protein = new Protein();
         $start = 'fail';
-        
+
         $peptide = new Peptide($sequence);
         $peptide->addProtein($protein, $start);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::getProteins
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setStart
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::getStart
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setEnd
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::getEnd
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::setStart
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::getStart
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::setEnd
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::getEnd
      *
      * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ProteinEntry
      */
     public function testCanGetAddProteinEndValid()
     {
@@ -167,24 +175,25 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $peptide = new Peptide($sequence);
         $start = 12;
         $end = 12;
-        
+
         $peptide->addProtein($protein, $start, $end);
-        
+
         $this->assertEquals($protein, $peptide->getProteins()[0]->getProtein());
         $this->assertEquals($start, $peptide->getProteins()[0]->getStart());
         $this->assertEquals($end, $peptide->getProteins()[0]->getEnd());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::addProtein
      * @covers pgb_liv\php_ms\Core\Peptide::addProteinEntry
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::__construct
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setStart
-     * @covers pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry::setEnd
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::__construct
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::setStart
+     * @covers pgb_liv\php_ms\Core\Entry\ProteinEntry::setEnd
      * @expectedException InvalidArgumentException
      *
      * @uses pgb_liv\php_ms\Core\Peptide
-     * @uses pgb_liv\php_ms\Core\ProteinEntry\ProteinEntry
+     * @uses pgb_liv\php_ms\Core\Entry\ProteinEntry
      */
     public function testCanGetAddProteinEndInvalid()
     {
@@ -193,11 +202,12 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $peptide = new Peptide($sequence);
         $start = 12;
         $end = 'fail';
-        
+
         $peptide->addProtein($protein, $start, $end);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::__clone
      *
      * @uses pgb_liv\php_ms\Core\Peptide
@@ -211,13 +221,14 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
         $modification = new Modification();
         $modification->setMonoisotopicMass(79.97);
         $peptide->addModification($modification);
-        
+
         $peptideClone = clone $peptide;
-        
+
         $this->assertEquals($peptideClone, $peptide);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Peptide::getMolecularFormula
      *
      * @uses pgb_liv\php_ms\Core\Peptide
@@ -225,7 +236,7 @@ class PeptideTest extends \PHPUnit_Framework_TestCase
     public function testCanGetMolecularFormula()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $this->assertEquals('C34H53N7O15', $peptide->getMolecularFormula());
     }
 }
