@@ -42,7 +42,6 @@ abstract class AbstractFragment implements FragmentInterface
      *
      * @param ModifiableSequenceInterface $sequence
      *            Peptide object which must contain a sequence
-     *            
      * @throws \InvalidArgumentException If the peptide object does not contain a sequence
      */
     public function __construct(ModifiableSequenceInterface $sequence)

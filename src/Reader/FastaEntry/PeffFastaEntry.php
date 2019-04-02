@@ -140,8 +140,7 @@ class PeffFastaEntry implements FastaInterface
                     // Not supported
                     break;
                 default:
-                    var_dump($key);
-                    exit();
+                    // Not supported
                     break;
             }
         }

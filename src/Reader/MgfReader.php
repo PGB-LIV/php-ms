@@ -38,7 +38,7 @@ class MgfReader implements \Iterator
 
     private $key = 0;
 
-    private $mz;
+    private $massCharge;
 
     private $charge;
 
@@ -137,7 +137,7 @@ class MgfReader implements \Iterator
             return null;
         }
 
-        $this->mz = null;
+        $this->massCharge = null;
         $this->charge = 1;
 
         // Scan for key=value pairs
@@ -150,8 +150,8 @@ class MgfReader implements \Iterator
         }
 
         // TODO: Better support required for charge-less data
-        if (! is_null($this->mz)) {
-            $entry->setMonoisotopicMassCharge($this->mz, $this->charge);
+        if (! is_null($this->massCharge)) {
+            $entry->setMonoisotopicMassCharge($this->massCharge, $this->charge);
         } else {
             $entry->setCharge($this->charge);
         }
@@ -194,7 +194,7 @@ class MgfReader implements \Iterator
                 $precursor->setIntensity((float) $chunks[1] + 0);
             }
 
-            $this->mz = (float) $chunks[0] + 0;
+            $this->massCharge = (float) $chunks[0] + 0;
         } elseif ($pair[0] == 'CHARGE') {
             $this->charge = (int) $pair[1];
         } elseif ($pair[0] == 'SCANS') {
@@ -227,7 +227,8 @@ class MgfReader implements \Iterator
 
         $ion = new FragmentIon();
         $fragmentMz = (float) $pair[0];
-        $fragmentCharge = $this->charge;
+        $fragmentCharge = 1;
+        
         if (count($pair) > 1) {
             $ion->setIntensity((float) $pair[1]);
         }

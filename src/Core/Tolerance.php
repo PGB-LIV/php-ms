@@ -136,18 +136,31 @@ class Tolerance
      */
     public function isTolerable($observed, $expected)
     {
-        $diff = 0;
-        if ($this->unit == Tolerance::DA) {
-            $diff = abs($observed - $expected);
-        } else {
-            $diff = abs(Tolerance::getDifferencePpm($observed, $expected));
-        }
+        $diff = $this->getDifference($observed, $expected);
 
         if ($diff > $this->tolerance) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Gets the difference between the observed and expected, and returns it depending on the instance unit
+     *
+     * @param float $observed
+     *            The observed value
+     * @param float $expected
+     *            The expected value
+     * @return float
+     */
+    public function getDifference($observed, $expected)
+    {
+        if ($this->unit == Tolerance::DA) {
+            return abs($observed - $expected);
+        }
+
+        return abs(self::getDifferencePpm($observed, $expected));
     }
 
     /**

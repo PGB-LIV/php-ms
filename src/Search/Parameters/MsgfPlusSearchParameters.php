@@ -255,7 +255,6 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * If -mod option is not specified, standard amino acids with fixed Carboamidomethylation C will be used.
      *
      * @see https://raw.githubusercontent.com/sangtaekim/msgfplus/master/doc/examples/Mods.txt Example modification file.
-     *     
      * @param string $filePath
      *            Modification file path
      */

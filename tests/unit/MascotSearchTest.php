@@ -25,6 +25,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      *
      * @uses pgb_liv\php_ms\Search\MascotSearch
@@ -35,11 +36,12 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     {
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
         $this->assertInstanceOf('\pgb_liv\php_ms\Search\MascotSearch', $search);
-        
+
         return $search;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
@@ -54,11 +56,12 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     {
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
         $isAuthed = $search->authenticate(MASCOT_USER, MASCOT_PASS);
-        
+
         $this->assertTrue($isAuthed);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::getCookieHeader
@@ -73,11 +76,12 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     {
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
         $isAuthed = $search->authenticate('fakeuser', 'fakepass');
-        
+
         $this->assertFalse($isAuthed);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::getSearches
@@ -92,15 +96,16 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     public function testCanGetValidRecentSearches()
     {
         $searchLimit = 15;
-        
+
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
         $search->authenticate(MASCOT_USER, MASCOT_PASS);
         $lastSearches = $search->getSearches($searchLimit);
-        
+
         $this->assertEquals($searchLimit, count($lastSearches));
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::getSearches
@@ -120,7 +125,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
         $search->authenticate(MASCOT_USER, MASCOT_PASS);
         $lastSearches = $search->getSearches($searchLimit);
-        
+
         $duration = 100000;
         $filePath = '';
         foreach ($lastSearches as $record) {
@@ -129,20 +134,21 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
                 $duration = $record['dur'];
             }
         }
-        
+
         if ($filePath == '') {
             return;
         }
-        
+
         $result = $search->getXml($filePath);
-        
+
         $matches = null;
         preg_match('/F[0-9]+/', $filePath, $matches);
-        
+
         $this->assertEquals($matches[0] . '.xml', $result['name']);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MascotSearch::__construct
      * @covers pgb_liv\php_ms\Search\MascotSearch::authenticate
      * @covers pgb_liv\php_ms\Search\MascotSearch::search
@@ -159,23 +165,23 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     public function testCanSubmitValidJob()
     {
         $filePath = $this->createMgf();
-        
+
         $search = new MascotSearch(MASCOT_HOST, MASCOT_PORT, MASCOT_PATH);
         $search->authenticate(MASCOT_USER, MASCOT_PASS);
-        
+
         $params = new MascotSearchParameters();
         $params->setUserName('php-ms Unit Test');
         $params->setUserMail('example@example.com');
         $params->setTitle('php-ms Unit Test');
         $params->setDatabases('Mouse_AndrewC_NOV16');
-        
+
         $carb = new Modification();
         $carb->setName('Carbamidomethyl');
         $carb->setResidues(array(
             'C'
         ));
         $params->addFixedModification($carb);
-        
+
         $phospho = new Modification();
         $phospho->setName('Phospho');
         $phospho->setResidues(array(
@@ -186,10 +192,10 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
         $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
         $params->setFragmentTolerance(new Tolerance(0.01, Tolerance::DA));
         $params->setSpectraPath($filePath);
-        
+
         $datPath = $search->search($params);
         $result = $search->getXml($datPath);
-        
+
         $matches = null;
         preg_match('/F[0-9]+/', $datPath, $matches);
         $this->assertEquals($matches[0] . '.xml', $result['name']);
@@ -198,7 +204,7 @@ class MascotSearchTest extends \PHPUnit_Framework_TestCase
     public function createMgf()
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'php-ms');
-        file_put_contents($tempFile, 
+        file_put_contents($tempFile,
             'SEARCH=MIS
 MASS=Monoisotopic
 BEGIN IONS
@@ -881,7 +887,7 @@ RTINSECONDS=2108.208
 1016.50299 26308.21
 1017.50378 17179.04
 END IONS');
-        
+
         return $tempFile;
     }
 }

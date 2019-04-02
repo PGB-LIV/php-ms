@@ -133,7 +133,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getAnalysisSampleCollection()
-    {}
+    {
+        // TODO: Implement
+    }
 
     public function getAnalysisSoftwareList()
     {
@@ -171,16 +173,24 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getAuditCollection()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getBibliographicReference()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getContactRole()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getCustomisations()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getDbSequence(\SimpleXMLElement $xml)
     {
@@ -852,7 +862,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getSearchDatabaseRef()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getSearchModification(\SimpleXMLElement $xml)
     {
@@ -877,11 +889,13 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
             $modification->setResidues($residues);
         }
 
+        $modType = Modification::TYPE_VARIABLE;
+        
         if ((string) $xml->attributes()->fixedMod == 'true') {
-            $modification->setType(Modification::TYPE_FIXED);
-        } else {
-            $modification->setType(Modification::TYPE_VARIABLE);
+            $modType = Modification::TYPE_FIXED;
         }
+        
+        $modification->setType($modType);
 
         $cvParam = $this->getCvParam($xml->cvParam);
 
@@ -1199,9 +1213,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
         // We can not currently pull data from the .raw data so take the m/z vlaues from the first identification
         $charge = (int) $xml->SpectrumIdentificationItem->attributes()->chargeState;
-        $mz = (float) $xml->SpectrumIdentificationItem->attributes()->experimentalMassToCharge;
+        $massCharge = (float) $xml->SpectrumIdentificationItem->attributes()->experimentalMassToCharge;
 
-        $spectra->setMonoisotopicMassCharge($mz, $charge);
+        $spectra->setMonoisotopicMassCharge($massCharge, $charge);
 
         foreach ($xml->SpectrumIdentificationItem as $spectrumItem) {
             $identification = $this->getSpectrumIdentificationItem($spectrumItem, $sequences);

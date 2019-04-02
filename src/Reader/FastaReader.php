@@ -161,10 +161,10 @@ class FastaReader implements \Iterator
             }
         } while ($this->getLine());
 
-        $description = '';
+        $identifier = '';
         while ($line = $this->getLine()) {
             $line = trim($line);
-            $description .= substr($line, 1);
+            $identifier .= substr($line, 1);
 
             $nextLine = trim($this->peekLine());
             if (strpos($nextLine, '>') !== 0) {
@@ -172,12 +172,12 @@ class FastaReader implements \Iterator
             }
         }
 
-        if (strpos($description, ' ') !== false) {
-            $identifier = substr($description, 0, strpos($description, ' '));
-            $description = substr($description, strpos($description, ' ') + 1);
-        } else {
-            $identifier = $description;
-            $description = '';
+        $description = '';
+        $separator = strpos($identifier, ' ');
+
+        if ($separator !== false) {
+            $description = substr($identifier, $separator + 1);
+            $identifier = substr($identifier, 0, $separator);
         }
 
         try {
@@ -190,7 +190,7 @@ class FastaReader implements \Iterator
             $this->format = FastaEntryFactory::getParser($identifier);
             $protein = $this->format->getProtein($identifier, $description);
         }
-        
+
         $protein->setIdentifier($identifier);
         $protein->setSequence($this->parseSequence());
 
