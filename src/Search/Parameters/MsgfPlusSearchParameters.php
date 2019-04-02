@@ -88,7 +88,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * The combination of -t and -ti determines the precursor mass tolerance.
      * E.g. "-t 20ppm -ti -1,2" tests abs(exp-calc-n*1.00335Da)<20ppm for n=-1, 0, 1, 2.
      *
-     * @param string $range            
+     * @param string $range
      */
     public function setIsotopeErrorRange($range)
     {
@@ -114,7 +114,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($threadCount) || $threadCount < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
-        
+
         $this->numOfThreads = $threadCount;
     }
 
@@ -144,7 +144,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($method) || $method < 0 || $method > 4) {
             throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 4');
         }
-        
+
         $this->fragmentationMethodId = $method;
     }
 
@@ -172,7 +172,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($identifier) || $identifier < 0 || $identifier > 3) {
             throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 3');
         }
-        
+
         $this->ms2DetectorId = $identifier;
     }
 
@@ -196,7 +196,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($enzyme) || $enzyme < 0 || $enzyme > 9) {
             throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 9');
         }
-        
+
         parent::setEnzyme($enzyme);
     }
 
@@ -216,7 +216,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($identifier) || $identifier < 0 || $identifier > 3) {
             throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 3');
         }
-        
+
         $this->protocolId = $identifier;
     }
 
@@ -240,7 +240,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($identifier) || $identifier < 0 || $identifier > 2) {
             throw new \InvalidArgumentException('Argument 1 must be an integer between 0 and 2');
         }
-        
+
         $this->tolerableTrypticTermini = $identifier;
     }
 
@@ -264,7 +264,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! file_exists($filePath)) {
             throw new \InvalidArgumentException('Argument 1 must be a validation modification file');
         }
-        
+
         $this->modificationFile = $filePath;
     }
 
@@ -282,14 +282,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * Minimum length of the peptide to be considered.
      * (Default: 6)
      *
-     * @param int $length            
+     * @param int $length
      */
     public function setMinPeptideLength($length)
     {
         if (! is_int($length) || $length < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
-        
+
         $this->minPeptideLength = $length;
     }
 
@@ -302,14 +302,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * Maximum length of the peptide to be considered.
      * (Default: 40)
      *
-     * @param int $length            
+     * @param int $length
      */
     public function setMaxPeptideLength($length)
     {
         if (! is_int($length) || $length < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
-        
+
         $this->maxPeptideLength = $length;
     }
 
@@ -323,14 +323,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * This parameter is used only for spectra with no charge.
      * (Default: 2)
      *
-     * @param int $charge            
+     * @param int $charge
      */
     public function setMinPrecursorCharge($charge)
     {
         if (! is_int($charge) || $charge < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
-        
+
         $this->minPrecursorCharge = $charge;
     }
 
@@ -344,14 +344,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * This parameter is used only for spectra with no charge.
      * (Default: 3)
      *
-     * @param int $charge            
+     * @param int $charge
      */
     public function setMaxPrecursorCharge($charge)
     {
         if (! is_int($charge) || $charge < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
-        
+
         $this->maxPrecursorCharge = $charge;
     }
 
@@ -371,7 +371,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_int($psmCount) || $psmCount < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a positive integer');
         }
-        
+
         $this->numMatchesPerSpec = $psmCount;
     }
 
@@ -388,14 +388,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * NTermIonCurrentRatio: Summed intensity of all matched prefix ions (e.g. b, b-H2O, etc.) divided by MS2IonCurrent
      * CTermIonCurrentRatio: Summed intensity of all matched suffix ions (e.g. y, y-H2O, etc.) divided by MS2IonCurrent
      *
-     * @param bool $bool            
+     * @param bool $bool
      */
     public function setAdditionalFeatures($bool)
     {
         if (! is_bool($bool)) {
             throw new \InvalidArgumentException('Argument 1 must be a boolean');
         }
-        
+
         $this->additionalFeatures = $bool;
     }
 
@@ -409,14 +409,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
      * If true, QValue (PSM-level Q-value) and PepQValue (peptide-level Q-value) are reported (Default).
      * This parameter is ignored when "-tda 0".
      *
-     * @param bool $bool            
+     * @param bool $bool
      */
     public function setShowQValue($bool)
     {
         if (! is_bool($bool)) {
             throw new \InvalidArgumentException('Argument 1 must be a boolean');
         }
-        
+
         $this->showQValue = $bool;
     }
 
@@ -436,7 +436,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         if (! is_float($mass)) {
             throw new \InvalidArgumentException('Argument 1 must be a float');
         }
-        
+
         $this->chargeCarrierMass = $mass;
     }
 
@@ -448,7 +448,7 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
     /**
      * Creates a modification file from an array of modifications
      *
-     * @param Modification[] $modifications            
+     * @param Modification[] $modifications
      * @param number $numMods
      *            Max number of modifications to search per peptide
      * @return string File path the newly created modification file
@@ -459,14 +459,14 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
         // All array must be this class
         // NumMods must be uint
         $data = 'NumMods=' . $numMods . PHP_EOL;
-        
+
         foreach ($modifications as $modification) {
             $entry = $modification->getMonoisotopicMass() . ',';
             $entry .= count($modification->getResidues()) == 0 ? '*' : implode('', $modification->getResidues());
             $entry .= ',';
-            
+
             $entry .= $modification->isFixed() ? 'fix,' : 'opt,';
-            
+
             $position = '';
             switch ($modification->getPosition()) {
                 case Modification::POSITION_PROTEIN_NTERM:
@@ -486,16 +486,16 @@ class MsgfPlusSearchParameters extends AbstractSearchParameters implements Searc
                     $position = 'any';
                     break;
             }
-            
+
             $entry .= $position . ',';
             $entry .= $modification->getName();
-            
+
             $data .= $entry . PHP_EOL;
         }
-        
+
         $modFile = tempnam(sys_get_temp_dir(), 'php-msMsgfMods');
         file_put_contents($modFile, $data);
-        
+
         return $modFile;
     }
 }

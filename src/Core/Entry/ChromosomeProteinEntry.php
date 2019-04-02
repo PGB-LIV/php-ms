@@ -81,7 +81,7 @@ class ChromosomeProteinEntry extends ProteinEntry
                     'Argument 1 must be an array of type integer. Argument type is ' . gettype($position));
             }
         }
-        
+
         $this->starts = $positions;
     }
 
@@ -91,7 +91,7 @@ class ChromosomeProteinEntry extends ProteinEntry
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
-        
+
         $this->end = $position;
     }
 
@@ -101,19 +101,19 @@ class ChromosomeProteinEntry extends ProteinEntry
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type integer. Argument type is ' . gettype($count));
         }
-        
+
         $this->blockCount = $count;
     }
 
     public function setChromosomeBlockSizes(array $sizes)
     {
-        foreach ($sizes as $size) {            
+        foreach ($sizes as $size) {
             if (! is_int($size)) {
                 throw new \InvalidArgumentException(
                     'Argument 1 must be of type integer[]. Element of argument 1 is ' . gettype($size));
             }
         }
-        
+
         $this->blockSizes = $sizes;
     }
 }

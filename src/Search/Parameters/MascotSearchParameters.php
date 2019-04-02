@@ -227,7 +227,7 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
         if (! is_int($peptideIsotopeError) || $peptideIsotopeError < 0 || $peptideIsotopeError > 2) {
             throw new \InvalidArgumentException('Argument 1 must be an integer value between 0 and 2');
         }
-        
+
         $this->peptideIsotopeError = $peptideIsotopeError;
     }
 
@@ -248,7 +248,7 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
 
     public function setFileFormat($fileFormat)
     {
-        switch ($fileFormat) {            
+        switch ($fileFormat) {
             case 'Mascot generic':
             case 'Sequest (.DTA)':
             case 'Finnigan (.ASC)':
@@ -283,7 +283,7 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
         if ((! is_float($precursorMass) && ! is_int($precursorMass)) || $precursorMass < 0) {
             throw new \InvalidArgumentException('Argument 1 must be a float or integer value greater than 0');
         }
-        
+
         $this->precursor = $precursorMass;
     }
 
@@ -348,13 +348,13 @@ class MascotSearchParameters extends AbstractSearchParameters implements SearchP
     {
         return $this->mass;
     }
-    
+
     public function setMissedCleavageCount($maxCleave)
     {
         if (! is_int($maxCleave) || $maxCleave < 0 || $maxCleave > 9) {
             throw new \InvalidArgumentException('Argument 1 must be an unsigned integer between 0 and 9');
         }
-        
+
         parent::setMissedCleavageCount($maxCleave);
     }
 }

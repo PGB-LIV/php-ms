@@ -71,12 +71,10 @@ class FastaWriter
         }
 
         if ($protein->getDatabaseEntries()[0]->getVersion()) {
-
             $description .= ' \SV=' . $protein->getDatabaseEntries()[0]->getVersion();
         }
 
         if ($protein->getDatabaseEntries()[0]->getEvidence()) {
-
             $description .= ' \PE=' . $protein->getDatabaseEntries()[0]->getEvidence();
         }
 

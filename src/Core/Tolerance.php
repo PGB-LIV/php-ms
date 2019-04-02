@@ -51,9 +51,9 @@ class Tolerance
             throw new \InvalidArgumentException(
                 'Argument 1 must be a float or int value. Valued passed is of type ' . gettype($tolerance));
         }
-        
+
         $this->tolerance = $tolerance;
-        
+
         switch (strtolower($unit)) {
             case strtolower(Tolerance::PPM):
             case strtolower(Tolerance::PSI_PPM_ACCESSION):
@@ -101,9 +101,9 @@ class Tolerance
         if ($this->unit == Tolerance::DA) {
             return $this->tolerance;
         }
-        
+
         $toleranceRatio = $this->tolerance / 1000000;
-        
+
         return $mass * $toleranceRatio;
     }
 
@@ -119,9 +119,9 @@ class Tolerance
         if ($this->unit == Tolerance::PPM) {
             return $this->tolerance;
         }
-        
+
         $toleranceRatio = $this->tolerance / $mass;
-        
+
         return $toleranceRatio * 1000000;
     }
 
@@ -142,17 +142,17 @@ class Tolerance
         } else {
             $diff = abs(Tolerance::getDifferencePpm($observed, $expected));
         }
-        
+
         if ($diff > $this->tolerance) {
             return false;
         }
-        
+
         return true;
     }
 
     /**
      * Gets the ppm difference for the observed and expected value
-     * 
+     *
      * @param float $observed
      *            The observed value
      * @param float $expected

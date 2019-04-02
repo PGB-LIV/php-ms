@@ -55,50 +55,50 @@ class DigestRegularExpression extends AbstractDigest implements DigestInterface
     protected function performDigestion(Protein $protein)
     {
         $peptideSequences = preg_split($this->cleavageRule, $protein->getSequence());
-        
+
         $peptides = array();
         $position = 0;
         foreach ($peptideSequences as $peptideSequence) {
             if (strlen($peptideSequence) == 0) {
                 continue;
             }
-            
+
             $peptide = new Peptide();
             $peptide->setSequence($peptideSequence);
-            
+
             $endPosition = $position + strlen($peptideSequence) - 1;
             $peptide->addProtein($protein, $position, $endPosition);
             $peptide->setMissedCleavageCount(0);
-            
+
             $peptides[] = $peptide;
             $position = $endPosition + 1;
         }
-        
+
         $missedCleaveges = array();
-        
+
         // Factor in missed cleaves
         for ($index = 0; $index < count($peptides); $index ++) {
             // Copy peptide
             $basePeptide = $peptides[$index];
-            
+
             $cumulativeSequence = $peptides[$index]->getSequence();
             for ($missedCleave = 1; $missedCleave <= $this->getMaxMissedCleavage(); $missedCleave ++) {
                 if ($index + $missedCleave >= count($peptides)) {
                     continue;
                 }
-                
+
                 $cumulativeSequence .= $peptides[$index + $missedCleave]->getSequence();
-                
+
                 $peptide = new Peptide($cumulativeSequence);
                 $peptide->setSequence($cumulativeSequence);
                 $proteinEntry = $basePeptide->getProteins()[0];
-                $peptide->addProtein($proteinEntry->getProtein(), $proteinEntry->getStart(), 
+                $peptide->addProtein($proteinEntry->getProtein(), $proteinEntry->getStart(),
                     $proteinEntry->getStart() + strlen($cumulativeSequence) - 1);
                 $peptide->setMissedCleavageCount($missedCleave);
                 $missedCleaveges[] = $peptide;
             }
         }
-        
+
         return array_merge($peptides, $missedCleaveges);
     }
 }

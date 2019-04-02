@@ -50,7 +50,7 @@ abstract class AbstractFragment implements FragmentInterface
         if (is_null($sequence->getSequence()) || strlen($sequence->getSequence()) == 0) {
             throw new \InvalidArgumentException('Null or empty sequence received.');
         }
-        
+
         $this->sequence = $sequence;
     }
 
@@ -62,22 +62,22 @@ abstract class AbstractFragment implements FragmentInterface
     {
         $ions = array();
         $sequenceString = $this->sequence->getSequence();
-        
+
         $sum = 0;
-        
+
         $cTermMass = $this->getCTerminalMass();
         $nTermMass = $this->getNTerminalMass();
-        
+
         for ($i = $this->getStart(); $i < $this->getEnd(); $i ++) {
             $residue = $sequenceString[$i];
             $mass = AminoAcidMono::getMonoisotopicMass($residue);
-            
+
             // Add mass
             if ($i == 0) {
                 $mass += $this->getAdditiveMass();
                 $mass += $nTermMass;
             }
-            
+
             // Add modification mass
             // Catch modification on position or residue
             foreach ($this->sequence->getModifications() as $modification) {
@@ -88,15 +88,15 @@ abstract class AbstractFragment implements FragmentInterface
                     $mass += $modification->getMonoisotopicMass();
                 }
             }
-            
+
             if ($i + 1 == $this->sequence->getLength()) {
                 $mass += $cTermMass;
             }
-            
+
             $sum += $mass;
             $ions[$i + 1] = $this->getChargedIon($sum, $charge);
         }
-        
+
         return $ions;
     }
 
@@ -108,7 +108,7 @@ abstract class AbstractFragment implements FragmentInterface
                 $mass += $modification->getMonoisotopicMass();
             }
         }
-        
+
         return $mass;
     }
 
@@ -121,7 +121,7 @@ abstract class AbstractFragment implements FragmentInterface
                 $mass += $modification->getMonoisotopicMass();
             }
         }
-        
+
         return $mass;
     }
 

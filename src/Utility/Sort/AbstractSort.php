@@ -38,10 +38,10 @@ abstract class AbstractSort implements SortInterface
             $this->returnTrue = 1;
             $this->returnFalse = - 1;
         }
-        
+
         // Validate method?
         $this->method = $method;
-        
+
         $clazz = get_class($this);
         if (defined($clazz . '::DATA_TYPE')) {
             $this->type = $clazz::DATA_TYPE;
@@ -53,7 +53,7 @@ abstract class AbstractSort implements SortInterface
         if ($validate) {
             $this->validate($array);
         }
-        
+
         usort($array, array(
             $this,
             $this->method
@@ -63,18 +63,18 @@ abstract class AbstractSort implements SortInterface
     protected function validate($array)
     {
         if (is_null($this->type)) {
-            return;
+            return false;
         }
-        
+
         foreach ($array as $key => $element) {
             if (is_a($element, $this->type)) {
                 continue;
             }
-            
+
             throw new \InvalidArgumentException(
                 'Type=' . $this->type . ' expected for element key=' . $key . ', type=' . gettype($element) . ' found');
         }
-        
+
         return true;
     }
 }

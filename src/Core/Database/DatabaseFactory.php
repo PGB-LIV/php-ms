@@ -35,7 +35,6 @@ class DatabaseFactory
     public static function getDatabase($prefix)
     {
         foreach (self::$classes as $class) {
-
             if ($class::PREFIX == $prefix) {
                 return $class::getInstance();
             }

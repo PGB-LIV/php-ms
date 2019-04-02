@@ -74,7 +74,7 @@ class PrecursorIon implements IonInterface
 
     /**
      * Gets the unique identifier for this object
-     * 
+     *
      * @return string
      */
     public function getIdentifier()
@@ -115,7 +115,7 @@ class PrecursorIon implements IonInterface
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type int or float. Value is of type ' . gettype($scan));
         }
-        
+
         $this->scan = $scan;
     }
 

@@ -41,11 +41,11 @@ trait PsiXmlTrait
     public function getCvParamName($accession)
     {
         $name = $this->cvParamIndex[$accession];
-        
+
         if (is_null($name)) {
             throw new \OutOfRangeException($accession . ' not seen in data source');
         }
-        
+
         return $name;
     }
 
@@ -58,37 +58,39 @@ trait PsiXmlTrait
     {
         $cvParam = array();
         // Required fields
-        
+
         $cvParam['cvRef'] = (string) $xml->attributes()->cvRef;
         $cvParam[PsiVerb::CV_ACCESSION] = (string) $xml->attributes()->accession;
         $cvParam[PsiVerb::CV_NAME] = (string) $xml->attributes()->name;
-        
+
         if (! isset($this->cvParamIndex[$cvParam[PsiVerb::CV_ACCESSION]])) {
             $this->cvParamIndex[$cvParam[PsiVerb::CV_ACCESSION]] = $cvParam['name'];
         }
-        
+
         // Optional fields
         if (isset($xml->attributes()->value)) {
             $cvParam[PsiVerb::CV_VALUE] = (string) $xml->attributes()->value;
         }
-        
+
         if (isset($xml->attributes()->unitAccession)) {
             $cvParam[PsiVerb::CV_UNITACCESSION] = (string) $xml->attributes()->unitAccession;
         }
-        
+
         if (isset($xml->attributes()->unitName)) {
             $cvParam['unitName'] = (string) $xml->attributes()->unitName;
         }
-        
+
         if (isset($xml->attributes()->unitCvRef)) {
             $cvParam['unitCvRef'] = (string) $xml->attributes()->unitCvRef;
         }
-        
+
         return $cvParam;
     }
 
     protected function getUserParam()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getAttributeId(\SimpleXMLElement $xml)
     {

@@ -24,8 +24,9 @@ namespace pgb_liv\php_ms\experimental;
  */
 class MzMlMerge
 {
+
     const CV_MINUTE = 'UO:0000031';
-    
+
     private $timeOffset;
 
     private $indexOffset;
@@ -45,7 +46,7 @@ class MzMlMerge
     /**
      * The number of seconds that should be used as padding between scans.
      * This should be high enough that image recognition alignment tools can identify a distinct boundary
-     * 
+     *
      * @var integer
      */
     private $paddingBetweenScans = 600;
@@ -67,9 +68,9 @@ class MzMlMerge
      * Adds a data file for processing.
      * The index is the fraction order which should be consistent across replicates
      *
-     * @param int $replicate            
-     * @param string $file            
-     * @param int $index            
+     * @param int $replicate
+     * @param string $file
+     * @param int $index
      */
     public function addDataFile($replicate, $index, $file)
     {
@@ -85,29 +86,29 @@ class MzMlMerge
     public function analyseData()
     {
         // TODO: Validate input and output
-        
+
         // Perform first pass on each data file to identify start, stop RT
         foreach ($this->dataFiles as $replicate => $fractions) {
             foreach ($fractions as $index => $file) {
                 $this->dataFiles[$replicate][$index] = $this->analyseFile($file);
             }
         }
-        
+
         // Set replicate start time
         foreach ($this->dataFiles as $replicate => $fractions) {
             foreach ($fractions as $index => $file) {
                 if (! isset($this->fractionOffsets[$index]) || $file['endTime'] > $this->fractionOffsets[$index]) {
                     $this->fractionOffsets[$index] = $file['endTime'];
                 }
-                
+
                 if (! isset($this->spectrumCount[$replicate])) {
                     $this->spectrumCount[$replicate] = 0;
                 }
-                
+
                 $this->spectrumCount[$replicate] += $file['spectra'];
             }
         }
-        
+
         // Push forward
         $sum = 0;
         foreach ($this->fractionOffsets as $index => $time) {
@@ -115,7 +116,7 @@ class MzMlMerge
             $this->fractionOffsets[$index] = $sum;
             $sum += $time + $this->paddingBetweenScans;
         }
-        
+
         return $this->dataFiles;
     }
 
@@ -127,61 +128,62 @@ class MzMlMerge
     private function analyseFile($file)
     {
         $reader = fopen($file['path'], 'r');
-        
+
         $isSpectrumList = false;
-        
+
         while (! feof($reader)) {
             $line = fgets($reader);
-            
+
             if (stripos($line, '<spectrumList') !== false) {
                 $isSpectrumList = true;
-                
+
+                $matches = null;
                 if (preg_match('/<spectrumList(?=.*count="([0-9.]+)")/', $line, $matches)) {
                     $file['spectra'] = $matches[1];
                 }
-                
+
                 continue;
             }
-            
+
             if (! $isSpectrumList) {
                 continue;
             }
-            
+
             if (stripos($line, '</spectrumList') !== false) {
                 break;
             }
-            
+
             if (preg_match('/<spectrum(?=.*(index="([0-9.]+)"))(?=.*(id=".*(scan=([0-9]+)).*?"))/', $line, $matches)) {
                 $index = $matches[2];
-                
+
                 if ($index > $file['endIndex']) {
                     $file['endIndex'] = $index;
                 }
-                
+
                 $scan = $matches[5];
-                
+
                 if ($scan > $file['endScans']) {
                     $file['endScans'] = $scan;
                 }
             }
-            
-            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
+
+            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line,
                 $matches)) {
                 $scanTime = $matches[2];
                 if ($matches[3] == self::CV_MINUTE) {
                     $scanTime *= 60;
                 }
-                
+
                 if ($scanTime > $file['endTime']) {
                     $file['endTime'] = $scanTime;
                 }
-                
+
                 if ($matches[3] == self::CV_MINUTE) {
                     $scanTime /= 60;
                 }
             }
         }
-        
+
         return $file;
     }
 
@@ -195,18 +197,18 @@ class MzMlMerge
             $firstFile = current($fractions);
             // Write header
             $this->writeHeader($firstFile['path'], $this->spectrumCount[$replicate], $this->outputFiles[$replicate]);
-            
+
             // Resets vars
             $this->spectrumIdRef = array();
             $this->timeOffset = 0;
             $this->indexOffset = 0;
             $this->idOffset = 0;
-            
+
             foreach ($fractions as $fractionIndex => $file) {
-                $this->writeSpectrum($file['path'], $this->outputFiles[$replicate], 
+                $this->writeSpectrum($file['path'], $this->outputFiles[$replicate],
                     $this->fractionOffsets[$fractionIndex]);
             }
-            
+
             $this->writeFooter($firstFile['path'], $this->outputFiles[$replicate]);
         }
     }
@@ -215,21 +217,22 @@ class MzMlMerge
     {
         $reader = fopen($file, 'r');
         $writer = fopen($outputFile, 'w');
-        
+
         while (! feof($reader)) {
             $line = fgets($reader);
-            
+
+            $matches = null;
             if (preg_match('/<spectrumList(?=.*count="([0-9.]+)")/', $line, $matches)) {
                 $line = str_replace($matches[1], $spectrumCount, $line);
             }
-            
+
             fwrite($writer, $line);
-            
+
             if (stripos($line, '<spectrumList') !== false) {
                 break;
             }
         }
-        
+
         fclose($reader);
         fclose($writer);
     }
@@ -238,20 +241,20 @@ class MzMlMerge
     {
         $reader = fopen($file, 'r');
         $writer = fopen($outputFile, 'a');
-        
+
         $isPastSpectrumList = false;
         while (! feof($reader)) {
             $line = fgets($reader);
-            
+
             if (stripos($line, '</spectrumList') !== false) {
                 $isPastSpectrumList = true;
             }
-            
+
             if ($isPastSpectrumList) {
                 fwrite($writer, $line);
             }
         }
-        
+
         fclose($reader);
         fclose($writer);
     }
@@ -260,74 +263,75 @@ class MzMlMerge
     {
         $reader = fopen($file, 'r');
         $writer = fopen($outputFile, 'a');
-        
+
         $isSpectrumList = false;
         // Local offsets
         $localIndexOffset = $this->indexOffset;
         $localIdOffset = $this->idOffset;
-        
+
         while (! feof($reader)) {
             $line = fgets($reader);
-            
+
             if (stripos($line, '<spectrumList') !== false) {
                 $isSpectrumList = true;
                 continue;
             }
-            
+
             if (! $isSpectrumList) {
                 continue;
             }
-            
+
             if (stripos($line, '</spectrumList') !== false) {
                 break;
             }
-            
+
+            $matches = null;
             if (preg_match('/<spectrum(?=.*(index="([0-9.]+)"))(?=.*(id=".*(scan=([0-9]+)).*?"))/', $line, $matches)) {
                 $index = $matches[2];
                 $index += $localIndexOffset;
-                
+
                 if ($index > $this->indexOffset) {
                     $this->indexOffset = $index;
                 }
-                
+
                 $scan = $matches[5];
                 $scan += $localIdOffset;
-                
+
                 if ($scan > $this->idOffset) {
                     $this->idOffset = $scan;
                 }
-                
+
                 $line = str_replace($matches[1], 'index="' . $index . '"', $line);
                 $idChunk = str_replace($matches[4], 'scan=' . $scan, $matches[3]);
-                
+
                 $this->spectrumIdRef[substr($matches[3], 4, - 1)] = substr($idChunk, 4, - 1);
-                
+
                 $line = str_replace($matches[3], $idChunk, $line);
             }
-            
+
             if (preg_match('/<precursor(?=.*(spectrumRef="(.*?)"))/', $line, $matches)) {
                 $line = str_replace($matches[2], $this->spectrumIdRef[$matches[2]], $line);
             }
-            
-            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line, 
+
+            if (preg_match('/accession="MS:1000016"(?=.*(value="([0-9.]+))")(?=.*unitAccession="([A-Z0-9:]+)")/', $line,
                 $matches)) {
                 $scanTime = $matches[2];
                 if ($matches[3] == self::CV_MINUTE) {
                     $scanTime *= 60;
                 }
-                
+
                 $scanTime += $timeOffset;
-                
+
                 if ($matches[3] == self::CV_MINUTE) {
                     $scanTime /= 60;
                 }
-                
+
                 $line = str_replace($matches[2], $scanTime, $line);
             }
-            
+
             fwrite($writer, $line);
         }
-        
+
         fclose($reader);
         fclose($writer);
     }

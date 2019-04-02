@@ -76,7 +76,6 @@ class FalseDiscoveryRate
     {
         $score = 0;
         foreach ($this->falseDiscoveryRates as $falseDiscoryRate) {
-
             if ($falseDiscoryRate['FDR'] < $targetRate) {
                 $score = $falseDiscoryRate['score'];
 
@@ -146,4 +145,3 @@ class FalseDiscoveryRate
         }
     }
 }
-

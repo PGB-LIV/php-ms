@@ -61,13 +61,3 @@ class DefaultDatabase implements DatabaseInterface
         return $this->name;
     }
 }
-
-        /*
-         * TODO:
-         *
-         * } elseif ($this->getPrefix() == 'GENSCAN') {
-         * $dbName = 'Ensemble';
-         * }
-         */
-    
-

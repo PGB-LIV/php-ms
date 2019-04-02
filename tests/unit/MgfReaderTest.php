@@ -32,34 +32,35 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
             $entry->setMonoisotopicMassCharge(rand(10000000, 1000000000) / 100000, 3);
             $entry->setScan(rand(1000, 10000));
             $entry->setRetentionTime(rand(1000, 90000) / 100);
-            
+
             for ($ionIndex = 0; $ionIndex < 15; $ionIndex ++) {
                 $ion = new FragmentIon();
-                
+
                 $ion->setMonoisotopicMassCharge(rand(10000, 100000) / 100.0, rand(1, 3));
                 $ion->setIntensity(rand(100000, 10000000) / 100);
-                
+
                 $entry->addFragmentIon($ion);
             }
-            
+
             $mgfEntries[] = $entry;
         }
-        
+
         $tempFile = tempnam(sys_get_temp_dir(), 'MgfReaderTest');
         $mgfWriter = new MgfWriter($tempFile);
-        
+
         foreach ($mgfEntries as $entry) {
             $mgfWriter->write($entry);
         }
-        
+
         $mgfWriter->close();
-        
+
         return $tempFile;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
-     * 
+     *
      * @uses pgb_liv\php_ms\Reader\MgfReader
      */
     public function testObjectCanBeConstructedForValidConstructorArguments()
@@ -68,11 +69,12 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
         $mgfPath = $this->createTestFile($mgfEntries);
         $mgf = new MgfReader($mgfPath);
         $this->assertInstanceOf('pgb_liv\php_ms\Reader\MgfReader', $mgf);
-        
+
         return $mgf;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
      * @covers pgb_liv\php_ms\Reader\MgfReader::current
      * @covers pgb_liv\php_ms\Reader\MgfReader::next
@@ -91,19 +93,20 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
     {
         $mgfEntries = array();
         $mgfPath = $this->createTestFile($mgfEntries);
-        
+
         $mgf = new MgfReader($mgfPath);
-        
+
         $i = 0;
         foreach ($mgf as $key => $entry) {
             $this->assertEquals($mgfEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($mgfEntries));
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Reader\MgfReader::__construct
      * @covers pgb_liv\php_ms\Reader\MgfReader::current
      * @covers pgb_liv\php_ms\Reader\MgfReader::next
@@ -122,24 +125,24 @@ class MgfReaderTest extends \PHPUnit_Framework_TestCase
     {
         $mgfEntries = array();
         $mgfPath = $this->createTestFile($mgfEntries);
-        
+
         $mgf = new MgfReader($mgfPath);
-        
+
         $i = 0;
         foreach ($mgf as $key => $entry) {
             $this->assertEquals($mgfEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($mgfEntries));
-        
+
         // Ensure rewind fires correctly
         $i = 0;
         foreach ($mgf as $key => $entry) {
             $this->assertEquals($mgfEntries[$key - 1], $entry);
             $i ++;
         }
-        
+
         $this->assertEquals($i, count($mgfEntries));
     }
 }

@@ -64,23 +64,23 @@ class MascotSearch
         foreach ($this->cookies as $key => $value) {
             $cookiePairs[] = $key . '=' . $value;
         }
-        
+
         return 'Cookie: ' . implode(';', $cookiePairs);
     }
 
     private function sendPost($path, $args)
     {
         $handle = fsockopen($this->host, $this->port);
-        
+
         fwrite($handle, 'POST ' . $path . ' HTTP/1.1' . "\r\n");
         fwrite($handle, 'Host: ' . $this->host . "\r\n");
-        
+
         if (! empty($this->cookies)) {
             fwrite($handle, $this->getCookieHeader() . "\r\n");
         }
-        
+
         $boundary = '---------------------------' . mt_rand();
-        
+
         $size = 0;
         foreach ($args as $key => $value) {
             $size += 2 + strlen($boundary) + 2;
@@ -100,30 +100,30 @@ class MascotSearch
             }
         }
         $size += 2 + strlen($boundary) + 4;
-        
+
         fwrite($handle, 'Content-Type: multipart/form-data; boundary=' . $boundary . "\r\n");
         fwrite($handle, 'Content-Length: ' . $size . "\r\n\r\n");
-        
+
         foreach ($args as $key => $value) {
             fwrite($handle, '--' . $boundary . "\r\n");
-            
+
             if (is_array($value) && $key == 'FILE') {
                 fwrite($handle,
                     'Content-Disposition: form-data; name="' . $key . '"; filename="' . $value[MascotSearch::FILE_NAME] .
                     '"' . "\r\n");
                 fwrite($handle, $value[MascotSearch::MIME_TYPE] . "\r\n\r\n");
-                
+
                 $fileHandle = fopen($value[MascotSearch::FILE_DATA], 'r');
                 while (! feof($fileHandle)) {
                     fwrite($handle, fgets($fileHandle));
                 }
-                
+
                 fclose($fileHandle);
-                
+
                 fwrite($handle, "\r\n\r\n");
             } elseif ($key == 'MODS' || $key == 'IT_MODS') {
                 fwrite($handle, 'Content-Disposition: form-data; name="' . $key . '"' . "\r\n\r\n");
-                
+
                 foreach ($value as $modification) {
                     fwrite($handle,
                         $modification->getName() . ' (' . implode('', $modification->getResidues()) . ")\r\n");
@@ -133,33 +133,33 @@ class MascotSearch
                 fwrite($handle, $value . "\r\n");
             }
         }
-        
+
         fwrite($handle, '--' . $boundary . "--\r\n");
-        
+
         return $this->readResponse($handle);
     }
 
     private function sendGet($path, $args)
     {
         $handle = fsockopen($this->host, $this->port);
-        
+
         $queryString = '';
         $prefix = '?';
         foreach ($args as $key => $value) {
             $queryString .= $prefix . urlencode($key) . '=' . urlencode($value);
-            
+
             if ($prefix == '?') {
                 $prefix = '&';
             }
         }
-        
+
         fwrite($handle, 'GET ' . $path . $queryString . ' HTTP/1.1' . "\r\n");
         fwrite($handle, 'Host: ' . $this->host . "\r\n");
-        
+
         if (! empty($this->cookies)) {
             fwrite($handle, $this->getCookieHeader() . "\r\n\r\n");
         }
-        
+
         return $this->readResponse($handle);
     }
 
@@ -174,65 +174,65 @@ class MascotSearch
         $isChunked = false;
         $chunkSizeExpected = - 1;
         $chunkSize = 0;
-        
+
         while (! feof($socket)) {
             $line = fgets($socket);
-            
+
             if ($isChunked) {
                 if ($chunkSize + strlen($line) - 2 == $chunkSizeExpected) {
                     $line = substr($line, 0, - 2);
                 }
-                
+
                 if ($chunkSize == $chunkSizeExpected) {
                     $chunkSizeExpected = hexdec(trim($line));
                     $chunkSize = 0;
                     continue;
                 }
-                
+
                 $chunkSize += strlen($line);
             }
-            
+
             if ($isHeader) {
                 if ($line == "\r\n") {
                     $isHeader = false;
-                    
+
                     if ($isChunked) {
                         // Reset for first chunk
                         $chunkSizeExpected = 0;
                         $chunkSize = 0;
                     }
-                    
+
                     continue;
                 }
-                
+
                 if (stripos($line, 'Transfer-Encoding: chunked') === 0) {
                     $isChunked = true;
                 }
-                
+
                 if (stripos($line, 'Content-Disposition: attachment;') === 0) {
                     $hasAttachment = true;
                     $attachmentName = substr($line, 43, - 3);
                 }
-                
+
                 $header .= $line;
             } elseif ($hasAttachment) {
                 if (is_null($tmpFile)) {
                     $tmpFile = tempnam(sys_get_temp_dir(), 'mascot_attach_');
                     $tmpFileHandle = fopen($tmpFile, 'w');
                 }
-                
+
                 fwrite($tmpFileHandle, $line);
             } else {
                 $content .= $line;
             }
         }
-        
+
         fclose($socket);
-        
+
         if (! is_null($tmpFile)) {
             fclose($tmpFileHandle);
         }
-        
+
         return array(
             'header' => $header,
             'content' => $content,
@@ -252,9 +252,9 @@ class MascotSearch
         $args['action'] = 'login';
         $args['userid'] = '';
         $args['onerrdisplay'] = 'login_prompt';
-        
+
         $response = $this->sendPost($this->path . '/cgi/login.pl', $args);
-        
+
         $this->cookies = array();
         foreach (explode("\n", $response['header']) as $line) {
             if (stripos($line, 'Set-Cookie:') === 0) {
@@ -263,7 +263,7 @@ class MascotSearch
                 $this->cookies[$parts[0]] = $parts[1];
             }
         }
-        
+
         return count($this->cookies) >= 3;
     }
 
@@ -314,9 +314,9 @@ class MascotSearch
         $args['pep_seq'] = '1';
         $args['pep_var_mod'] = '1';
         $args['pep_scan_title'] = '1';
-        
+
         $response = $this->sendPost($this->path . '/cgi/export_dat_2.pl', $args);
-        
+
         return array(
             'name' => $response['attachmentName'],
             'path' => $response['attachmentFile']
@@ -359,12 +359,13 @@ class MascotSearch
         $args['f12'] = '';
         $args['f13'] = '';
         $args['f14'] = '';
-        
+
         $response = $this->sendGet($this->path . '/x-cgi/ms-review.exe', $args);
-        
+
         $pattern = '/<TR>\s+<TD><A HREF="..\/cgi\/master_results_2.pl\?file=(?<filename>.*)">\s?(?<job>[0-9]+)<\/A><\/TD>\s+<TD>\s?(?<pid>[0-9]+)<\/TD>\s+<TD>(?<dbase>.+)<\/TD>\s+<TD>(?<username>.*)<\/TD>\s*<TD>(?<email>.*)<\/TD>\s+<TD>(?<ti>.*)<\/TD>\s+<TD>.*<\/TD>\s+<TD NOWRAP>(?<start_time>.+)<\/TD>\s+<TD>\s*(?<dur>[0-9]+)<\/TD>\s+<TD>(?<status>.+)<\/TD>\s+<TD>(?<pr>.+)<\/TD>\s+<TD>(?<typ>.+)<\/TD>\s+<TD>(?<enzyme>.+)<\/TD>\s+<TD>\s?(?<ip>[0-9]*)<\/TD>\s+<TD>\s?(?<userid>[0-9]+)<\/TD>/sU';
+        $matches = null;
         preg_match_all($pattern, $response['content'], $matches);
-        
+
         $searchLog = array();
         for ($i = 0; $i < count($matches['filename']); $i ++) {
             $searchLog[$i] = array();
@@ -383,7 +384,7 @@ class MascotSearch
             $searchLog[$i]['ip'] = $matches['ip'][$i];
             $searchLog[$i]['userid'] = $matches['userid'][$i];
         }
-        
+
         return $searchLog;
     }
 
@@ -424,12 +425,13 @@ class MascotSearch
         $args['INSTRUMENT'] = $params->getInstrument();
         $args['DECOY'] = $params->isDecoyEnabled();
         $args['REPORT'] = $params->getReport();
-        
+
         $response = $this->sendPost($this->path . '/cgi/nph-mascot.exe?1', $args);
-        
+
         // Extract .dat path
+        $matches = null;
         preg_match('/master_results\\.pl\\?file=(.*[0-9]+\\/F[0-9]+\\.dat)/', $response['content'], $matches);
-        
+
         return $matches[1];
     }
 }

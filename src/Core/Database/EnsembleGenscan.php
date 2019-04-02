@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace pgb_liv\php_ms\Reader\HupoPsi;
+namespace pgb_liv\php_ms\Core\Database;
 
 /**
- * Constant class for storing commonly used verbs across HUPO-PSI parsed files
+ * Class for Ensemble GENSCAN (GENSCAN) database
  *
  * @author Andrew Collins
  */
-class PsiVerb
+class EnsembleGenscanDatabase extends AbstractDatabase
 {
 
-    const CV_ACCESSION = 'accession';
+    const PREFIX = 'GENSCAN';
 
-    const CV_VALUE = 'value';
-
-    const CV_NAME = 'name';
-
-    const CV_UNITACCESSION = 'unitAccession';
+    /**
+     * Sets the database prefix
+     *
+     * @param string $prefix
+     *            value to set
+     */
+    protected function __construct()
+    {
+        parent::__construct(self::PREFIX, 'Ensemble/GENSCAN');
+    }
 }

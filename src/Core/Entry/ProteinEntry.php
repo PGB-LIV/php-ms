@@ -72,7 +72,7 @@ class ProteinEntry
     /**
      * Sets the start position of the parent object inside the protein
      *
-     * @param int $position            
+     * @param int $position
      * @throws \InvalidArgumentException If argument is non-integer
      */
     public function setStart($position)
@@ -81,7 +81,7 @@ class ProteinEntry
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
-        
+
         $this->start = $position;
     }
 
@@ -98,7 +98,7 @@ class ProteinEntry
     /**
      * Sets the end position of the parent object inside the protein
      *
-     * @param int $position            
+     * @param int $position
      * @throws \InvalidArgumentException If argument is non-integer
      */
     public function setEnd($position)
@@ -107,7 +107,7 @@ class ProteinEntry
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type integer. Argument type is ' . gettype($position));
         }
-        
+
         $this->end = $position;
     }
 

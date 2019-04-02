@@ -90,13 +90,19 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getAffiliation()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getAmigiousResidue()
-    {}
+    {
+        // TODO: Implement
+    }
 
     public function getAnalysisCollection()
-    {}
+    {
+        // TODO: Implement
+    }
 
     public function getAnalysisData()
     {
@@ -105,7 +111,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getAnalysisParams()
-    {}
+    {
+        // TODO: Implement
+    }
 
     public function getAnalysisProtocolCollection()
     {
@@ -200,12 +208,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
         if ($databases[$databaseRef]['isDecoy'] == 1) {
             $protein->setIsDecoy(true);
-        } else 
-            if ($databases[$databaseRef]['isDecoy'] == 2) {
-                $isDecoy = preg_match('/' . $databases[$databaseRef]['decoyRules']['regExp'] . '/',
-                    $protein->getIdentifier());
-                $protein->setIsDecoy($isDecoy > 0);
-            }
+        } elseif ($databases[$databaseRef]['isDecoy'] == 2) {
+            $isDecoy = preg_match('/' . $databases[$databaseRef]['decoyRules']['regExp'] . '/',
+                $protein->getIdentifier());
+            $protein->setIsDecoy($isDecoy > 0);
+        }
 
         return $protein;
     }
@@ -262,13 +269,19 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getDatabaseFilters()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getDatabaseName()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getDatabaseTranslation()
-    {}
+    {
+        // TODO: Implement
+    }
 
     /**
      * The details of an individual cleavage enzyme should be provided by giving a regular expression or a CV term if a "standard" enzyme cleavage has been
@@ -306,7 +319,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     $enzyme['semiSpecific'] = (string) $value == 'true';
                     break;
                 default:
-                    continue;
+                    // Unknown element
+                    break;
             }
         }
 
@@ -351,10 +365,14 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getExclude()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getExternalFormatDocumentation()
-    {}
+    {
+        // TODO: Implement
+    }
 
     /**
      * The format of the ExternalData file, for example "tiff" for image files.
@@ -376,13 +394,19 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getFilter()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getFilterType()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getFragmentArray()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getFragmentTolerance(\SimpleXMLElement $xml)
     {
@@ -408,19 +432,29 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getFragmentation()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getFragmentationTable()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getInclude()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getInputSpectra()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getInputSpectrumIdentifications()
-    {}
+    {
+        // TODO: Implement
+    }
 
     public function getInputs()
     {
@@ -441,13 +475,19 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getIonType()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getMassTable()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getMeasure()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getModification(\SimpleXMLElement $xml)
     {
@@ -501,10 +541,14 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getOrganization()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getParent()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getParentTolerance(\SimpleXMLElement $xml)
     {
@@ -613,7 +657,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getPerson()
-    {}
+    {
+        // TODO: Implement
+    }
 
     /**
      * A set of logically related results from a protein detection, for example to represent conflicting assignments of peptides to proteins.
@@ -633,7 +679,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getProteinDetection()
-    {}
+    {
+        // TODO: Implement
+    }
 
     /**
      * A single result of the ProteinDetection analysis (i.e.
@@ -722,16 +770,24 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getProvider()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getResidue()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getRole()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getSample()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getSearchDatabase(\SimpleXMLElement $xml)
     {
@@ -788,10 +844,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
         if ($database['decoyRules']['isMixed']) {
             $database['isDecoy'] = 2;
-        } else 
-            if ($database['decoyRules']['isReversed']) {
-                $database['isDecoy'] = 1;
-            }
+        } elseif ($database['decoyRules']['isReversed']) {
+            $database['isDecoy'] = 1;
+        }
 
         return $database;
     }
@@ -843,7 +898,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getSearchType()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getSeq(\SimpleXMLElement $xml)
     {
@@ -892,7 +949,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getSiteRegexp()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getSoftwareName(\SimpleXMLElement $xml)
     {
@@ -907,7 +966,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getSourceFile()
-    {}
+    {
+        // TODO: Implement
+    }
 
     protected function getSpecifityRules(\SimpleXMLElement $xml)
     {
@@ -963,7 +1024,9 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getSpectrumIdentification()
-    {}
+    {
+        // TODO: Implement
+    }
 
     /**
      * An identification of a single (poly)peptide, resulting from querying an input spectra, along with the set of confidence values for that identification.
@@ -1160,7 +1223,8 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
                     $spectra->setScan((float) $cvParam[PsiVerb::CV_VALUE]);
                     break;
                 default:
-                    continue;
+                    // Unknown element
+                    break;
             }
         }
 
@@ -1168,10 +1232,14 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getSubSample()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getSubstitutionModification()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getThreshold(\SimpleXMLElement $xmlThreshold)
     {
@@ -1185,13 +1253,19 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     }
 
     private function getTranslationTable()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getCv()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getCvList()
-    {}
+    {
+        // TODO: Implement
+    }
 
     private function getProteinEntryType(array $peptideEvidence, Protein $protein)
     {

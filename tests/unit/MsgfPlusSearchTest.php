@@ -25,6 +25,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
      *
      * @group online
@@ -34,11 +35,12 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
     {
         $search = new MsgfPlusSearch(MSGFPLUS_PATH);
         $this->assertInstanceOf('\pgb_liv\php_ms\Search\MsgfPlusSearch', $search);
-        
+
         return $search;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::search
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::getCommand
@@ -51,20 +53,21 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
     public function testCanSubmitValidJob()
     {
         $filePath = $this->createMgf();
-        
+
         new MsgfPlusSearch(MSGFPLUS_PATH);
-        
+
         $params = new MsgfPlusSearchParameters();
         $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
         $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
         $params->setSpectraPath($filePath);
-        
+
         // TODO: Must generate fasta file as needed
-        //$datPath = $search->search($params);
-        //$this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
+        // $datPath = $search->search($params);
+        // $this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::__construct
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::search
      * @covers pgb_liv\php_ms\Search\MsgfPlusSearch::getCommand
@@ -77,14 +80,14 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
     public function testCanSubmitValidJobWithMods()
     {
         $filePath = $this->createMgf();
-        
+
         new MsgfPlusSearch(MSGFPLUS_PATH);
-        
+
         $params = new MsgfPlusSearchParameters();
         $params->setDatabases('/mnt/nas/johnheap/uniprot-mouse-13-11-2016.fasta');
         $params->setPrecursorTolerance(new Tolerance(5, Tolerance::PPM));
         $params->setSpectraPath($filePath);
-        
+
         $modification = new Modification();
         $modification->setMonoisotopicMass(57.021464);
         $modification->setResidues(array(
@@ -92,7 +95,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
         ));
         $modification->setName('Carbamidomethyl');
         $params->addFixedModification($modification);
-        
+
         $modification = new Modification();
         $modification->setMonoisotopicMass(15.994915);
         $modification->setResidues(array(
@@ -100,7 +103,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
         ));
         $modification->setName('Oxidation');
         $params->addVariableModification($modification);
-        
+
         $modification = new Modification();
         $modification->setMonoisotopicMass(42.010565);
         $modification->setResidues(array(
@@ -109,7 +112,7 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
         $modification->setPosition(Modification::POSITION_PROTEIN_NTERM);
         $modification->setName('Acetyl');
         $params->addVariableModification($modification);
-        
+
         $modification = new Modification();
         $modification->setMonoisotopicMass(79.966331);
         $modification->setResidues(array(
@@ -119,16 +122,16 @@ class MsgfPlusSearchTest extends \PHPUnit_Framework_TestCase
         ));
         $modification->setName('Phospho');
         $params->addVariableModification($modification);
-        
+
         // TODO: Must generate fasta file as needed
-        //$datPath = $search->search($params);
-        //$this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
+        // $datPath = $search->search($params);
+        // $this->assertEquals(substr($filePath, 0, - 3) . 'mzid', $datPath);
     }
 
     public function createMgf()
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'php-ms') . '.mgf';
-        file_put_contents($tempFile, 
+        file_put_contents($tempFile,
             'SEARCH=MIS
 MASS=Monoisotopic
 BEGIN IONS
@@ -811,7 +814,7 @@ RTINSECONDS=2108.208
 1016.50299 26308.21
 1017.50378 17179.04
 END IONS');
-        
+
         return $tempFile;
     }
 }
