@@ -85,7 +85,7 @@ class MgfWriter
             fwrite($this->fileHandle, $ion->getMonoisotopicMassCharge() . ' ');
             fwrite($this->fileHandle, $ion->getIntensity());
             
-            if (! is_null($ion->getCharge()) && $ion->getCharge() != $precursor->getCharge()) {
+            if (! is_null($ion->getCharge()) && $ion->getCharge() != 1) {
                 fwrite($this->fileHandle, ' ' . $ion->getCharge());
             }
             
