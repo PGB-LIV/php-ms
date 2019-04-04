@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,18 @@ class PsiVerb
     const CV_NAME = 'name';
 
     const CV_UNITACCESSION = 'unitAccession';
-    
+
     const NCBI_TAX_ID = 'NcbiTaxId';
-    
+
     const TAX_NAME = 'TaxName';
+
+    const DB_NAME = 'DbName';
+
+    const DB_VERSION = 'DbVersion';
+
+    const DB_SOURCE = 'DbSource';
+
+    const SEQUENCE_TYPE = 'SequenceType';
+
+    const NUMBER_OF_ENTRIES = 'NumberOfEntries';
 }

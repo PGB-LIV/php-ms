@@ -89,7 +89,7 @@ class PeffFastaEntry implements FastaInterface
     private function parseAttributes(Protein $protein, array $attributes)
     {
         if (isset($attributes[PsiVerb::NCBI_TAX_ID])) {
-            $organism = Organism::getInstance($attributes[self::NCBI_TAX_ID]);
+            $organism = Organism::getInstance($attributes[PsiVerb::NCBI_TAX_ID]);
             $protein->setOrganism($organism);
         }
 
@@ -98,7 +98,7 @@ class PeffFastaEntry implements FastaInterface
                 $protein->setOrganism(new Organism());
             }
 
-            $protein->getOrganism()->setName($attributes[self::TAX_NAME]);
+            $protein->getOrganism()->setName($attributes[PsiVerb::TAX_NAME]);
         }
 
         foreach ($attributes as $key => $value) {

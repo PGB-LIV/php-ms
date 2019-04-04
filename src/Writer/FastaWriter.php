@@ -17,6 +17,7 @@
 namespace pgb_liv\php_ms\Writer;
 
 use pgb_liv\php_ms\Core\Protein;
+use pgb_liv\php_ms\Reader\HupoPsi\PsiVerb;
 
 /**
  * A file writer class for creating FASTA files.
@@ -26,6 +27,10 @@ use pgb_liv\php_ms\Core\Protein;
  */
 class FastaWriter
 {
+
+    const DECOY_COUNT = '_DecoyCount';
+
+    const UNKNOWN_PLACEHOLDER = 'Unknown';
 
     private $tmpHandle = null;
 
@@ -95,13 +100,13 @@ class FastaWriter
             }
 
             $header .= '# Prefix=' . $prefix . PHP_EOL;
-            if ($database['_decoys'] == $database['NumberOfEntries']) {
+            if ($database[self::DECOY_COUNT] == $database[PsiVerb::NUMBER_OF_ENTRIES]) {
                 $database['Decoy'] = 'true';
-            } elseif ($database['_decoys'] == 0) {
+            } elseif ($database[self::DECOY_COUNT] == 0) {
                 $database['Decoy'] = 'false';
             }
 
-            unset($database['_decoys']);
+            unset($database[self::DECOY_COUNT]);
 
             foreach ($database as $key => $value) {
                 $header .= '# ' . $key . '=' . $value . PHP_EOL;
@@ -140,11 +145,11 @@ class FastaWriter
             $organism = $protein->getOrganism();
 
             if (! is_null($organism->getName())) {
-                $description .= ' \TaxName=' . $protein->getOrganism()->getName();
+                $description .= ' \\' . PsiVerb::TAX_NAME . '=' . $protein->getOrganism()->getName();
             }
 
             if (! is_null($organism->getIdentifier())) {
-                $description .= ' \NcbiTaxId=' . $protein->getOrganism()->getIdentifier();
+                $description .= ' \\' . PsiVerb::NCBI_TAX_ID . '=' . $protein->getOrganism()->getIdentifier();
             }
         }
 
@@ -177,18 +182,19 @@ class FastaWriter
 
         $this->initialiseDatabase($prefix);
 
-        if ($this->databases[$prefix]['DbName'] == 'Unknown' && ! is_null($database->getName())) {
-            $this->setHeader($prefix, 'DbName', $database->getName());
+        if ($this->databases[$prefix][PsiVerb::DB_NAME] == self::UNKNOWN_PLACEHOLDER && ! is_null($database->getName())) {
+            $this->setHeader($prefix, PsiVerb::DB_NAME, $database->getName());
         }
 
-        if ($this->databases[$prefix]['DbSource'] == 'Unknown' && ! is_null($database->getSource())) {
-            $this->setHeader($prefix, 'DbSource', $database->getSource());
+        if ($this->databases[$prefix][PsiVerb::DB_SOURCE] == self::UNKNOWN_PLACEHOLDER &&
+            ! is_null($database->getSource())) {
+            $this->setHeader($prefix, PsiVerb::DB_SOURCE, $database->getSource());
         }
 
-        $this->databases[$prefix]['NumberOfEntries'] ++;
+        $this->databases[$prefix][PsiVerb::NUMBER_OF_ENTRIES] ++;
 
         if ($protein->isDecoy()) {
-            $this->databases[$prefix]['_decoys'] ++;
+            $this->databases[$prefix][self::DECOY_COUNT] ++;
         }
     }
 
@@ -199,12 +205,12 @@ class FastaWriter
         }
 
         $this->databases[$prefix] = array();
-        $this->databases[$prefix]['DbName'] = 'Unknown';
-        $this->databases[$prefix]['DbVersion'] = 'Unknown';
-        $this->databases[$prefix]['DbSource'] = 'Unknown';
-        $this->databases[$prefix]['SequenceType'] = 'AA';
-        $this->databases[$prefix]['NumberOfEntries'] = 0;
-        $this->databases[$prefix]['_decoys'] = 0;
+        $this->databases[$prefix][PsiVerb::DB_NAME] = self::UNKNOWN_PLACEHOLDER;
+        $this->databases[$prefix][PsiVerb::DB_VERSION] = self::UNKNOWN_PLACEHOLDER;
+        $this->databases[$prefix][PsiVerb::DB_SOURCE] = self::UNKNOWN_PLACEHOLDER;
+        $this->databases[$prefix][PsiVerb::SEQUENCE_TYPE] = 'AA';
+        $this->databases[$prefix][PsiVerb::NUMBER_OF_ENTRIES] = 0;
+        $this->databases[$prefix][self::DECOY_COUNT] = 0;
     }
 
     public function setHeader($prefix, $key, $value)

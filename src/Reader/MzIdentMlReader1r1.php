@@ -106,7 +106,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     public function getAnalysisData()
     {
-        // TODO: This should link to getProteinDetectionList();
+        // TODO: This should link to getProteinDetectionList
         return $this->getSpectrumIdentificationList();
     }
 
@@ -420,25 +420,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     private function getFragmentTolerance(\SimpleXMLElement $xml)
     {
-        $tolerances = array();
-
-        foreach ($xml->cvParam as $xmlCvParam) {
-            $cvParam = $this->getCvParam($xmlCvParam);
-
-            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
-                case 'MS:1001412':
-                case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[PsiVerb::CV_VALUE], $cvParam[PsiVerb::CV_UNITACCESSION]);
-                    break;
-                default:
-                    $tolerance = $cvParam;
-                    break;
-            }
-
-            $tolerances[] = $tolerance;
-        }
-
-        return $tolerances;
+        return $this->getTolerance($xml);
     }
 
     private function getFragmentation()
@@ -562,25 +544,7 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
 
     protected function getParentTolerance(\SimpleXMLElement $xml)
     {
-        $tolerances = array();
-
-        foreach ($xml->cvParam as $xmlCvParam) {
-            $cvParam = $this->getCvParam($xmlCvParam);
-
-            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
-                case 'MS:1001412':
-                case 'MS:1001413':
-                    $tolerance = new Tolerance((float) $cvParam[PsiVerb::CV_VALUE], $cvParam[PsiVerb::CV_UNITACCESSION]);
-                    break;
-                default:
-                    $tolerance = $cvParam;
-                    break;
-            }
-
-            $tolerances[] = $tolerance;
-        }
-
-        return $tolerances;
+        return $this->getTolerance($xml);
     }
 
     /**
@@ -890,11 +854,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         }
 
         $modType = Modification::TYPE_VARIABLE;
-        
+
         if ((string) $xml->attributes()->fixedMod == 'true') {
             $modType = Modification::TYPE_FIXED;
         }
-        
+
         $modification->setType($modType);
 
         $cvParam = $this->getCvParam($xml->cvParam);
@@ -1264,6 +1228,29 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         }
 
         return $params;
+    }
+
+    private function getTolerance(\SimpleXMLElement $xml)
+    {
+        $tolerances = array();
+
+        foreach ($xml->cvParam as $xmlCvParam) {
+            $cvParam = $this->getCvParam($xmlCvParam);
+
+            switch ($cvParam[PsiVerb::CV_ACCESSION]) {
+                case 'MS:1001412':
+                case 'MS:1001413':
+                    $tolerance = new Tolerance((float) $cvParam[PsiVerb::CV_VALUE], $cvParam[PsiVerb::CV_UNITACCESSION]);
+                    break;
+                default:
+                    $tolerance = $cvParam;
+                    break;
+            }
+
+            $tolerances[] = $tolerance;
+        }
+
+        return $tolerances;
     }
 
     private function getTranslationTable()
