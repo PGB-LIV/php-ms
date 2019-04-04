@@ -35,5 +35,6 @@ class EnsembleGenscanDatabase extends AbstractDatabase
     protected function __construct()
     {
         parent::__construct(self::PREFIX, 'Ensemble/GENSCAN');
+        $this->setSource('https://www.ensembl.org');
     }
 }

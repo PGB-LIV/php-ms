@@ -58,7 +58,7 @@ class PeffFastaEntry implements FastaInterface
         $identifierParts = $this->parseIdentifier($identifier);
         $database = DatabaseFactory::getDatabase($identifierParts[0]);
         $dbEntry = new DatabaseEntry($database);
-        $protein->addDatabaseEntry($dbEntry);
+        $protein->setDatabaseEntry($dbEntry);
 
         $dbEntry->setUniqueIdentifier($identifierParts[1]);
 
@@ -113,12 +113,13 @@ class PeffFastaEntry implements FastaInterface
                     $protein->setGene($gene);
                     break;
                 case 'sv':
+                    $protein->getDatabaseEntry()->setSequenceVersion($value);
+                    break;
                 case 'ev':
-                    // Probably not handled correctly. Are these the same thing?
-                    $protein->getDatabaseEntries()[0]->setVersion($value);
+                    $protein->getDatabaseEntry()->setEntryVersion($value);
                     break;
                 case 'pe':
-                    $protein->getDatabaseEntries()[0]->setEvidence($value);
+                    $protein->getDatabaseEntry()->setEvidence($value);
                     break;
                 case 'pname':
                     $protein->setDescription($value);

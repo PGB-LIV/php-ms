@@ -35,5 +35,6 @@ class UniProtTrDatabase extends AbstractDatabase
     protected function __construct()
     {
         parent::__construct(self::PREFIX, 'UniProtKB/TrEMBL');
+        $this->setSource('https://www.uniprot.org');
     }
 }

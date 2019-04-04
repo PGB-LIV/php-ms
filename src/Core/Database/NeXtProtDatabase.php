@@ -35,5 +35,6 @@ class NeXtProtDatabase extends AbstractDatabase
     protected function __construct()
     {
         parent::__construct(self::PREFIX, 'NeXtProt');
+        $this->setSource('https://www.nextprot.org');
     }
 }

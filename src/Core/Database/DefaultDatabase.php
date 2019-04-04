@@ -29,6 +29,8 @@ class DefaultDatabase implements DatabaseInterface
 
     private $name;
 
+    private $source;
+
     /**
      * Sets the database prefix
      *
@@ -51,13 +53,35 @@ class DefaultDatabase implements DatabaseInterface
         $this->name = $name;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function getPrefix()
     {
         return $this->prefix;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setSource($source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

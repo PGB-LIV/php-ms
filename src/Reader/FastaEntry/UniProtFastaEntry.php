@@ -65,7 +65,8 @@ class UniProtFastaEntry implements FastaInterface
         } elseif ($identifierParts[0] == 'tr') {
             $dbEntry = new DatabaseEntry(UniProtTrDatabase::getInstance());
         }
-        $protein->addDatabaseEntry($dbEntry);
+
+        $protein->setDatabaseEntry($dbEntry);
 
         $dbEntry->setUniqueIdentifier($identifierParts[1]);
         $dbEntry->setName($identifierParts[2]);
@@ -113,7 +114,7 @@ class UniProtFastaEntry implements FastaInterface
         }
 
         if (isset($keyValues['SV'])) {
-            $dbEntry->setVersion($keyValues['SV']);
+            $dbEntry->setSequenceVersion($keyValues['SV']);
         }
 
         return $protein;

@@ -23,6 +23,7 @@ namespace pgb_liv\php_ms\Core\Database;
  */
 class EnsembleTDatabase extends AbstractDatabase
 {
+
     const PREFIX = 'ENST';
 
     /**
@@ -34,5 +35,6 @@ class EnsembleTDatabase extends AbstractDatabase
     protected function __construct()
     {
         parent::__construct(self::PREFIX, 'Ensemble/Transcript');
+        $this->setSource('https://www.ensembl.org');
     }
 }

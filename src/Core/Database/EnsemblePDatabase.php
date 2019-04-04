@@ -35,5 +35,6 @@ class EnsemblePDatabase extends AbstractDatabase
     protected function __construct()
     {
         parent::__construct(self::PREFIX, 'Ensemble/Protein');
+        $this->setSource('https://www.ensembl.org');
     }
 }

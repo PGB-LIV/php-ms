@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,12 @@ class DatabaseFactory
 {
 
     private static $classes = array(
-        'pgb_liv\php_ms\Core\Database\UniProtSpDatabase',
-        'pgb_liv\php_ms\Core\Database\UniProtTrDatabase',
+        'pgb_liv\php_ms\Core\Database\EnsembleGenscanDatabase',
         'pgb_liv\php_ms\Core\Database\EnsemblePDatabase',
         'pgb_liv\php_ms\Core\Database\EnsembleTDatabase',
-        'pgb_liv\php_ms\Core\Database\NeXtProtDatabase'
+        'pgb_liv\php_ms\Core\Database\NeXtProtDatabase',
+        'pgb_liv\php_ms\Core\Database\UniProtSpDatabase',
+        'pgb_liv\php_ms\Core\Database\UniProtTrDatabase'
     );
 
     public static function getDatabase($prefix)

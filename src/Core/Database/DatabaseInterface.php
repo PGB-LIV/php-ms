@@ -24,7 +24,24 @@ namespace pgb_liv\php_ms\Core\Database;
 interface DatabaseInterface
 {
 
+    /**
+     * Gets the prefix used by this database instance in FASTA files
+     *
+     * @return string
+     */
     public function getPrefix();
 
+    /**
+     * Gets the full name of this database instance
+     *
+     * @return string|null
+     */
     public function getName();
+
+    /**
+     * Gets the source URI for this database instance
+     *
+     * @return string|null
+     */
+    public function getSource();
 }

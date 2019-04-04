@@ -41,11 +41,18 @@ class DatabaseEntry
     private $evidence;
 
     /**
-     * The version number of this entry.
+     * The sequence version number of this entry.
      *
-     * @var int
+     * @var string
      */
-    private $version;
+    private $sequenceVersion;
+
+    /**
+     * The entry version number of this entry.
+     *
+     * @var string
+     */
+    private $entryVersion;
 
     /**
      * The unique identifier associated with the database entry.
@@ -92,14 +99,24 @@ class DatabaseEntry
         return $this->evidence;
     }
 
-    public function setVersion($version)
+    public function setSequenceVersion($version)
     {
-        $this->version = $version;
+        $this->sequenceVersion = $version;
     }
 
-    public function getVersion()
+    public function getSequenceVersion()
     {
-        return $this->version;
+        return $this->sequenceVersion;
+    }
+
+    public function setEntryVersion($version)
+    {
+        $this->entryVersion = $version;
+    }
+
+    public function getEntryVersion()
+    {
+        return $this->entryVersion;
     }
 
     public function setUniqueIdentifier($identifier)

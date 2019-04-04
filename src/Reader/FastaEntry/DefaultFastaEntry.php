@@ -46,7 +46,7 @@ class DefaultFastaEntry implements FastaInterface
         $database = new DefaultDatabase();
         $dbEntry = new DatabaseEntry($database);
         $dbEntry->setUniqueIdentifier($identifier);
-        $protein->addDatabaseEntry($dbEntry);
+        $protein->setDatabaseEntry($dbEntry);
 
         $protein->setDescription($description);
 

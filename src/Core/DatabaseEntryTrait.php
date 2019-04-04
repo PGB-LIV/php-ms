@@ -27,27 +27,24 @@ trait DatabaseEntryTrait
 {
 
     /**
+     * Sets the database entry for this instance
      *
-     * @var DatabaseEntry[]
+     * @var DatabaseEntry
      */
     private $database = array();
 
-    public function addDatabaseEntry(DatabaseEntry $dbEntry)
+    public function setDatabaseEntry(DatabaseEntry $dbEntry)
     {
-        $this->database[] = $dbEntry;
+        $this->database = $dbEntry;
     }
 
     /**
+     * Gets the database entry for this instance
      *
-     * @return DatabaseEntry[]
+     * @return DatabaseEntry
      */
-    public function getDatabaseEntries()
+    public function getDatabaseEntry()
     {
         return $this->database;
-    }
-
-    public function clearDatabaseEntries()
-    {
-        $this->database = array();
     }
 }

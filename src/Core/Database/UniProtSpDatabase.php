@@ -23,6 +23,7 @@ namespace pgb_liv\php_ms\Core\Database;
  */
 class UniProtSpDatabase extends AbstractDatabase
 {
+
     const PREFIX = 'sp';
 
     /**
@@ -34,5 +35,6 @@ class UniProtSpDatabase extends AbstractDatabase
     protected function __construct()
     {
         parent::__construct(self::PREFIX, 'UniProtKB/Swiss-Prot');
+        $this->setSource('https://www.uniprot.org');
     }
 }

@@ -28,6 +28,8 @@ abstract class AbstractDatabase implements DatabaseInterface
 
     private $name;
 
+    private $source;
+
     /**
      *
      * @var DatabaseInterface[]
@@ -44,9 +46,8 @@ abstract class AbstractDatabase implements DatabaseInterface
     }
 
     /**
-     * Gets the database prefix
      *
-     * @return string
+     * {@inheritdoc}
      */
     public function getPrefix()
     {
@@ -54,16 +55,30 @@ abstract class AbstractDatabase implements DatabaseInterface
     }
 
     /**
-     * Attempts to map the database prefix to the full database name.
      *
-     * @return string|null The full database name or null
+     * {@inheritdoc}
      */
     public function getName()
     {
         return $this->name;
     }
 
+    protected function setSource($source)
+    {
+        $this->source = $source;
+    }
+
     /**
+     *
+     * {@inheritdoc}
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Gets the singleton intance for this prefix
      *
      * @param string $prefix
      * @return DatabaseInterface

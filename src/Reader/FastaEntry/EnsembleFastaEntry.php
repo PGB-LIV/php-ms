@@ -21,8 +21,8 @@ use pgb_liv\php_ms\Core\Gene;
 use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Chromosome;
 use pgb_liv\php_ms\Core\Transcript;
-use pgb_liv\php_ms\Core\Database\EnsemblePDatabase;
 use pgb_liv\php_ms\Core\Database\EnsembleTDatabase;
+use pgb_liv\php_ms\Core\Database\DatabaseFactory;
 
 /**
  * FASTA entry parser to map Ensemble header to protein elements
@@ -60,9 +60,9 @@ class EnsembleFastaEntry implements FastaInterface
 
         $dbEntry = null;
 
-        $database = EnsemblePDatabase::getInstance();
+        $database = DatabaseFactory::getDatabase($identifierParts[0]);
         $dbEntry = new DatabaseEntry($database);
-        $protein->addDatabaseEntry($dbEntry);
+        $protein->setDatabaseEntry($dbEntry);
 
         $dbEntry->setUniqueIdentifier($identifierParts[1]);
         $dbEntry->setVersion($identifierParts[2]);
@@ -109,7 +109,7 @@ class EnsembleFastaEntry implements FastaInterface
             $transcript = new Transcript();
             $transcriptEntry = new DatabaseEntry(EnsembleTDatabase::getInstance());
             $transcriptEntry->setUniqueIdentifier($keyValues['transcript']);
-            $transcript->addDatabaseEntry($transcriptEntry);
+            $transcript->setDatabaseEntry($transcriptEntry);
             $protein->setTranscript($transcript);
 
             if (isset($keyValues['transcript_biotype'])) {
