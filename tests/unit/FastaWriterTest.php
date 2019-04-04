@@ -65,7 +65,7 @@ class FastaWriterTest extends \PHPUnit_Framework_TestCase
         $dbEntry = new DatabaseEntry($database);
         $dbEntry->setUniqueIdentifier('Q12471');
 
-        $protein->addDatabaseEntry($dbEntry);
+        $protein->setDatabaseEntry($dbEntry);
 
         $protein->setSequence(
             'MGGSSDSDSHDGYLTSEYNSSNSLFSLNTGNSYSSASLDRATLDCQDSVFFDNHKSSLLS' .
