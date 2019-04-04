@@ -41,10 +41,10 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanBeConstructedForValidConstructorArguments()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new BFragment($peptide);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $fragment);
-        
+
         $fragment = new YFragment($peptide);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $fragment);
     }
@@ -60,7 +60,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanBeConstructedForInvalidConstructorArguments()
     {
         $peptide = new Peptide();
-        
+
         $fragment = new BFragment($peptide);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $fragment);
     }
@@ -69,6 +69,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
@@ -90,13 +91,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[5] = 510.292225;
         $expected[6] = 625.319168;
         $expected[7] = 754.361761;
-        
+
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new AFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertFalse($fragment->isReversed());
     }
@@ -105,6 +106,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
@@ -126,13 +128,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[5] = 538.28714;
         $expected[6] = 653.31408;
         $expected[7] = 782.35667;
-        
+
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new BFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-                
+
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertFalse($fragment->isReversed());
     }
@@ -141,6 +143,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::isReversed
@@ -162,13 +165,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[4] = 442.22962;
         $expected[5] = 555.31368;
         $expected[6] = 670.34063;
-        
+
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new CFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertFalse($fragment->isReversed());
     }
@@ -177,6 +180,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
@@ -203,13 +207,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[3] = 402.15070;
         $expected[2] = 289.06664;
         $expected[1] = 174.03969;
-        
+
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new XFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertTrue($fragment->isReversed());
     }
@@ -218,6 +222,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
@@ -244,13 +249,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[3] = 376.17144;
         $expected[2] = 263.08737;
         $expected[1] = 148.06043;
-        
+
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new YFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertTrue($fragment->isReversed());
     }
@@ -259,6 +264,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
@@ -285,13 +291,13 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[3] = 359.14489;
         $expected[2] = 246.06082;
         $expected[1] = 131.03388;
-        
+
         $peptide = new Peptide('PEPTIDE');
-        
+
         $fragment = new ZFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
         $this->assertTrue($fragment->isReversed());
     }
@@ -300,6 +306,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getCTerminalMass
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getStart
@@ -321,29 +328,29 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[5] = 635.15714;
         $expected[6] = 750.18408;
         $expected[7] = 1004.29667;
-        
+
         $peptide = new Peptide('PEPTIDE');
         $nterm = new Modification();
         $nterm->setLocation(0);
         $nterm->setMonoisotopicMass(16.9);
         $peptide->addModification($nterm);
-        
+
         $cterm = new Modification();
         $cterm->setLocation($peptide->getLength() + 1);
         $cterm->setMonoisotopicMass(45.1);
         $peptide->addModification($cterm);
-        
+
         $phospho = new Modification();
         $phospho->setResidues(array(
             'E'
         ));
         $phospho->setMonoisotopicMass(79.97);
         $peptide->addModification($phospho);
-        
+
         $fragment = new BFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
     }
 
@@ -351,6 +358,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
      *
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragmentReverse::getIons
+     * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getChargedIon
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::__construct
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getIons
      * @covers pgb_liv\php_ms\Utility\Fragment\AbstractFragment::getNTerminalMass
@@ -374,29 +382,29 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
         $expected[3] = 501.24144;
         $expected[2] = 388.15737;
         $expected[1] = 273.13043;
-        
+
         $peptide = new Peptide('PEPTIDE');
         $nterm = new Modification();
         $nterm->setLocation(0);
         $nterm->setMonoisotopicMass(16.9);
         $peptide->addModification($nterm);
-        
+
         $cterm = new Modification();
         $cterm->setLocation($peptide->getLength() + 1);
         $cterm->setMonoisotopicMass(45.1);
         $peptide->addModification($cterm);
-        
+
         $phospho = new Modification();
         $phospho->setResidues(array(
             'E'
         ));
         $phospho->setMonoisotopicMass(79.97);
         $peptide->addModification($phospho);
-        
+
         $fragment = new YFragment($peptide);
-        
+
         $ions = $fragment->getIons();
-        
+
         $this->assertEquals($expected, $ions, null, 0.00001);
     }
 
@@ -410,7 +418,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetFragmentMethods()
     {
         $methods = FragmentFactory::getFragmentMethods();
-        
+
         \PHPUnit_Framework_TestCase::assertAttributeEquals($methods, 'methods',
             'pgb_liv\php_ms\Utility\Fragment\FragmentFactory');
     }
@@ -425,9 +433,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodCID()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('CID', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $types['Y']);
         $this->assertEquals(2, count($types));
@@ -443,9 +451,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodHCD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('HCD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $types['Y']);
         $this->assertEquals(2, count($types));
@@ -461,9 +469,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodECD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('ECD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\CFragment', $types['C']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\ZFragment', $types['Z']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
@@ -480,9 +488,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodETD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('ETD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\CFragment', $types['C']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\ZFragment', $types['Z']);
         $this->assertEquals(2, count($types));
@@ -498,9 +506,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodCTD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('CTD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\AFragment', $types['A']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\XFragment', $types['X']);
         $this->assertEquals(2, count($types));
@@ -516,9 +524,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodEDD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('EDD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\AFragment', $types['A']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\XFragment', $types['X']);
         $this->assertEquals(2, count($types));
@@ -534,9 +542,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodNETD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('NETD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\AFragment', $types['A']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\XFragment', $types['X']);
         $this->assertEquals(2, count($types));
@@ -552,9 +560,9 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodEThcD()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         $types = FragmentFactory::getMethodFragments('EThcD', $peptide);
-        
+
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\BFragment', $types['B']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\YFragment', $types['Y']);
         $this->assertInstanceOf('\pgb_liv\php_ms\Utility\Fragment\CFragment', $types['C']);
@@ -574,7 +582,7 @@ class FragmentTest extends \PHPUnit_Framework_TestCase
     public function testObjectCanGetMethodUnknown()
     {
         $peptide = new Peptide('PEPTIDE');
-        
+
         FragmentFactory::getMethodFragments('MyUnknownMethod', $peptide);
     }
 }

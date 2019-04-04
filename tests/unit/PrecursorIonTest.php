@@ -188,8 +188,8 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
 
         $identifications = $spectra->getIdentifications();
 
-        $this->assertEquals($identification1->getPeptide(), $identifications[0]->getPeptide());
-        $this->assertEquals($identification2->getPeptide(), $identifications[1]->getPeptide());
+        $this->assertEquals($identification1->getSequence(), $identifications[0]->getSequence());
+        $this->assertEquals($identification2->getSequence(), $identifications[1]->getSequence());
     }
 
     /**

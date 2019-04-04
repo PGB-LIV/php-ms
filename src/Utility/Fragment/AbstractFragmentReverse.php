@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,22 +41,22 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
     {
         $ions = array();
         $sequence = $this->sequence->getSequence();
-        
+
         $sum = 0;
-        
+
         $cTermMass = $this->getCTerminalMass();
         $nTermMass = $this->getNTerminalMass();
-        
+
         for ($i = $this->getEnd(); $i > $this->getStart(); $i --) {
             $residue = $sequence[$i - 1];
             $mass = AminoAcidMono::getMonoisotopicMass($residue);
-            
+
             // Add mass
             if ($i == $this->getEnd()) {
                 $mass += $this->getAdditiveMass();
                 $mass += $cTermMass;
             }
-            
+
             // Add modification mass
             // Catch modification on position or residue
             foreach ($this->sequence->getModifications() as $modification) {
@@ -67,15 +67,15 @@ abstract class AbstractFragmentReverse extends AbstractFragment implements Fragm
                     $mass += $modification->getMonoisotopicMass();
                 }
             }
-            
+
             if ($i == 1) {
                 $mass += $nTermMass;
             }
-            
+
             $sum += $mass;
             $ions[($this->getEnd() - $i) + 1] = $this->getChargedIon($sum, $charge);
         }
-        
+
         return $ions;
     }
 }
