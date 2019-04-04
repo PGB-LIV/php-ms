@@ -413,8 +413,8 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         ));
 
         $mods[1] = new Modification();
-        $mods[2]->setMonoisotopicMass(79.97);
-        $mods[3]->setResidues(array(
+        $mods[1]->setMonoisotopicMass(79.97);
+        $mods[1]->setResidues(array(
             'T'
         ));
 
