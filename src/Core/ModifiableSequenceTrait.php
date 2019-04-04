@@ -247,10 +247,6 @@ trait ModifiableSequenceTrait
                     }
                     break;
             }
-
-            if (in_array('[', $modification->getResidues()) || in_array(']', $modification->getResidues())) {
-                $mass += $modification->getMonoisotopicMass();
-            }
         }
 
         return $mass;
