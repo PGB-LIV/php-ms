@@ -32,6 +32,20 @@ use pgb_liv\php_ms\Core\Database\DatabaseFactory;
 class EnsembleFastaEntry implements FastaInterface
 {
 
+    const CHROMOSOME = 'chromosome';
+
+    const GENE = 'gene';
+
+    const GENE_BIOTYPE = 'gene_biotype';
+
+    const GENE_SYMBOL = 'gene_symbol';
+
+    const TRANSCRIPT = 'transcript';
+
+    const TRANSCRIPT_BIOTYPE = 'transcript_biotype';
+
+    const DESCRIPTION = 'description';
+
     public static function parseIdentifier($identifier)
     {
         $matches = null;
@@ -65,7 +79,7 @@ class EnsembleFastaEntry implements FastaInterface
         $protein->setDatabaseEntry($dbEntry);
 
         $dbEntry->setUniqueIdentifier($identifierParts[1]);
-        $dbEntry->setVersion($identifierParts[2]);
+        $dbEntry->setEntryVersion($identifierParts[2]);
 
         $matches = array();
         preg_match_all('/(\w+):(.*?(?=\s\[|\s\w+:))/', $description, $matches);
@@ -74,13 +88,13 @@ class EnsembleFastaEntry implements FastaInterface
 
         foreach ($matches[1] as $key => $value) {
             switch ($value) {
-                case 'chromosome':
-                case 'gene':
-                case 'transcript':
-                case 'gene_biotype':
-                case 'transcript_biotype':
-                case 'gene_symbol':
-                case 'description':
+                case self::CHROMOSOME:
+                case self::GENE:
+                case self::GENE_BIOTYPE:
+                case self::GENE_SYMBOL:
+                case self::TRANSCRIPT:
+                case self::TRANSCRIPT_BIOTYPE:
+                case self::DESCRIPTION:
                     $keyValues[$value] = $matches[2][$key];
                     break;
                 default:
@@ -89,36 +103,36 @@ class EnsembleFastaEntry implements FastaInterface
             }
         }
 
-        if (isset($keyValues['chromosome'])) {
+        if (isset($keyValues[self::CHROMOSOME])) {
             $chromosome = new Chromosome();
-            $chromosome->setName($keyValues['chromosome']);
+            $chromosome->setName($keyValues[self::CHROMOSOME]);
 
             $protein->setChromosome($chromosome);
         }
 
-        if (isset($keyValues['gene_symbol'])) {
-            $gene = Gene::getInstance($keyValues['gene_symbol']);
+        if (isset($keyValues[self::GENE_SYMBOL])) {
+            $gene = Gene::getInstance($keyValues[self::GENE_SYMBOL]);
             $protein->setGene($gene);
 
-            if (isset($keyValues['gene_biotype'])) {
-                $gene->setType($keyValues['gene_biotype']);
+            if (isset($keyValues[self::GENE_BIOTYPE])) {
+                $gene->setType($keyValues[self::GENE_BIOTYPE]);
             }
         }
 
-        if (isset($keyValues['transcript'])) {
+        if (isset($keyValues[self::TRANSCRIPT])) {
             $transcript = new Transcript();
             $transcriptEntry = new DatabaseEntry(EnsembleTDatabase::getInstance());
-            $transcriptEntry->setUniqueIdentifier($keyValues['transcript']);
+            $transcriptEntry->setUniqueIdentifier($keyValues[self::TRANSCRIPT]);
             $transcript->setDatabaseEntry($transcriptEntry);
             $protein->setTranscript($transcript);
 
-            if (isset($keyValues['transcript_biotype'])) {
-                $transcript->setType($keyValues['transcript_biotype']);
+            if (isset($keyValues[self::TRANSCRIPT_BIOTYPE])) {
+                $transcript->setType($keyValues[self::TRANSCRIPT_BIOTYPE]);
             }
         }
 
-        if (isset($keyValues['description'])) {
-            $protein->setDescription($keyValues['description']);
+        if (isset($keyValues[self::DESCRIPTION])) {
+            $protein->setDescription($keyValues[self::DESCRIPTION]);
         }
 
         return $protein;

@@ -31,4 +31,8 @@ class PsiVerb
     const CV_NAME = 'name';
 
     const CV_UNITACCESSION = 'unitAccession';
+    
+    const NCBI_TAX_ID = 'NcbiTaxId';
+    
+    const TAX_NAME = 'TaxName';
 }

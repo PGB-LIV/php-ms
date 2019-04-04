@@ -22,6 +22,7 @@ use pgb_liv\php_ms\Core\Entry\DatabaseEntry;
 use pgb_liv\php_ms\Core\Gene;
 use pgb_liv\php_ms\Core\Organism;
 use pgb_liv\php_ms\Core\Database\DatabaseFactory;
+use pgb_liv\php_ms\Reader\HupoPsi\PsiVerb;
 
 /**
  * FASTA entry parser to map generic PEFF headers to protein elements
@@ -87,57 +88,54 @@ class PeffFastaEntry implements FastaInterface
      */
     private function parseAttributes(Protein $protein, array $attributes)
     {
-        if (isset($attributes['NcbiTaxId'])) {
-            $organism = Organism::getInstance($attributes['NcbiTaxId']);
+        if (isset($attributes[PsiVerb::NCBI_TAX_ID])) {
+            $organism = Organism::getInstance($attributes[self::NCBI_TAX_ID]);
             $protein->setOrganism($organism);
         }
 
-        if (isset($attributes['taxname'])) {
+        if (isset($attributes[PsiVerb::TAX_NAME])) {
             if (! $protein->getOrganism()) {
                 $protein->setOrganism(new Organism());
             }
 
-            $protein->getOrganism()->setName($attributes['taxname']);
+            $protein->getOrganism()->setName($attributes[self::TAX_NAME]);
         }
 
         foreach ($attributes as $key => $value) {
-            switch (strtolower($key)) {
-                case 'dbuniqueid':
+            switch ($key) {
+                case 'DbUniqueId':
                     $protein->setAccession($value);
                     break;
-                case 'cc':
-                    $protein->setEntryName($value);
-                    break;
-                case 'gname':
+                case 'GName':
                     $gene = Gene::getInstance($value);
                     $protein->setGene($gene);
                     break;
-                case 'sv':
+                case 'SV':
                     $protein->getDatabaseEntry()->setSequenceVersion($value);
                     break;
-                case 'ev':
+                case 'EV':
                     $protein->getDatabaseEntry()->setEntryVersion($value);
                     break;
-                case 'pe':
+                case 'PE':
                     $protein->getDatabaseEntry()->setEvidence($value);
                     break;
-                case 'pname':
+                case 'PName':
                     $protein->setDescription($value);
                     break;
-                case 'modres':
-                case 'modrespsi':
-                case 'modresunimod':
+                case 'ModRes':
+                case 'ModResPsi':
+                case 'ModResUnimod':
                     $modifications = self::parseModifications($value);
                     $protein->addModifications($modifications);
                     break;
-                case 'ncbitaxid':
-                case 'taxname':
+                case PsiVerb::NCBI_TAX_ID:
+                case PsiVerb::TAX_NAME:
                     // Safe to ignore - already handled
                     break;
-                case 'length':
-                case 'variantsimple':
-                case 'variantcomplex':
-                case 'processed':
+                case 'Length':
+                case 'VariantSimple ':
+                case 'VariantComplex':
+                case 'Processed':
                     // Not supported
                     break;
                 default:
