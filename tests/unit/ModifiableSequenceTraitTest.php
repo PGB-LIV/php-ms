@@ -18,6 +18,7 @@ namespace pgb_liv\php_ms\Test\Unit;
 
 use pgb_liv\php_ms\Core\Peptide;
 use pgb_liv\php_ms\Core\Modification;
+use pgb_liv\php_ms\Constant\ChemicalConstants;
 
 class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,7 +31,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
      *
      * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
      */
-    public function testCanValidiateGetSetVlidSequence()
+    public function testCanValidiateGetSetValidSequence()
     {
         $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
 
@@ -131,8 +132,8 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
         $mass = Peptide::AMINO_ACID_B_MASS;
         $mass += Peptide::AMINO_ACID_X_MASS;
         $mass += Peptide::AMINO_ACID_Z_MASS;
-        $mass += Peptide::HYDROGEN_MASS * 2;
-        $mass += Peptide::OXYGEN_MASS;
+        $mass += ChemicalConstants::HYDROGEN_MASS * 2;
+        $mass += ChemicalConstants::OXYGEN_MASS;
 
         $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
         $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
@@ -191,6 +192,37 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
 
         $mock->addModification($modificiation);
         $mass += $modificiation->getMonoisotopicMass() * 2;
+
+        $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
+        $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
+    }
+
+    /**
+     *
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::setSequence
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::getMonoisotopicMass
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::addModification
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testCanGetModifiedMass3()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+
+        $sequence = 'PEPTIDE';
+        $mock->setSequence($sequence);
+        $mass = 799.3599;
+
+        $modificiation = new Modification();
+        $modificiation->setMonoisotopicMass(79.97);
+        $modificiation->setResidues(array(
+            'P'
+        ));
+        $modificiation->setPosition(Modification::POSITION_NTERM);
+
+        $mock->addModification($modificiation);
+        $mass += $modificiation->getMonoisotopicMass();
 
         $this->assertEquals($mock->getMass(), $mock->getMonoisotopicMass(), '', 0.0001);
         $this->assertEquals($mass, $mock->getMonoisotopicMass(), '', 0.0001);
@@ -278,7 +310,7 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
 
-        $this->assertEquals(false, $mock->isModified());
+        $this->assertFalse($mock->isModified());
     }
 
     /**
@@ -292,15 +324,68 @@ class ModifiableSequenceTraitTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
 
-        $mods = array();
-        $mods[0] = new Modification();
-        $mods[0]->setMonoisotopicMass(146.14);
-        $mods[0]->setResidues(array(
+        $mod = new Modification();
+        $mod->setMonoisotopicMass(146.14);
+        $mod->setResidues(array(
             'M'
         ));
 
-        $mock->addModification($mods[0]);
+        $mock->addModification($mod);
 
-        $this->assertEquals(true, $mock->isModified());
+        $this->assertTrue($mock->isModified());
+    }
+
+    /**
+     *
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::clearModifications
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::isModified
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::clearModifications
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testObjectCanClearModifications()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+
+        $mod = new Modification();
+        $mod->setMonoisotopicMass(146.14);
+        $mod->setResidues(array(
+            'M'
+        ));
+
+        $mock->addModification($mod);
+
+        $this->assertTrue($mock->isModified());
+
+        $mock->clearModifications();
+
+        $this->assertFalse($mock->isModified());
+    }
+
+    /**
+     *
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::clearModifications
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::isModified
+     * @covers pgb_liv\php_ms\Core\ModifiableSequenceTrait::removeModification
+     *
+     * @uses pgb_liv\php_ms\Core\ModifiableSequenceTrait
+     */
+    public function testObjectCanRemoveModification()
+    {
+        $mock = $this->getMockForTrait('pgb_liv\php_ms\Core\ModifiableSequenceTrait');
+
+        $mod = new Modification();
+        $mod->setMonoisotopicMass(146.14);
+        $mod->setResidues(array(
+            'M'
+        ));
+
+        $mock->addModification($mod);
+
+        $this->assertTrue($mock->isModified());
+
+        $mock->removeModification($mod);
+
+        $this->assertFalse($mock->isModified());
     }
 }

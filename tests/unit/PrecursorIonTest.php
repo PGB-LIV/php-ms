@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::setRetentionTime
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getRetentionTime
      *
@@ -33,14 +34,15 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     public function testCanSetRetentionTimeValid()
     {
         $value = 51.5;
-        
+
         $spectra = new PrecursorIon();
         $spectra->setRetentionTime($value);
-        
+
         $this->assertEquals($value, $spectra->getRetentionTime());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::setRetentionTime
      * @expectedException InvalidArgumentException
      *
@@ -49,12 +51,13 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     public function testCanSetRetentionTimeInvalid()
     {
         $value = 'fail';
-        
+
         $spectra = new PrecursorIon();
         $spectra->setRetentionTime($value);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::setTitle
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getTitle
      *
@@ -63,14 +66,32 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     public function testCanSetTitle()
     {
         $value = 'MySpectra 1.0324 with intensity 500000';
-        
+
         $spectra = new PrecursorIon();
         $spectra->setTitle($value);
-        
+
         $this->assertEquals($value, $spectra->getTitle());
     }
 
     /**
+     *
+     * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::setIdentifier
+     * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getIdentifier
+     *
+     * @uses pgb_liv\php_ms\Core\Spectra\PrecursorIon
+     */
+    public function testCanSetIdentifier()
+    {
+        $value = '#35251';
+
+        $spectra = new PrecursorIon();
+        $spectra->setIdentifier($value);
+
+        $this->assertEquals($value, $spectra->getIdentifier());
+    }
+
+    /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::setScan
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getScan
      *
@@ -79,14 +100,15 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     public function testCanSetScansValid()
     {
         $value = 1000;
-        
+
         $spectra = new PrecursorIon();
         $spectra->setScan($value);
-        
+
         $this->assertEquals($value, $spectra->getScan());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::setScan
      * @expectedException InvalidArgumentException
      *
@@ -95,12 +117,13 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     public function testCanSetScansInvalid()
     {
         $value = 'fail';
-        
+
         $spectra = new PrecursorIon();
         $spectra->setScan($value);
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::addFragmentIon
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getFragmentIons
      *
@@ -110,21 +133,22 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     {
         $ion1 = new FragmentIon();
         $ion1->setMass(1258.42);
-        
+
         $ion2 = new FragmentIon();
         $ion2->setMass(1258.27);
-        
+
         $spectra = new PrecursorIon();
         $spectra->addFragmentIon($ion1);
         $spectra->addFragmentIon($ion2);
-        
+
         $ions = $spectra->getFragmentIons();
-        
+
         $this->assertEquals($ion1->getMass(), $ions[0]->getMass());
         $this->assertEquals($ion2->getMass(), $ions[1]->getMass());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::addFragmentIon
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getFragmentIons
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::clearFragmentIons
@@ -136,14 +160,15 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
         $spectra = new PrecursorIon();
         $spectra->addFragmentIon(new FragmentIon());
         $spectra->addFragmentIon(new FragmentIon());
-        
+
         $this->assertEquals(2, count($spectra->getFragmentIons()));
-        
+
         $spectra->clearFragmentIons();
         $this->assertEquals(0, count($spectra->getFragmentIons()));
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::addIdentification
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getIdentifications
      *
@@ -153,21 +178,22 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
     {
         $identification1 = new Identification();
         $identification1->setPeptide(new Peptide('PEPTIDE'));
-        
+
         $identification2 = new Identification();
         $identification2->setPeptide(new Peptide('FRED'));
-        
+
         $spectra = new PrecursorIon();
         $spectra->addIdentification($identification1);
         $spectra->addIdentification($identification2);
-        
+
         $identifications = $spectra->getIdentifications();
-        
+
         $this->assertEquals($identification1->getPeptide(), $identifications[0]->getPeptide());
         $this->assertEquals($identification2->getPeptide(), $identifications[1]->getPeptide());
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::addIdentification
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::getIdentifications
      * @covers pgb_liv\php_ms\Core\Spectra\PrecursorIon::clearIdentifications
@@ -179,9 +205,9 @@ class PrecursorIonTest extends \PHPUnit_Framework_TestCase
         $spectra = new PrecursorIon();
         $spectra->addIdentification(new Identification());
         $spectra->addIdentification(new Identification());
-        
+
         $this->assertEquals(2, count($spectra->getIdentifications()));
-        
+
         $spectra->clearIdentifications();
         $this->assertEquals(0, count($spectra->getIdentifications()));
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      *
      * @uses pgb_liv\php_ms\Core\Tolerance
@@ -30,11 +31,12 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
     {
         $tolerance = new Tolerance(7.5, 'ppm');
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         return $tolerance;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      *
      * @uses pgb_liv\php_ms\Core\Tolerance
@@ -43,11 +45,12 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
     {
         $tolerance = new Tolerance(0.5, Tolerance::DA);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         return $tolerance;
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @expectedException InvalidArgumentException
      *
@@ -60,6 +63,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @expectedException InvalidArgumentException
      *
@@ -72,6 +76,7 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getTolerance
      * @covers pgb_liv\php_ms\Core\Tolerance::getUnit
@@ -84,12 +89,13 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $unit = 'ppm';
         $tolerance = new Tolerance($value, $unit);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         $this->assertEquals($value, $tolerance->getTolerance());
         $this->assertEquals($unit, $tolerance->getUnit());
     }
-    
+
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonDelta
      *
@@ -101,11 +107,12 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $unit = Tolerance::PPM;
         $tolerance = new Tolerance($value, $unit);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         $this->assertEquals(0.01, $tolerance->getDaltonDelta(1000), '', 0.001);
     }
-    
+
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getDaltonDelta
      *
@@ -117,11 +124,12 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $unit = Tolerance::DA;
         $tolerance = new Tolerance($value, $unit);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         $this->assertEquals($value, $tolerance->getDaltonDelta(1000));
     }
-    
+
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getPpmDelta
      *
@@ -133,11 +141,12 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $unit = Tolerance::PPM;
         $tolerance = new Tolerance($value, $unit);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         $this->assertEquals($value, $tolerance->getPpmDelta(1000));
     }
-    
+
     /**
+     *
      * @covers pgb_liv\php_ms\Core\Tolerance::__construct
      * @covers pgb_liv\php_ms\Core\Tolerance::getPpmDelta
      *
@@ -149,7 +158,64 @@ class ToleranceTest extends \PHPUnit_Framework_TestCase
         $unit = Tolerance::DA;
         $tolerance = new Tolerance($value, $unit);
         $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
-        
+
         $this->assertEquals(500, $tolerance->getPpmDelta(1000), '', 0.001);
+    }
+
+    /**
+     *
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::isTolerable
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDifference
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDifferencePpm
+     *
+     * @uses pgb_liv\php_ms\Core\Tolerance
+     */
+    public function testIsTolerablePpm()
+    {
+        $value = 5;
+        $unit = Tolerance::PPM;
+        $tolerance = new Tolerance($value, $unit);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
+
+        $this->assertTrue($tolerance->isTolerable(100, 100));
+    }
+
+    /**
+     *
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::isTolerable
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDifference
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDifferencePpm
+     *
+     * @uses pgb_liv\php_ms\Core\Tolerance
+     */
+    public function testIsNotTolerablePpm()
+    {
+        $value = 5;
+        $unit = Tolerance::PPM;
+        $tolerance = new Tolerance($value, $unit);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
+
+        $this->assertFalse($tolerance->isTolerable(100, 1000));
+    }
+
+    /**
+     *
+     * @covers pgb_liv\php_ms\Core\Tolerance::__construct
+     * @covers pgb_liv\php_ms\Core\Tolerance::isTolerable
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDifference
+     * @covers pgb_liv\php_ms\Core\Tolerance::getDifferencePpm
+     *
+     * @uses pgb_liv\php_ms\Core\Tolerance
+     */
+    public function testIsTolerableDa()
+    {
+        $value = .5;
+        $unit = Tolerance::DA;
+        $tolerance = new Tolerance($value, $unit);
+        $this->assertInstanceOf('pgb_liv\php_ms\Core\Tolerance', $tolerance);
+
+        $this->assertTrue($tolerance->isTolerable(100, 100.1));
     }
 }

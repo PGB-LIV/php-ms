@@ -59,7 +59,7 @@ trait ModifiableSequenceTrait
         if (preg_match('/^[A-Z]+$/', $sequence) !== 1) {
             throw new \InvalidArgumentException('Argument 1 must be a valid peptide sequence.');
         }
-        
+
         $this->sequence = $sequence;
     }
 
@@ -124,7 +124,7 @@ trait ModifiableSequenceTrait
             if ($modification !== $searchModification) {
                 continue;
             }
-            
+
             unset($this->modifications[$key]);
         }
     }
@@ -150,7 +150,7 @@ trait ModifiableSequenceTrait
         if (! is_bool($bool)) {
             throw new \InvalidArgumentException('Argument 1 must be a boolean value');
         }
-        
+
         $this->isDecoy = $bool;
     }
 
@@ -193,9 +193,9 @@ trait ModifiableSequenceTrait
     public function getMonoisotopicMass()
     {
         $acids = str_split($this->getSequence(), 1);
-        
+
         $mass = ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::HYDROGEN_MASS + ChemicalConstants::OXYGEN_MASS;
-        
+
         foreach ($acids as $acid) {
             switch ($acid) {
                 case 'X':
@@ -207,7 +207,7 @@ trait ModifiableSequenceTrait
                     break;
             }
         }
-        
+
         // Add modification mass
         // Catch modification on position, residue or terminus
         foreach ($this->getModifications() as $modification) {
@@ -215,18 +215,44 @@ trait ModifiableSequenceTrait
                 $mass += $modification->getMonoisotopicMass();
                 continue;
             }
-            
-            foreach ($acids as $acid) {
-                if (in_array($acid, $modification->getResidues())) {
-                    $mass += $modification->getMonoisotopicMass();
-                }
+
+            switch ($modification->getPosition()) {
+                case Modification::POSITION_NTERM:
+                case Modification::POSITION_PROTEIN_NTERM:
+                    // TODO: Handle protein level safely
+                    // A peptide can be both at protein n-term and not since multiple proteins supported
+                    $nTerm = $this->sequence[0];
+                    if (in_array($nTerm, $modification->getResidues())) {
+                        $mass += $modification->getMonoisotopicMass();
+                    }
+
+                    break;
+
+                case Modification::POSITION_CTERM:
+                case Modification::POSITION_PROTEIN_CTERM:
+                    // TODO: Handle protein level safely
+                    // A peptide can be both at protein n-term and not since multiple proteins supported
+                    $cTerm = $this->sequence[strlen($this->sequence) - 1];
+                    if (in_array($cTerm, $modification->getResidues())) {
+                        $mass += $modification->getMonoisotopicMass();
+                    }
+
+                    break;
+
+                default:
+                    foreach ($acids as $acid) {
+                        if (in_array($acid, $modification->getResidues())) {
+                            $mass += $modification->getMonoisotopicMass();
+                        }
+                    }
+                    break;
             }
-            
+
             if (in_array('[', $modification->getResidues()) || in_array(']', $modification->getResidues())) {
                 $mass += $modification->getMonoisotopicMass();
             }
         }
-        
+
         return $mass;
     }
 
@@ -241,7 +267,7 @@ trait ModifiableSequenceTrait
     {
         $massCharge = $this->getMonoisotopicMass();
         $massCharge += PhysicalConstants::PROTON_MASS * $charge;
-        
+
         return $massCharge / $charge;
     }
 

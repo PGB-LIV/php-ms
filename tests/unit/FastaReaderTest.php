@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,6 +122,7 @@ TACKV
      * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseSequence
      * @covers pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
@@ -154,6 +155,7 @@ TACKV
      * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseSequence
      * @covers pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader
@@ -194,6 +196,7 @@ TACKV
      * @covers pgb_liv\php_ms\Reader\FastaReader::peekLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::getLine
      * @covers pgb_liv\php_ms\Reader\FastaReader::parseEntry
+     * @covers pgb_liv\php_ms\Reader\FastaReader::parseSequence
      * @covers pgb_liv\php_ms\Reader\FastaEntry\UniProtFastaEntry::getProtein
      *
      * @uses pgb_liv\php_ms\Reader\FastaReader

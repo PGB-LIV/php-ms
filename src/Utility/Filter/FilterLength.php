@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,18 +50,22 @@ class FilterLength extends AbstractFilter
      * @param int $maxCharge
      *            Maximum spectra charge, inclusive
      */
-    public function __construct($minLength, $maxLength = null)
+    public function __construct($minLength = null, $maxLength = null)
     {
         if (! is_int($minLength) && ! is_null($minLength)) {
             throw new \InvalidArgumentException(
                 'Argument 1 must be of type int or null. Value is of type ' . gettype($minLength));
         }
-        
+
         if (! is_int($maxLength) && ! is_null($maxLength)) {
             throw new \InvalidArgumentException(
                 'Argument 2 must be of type int or null. Value is of type ' . gettype($maxLength));
         }
-        
+
+        if (is_null($minLength) && is_null($maxLength)) {
+            throw new \InvalidArgumentException('Min and max both cannot be null');
+        }
+
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
     }
@@ -77,11 +81,11 @@ class FilterLength extends AbstractFilter
         if (! is_null($this->minLength) && $peptide->getLength() < $this->minLength) {
             return false;
         }
-        
+
         if (! is_null($this->maxLength) && $peptide->getLength() > $this->maxLength) {
             return false;
         }
-        
+
         return true;
     }
 }
