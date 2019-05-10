@@ -47,16 +47,30 @@ class MgfReader implements \Iterator
         $this->filePath = $filePath;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     * @return PrecursorIon
+     */
     public function current()
     {
         return $this->current;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     * @return int
+     */
     public function key()
     {
         return $this->key;
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function next()
     {
         $this->current = null;
@@ -65,6 +79,10 @@ class MgfReader implements \Iterator
         }
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     */
     public function rewind()
     {
         // Reset file parsing to start
@@ -77,6 +95,11 @@ class MgfReader implements \Iterator
         $this->current = $this->parseEntry();
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     * @return bool
+     */
     public function valid()
     {
         if ($this->current instanceof PrecursorIon) {
@@ -228,7 +251,7 @@ class MgfReader implements \Iterator
         $ion = new FragmentIon();
         $fragmentMz = (float) $pair[0];
         $fragmentCharge = 1;
-        
+
         if (count($pair) > 1) {
             $ion->setIntensity((float) $pair[1]);
         }

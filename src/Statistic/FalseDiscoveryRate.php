@@ -17,54 +17,24 @@
 namespace pgb_liv\php_ms\Statistic;
 
 use pgb_liv\php_ms\Core\Identification;
+use pgb_liv\php_ms\Utility\Sort\IdentificationSort;
 
 /**
  * Class for calculating False Discovery Rate (FDR) from a collection of identifications
  *
  * @author Andrew Collins
+ * @todo Allow assigning of FDR to ident object - use custom key?
  */
 class FalseDiscoveryRate
 {
 
     private $falseDiscoveryRates;
 
-    /**
-     *
-     * @param Identification[] $identifications
-     * @param string $scoreKey
-     * @param int $sort
-     */
-    public function __construct(array $identifications, $scoreKey, $sort = SORT_DESC)
+    private $fdrKey = null;
+
+    public function setFdrKey($key)
     {
-        $scores = array();
-        $targetDecoy = array();
-
-        foreach ($identifications as $identification) {
-            $scores[] = (float) $identification->getScore($scoreKey);
-            $isDecoy = false;
-
-            if ($identification->getSequence()->isDecoy()) {
-                $isDecoy = true;
-            } else {
-                // Peptide may not contain the field, but the protein might.
-                foreach ($identification->getSequence()->getProteins() as $proteinEntry) {
-                    $protein = $proteinEntry->getProtein();
-                    if ($protein->isDecoy()) {
-                        $isDecoy = true;
-                    }
-                }
-            }
-
-            $targetDecoy[] = $isDecoy;
-        }
-
-        if ($sort == SORT_DESC) {
-            arsort($scores, SORT_NUMERIC);
-        } else {
-            asort($scores, SORT_NUMERIC);
-        }
-
-        $this->calculateFdr($scores, $targetDecoy);
+        $this->fdrKey = $key;
     }
 
     /**
@@ -115,17 +85,22 @@ class FalseDiscoveryRate
 
     /**
      *
-     * @param float[] $scores
-     * @param bool[] $targetDecoy
+     * @param Identification[] $identifications
+     * @param string $scoreKey
+     * @param int $sort
      */
-    private function calculateFdr(array $scores, array $isDecoy)
+    public function calculate(array $identifications, $scoreKey, $sort = SORT_DESC)
     {
+        $scoreSort = new IdentificationSort(IdentificationSort::SORT_SCORE, $sort);
+        $scoreSort->setScoreKey($scoreKey);
+        $scoreSort->sort($identifications);
+
         $this->falseDiscoveryRates = array();
 
         $V = 0;
         $S = 0;
-        foreach ($scores as $scoreKey => $score) {
-            if ($isDecoy[$scoreKey]) {
+        foreach ($identifications as $identification) {
+            if ($this->isDecoy($identification)) {
                 $V ++;
             } else {
                 $S ++;
@@ -140,8 +115,29 @@ class FalseDiscoveryRate
 
             $this->falseDiscoveryRates[] = array(
                 'FDR' => $fdr,
-                'score' => $score
+                'score' => $identification->getScore($scoreKey)
             );
+
+            if (! is_null($this->fdrKey)) {
+                $identification->setScore($this->fdrKey, $fdr);
+            }
         }
+    }
+
+    private function isDecoy(Identification $identification)
+    {
+        if ($identification->getSequence()->isDecoy()) {
+            return true;
+        } else {
+            // Peptide may not contain the field, but the protein might.
+            foreach ($identification->getSequence()->getProteins() as $proteinEntry) {
+                $protein = $proteinEntry->getProtein();
+                if ($protein->isDecoy()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
