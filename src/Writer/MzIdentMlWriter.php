@@ -389,8 +389,7 @@ class MzIdentMlWriter
                 ->getMonoisotopicMassCharge($precursor->getCharge()));
 
         foreach ($identification->getSequence()->getProteins() as $proteinEntry) {
-            $ref = $this->getId($identification->getSequence()) . '_' .
-                $proteinEntry->getProtein()->getUniqueIdentifier();
+            $ref = $this->getId($identification->getSequence()) . '_' . $proteinEntry->getProtein()->getIdentifier();
             $this->writePeptideEvidenceRef($ref);
         }
 
@@ -839,7 +838,7 @@ class MzIdentMlWriter
                 $proteins = $peptide->getProteins();
 
                 foreach ($proteins as $proteinEntry) {
-                    if (isset($objectsWritten[$proteinEntry->getProtein()->getUniqueIdentifier()])) {
+                    if (isset($objectsWritten[$proteinEntry->getProtein()->getIdentifier()])) {
                         continue;
                     }
 
@@ -850,7 +849,7 @@ class MzIdentMlWriter
                     }
                     $this->writeDbSequence($dbId, $proteinEntry->getProtein());
 
-                    $objectsWritten[$proteinEntry->getProtein()->getUniqueIdentifier()] = true;
+                    $objectsWritten[$proteinEntry->getProtein()->getIdentifier()] = true;
                 }
             }
         }
@@ -882,7 +881,7 @@ class MzIdentMlWriter
                 foreach ($proteins as $proteinEntry) {
                     $protein = $proteinEntry->getProtein();
 
-                    $id = $this->getId($peptide) . '_' . $protein->getUniqueIdentifier();
+                    $id = $this->getId($peptide) . '_' . $protein->getIdentifier();
                     if (isset($objectsWritten[$id])) {
                         continue;
                     }
@@ -901,8 +900,8 @@ class MzIdentMlWriter
     {
         $this->stream->startElement('DBSequence');
 
-        $this->stream->writeAttribute('accession', $protein->getAccession());
-        $this->stream->writeAttribute('id', $protein->getUniqueIdentifier());
+        $this->stream->writeAttribute('accession', $protein->getIdentifier());
+        $this->stream->writeAttribute('id', $protein->getIdentifier());
 
         $dbRef = self::SEARCH_DATABASE_PREFIX . $databaseId;
         $this->stream->writeAttribute('searchDatabase_ref', $dbRef);
@@ -974,8 +973,8 @@ class MzIdentMlWriter
         $protein = $proteinEntry->getProtein();
         $this->stream->startElement('PeptideEvidence');
 
-        $this->stream->writeAttribute('id', $this->getId($peptide) . '_' . $protein->getUniqueIdentifier());
-        $this->stream->writeAttribute('dBSequence_ref', $protein->getUniqueIdentifier());
+        $this->stream->writeAttribute('id', $this->getId($peptide) . '_' . $protein->getIdentifier());
+        $this->stream->writeAttribute('dBSequence_ref', $protein->getIdentifier());
         $this->stream->writeAttribute('peptide_ref', $this->getId($peptide));
 
         $this->writeAttributeNotNull('start', $proteinEntry->getStart());
