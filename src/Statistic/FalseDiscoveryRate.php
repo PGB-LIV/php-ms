@@ -23,14 +23,24 @@ use pgb_liv\php_ms\Utility\Sort\IdentificationSort;
  * Class for calculating False Discovery Rate (FDR) from a collection of identifications
  *
  * @author Andrew Collins
- * @todo Allow assigning of FDR to ident object - use custom key?
  */
 class FalseDiscoveryRate
 {
 
-    private $falseDiscoveryRates;
+    private $fdrTable = true;
+
+    private $falseDiscoveryRates = array();
 
     private $fdrKey = null;
+
+    private $fdrV = 0;
+
+    private $fdrS = 0;
+
+    public function setFdrTableUsage($bool)
+    {
+        $this->fdrTable = $bool;
+    }
 
     public function setFdrKey($key)
     {
@@ -46,7 +56,7 @@ class FalseDiscoveryRate
     {
         $score = 0;
         foreach ($this->falseDiscoveryRates as $falseDiscoryRate) {
-            if ($falseDiscoryRate['FDR'] < $targetRate) {
+            if ($falseDiscoryRate['FDR'] <= $targetRate) {
                 $score = $falseDiscoryRate['score'];
 
                 continue;
@@ -88,40 +98,78 @@ class FalseDiscoveryRate
      * @param Identification[] $identifications
      * @param string $scoreKey
      * @param int $sort
+     *            Direction of sort, use SORT_DESC or SORT_ASC. If $sort=null, no sorting will be performed. This setting is recommended only when the data
+     *            is already sorted.
+     * @deprecated Alias of getFdrAll
      */
     public function calculate(array $identifications, $scoreKey, $sort = SORT_DESC)
     {
-        $scoreSort = new IdentificationSort(IdentificationSort::SORT_SCORE, $sort);
-        $scoreSort->setScoreKey($scoreKey);
-        $scoreSort->sort($identifications);
+        getFdrAll($identifications, $scoreKey, $sort);
+    }
 
-        $this->falseDiscoveryRates = array();
+    /**
+     *
+     * @param Identification[] $identifications
+     * @param string $scoreKey
+     * @param int $sort
+     *            Direction of sort, use SORT_DESC or SORT_ASC. If $sort=null, no sorting will be performed. This setting is recommended only when the data
+     *            is already sorted.
+     */
+    public function getFdrAll(array $identifications, $scoreKey, $sort = SORT_DESC)
+    {
+        if (! is_null($sort)) {
+            $scoreSort = new IdentificationSort(IdentificationSort::SORT_SCORE, $sort);
+            $scoreSort->setScoreKey($scoreKey);
+            $scoreSort->sort($identifications);
+        }
 
-        $V = 0;
-        $S = 0;
         foreach ($identifications as $identification) {
-            if ($this->isDecoy($identification)) {
-                $V ++;
-            } else {
-                $S ++;
-            }
+            $this->getFdr($identification, $scoreKey);
+        }
+    }
 
-            $R = $V + $S;
+    public function getFdr(Identification $identification, $scoreKey)
+    {
+        $fdr = getFdrScore($identification->getScore($scoreKey), $this->isDecoy($identification));
 
-            $fdr = 0;
-            if ($R > 1) {
-                $fdr = $V / $R;
-            }
+        if (! is_null($this->fdrKey)) {
+            $identification->setScore($this->fdrKey, $fdr);
+        }
 
+        return $fdr;
+    }
+
+    public function getFdrScore($score, $isDecoy)
+    {
+        if ($isDecoy) {
+            $this->fdrV ++;
+        } else {
+            $this->fdrS ++;
+        }
+
+        $R = $this->fdrV + $this->fdrS;
+
+        $fdr = 0;
+        if ($R > 1) {
+            $fdr = $this->fdrV / $R;
+        }
+
+        if ($this->fdrTable) {
             $this->falseDiscoveryRates[] = array(
                 'FDR' => $fdr,
-                'score' => $identification->getScore($scoreKey)
+                'score' => $score
             );
-
-            if (! is_null($this->fdrKey)) {
-                $identification->setScore($this->fdrKey, $fdr);
-            }
         }
+
+        return $fdr;
+    }
+
+    public function reset()
+    {
+        $this->falseDiscoveryRates = array();
+        $this->fdrV = 0;
+        $this->fdrS = 0;
+        $this->fdrKey = null;
     }
 
     private function isDecoy(Identification $identification)
