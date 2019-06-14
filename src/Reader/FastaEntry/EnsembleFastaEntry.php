@@ -21,6 +21,7 @@ use pgb_liv\php_ms\Core\Gene;
 use pgb_liv\php_ms\Core\Protein;
 use pgb_liv\php_ms\Core\Chromosome;
 use pgb_liv\php_ms\Core\Transcript;
+use pgb_liv\php_ms\Core\Database\EnsembleGDatabase;
 use pgb_liv\php_ms\Core\Database\EnsembleTDatabase;
 use pgb_liv\php_ms\Core\Database\DatabaseFactory;
 
@@ -110,8 +111,17 @@ class EnsembleFastaEntry implements FastaInterface
             $protein->setChromosome($chromosome);
         }
 
-        if (isset($keyValues[self::GENE_SYMBOL])) {
-            $gene = Gene::getInstance($keyValues[self::GENE_SYMBOL]);
+        if (isset($keyValues[self::GENE])) {
+            if (isset($keyValues[self::GENE_SYMBOL])) {
+                $gene = Gene::getInstance($keyValues[self::GENE_SYMBOL]);
+            } else {
+                $gene = new Gene();
+            }
+
+            $geneEntry = new DatabaseEntry(EnsembleGDatabase::getInstance());
+            $geneEntry->setUniqueIdentifier($keyValues[self::GENE]);
+            $gene->setDatabaseEntry($geneEntry);
+
             $protein->setGene($gene);
 
             if (isset($keyValues[self::GENE_BIOTYPE])) {

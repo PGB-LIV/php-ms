@@ -59,7 +59,7 @@ class Gene
      * @param string $symbol
      *            value to set
      */
-    private function __construct($symbol)
+    public function __construct($symbol = null)
     {
         $this->symbol = $symbol;
     }

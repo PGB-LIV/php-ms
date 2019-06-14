@@ -103,7 +103,11 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
     {
         // TODO: Implement
     }
-
+    
+    /**
+     *
+     * @return PrecursorIon[]
+     */
     public function getAnalysisData()
     {
         // TODO: This should link to getProteinDetectionList
@@ -1117,6 +1121,10 @@ class MzIdentMlReader1r1 implements MzIdentMlReader1Interface
         return (string) $xml->attributes()->spectrumIdentificationItem_ref;
     }
 
+    /**
+     *
+     * @return PrecursorIon[]
+     */
     private function getSpectrumIdentificationList()
     {
         $sequences = $this->getSequenceCollection();
