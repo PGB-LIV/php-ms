@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 University of Liverpool
+ * Copyright 2019 University of Liverpool
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ use pgb_liv\php_ms\Core\Identification;
 use pgb_liv\php_ms\Utility\Sort\IdentificationSort;
 
 /**
- * Class for calculating False Discovery Rate (FDR) from a collection of identifications
+ * Class for calculating False Discovery Rate (FDR) from a object scores
  *
  * @author Andrew Collins
  */
@@ -35,13 +35,25 @@ class FalseDiscoveryRate
 
     private $fdrV = 0;
 
-    private $fdrS = 0;
+    private $fdrR = 0;
 
+    /**
+     * Sets whether the FDR table is available, used by getScore/getMatches.
+     * Default true.
+     *
+     * @param bool $bool
+     */
     public function setFdrTableUsage($bool)
     {
         $this->fdrTable = $bool;
     }
 
+    /**
+     * Sets the key that should be used to record the FDR as an identification score element.
+     * Only jused when identification data is used to calculate FDR
+     *
+     * @param string $key
+     */
     public function setFdrKey($key)
     {
         $this->fdrKey = $key;
@@ -88,12 +100,18 @@ class FalseDiscoveryRate
         return $matches;
     }
 
+    /**
+     * Gets the array of FDR rates, FDR => Score
+     *
+     * @return array
+     */
     public function getFalseDiscoryRates()
     {
         return $this->falseDiscoveryRates;
     }
 
     /**
+     * Alias of getFdrAll
      *
      * @param Identification[] $identifications
      * @param string $scoreKey
@@ -108,6 +126,8 @@ class FalseDiscoveryRate
     }
 
     /**
+     * Calculates the FDR of all identifications, and stores them depending on options used for this
+     * instance.
      *
      * @param Identification[] $identifications
      * @param string $scoreKey
@@ -128,6 +148,13 @@ class FalseDiscoveryRate
         }
     }
 
+    /**
+     * Gets the FDR for the specified identification.
+     *
+     * @param Identification $identification
+     * @param string $scoreKey
+     * @return float
+     */
     public function getFdr(Identification $identification, $scoreKey)
     {
         $fdr = getFdrScore($identification->getScore($scoreKey), $this->isDecoy($identification));
@@ -139,19 +166,24 @@ class FalseDiscoveryRate
         return $fdr;
     }
 
+    /**
+     * Gets the FDR for the specified score
+     *
+     * @param float $score
+     * @param bool $isDecoy
+     * @return float
+     */
     public function getFdrScore($score, $isDecoy)
     {
         if ($isDecoy) {
             $this->fdrV ++;
-        } else {
-            $this->fdrS ++;
         }
 
-        $R = $this->fdrV + $this->fdrS;
+        $this->fdrR ++;
 
         $fdr = 0;
-        if ($R > 1) {
-            $fdr = $this->fdrV / $R;
+        if ($this->fdrR > 1) {
+            $fdr = $this->fdrV / $this->fdrR;
         }
 
         if ($this->fdrTable) {
@@ -164,14 +196,23 @@ class FalseDiscoveryRate
         return $fdr;
     }
 
+    /**
+     * Resets the cummulative FDR tallies for this instance.
+     */
     public function reset()
     {
         $this->falseDiscoveryRates = array();
         $this->fdrV = 0;
-        $this->fdrS = 0;
+        $this->fdrR = 0;
         $this->fdrKey = null;
     }
 
+    /**
+     * Identifies whether the identification is a decoy or not.
+     *
+     * @param Identification $identification
+     * @return boolean
+     */
     private function isDecoy(Identification $identification)
     {
         if ($identification->getSequence()->isDecoy()) {
