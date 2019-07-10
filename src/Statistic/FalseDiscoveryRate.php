@@ -33,9 +33,9 @@ class FalseDiscoveryRate
 
     private $fdrKey = null;
 
-    private $fdrV = 0;
+    private $falsePositives = 0;
 
-    private $fdrR = 0;
+    private $discoveryCount = 0;
 
     /**
      * Sets whether the FDR table is available, used by getScore/getMatches.
@@ -89,12 +89,11 @@ class FalseDiscoveryRate
     {
         $matches = 0;
         foreach ($this->falseDiscoveryRates as $falseDiscoryRate) {
-            if ($falseDiscoryRate['FDR'] <= $targetRate) {
-                $matches ++;
-                continue;
+            if ($falseDiscoryRate['FDR'] > $targetRate) {
+                break;
             }
 
-            break;
+            $matches ++;
         }
 
         return $matches;
@@ -157,7 +156,7 @@ class FalseDiscoveryRate
      */
     public function getFdr(Identification $identification, $scoreKey)
     {
-        $fdr = getFdrScore($identification->getScore($scoreKey), $this->isDecoy($identification));
+        $fdr = $this->getFdrScore($identification->getScore($scoreKey), $this->isDecoy($identification));
 
         if (! is_null($this->fdrKey)) {
             $identification->setScore($this->fdrKey, $fdr);
@@ -176,14 +175,14 @@ class FalseDiscoveryRate
     public function getFdrScore($score, $isDecoy)
     {
         if ($isDecoy) {
-            $this->fdrV ++;
+            $this->falsePositives ++;
         }
 
-        $this->fdrR ++;
+        $this->discoveryCount ++;
 
         $fdr = 0;
-        if ($this->fdrR > 1) {
-            $fdr = $this->fdrV / $this->fdrR;
+        if ($this->discoveryCount > 0) {
+            $fdr = $this->falsePositives / $this->discoveryCount;
         }
 
         if ($this->fdrTable) {
@@ -202,8 +201,8 @@ class FalseDiscoveryRate
     public function reset()
     {
         $this->falseDiscoveryRates = array();
-        $this->fdrV = 0;
-        $this->fdrR = 0;
+        $this->falsePositives = 0;
+        $this->discoveryCount = 0;
         $this->fdrKey = null;
     }
 

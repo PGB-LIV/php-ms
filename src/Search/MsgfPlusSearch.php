@@ -31,6 +31,8 @@ class MsgfPlusSearch
 
     private $javaPath;
 
+    private $host = null;
+
     /**
      * Create a new instance of this class.
      * Must supply server details.
@@ -44,6 +46,16 @@ class MsgfPlusSearch
     {
         $this->exePath = $exePath;
         $this->javaPath = $javaPath;
+    }
+
+    /**
+     * Execute the command on the target host via SSH
+     *
+     * @param string $host
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
     }
 
     /**
@@ -121,8 +133,13 @@ class MsgfPlusSearch
         $command .= $this->appendArgument(' -n', $parameters->getNumMatchesPerSpectrum());
         $command .= $this->appendArgument(' -addFeatures', $parameters->getAdditionalFeatures());
         $command .= $this->appendArgument(' -ccm', $parameters->getChargeCarrierMass());
-        
-        return $command . $this->appendArgument(' -showQValue', $parameters->getShowQValue());
+        $command .= $this->appendArgument(' -showQValue', $parameters->getShowQValue());
+
+        if (! is_null($this->host)) {
+            $command = 'ssh ' . $this->host . ' "' . addslashes($command) . '"';
+        }
+
+        return $command;
     }
 
     private function appendArgument($key, $value)
