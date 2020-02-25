@@ -46,7 +46,7 @@ trait ModifiableSequenceTrait
      *
      * @var bool
      */
-    private $isDecoy;
+    private $isDecoy = false;
 
     /**
      * Sets the sequence for this object

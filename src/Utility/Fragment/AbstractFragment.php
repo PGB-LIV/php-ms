@@ -176,6 +176,10 @@ abstract class AbstractFragment implements FragmentInterface
      */
     protected function getChargedIon($mass, $charge)
     {
+        if ($charge == 0) {
+            return $mass;
+        }
+
         $chargedMass = $mass + (PhysicalConstants::PROTON_MASS * $charge);
         return $chargedMass / $charge;
     }

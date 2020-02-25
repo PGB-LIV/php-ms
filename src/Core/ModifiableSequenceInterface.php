@@ -62,6 +62,12 @@ interface ModifiableSequenceInterface
      */
     public function getModifications();
 
+    
+    /**
+     * Remove a modification
+     */
+    public function removeModification(Modification $searchModification);
+    
     /**
      * Clears the modifications
      */

@@ -109,7 +109,7 @@ trait ChargedMassTrait
     /**
      * Gets the mass-to-charge value for the specified mass and charge
      *
-     * @param float $mass
+     * @param float $mass Neutral mass value
      * @param int $charge
      * @return float
      */
