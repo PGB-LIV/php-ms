@@ -42,6 +42,8 @@ class MgfReader implements \Iterator
 
     private $charge;
 
+    private $scanFilter = null;
+
     public function __construct($filePath)
     {
         $this->filePath = $filePath;
@@ -75,7 +77,7 @@ class MgfReader implements \Iterator
     {
         $this->current = null;
         if (! feof($this->fileHandle)) {
-            $this->current = $this->parseEntry();
+            $this->current = $this->getNextValidEntry();
         }
     }
 
@@ -92,7 +94,7 @@ class MgfReader implements \Iterator
 
         $this->fileHandle = fopen($this->filePath, 'r');
         $this->key = 0;
-        $this->current = $this->parseEntry();
+        $this->current = $this->getNextValidEntry();
     }
 
     /**
@@ -140,6 +142,15 @@ class MgfReader implements \Iterator
         return $this->filePeek;
     }
 
+    private function getNextValidEntry()
+    {
+        do {
+            $entry = $this->parseEntry();
+        } while ($entry == null);
+
+        return $entry;
+    }
+
     private function parseEntry()
     {
         $entry = new PrecursorIon();
@@ -179,10 +190,21 @@ class MgfReader implements \Iterator
             $entry->setCharge($this->charge);
         }
 
+        $filterMatch = $this->isFilterMatch($entry);
+
+        if (! $filterMatch) {
+            $entry = null;
+        }
+
         // Scan for [m/z] [intensity] [charge]
         while ($line = $this->peekLine()) {
             if (strpos($line, 'END IONS') !== false) {
                 break;
+            }
+
+            if (! $filterMatch) {
+                $this->getLine();
+                continue;
             }
 
             $this->parseFragments($entry);
@@ -263,5 +285,19 @@ class MgfReader implements \Iterator
         $ion->setMonoisotopicMassCharge($fragmentMz, $fragmentCharge);
 
         $precursor->addFragmentIon($ion);
+    }
+
+    public function isFilterMatch(PrecursorIon $precursor)
+    {
+        if (! is_null($this->scanFilter) && $this->scanFilter != $precursor->getScan()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function setScanFilter($scanNum)
+    {
+        $this->scanFilter = $scanNum;
     }
 }

@@ -201,7 +201,8 @@ trait ModifiableSequenceTrait
                 case 'X':
                 case 'B':
                 case 'Z':
-                    continue;
+                    // Do nothing
+                    break;
                 default:
                     $mass += AminoAcidMono::getMonoisotopicMass($acid);
                     break;
